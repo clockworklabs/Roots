@@ -1,0 +1,21 @@
+:root {
+    --bs-body-bg: #212529;
+    --bs-border-width: 1px;
+    --bs-border-color: #495057;
+    --bs-border-radius: 6px;
+}
+
+.img-fluid {
+    max-width: 100%;
+    /*--props-height: auto; //(aspect ratio)*/
+}
+
+.img-thumbnail {
+    padding: 4px;
+    background-color: var(--bs-body-bg);
+    border-width: var(--bs-border-width);
+    border-color: var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
+    max-width: 100%;
+    /*--props-height: auto; //(aspect ratio)*/
+}

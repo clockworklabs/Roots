@@ -57,6 +57,81 @@ namespace Roots
     //         return $"{g}-{v}";
     //     }
     // }
+    
+    // REFERENCE FOR GUTTER
+    // public struct Gap
+    // {
+    //     public int? row;
+    //     public int? column;
+    //
+    //     public Gap(int value)
+    //     {
+    //         row = value;
+    //         column = value;
+    //     }
+    //     public Gap(int row, int column)
+    //     {
+    //         this.row = row;
+    //         this.column = column;
+    //     }
+    //     
+    //     public static implicit operator Gap(int value) => new Gap(value);
+    //     public static implicit operator Gap((int x, int y) value) => new Gap(value.x, value.y);
+    //
+    //     public static Gap Row(int row) => new Gap
+    //     {
+    //         row = row
+    //     };
+    //     public static Gap Column(int column) => new Gap
+    //     {
+    //         column = column
+    //     };
+    //
+    //     internal bool TryGetClassName(out string className, string breakpoint = null) {
+    //         if(row != column) {
+    //             className = null;
+    //             return false;
+    //         }
+    //         
+    //         className = GetClassName(breakpoint, "gap", row);
+    //         return true;
+    //     }
+    //     internal bool TryGetRowClassName(out string className, string breakpoint = null) {
+    //         if(row == column) {
+    //             className = null;
+    //             return false;
+    //         }
+    //         
+    //         className = GetClassName(breakpoint, "row-gap", row);
+    //         return true;
+    //     }
+    //     internal bool TryGetColumnClassName(out string className, string breakpoint = null) {
+    //         if(row == column) {
+    //             className = null;
+    //             return false;
+    //         }
+    //
+    //         className = GetClassName(breakpoint, "column-gap", column);
+    //         return true;
+    //     }
+    //
+    //     private string GetClassName(string breakpoint, string prefix, int? value)
+    //     {
+    //         if (!value.HasValue)
+    //         {
+    //             return string.Empty;
+    //         }
+    //         var v = value.Value;
+    //         if (v is < 0 or > 5)
+    //         {
+    //             return string.Empty;
+    //         }
+    //
+    //         var gap = string.IsNullOrWhiteSpace(breakpoint) ? prefix : $"{prefix}-{breakpoint}";
+    //
+    //         return $"{gap}-{v}";
+    //     }
+    // }
 
     [RishValueType]
     public struct RowProps
@@ -84,7 +159,7 @@ namespace Roots
 
         private static string GetColsClassName(int value, string breakpoint = null)
         {
-            if (value is < 0 or > 24 or > 12 and < 24)
+            if (value is <= 0 or > 24 or > 12 and < 24)
             {
                 return string.Empty;
             }

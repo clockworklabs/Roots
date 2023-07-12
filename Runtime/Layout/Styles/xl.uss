@@ -1,0 +1,597 @@
+.container {
+    width: 1140px;
+}
+.container-xl {
+    width: 1140px;
+}
+
+.col-xl {
+    flex: 1 0 0%;
+}
+
+.row-cols-xl-1>* {
+    flex: 0 0 auto;
+    width: 100%;
+}
+.row-cols-xl-2>* {
+    flex: 0 0 auto;
+    width: 50%;
+}
+.row-cols-xl-3>* {
+    flex: 0 0 auto;
+    width: 33.3333%;
+}
+.row-cols-xl-4>* {
+    flex: 0 0 auto;
+    width: 25%;
+}
+.row-cols-xl-5>* {
+    flex: 0 0 auto;
+    width: 20%;
+}
+.row-cols-xl-6>* {
+    flex: 0 0 auto;
+    width: 16.6666%;
+}
+.row-cols-xl-7>* {
+    flex: 0 0 auto;
+    width: 14.2857%;
+}
+.row-cols-xl-8>* {
+    flex: 0 0 auto;
+    width: 12.5%;
+}
+.row-cols-xl-9>* {
+    flex: 0 0 auto;
+    width: 11.1111%;
+}
+.row-cols-xl-10>* {
+    flex: 0 0 auto;
+    width: 10%;
+}
+.row-cols-xl-11>* {
+    flex: 0 0 auto;
+    width: 9.0909%;
+}
+.row-cols-xl-12>* {
+    flex: 0 0 auto;
+    width: 8.3333%;
+}
+.row-cols-xl-24>* {
+    flex: 0 0 auto;
+    width: 4.1666%;
+}
+
+.col-xl-1 {
+    flex: 0 0 auto;
+    width: 100%;
+}
+.col-xl-1-1 {
+    flex: 0 0 auto;
+    width: 100%;
+}
+
+.col-xl-1-2 {
+    flex: 0 0 auto;
+    width: 50%;
+}
+.col-xl-2-2 {
+    flex: 0 0 auto;
+    width: 10%;
+}
+
+.col-xl-1-3 {
+    flex: 0 0 auto;
+    width: 33.3333%;
+}
+.col-xl-2-3 {
+    flex: 0 0 auto;
+    width: 66.6666%;
+}
+.col-xl-3-3 {
+    flex: 0 0 auto;
+    width: 100%;
+}
+
+.col-xl-1-4 {
+    flex: 0 0 auto;
+    width: 25%;
+}
+.col-xl-2-4 {
+    flex: 0 0 auto;
+    width: 50%;
+}
+.col-xl-3-4 {
+    flex: 0 0 auto;
+    width: 75%;
+}
+.col-xl-4-4 {
+    flex: 0 0 auto;
+    width: 100%;
+}
+
+.col-xl-1-5 {
+    flex: 0 0 auto;
+    width: 20%;
+}
+.col-xl-2-5 {
+    flex: 0 0 auto;
+    width: 40%;
+}
+.col-xl-3-5 {
+    flex: 0 0 auto;
+    width: 60%;
+}
+.col-xl-4-5 {
+    flex: 0 0 auto;
+    width: 80%;
+}
+.col-xl-5-5 {
+    flex: 0 0 auto;
+    width: 100%;
+}
+
+.col-xl-1-6 {
+    flex: 0 0 auto;
+    width: 16.6666%;
+}
+.col-xl-2-6 {
+    flex: 0 0 auto;
+    width: 33.3333%;
+}
+.col-xl-3-6 {
+    flex: 0 0 auto;
+    width: 50%;
+}
+.col-xl-4-6 {
+    flex: 0 0 auto;
+    width: 66.6666%;
+}
+.col-xl-5-6 {
+    flex: 0 0 auto;
+    width: 83.3333%;
+}
+.col-xl-6-6 {
+    flex: 0 0 auto;
+    width: 100%;
+}
+
+.col-xl-1-7 {
+    flex: 0 0 auto;
+    width: 14.2857%;
+}
+.col-xl-2-7 {
+    flex: 0 0 auto;
+    width: 28.5714%;
+}
+.col-xl-3-7 {
+    flex: 0 0 auto;
+    width: 42.8571%;
+}
+.col-xl-4-7 {
+    flex: 0 0 auto;
+    width: 67.1428%;
+}
+.col-xl-5-7 {
+    flex: 0 0 auto;
+    width: 71.4285%;
+}
+.col-xl-6-7 {
+    flex: 0 0 auto;
+    width: 85.7142%;
+}
+.col-xl-7-7 {
+    flex: 0 0 auto;
+    width: 100%;
+}
+
+.col-xl-1-8 {
+    flex: 0 0 auto;
+    width: 12.5%;
+}
+.col-xl-2-8 {
+    flex: 0 0 auto;
+    width: 25%;
+}
+.col-xl-3-8 {
+    flex: 0 0 auto;
+    width: 37.5%;
+}
+.col-xl-4-8 {
+    flex: 0 0 auto;
+    width: 50%;
+}
+.col-xl-5-8 {
+    flex: 0 0 auto;
+    width: 62.5%;
+}
+.col-xl-6-8 {
+    flex: 0 0 auto;
+    width: 75%;
+}
+.col-xl-7-8 {
+    flex: 0 0 auto;
+    width: 87.5%;
+}
+.col-xl-8-8 {
+    flex: 0 0 auto;
+    width: 100%;
+}
+
+.col-xl-1-9 {
+    flex: 0 0 auto;
+    width: 11.1111%;
+}
+.col-xl-2-9 {
+    flex: 0 0 auto;
+    width: 22.2222%;
+}
+.col-xl-3-9 {
+    flex: 0 0 auto;
+    width: 33.3333%;
+}
+.col-xl-4-9 {
+    flex: 0 0 auto;
+    width: 44.4444%;
+}
+.col-xl-5-9 {
+    flex: 0 0 auto;
+    width: 55.5555%;
+}
+.col-xl-6-9 {
+    flex: 0 0 auto;
+    width: 66.6666%;
+}
+.col-xl-7-9 {
+    flex: 0 0 auto;
+    width: 77.7777%;
+}
+.col-xl-8-9 {
+    flex: 0 0 auto;
+    width: 88.8888%;
+}
+.col-xl-9-9 {
+    flex: 0 0 auto;
+    width: 100%;
+}
+
+.col-xl-1-10 {
+    flex: 0 0 auto;
+    width: 10%;
+}
+.col-xl-2-10 {
+    flex: 0 0 auto;
+    width: 20%;
+}
+.col-xl-3-10 {
+    flex: 0 0 auto;
+    width: 30%;
+}
+.col-xl-4-10 {
+    flex: 0 0 auto;
+    width: 40%;
+}
+.col-xl-5-10 {
+    flex: 0 0 auto;
+    width: 50%;
+}
+.col-xl-6-10 {
+    flex: 0 0 auto;
+    width: 60%;
+}
+.col-xl-7-10 {
+    flex: 0 0 auto;
+    width: 70%;
+}
+.col-xl-8-10 {
+    flex: 0 0 auto;
+    width: 80%;
+}
+.col-xl-9-10 {
+    flex: 0 0 auto;
+    width: 90%;
+}
+.col-xl-10-10 {
+    flex: 0 0 auto;
+    width: 100%;
+}
+
+.col-xl-1-11 {
+    flex: 0 0 auto;
+    width: 9.0909%;
+}
+.col-xl-2-11 {
+    flex: 0 0 auto;
+    width: 18.1818%;
+}
+.col-xl-3-11 {
+    flex: 0 0 auto;
+    width: 27.2727%;
+}
+.col-xl-4-11 {
+    flex: 0 0 auto;
+    width: 36.3636%;
+}
+.col-xl-5-11 {
+    flex: 0 0 auto;
+    width: 45.4545%;
+}
+.col-xl-6-11 {
+    flex: 0 0 auto;
+    width: 54.5454%;
+}
+.col-xl-7-11 {
+    flex: 0 0 auto;
+    width: 63.6363%;
+}
+.col-xl-8-11 {
+    flex: 0 0 auto;
+    width: 72.7272%;
+}
+.col-xl-9-11 {
+    flex: 0 0 auto;
+    width: 81.8181%;
+}
+.col-xl-10-11 {
+    flex: 0 0 auto;
+    width: 90.9090%;
+}
+.col-xl-11-11 {
+    flex: 0 0 auto;
+    width: 100%;
+}
+
+.col-xl-1-12 {
+    flex: 0 0 auto;
+    width: 8.3333%;
+}
+.col-xl-2-12 {
+    flex: 0 0 auto;
+    width: 16.6666%;
+}
+.col-xl-3-12 {
+    flex: 0 0 auto;
+    width: 25%;
+}
+.col-xl-4-12 {
+    flex: 0 0 auto;
+    width: 33.3333%;
+}
+.col-xl-5-12 {
+    flex: 0 0 auto;
+    width: 41.6666%;
+}
+.col-xl-6-12 {
+    flex: 0 0 auto;
+    width: 50%;
+}
+.col-xl-7-12 {
+    flex: 0 0 auto;
+    width: 58.3333%;
+}
+.col-xl-8-12 {
+    flex: 0 0 auto;
+    width: 66.6666%;
+}
+.col-xl-9-12 {
+    flex: 0 0 auto;
+    width: 75%;
+}
+.col-xl-10-12 {
+    flex: 0 0 auto;
+    width: 83.3333%;
+}
+.col-xl-11-12 {
+    flex: 0 0 auto;
+    width: 91.6666%;
+}
+.col-xl-12-12 {
+    flex: 0 0 auto;
+    width: 100%;
+}
+
+.col-xl-1-24 {
+    flex: 0 0 auto;
+    width: 4.1666%;
+}
+.col-xl-2-24 {
+    flex: 0 0 auto;
+    width: 8.3333%;
+}
+.col-xl-3-24 {
+    flex: 0 0 auto;
+    width: 12.5%;
+}
+.col-xl-4-24 {
+    flex: 0 0 auto;
+    width: 16.6666%;
+}
+.col-xl-5-24 {
+    flex: 0 0 auto;
+    width: 20.8333%;
+}
+.col-xl-6-24 {
+    flex: 0 0 auto;
+    width: 25%;
+}
+.col-xl-7-24 {
+    flex: 0 0 auto;
+    width: 29.1666%;
+}
+.col-xl-8-24 {
+    flex: 0 0 auto;
+    width: 33.3333%;
+}
+.col-xl-9-24 {
+    flex: 0 0 auto;
+    width: 37.5%;
+}
+.col-xl-10-24 {
+    flex: 0 0 auto;
+    width: 41.6666%;
+}
+.col-xl-11-24 {
+    flex: 0 0 auto;
+    width: 45.8333%;
+}
+.col-xl-12-24 {
+    flex: 0 0 auto;
+    width: 50%;
+}
+.col-xl-13-24 {
+    flex: 0 0 auto;
+    width: 54.1666%;
+}
+.col-xl-14-24 {
+    flex: 0 0 auto;
+    width: 58.3333%;
+}
+.col-xl-15-24 {
+    flex: 0 0 auto;
+    width: 62.5%;
+}
+.col-xl-16-24 {
+    flex: 0 0 auto;
+    width: 66.6666%;
+}
+.col-xl-17-24 {
+    flex: 0 0 auto;
+    width: 70.8333%;
+}
+.col-xl-18-24 {
+    flex: 0 0 auto;
+    width: 75%;
+}
+.col-xl-19-24 {
+    flex: 0 0 auto;
+    width: 79.1666%;
+}
+.col-xl-20-24 {
+    flex: 0 0 auto;
+    width: 83.3333%;
+}
+.col-xl-21-24 {
+    flex: 0 0 auto;
+    width: 87.5%;
+}
+.col-xl-22-24 {
+    flex: 0 0 auto;
+    width: 91.6666%;
+}
+.col-xl-23-24 {
+    flex: 0 0 auto;
+    width: 95.8333%;
+}
+.col-xl-24-24 {
+    flex: 0 0 auto;
+    width: 100%;
+}
+
+.g-xl-0 {
+    --rs-gutter-x: 0px;
+    --rs-half-gutter-x: 0px;
+    --rs-neg-gutter-x: 0px;
+    --rs-gutter-y: 0px;
+    --rs-half-gutter-y: 0px;
+    --rs-neg-gutter-y: 0px;
+}
+.g-xl-1 {
+    --rs-gutter-x: 4px;
+    --rs-half-gutter-x: 2px;
+    --rs-neg-gutter-x: -4px;
+    --rs-gutter-y: 4px;
+    --rs-half-gutter-y: 2px;
+    --rs-neg-gutter-y: -4px;
+}
+.g-xl-2 {
+    --rs-gutter-x: 8px;
+    --rs-half-gutter-x: 4px;
+    --rs-neg-gutter-x: -8px;
+    --rs-gutter-y: 8px;
+    --rs-half-gutter-y: 4px;
+    --rs-neg-gutter-y: -8px;
+}
+.g-xl-3 {
+    --rs-gutter-x: 16px;
+    --rs-half-gutter-x: 8px;
+    --rs-neg-gutter-x: -16px;
+    --rs-gutter-y: 16px;
+    --rs-half-gutter-y: 8px;
+    --rs-neg-gutter-y: -16px;
+}
+.g-xl-4 {
+    --rs-gutter-x: 24px;
+    --rs-half-gutter-x: 12px;
+    --rs-neg-gutter-x: -24px;
+    --rs-gutter-y: 24px;
+    --rs-half-gutter-y: 12px;
+    --rs-neg-gutter-y: -24px;
+}
+.g-xl-5 {
+    --rs-gutter-x: 48px;
+    --rs-half-gutter-x: 24px;
+    --rs-neg-gutter-x: -48px;
+    --rs-gutter-y: 48px;
+    --rs-half-gutter-y: 24px;
+    --rs-neg-gutter-y: -48px;
+}
+.gx-xl-0 {
+    --rs-gutter-x: 0px;
+    --rs-half-gutter-x: 0px;
+    --rs-neg-gutter-x: 0px;
+}
+.gx-xl-1 {
+    --rs-gutter-x: 4px;
+    --rs-half-gutter-x: 2px;
+    --rs-neg-gutter-x: -4px;
+}
+.gx-xl-2 {
+    --rs-gutter-x: 8px;
+    --rs-half-gutter-x: 4px;
+    --rs-neg-gutter-x: -8px;
+}
+.gx-xl-3 {
+    --rs-gutter-x: 16px;
+    --rs-half-gutter-x: 8px;
+    --rs-neg-gutter-x: -16px;
+}
+.gx-xl-4 {
+    --rs-gutter-x: 24px;
+    --rs-half-gutter-x: 12px;
+    --rs-neg-gutter-x: -24px;
+}
+.gx-xl-5 {
+    --rs-gutter-x: 48px;
+    --rs-half-gutter-x: 24px;
+    --rs-neg-gutter-x: -48px;
+}
+.gy-xl-0 {
+    --rs-gutter-y: 0px;
+    --rs-half-gutter-y: 0px;
+    --rs-neg-gutter-y: 0px;
+}
+.gy-xl-1 {
+    --rs-gutter-y: 4px;
+    --rs-half-gutter-y: 2px;
+    --rs-neg-gutter-y: -4px;
+}
+.gy-xl-2 {
+    --rs-gutter-y: 8px;
+    --rs-half-gutter-y: 4px;
+    --rs-neg-gutter-y: -8px;
+}
+.gy-xl-3 {
+    --rs-gutter-y: 16px;
+    --rs-half-gutter-y: 8px;
+    --rs-neg-gutter-y: -16px;
+}
+.gy-xl-4 {
+    --rs-gutter-y: 24px;
+    --rs-half-gutter-y: 12px;
+    --rs-neg-gutter-y: -24px;
+}
+.gy-xl-5 {
+    --rs-gutter-y: 48px;
+    --rs-half-gutter-y: 24px;
+    --rs-neg-gutter-y: -48px;
+}

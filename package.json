@@ -10,6 +10,7 @@
     "url": "https://lisandroct.com"
   },
   "dependencies": {
+    "com.unity.collections": "0.9.0-preview.6",
     "com.clockworklabs.rish": "3.0.0-pre.87"
   },
   "type": "library"

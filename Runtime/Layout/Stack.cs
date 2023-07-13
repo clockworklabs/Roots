@@ -23,6 +23,7 @@ namespace Roots
         public int? lgGap;
         public int? xlGap;
         public int? xxlGap;
+        public Utilities utilities;
         public Children children;
 
         private bool IsVertical => direction == StackDirection.Vertical;

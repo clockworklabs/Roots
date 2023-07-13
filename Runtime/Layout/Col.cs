@@ -87,6 +87,7 @@ namespace Roots
         public ColSize xl;
         public ColSize xxl;
 
+        public Utilities utilities;
         public Children children;
     }
 }

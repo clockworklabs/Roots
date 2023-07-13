@@ -148,6 +148,7 @@ namespace Roots
         // public Gutter lgGutter;
         // public Gutter xlGutter;
         // public Gutter xxlGutter;
+        public Utilities utilities;
         public Children children;
 
         internal string xsClassName => GetColsClassName(xs);

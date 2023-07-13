@@ -4,7 +4,7 @@ namespace Roots
 {
     public partial class HStack : RishElement<HStackProps>
     {
-        protected override Element Render() => Stack.Create(direction: StackDirection.Horizontal, gap: Props.gap, smGap: Props.smGap, mdGap: Props.mdGap, lgGap: Props.lgGap, xlGap: Props.xlGap, xxlGap: Props.xxlGap, children: Props.children);
+        protected override Element Render() => Stack.Create(direction: StackDirection.Horizontal, gap: Props.gap, smGap: Props.smGap, mdGap: Props.mdGap, lgGap: Props.lgGap, xlGap: Props.xlGap, xxlGap: Props.xxlGap, utilities: Props.utilities, children: Props.children);
     }
 
     [RishValueType]
@@ -16,6 +16,7 @@ namespace Roots
         public int? lgGap;
         public int? xlGap;
         public int? xxlGap;
+        public Utilities utilities;
         public Children children;
     }
 }

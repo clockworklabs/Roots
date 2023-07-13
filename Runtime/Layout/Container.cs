@@ -30,6 +30,7 @@ namespace Roots
     public struct ContainerProps
     {
         public Fluid fluid;
+        public Utilities utilities;
         public Children children;
     }
 }

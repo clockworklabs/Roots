@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using RishUI;
 using RishUI.Elements;
 
@@ -5,9 +6,18 @@ namespace Roots
 {
     public partial class Stack : RishElement<StackProps>
     {
+        private List<Element> Children { get; } = new();
+        
         protected override Element Render()
         {
-            return Div.Create(className: (Props.stackClassName, Props.xsGapClassName, Props.smGapClassName, Props.mdGapClassName, Props.lgGapClassName, Props.xlGapClassName, Props.xxlGapClassName), children: Props.children);
+            Children.Clear();
+            for (int i = 0, n = Props.children.Length; i < n; i++)
+            {
+                var child = Props.children[i];
+                Children.Add(Div.Create(child));
+            }
+            
+            return Div.Create(className: (Props.stackClassName, Props.xsGapClassName, Props.smGapClassName, Props.mdGapClassName, Props.lgGapClassName, Props.xlGapClassName, Props.xxlGapClassName), children: Children);
         }
     }
     

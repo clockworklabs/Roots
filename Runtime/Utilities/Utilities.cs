@@ -1,4 +1,5 @@
 using System;
+using RishUI;
 using UnityEngine.UIElements;
 
 namespace Roots
@@ -549,5 +550,42 @@ namespace Roots
         }
         
         // TODO: Sizing
+
+        public ClassName GetClassName()
+        {
+            var className = new ClassName();
+            if (display.xs.HasValue)
+            {
+                var xs = display.xs.Value;
+                className.Add($"display-{(xs == DisplayStyle.None ? "none" : "flex")}");
+            }
+            if (display.sm.HasValue)
+            {
+                var xs = display.sm.Value;
+                className.Add($"display-sm-{(xs == DisplayStyle.None ? "none" : "flex")}");
+            }
+            if (display.md.HasValue)
+            {
+                var xs = display.md.Value;
+                className.Add($"display-md-{(xs == DisplayStyle.None ? "none" : "flex")}");
+            }
+            if (display.lg.HasValue)
+            {
+                var xs = display.lg.Value;
+                className.Add($"display-lg-{(xs == DisplayStyle.None ? "none" : "flex")}");
+            }
+            if (display.xl.HasValue)
+            {
+                var xs = display.xl.Value;
+                className.Add($"display-xl-{(xs == DisplayStyle.None ? "none" : "flex")}");
+            }
+            if (display.xxl.HasValue)
+            {
+                var xs = display.xxl.Value;
+                className.Add($"display-xxl-{(xs == DisplayStyle.None ? "none" : "flex")}");
+            }
+
+            return className;
+        }
     }
 }

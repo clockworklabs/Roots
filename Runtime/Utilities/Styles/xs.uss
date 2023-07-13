@@ -1,4 +1,35 @@
 :root {
+    --rs-color-blue:     #0d6efd;
+    --rs-color-indigo:   #6610f2;
+    --rs-color-purple:   #6f42c1;
+    --rs-color-pink:     #d63384;
+    --rs-color-red:      #dc3545;
+    --rs-color-orange:   #fd7e14;
+    --rs-color-yellow:   #ffc107;
+    --rs-color-green:    #198754;
+    --rs-color-teal:     #20c997;
+    --rs-color-cyan:     #0dcaf0;
+    --rs-color-white:    #fff;
+    --rs-color-gray-100: #f8f9fa;
+    --rs-color-gray-200: #e9ecef;
+    --rs-color-gray-300: #dee2e6;
+    --rs-color-gray-400: #ced4da;
+    --rs-color-gray-500: #adb5bd;
+    --rs-color-gray-600: #6c757d;
+    --rs-color-gray-700: #495057;
+    --rs-color-gray-800: #343a40;
+    --rs-color-gray-900: #212529;
+    --rs-color-black:    #000;
+
+    --rs-color-primary:   var(--rs-color-blue);
+    --rs-color-secondary: var(--rs-color-gray-600);
+    --rs-color-success:   var(--rs-color-green);
+    --rs-color-info:      var(--rs-color-cyan);
+    --rs-color-warning:   var(--rs-color-yellow);
+    --rs-color-danger:    var(--rs-color-red);
+    --rs-color-light:     var(--rs-color-gray-100);
+    --rs-color-dark:      var(--rs-color-gray-900);
+    
     --rs-spacer-1: 4px;
     --rs-spacer-2: 8px;
     --rs-spacer-3: 16px;
@@ -19,6 +50,9 @@
     --rs-spacer-nh3: -8px;
     --rs-spacer-nh4: -12px;
     --rs-spacer-nh5: -24px;
+
+    --rs-border-width: 1px;
+    --bs-border-color: #495057;
 }
 
 /* --- Display - */
@@ -839,4 +873,38 @@
 }
 .mh-100 {
     max-height: 100%;
+}
+
+/* --- Borders - */
+.border {
+    border-width: var(--rs-border-width);
+    border-color: var(--rs-border-color);
+}
+.border-top {
+    border-top-width: var(--rs-border-width);
+    border-top-color: var(--rs-border-color);
+}
+.border-right {
+    border-right-width: var(--rs-border-width);
+    border-right-color: var(--rs-border-color);
+}
+.border-bottom {
+    border-bottom-width: var(--rs-border-width);
+    border-bottom-color: var(--rs-border-color);
+}
+.border-left {
+    border-left-width: var(--rs-border-width);
+    border-left-color: var(--rs-border-color);
+}
+.border-top-0 {
+    border-top-width: 0!important;
+}
+.border-right-0 {
+    border-right-width: 0!important;
+}
+.border-bottom-0 {
+    border-bottom-width: 0!important;
+}
+.border-left-0 {
+    border-left-width: 0!important;
 }

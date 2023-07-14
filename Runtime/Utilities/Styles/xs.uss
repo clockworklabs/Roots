@@ -21,6 +21,8 @@
     --rs-gray-900: #212529;
     --rs-black:    #000;
     --rs-transparent: rgba(0, 0, 0, 0);
+    --rs-white-50: rgba(255, 255, 255, 50%);
+    --rs-black-50: rgba(0, 0, 0, 50%);
 
     --rs-primary:   var(--rs-blue);
     --rs-secondary: var(--rs-gray-600);
@@ -49,6 +51,19 @@
     --rs-info-border-subtle: #087990;
     --rs-light-border-subtle: #495057;
     --rs-dark-border-subtle: #343a40;
+    --rs-primary-text-emphasis: #6ea8fe;
+    --rs-secondary-text-emphasis: #a7acb1;
+    --rs-success-text-emphasis: #75b798;
+    --rs-danger-text-emphasis: #ea868f;
+    --rs-warning-text-emphasis: #ffda6a;
+    --rs-info-text-emphasis: #6edff6;
+    --rs-light-text-emphasis: #f8f9fa;
+    --rs-dark-text-emphasis: #dee2e6;
+    --rs-body-color: #adb5bd;
+    --rs-emphasis-color: #fff;
+    --rs-secondary-color: rgba(173, 181, 189, 0.75);
+    --rs-tertiary-color: rgba(173, 181, 189, 0.5);
+    
     
     --rs-spacer-1: 4px;
     --rs-spacer-2: 8px;
@@ -1069,6 +1084,80 @@
 }
 .border-5 {
     border-width: 5px!important;
+}
+
+/* Colors */
+.text-primary {
+    color: var(--rs-primary)!important;
+}
+.text-primary-emphasis {
+    color: var(--rs-primary-text-emphasis)!important;
+}
+.text-secondary {
+    color: var(--rs-secondary)!important;
+}
+.text-secondary-emphasis {
+    color: var(--rs-secondary-text-emphasis)!important;
+}
+.text-success {
+    color: var(--rs-success)!important;
+}
+.text-success-emphasis {
+    color: var(--rs-success-text-emphasis)!important;
+}
+.text-danger {
+    color: var(--rs-danger)!important;
+}
+.text-danger-emphasis {
+    color: var(--rs-danger-text-emphasis)!important;
+}
+.text-warning {
+    color: var(--rs-warning)!important;
+}
+.text-warning-emphasis {
+    color: var(--rs-warning-text-emphasis)!important;
+}
+.text-info {
+    color: var(--rs-info)!important;
+}
+.text-info-emphasis {
+    color: var(--rs-info-text-emphasis)!important;
+}
+.text-light {
+    color: var(--rs-light)!important;
+}
+.text-light-emphasis {
+    color: var(--rs-light-text-emphasis)!important;
+}
+.text-dark {
+    color: var(--rs-dark)!important;
+}
+.text-dark-emphasis {
+    color: var(--rs-dark-text-emphasis)!important;
+}
+.text-body {
+    color: var(--rs-body-color)!important;
+}
+.text-body-emphasis {
+    color: var(--rs-emphasis-color)!important;
+}
+.text-body-secondary {
+    color: var(--rs-secondary-color)!important;
+}
+.text-body-tertiary {
+    color: var(--rs-tertiary-color)!important;
+}
+.text-black {
+    color: var(--rs-black)!important;
+}
+.text-white {
+    color: var(--rs-white)!important;
+}
+.text-black-50 {
+    color: var(--rs-black-50)!important;
+}
+.text-white-50 {
+    color: var(--rs-white-50)!important;
 }
 
 /* Rounded Corners */

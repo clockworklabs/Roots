@@ -14,7 +14,7 @@ namespace Roots
             for (int i = 0, n = Props.children.Length; i < n; i++)
             {
                 var child = Props.children[i];
-                Children.Add(Div.Create(child));
+                Children.Add(Div.Create(className: Props.IsVertical ? "flex-column" : "flex-row", children: child));
             }
             
             return Div.Create(className: (Props.stackClassName, Props.xsGapClassName, Props.smGapClassName, Props.mdGapClassName, Props.lgGapClassName, Props.xlGapClassName, Props.xxlGapClassName), children: Children);
@@ -36,7 +36,7 @@ namespace Roots
         public Utilities utilities;
         public Children children;
 
-        private bool IsVertical => direction == StackDirection.Vertical;
+        internal bool IsVertical => direction == StackDirection.Vertical;
 
         internal string stackClassName => IsVertical ? "vstack" : "hstack";
         internal string xsGapClassName => gap.HasValue ? GetGapClassName(gap.Value) : string.Empty;

@@ -2,91 +2,66 @@ using System.Collections.Generic;
 using System.Linq;
 using RishUI;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace Roots
 {
+    [RequireComponent(typeof(UIDocument))]
+    [RequireComponent(typeof(RishRoot))]
+    [DisallowMultipleComponent]
     public class RootsSetup : MonoBehaviour
     {
         [SerializeField]
-        private ResponsiveStyleSheet[] _styleSheets;
-        private ResponsiveStyleSheet[] StyleSheets => _styleSheets;
+        private ResponsiveStyleSheet[] _responsiveStyleSheets;
+        private ResponsiveStyleSheet[] ResponsiveStyleSheets => _responsiveStyleSheets;
+        
+        private UIDocument UIDocument { get; set; }
 
         private IReadOnlyList<MediaQueryStyleSheet> _sortedStyleSheets;
         private IReadOnlyList<MediaQueryStyleSheet> SortedStyleSheets => _sortedStyleSheets;
         
-        private RishRoot RishRoot { get; set; }
-
         private void Awake()
         {
-            var styleSheets = StyleSheets.SelectMany(group => group.StyleSheets).ToList();
+            UIDocument = GetComponent<UIDocument>();
+            
+            var styleSheets = ResponsiveStyleSheets.SelectMany(group => group.StyleSheets).ToList();
             styleSheets.Sort((a, b) => a.MinWidth.CompareTo(b.MinWidth));
             _sortedStyleSheets = styleSheets.AsReadOnly();
-            
-            RishRoot.OnStart += OnRishStart;
+
+            RishRoot.OnStart += SetupRishRoot;
+            ResponsiveContext.OnResize += OnResponsiveResize;
         }
         private void OnDestroy()
         {
-            SetRishRoot(null);
-            RishRoot.OnStart -= OnRishStart;
+            RishRoot.OnStart -= SetupRishRoot;
+            ResponsiveContext.OnResize -= OnResponsiveResize;
         }
 
-        private void OnRishStart(RishRoot root)
+        private void SetupRishRoot(RishRoot rishRoot)
         {
-            if (root.gameObject != gameObject)
+            if (rishRoot.gameObject != gameObject)
             {
                 return;
             }
-
-            SetRishRoot(root);
-        }
-
-        private void SetRishRoot(RishRoot root)
-        {
-            if (RishRoot != null)
+            
+            foreach (var responsiveStyleSheet in SortedStyleSheets)
             {
-                RishRoot.OnResize -= OnResize;
-
-                foreach (var styleSheet in SortedStyleSheets)
-                {
-                    RishRoot.RemoveStyleSheet(styleSheet.StyleSheet);
-                }
-            }
-
-            if (root == null)
-            {
-                return;
-            }
-
-            root.OnResize += OnResize;
-
-            foreach (var styleSheet in SortedStyleSheets)
-            {
-                if (styleSheet.MinWidth > 0)
+                if (responsiveStyleSheet.MinWidth > 0)
                 {
                     break;
                 }
                 
-                root.AddStyleSheet(styleSheet.StyleSheet);
+                rishRoot.AddStyleSheet(responsiveStyleSheet.StyleSheet);
             }
-
-            RishRoot = root;
         }
-
-        private void OnResize(Vector2 oldSize, Vector2 newSize)
+        
+        private void OnResponsiveResize(ResponsiveContext responsive, float oldWidth, float newWidth)
         {
-            if (RishRoot == null)
+            if (!TreeContains(responsive))
             {
                 return;
             }
             
-            var oldWidth = oldSize.x;
-            var newWidth = newSize.x;
-
-            if (Mathf.Approximately(oldWidth, newWidth))
-            {
-                return;
-            }
-
             if (newWidth > oldWidth)
             {
                 foreach (var styleSheet in SortedStyleSheets)
@@ -101,7 +76,7 @@ namespace Roots
                         break;
                     }
                     
-                    RishRoot.AddStyleSheet(styleSheet.StyleSheet);
+                    responsive.styleSheets.Add(styleSheet.StyleSheet);
                 }
             }
             else
@@ -118,9 +93,11 @@ namespace Roots
                         break;
                     }
                     
-                    RishRoot.RemoveStyleSheet(styleSheet.StyleSheet);
+                    responsive.styleSheets.Remove(styleSheet.StyleSheet);
                 }
             }
         }
+
+        private bool TreeContains(VisualElement body) => UIDocument.rootVisualElement.Contains(body);
     }
 }

@@ -1,0 +1,64 @@
+:root {
+    --rs-body-color: #adb5bd;
+    --rs-heading-color: inherit;
+}
+
+.body {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    
+    color: var(--rs-body-color);
+    font-size: 16px;
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6 {
+    margin-top: 0;
+    margin-bottom: 8px;
+    -unity-font-style: bold;
+    /*line-height: 1.2;*/
+    color: var(--rs-heading-color);
+}
+.h1 {
+    font-size: 40px;
+}
+.h2 {
+    font-size: 32px;
+}
+.h3 {
+    font-size: 28px;
+}
+.h4 {
+    font-size: 24px;
+}
+.h5 {
+    font-size: 20px;
+}
+.h6 {
+    font-size: 16px;
+}
+.p {
+    margin-top: 0;
+    margin-bottom: 16px;
+}
+.lead {
+    font-size: 20px;
+    font-weight: 300;
+}
+
+.img-fluid {
+    max-width: 100%;
+    /*--props-height: auto; //(aspect ratio)*/
+}
+
+.img-thumbnail {
+    padding: 4px;
+    background-color: var(--rs-body-bg);
+    border-width: var(--rs-border-width);
+    border-color: var(--rs-border-color);
+    border-radius: var(--rs-border-radius);
+    max-width: 100%;
+    /*--props-height: auto; //(aspect ratio)*/
+}

@@ -1,4 +1,3 @@
-using System.Numerics;
 using RishUI;
 using RishUI.Events;
 using UnityEngine;
@@ -18,6 +17,11 @@ namespace Roots
         
         private StyledPropsManager<Image, ImageProps> PropsManager { get; }
         StyledPropsManager<Image, ImageProps> IStyledProps<Image, ImageProps>.Manager => PropsManager;
+
+        private static readonly CustomStyleProperty<Color> TintColorProp = new("--props-tint-color"); 
+        private static readonly CustomStyleProperty<string> ScaleModeProp = new("--props-scale-mode"); 
+        private static readonly CustomStyleProperty<string> ImageWidthProp = new("--props-image-width"); 
+        private static readonly CustomStyleProperty<string> ImageHeightProp = new("--props-image-height"); 
 
         private VisualElement Parent { get; set; }
         private ImageSize Width;
@@ -39,18 +43,32 @@ namespace Roots
         void IVisualElement<ImageProps>.Setup(ImageProps props) => PropsManager.Setup(props);
         void IStyledProps<Image, ImageProps>.Setup(ImageProps props, bool dirty)
         {
-            Width = props.width;
-            Height = props.height;
+            Width = props.width.Value;
+            Height = props.height.Value;
             
             sprite = props.sprite;
             image = props.texture != null ? props.texture : props.renderTexture;
             vectorImage = props.vectorImage;
+            
             tintColor = props.tintColor.Value;
 
             // this.uv = Rect.MinMaxRect(0, 0, 1, 1);
-            scaleMode = props.scaleMode;
+            scaleMode = props.scaleMode.Value;
         }
-        
+
+        void IStyledProps<Image, ImageProps>.OnCustomStyle(ref ImageProps props)
+        {
+            props.tintColor ??= customStyle.TryGetValue(TintColorProp, out var customTintColor) ? customTintColor : Color.white;
+            props.scaleMode ??= customStyle.TryGetValue(ScaleModeProp, out var customScaleMode) ? customScaleMode switch
+            {
+                "scale-and-crop" => ScaleMode.ScaleAndCrop,
+                "scale-to-fit" => ScaleMode.ScaleToFit,
+                _ => ScaleMode.StretchToFill
+            } : default;
+            props.width ??= customStyle.TryGetValue(ImageWidthProp, out var customImageWidth) ? ImageSize.Parse(customImageWidth) : default;
+            props.height ??= customStyle.TryGetValue(ImageHeightProp, out var customImageHeight) ? ImageSize.Parse(customImageHeight) : default;
+        }
+
         private void OnMounted(AttachToPanelEvent evt)
         {
             Parent = parent;
@@ -83,7 +101,7 @@ namespace Roots
                 style.height = InlineHeight;
                 return;
             }
-
+            
             if (Width.IsDefault())
             {
                 style.width = InlineWidth;
@@ -95,7 +113,8 @@ namespace Roots
                     style.width = width;
                 } else if (!Height.IsAspectRatio())
                 {
-                    style.width = layout.size.y * aspectRatio;
+                    var paddingAndBorder = layout.width - contentRect.width;
+                    style.width = contentRect.height * aspectRatio + paddingAndBorder;
                 }
             }
             if (Height.IsDefault())
@@ -109,7 +128,8 @@ namespace Roots
                     style.height = height;
                 } else
                 {
-                    style.height = layout.size.x / aspectRatio;
+                    var paddingAndBorder = layout.height - contentRect.height;
+                    style.height = contentRect.width / aspectRatio + paddingAndBorder;
                 }
             }
         }
@@ -176,6 +196,33 @@ namespace Roots
         public static ImageSize Percent(float value) => new ImageSize(Length.Percent(value));
     
         public static implicit operator ImageSize(float value) => Pixel(value);
+
+        internal static ImageSize Parse(string customValue)
+        {
+            switch (customValue)
+            {
+                case "auto":
+                    return AspectRatio;
+                case "0":
+                    return Pixel(0);
+            }
+
+            if (customValue.EndsWith("px"))
+            {
+                if (int.TryParse(customValue.Substring(0, customValue.Length - 2), out var pixels))
+                {
+                    return Pixel(pixels);
+                }
+            } else if (customValue.EndsWith("%"))
+            {
+                if (int.TryParse(customValue.Substring(0, customValue.Length - 1), out var percent))
+                {
+                    return Percent(percent);
+                }
+            }
+
+            return default;
+        }
     }
     
     [RishValueType]
@@ -185,27 +232,24 @@ namespace Roots
         public VectorImage vectorImage;
         public Texture2D texture;
         public RenderTexture renderTexture;
-
-        public ScaleMode scaleMode;
-        // public Rect? uv;
+        /// <summary>
+        /// Styled Prop as --prop-scale-mode
+        /// </summary>
+        public ScaleMode? scaleMode;
+        // TODO: public Rect? uv;
+        
+        /// <summary>
+        /// Styled Prop as --prop-tint-color
+        /// </summary>
         public Color? tintColor;
         
-        // // TODO: Styled ImageSize
-        public ImageSize width;
-        public ImageSize height;
-
-        // TODO: Styled Rect props
-        // [StyledProp("--props-uv", 0, 0, 1, 1)]
-        // private Rect? UV
-        // {
-        //     get => uv;
-        //     set => uv = value;
-        // }
-        [StyledProp("--props-tint-color", 1, 1, 1)]
-        private Color? TintColor
-        {
-            get => tintColor;
-            set => tintColor = value;
-        }
+        /// <summary>
+        /// Styled Prop as --prop-image-width
+        /// </summary>
+        public ImageSize? width;
+        /// <summary>
+        /// Styled Prop as --prop-image-height
+        /// </summary>
+        public ImageSize? height;
     }
 }

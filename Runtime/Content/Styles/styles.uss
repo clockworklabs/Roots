@@ -50,7 +50,8 @@
 
 .img-fluid {
     max-width: 100%;
-    /*--props-height: auto; //(aspect ratio)*/
+    --props-image-height: auto;
+    --props-scale-mode: scale-to-fit;
 }
 
 .img-thumbnail {
@@ -58,7 +59,8 @@
     background-color: var(--rs-body-bg);
     border-width: var(--rs-border-width);
     border-color: var(--rs-border-color);
-    border-radius: var(--rs-border-radius);
+    border-radius: var(--rs-border-radius-1);
     max-width: 100%;
-    /*--props-height: auto; //(aspect ratio)*/
+    --props-image-height: auto;
+    --props-scale-mode: scale-to-fit;
 }

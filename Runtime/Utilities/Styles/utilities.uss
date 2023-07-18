@@ -63,7 +63,9 @@
     --rs-emphasis-color: #fff;
     --rs-secondary-color: rgba(173, 181, 189, 0.75);
     --rs-tertiary-color: rgba(173, 181, 189, 0.5);
-    
+
+    --rs-link-color: #6ea8fe;
+    --rs-link-hover-color: #8bb9fe;
     
     --rs-spacer-1: 4px;
     --rs-spacer-2: 8px;
@@ -112,6 +114,7 @@
 }
 .flex-row {
     flex-direction: row;
+    align-self: stretch;
 }
 .flex-row-reverse {
     flex-direction: row-reverse;

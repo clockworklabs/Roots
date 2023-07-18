@@ -64,3 +64,27 @@
     --props-image-height: auto;
     --props-scale-mode: scale-to-fit;
 }
+
+.hr {
+    margin: 16px 0;
+    height: 1px;
+    max-height: 1px;
+    width: 100%;
+    min-width: 16px;
+    opacity: 0.25;
+    align-self: stretch;
+}
+
+.vr {
+    margin: 0 16px;
+    width: 1px;
+    max-width: 1px;
+    height: 100%;
+    min-height: 16px;
+    opacity: 0.25;
+    background-color: var(--rs-body-color);
+}
+
+.h1>.rule, .h2>.rule, .h3>.rule, .h4>.rule, .h5>.rule, .h6>.rule, .p>.rule {
+    background-color: var(--rs-heading-color);
+}

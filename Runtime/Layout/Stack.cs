@@ -14,7 +14,8 @@ namespace Roots
             for (int i = 0, n = Props.children.Length; i < n; i++)
             {
                 var child = Props.children[i];
-                Children.Add(Div.Create(className: Props.IsVertical ? "flex-column" : "flex-row", children: child));
+                // Children.Add(Div.Create(className: Props.IsVertical ? "flex-column" : "flex-row", children: child));
+                Children.Add(child);
             }
             
             return Div.Create(className: (Props.stackClassName, Props.xsGapClassName, Props.smGapClassName, Props.mdGapClassName, Props.lgGapClassName, Props.xlGapClassName, Props.xxlGapClassName), children: Children);

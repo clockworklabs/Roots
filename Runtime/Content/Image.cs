@@ -45,15 +45,40 @@ namespace Roots
         {
             Width = props.width.Value;
             Height = props.height.Value;
+
+            image = null;
+            sprite = null;
+            vectorImage = null;
             
-            sprite = props.sprite;
             image = props.texture != null ? props.texture : props.renderTexture;
-            vectorImage = props.vectorImage;
-            
+            if (image == null)
+            {
+                sprite = props.sprite;
+            }
+            if (image == null && sprite == null)
+            {
+                vectorImage = props.vectorImage;
+            }
+
             tintColor = props.tintColor.Value;
 
             // this.uv = Rect.MinMaxRect(0, 0, 1, 1);
             scaleMode = props.scaleMode.Value;
+
+            if (sprite != null)
+            {
+                style.unitySliceTop = Mathf.RoundToInt(sprite.border.w);
+                style.unitySliceRight = Mathf.RoundToInt(sprite.border.z);
+                style.unitySliceBottom = Mathf.RoundToInt(sprite.border.y);
+                style.unitySliceLeft = Mathf.RoundToInt(sprite.border.x);
+                style.unitySliceScale = 100 / sprite.pixelsPerUnit;
+
+                style.backgroundImage = Background.FromSprite(sprite);
+
+                style.unityBackgroundImageTintColor = props.tintColor.Value;
+                
+                sprite = null;
+            }
         }
 
         void IStyledProps<Image, ImageProps>.OnCustomStyle(ref ImageProps props)

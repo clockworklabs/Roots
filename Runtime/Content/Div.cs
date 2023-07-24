@@ -13,7 +13,7 @@ namespace Roots
 
         public Div()
         {
-            PickingManager = new DefaultPickingManager(this);
+            PickingManager = new RectPickingManager(this);
         }
 
         void IVisualElement.Setup() { }

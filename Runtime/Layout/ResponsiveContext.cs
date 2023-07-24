@@ -17,7 +17,7 @@ namespace Roots
 
         public ResponsiveContext()
         {
-            PickingManager = new DefaultPickingManager(this);
+            PickingManager = new RectPickingManager(this);
             
             RegisterCallback<GeometryChangedEvent>(GeometryChanged);
         }

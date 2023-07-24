@@ -1,5 +1,6 @@
 using RishUI;
 using RishUI.Events;
+using Unity.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
 using StyleLength = UnityEngine.UIElements.StyleLength;
@@ -18,14 +19,24 @@ namespace Roots
         private StyledPropsManager<Image, ImageProps> PropsManager { get; }
         StyledPropsManager<Image, ImageProps> IStyledProps<Image, ImageProps>.Manager => PropsManager;
 
+        private static readonly CustomStyleProperty<string> TextureAddressProp = new("--props-texture"); 
+        private static readonly CustomStyleProperty<string> SpriteAddressProp = new("--props-sprite"); 
+        private static readonly CustomStyleProperty<string> VectorAddressProp = new("--props-vector"); 
+        private static readonly CustomStyleProperty<string> RenderTextureAddressProp = new("--props-render-texture"); 
         private static readonly CustomStyleProperty<Color> TintColorProp = new("--props-tint-color"); 
         private static readonly CustomStyleProperty<string> ScaleModeProp = new("--props-scale-mode"); 
         private static readonly CustomStyleProperty<string> ImageWidthProp = new("--props-image-width"); 
         private static readonly CustomStyleProperty<string> ImageHeightProp = new("--props-image-height"); 
 
+        private AssetsLoader Loader { get; set; }
+        
         private VisualElement Parent { get; set; }
         private ImageSize Width;
         private ImageSize Height;
+        private FixedString128Bytes TextureAddress;
+        private FixedString128Bytes SpriteAddress;
+        private FixedString128Bytes VectorAddress;
+        private FixedString128Bytes RenderTextureAddress;
         private StyleLength InlineWidth;
         private StyleLength InlineHeight;
 
@@ -46,18 +57,39 @@ namespace Roots
             Width = props.width.Value;
             Height = props.height.Value;
 
-            image = null;
-            sprite = null;
-            vectorImage = null;
-            
-            image = props.texture != null ? props.texture : props.renderTexture;
-            if (image == null)
+            if (Loader != null)
             {
-                sprite = props.sprite;
+                var textureAddress = props.textureAddress.Value;
+                if (textureAddress != TextureAddress)
+                {
+                    TextureAddress = textureAddress;
+                    Loader.Load<Texture>(textureAddress.Value, OnTextureLoaded);
+                }
+
+                var spriteAddress = props.spriteAddress.Value;
+                if (spriteAddress != SpriteAddress)
+                {
+                    SpriteAddress = spriteAddress;
+                    Loader.Load<Sprite>(spriteAddress.Value, OnSpriteLoaded);
+                }
+
+                var vectorAddress = props.vectorAddress.Value;
+                if (vectorAddress != VectorAddress)
+                {
+                    VectorAddress = vectorAddress;
+                    Loader.Load<VectorImage>(vectorAddress.Value, OnVectorLoaded);
+                }
+
+                var renderTextureAddress = props.renderTextureAddress.Value;
+                if (renderTextureAddress != RenderTextureAddress)
+                {
+                    RenderTextureAddress = renderTextureAddress;
+                    Loader.Load<RenderTexture>(renderTextureAddress.Value, OnRenderTextureLoaded);
+                }
             }
-            if (image == null && sprite == null)
+            else
             {
-                vectorImage = props.vectorImage;
+                Debug.LogError("App needs an Asset Loader");
             }
 
             tintColor = props.tintColor.Value;
@@ -67,22 +99,39 @@ namespace Roots
 
             if (sprite != null)
             {
-                style.unitySliceTop = Mathf.RoundToInt(sprite.border.w);
-                style.unitySliceRight = Mathf.RoundToInt(sprite.border.z);
-                style.unitySliceBottom = Mathf.RoundToInt(sprite.border.y);
-                style.unitySliceLeft = Mathf.RoundToInt(sprite.border.x);
-                style.unitySliceScale = 100 / sprite.pixelsPerUnit;
+                var border = sprite.border;
+                if (border != Vector4.zero)
+                {
+                    style.unitySliceTop = Mathf.RoundToInt(border.w);
+                    style.unitySliceRight = Mathf.RoundToInt(border.z);
+                    style.unitySliceBottom = Mathf.RoundToInt(border.y);
+                    style.unitySliceLeft = Mathf.RoundToInt(border.x);
+                    style.unitySliceScale = 100 / sprite.pixelsPerUnit;
 
-                style.backgroundImage = Background.FromSprite(sprite);
+                    style.backgroundImage = Background.FromSprite(sprite);
 
-                style.unityBackgroundImageTintColor = props.tintColor.Value;
+                    style.unityBackgroundImageTintColor = props.tintColor.Value;
                 
-                sprite = null;
+                    sprite = null;
+                }
             }
         }
 
         void IStyledProps<Image, ImageProps>.OnCustomStyle(ref ImageProps props)
         {
+            props.textureAddress ??= customStyle.TryGetValue(TextureAddressProp, out var customTextureAddress) 
+                ? AssetsLoader.GetAddressFromUSSUrl(customTextureAddress)
+                : string.Empty;
+            props.spriteAddress ??= customStyle.TryGetValue(SpriteAddressProp, out var customSpriteAddress) 
+                ? AssetsLoader.GetAddressFromUSSUrl(customSpriteAddress)
+                : string.Empty;
+            props.vectorAddress ??= customStyle.TryGetValue(VectorAddressProp, out var customVectorAddress) 
+                ? AssetsLoader.GetAddressFromUSSUrl(customVectorAddress)
+                : string.Empty;
+            props.renderTextureAddress ??= customStyle.TryGetValue(RenderTextureAddressProp, out var customRenderTextureAddress) 
+                ? AssetsLoader.GetAddressFromUSSUrl(customRenderTextureAddress)
+                : string.Empty;
+            
             props.tintColor ??= customStyle.TryGetValue(TintColorProp, out var customTintColor) ? customTintColor : Color.white;
             props.scaleMode ??= customStyle.TryGetValue(ScaleModeProp, out var customScaleMode) ? customScaleMode switch
             {
@@ -94,16 +143,72 @@ namespace Roots
             props.height ??= customStyle.TryGetValue(ImageHeightProp, out var customImageHeight) ? ImageSize.Parse(customImageHeight) : default;
         }
 
+        private void OnTextureLoaded(Asset<Texture> asset)
+        {
+            if (asset.address != TextureAddress)
+            {
+                return;
+            }
+
+            image = asset.asset;
+        }
+        private void OnSpriteLoaded(Asset<Sprite> asset)
+        {
+            if (asset.address != SpriteAddress)
+            {
+                return;
+            }
+
+            sprite = asset.asset;
+        }
+        private void OnVectorLoaded(Asset<VectorImage> asset)
+        {
+            if (asset.address != VectorAddress)
+            {
+                return;
+            }
+
+            vectorImage = asset.asset;
+        }
+        private void OnRenderTextureLoaded(Asset<RenderTexture> asset)
+        {
+            if (asset.address != RenderTextureAddress)
+            {
+                return;
+            }
+
+            image = asset.asset;
+        }
+
         private void OnMounted(AttachToPanelEvent evt)
         {
+            Loader = AssetsLoader.GetLoader(this);
+            
             Parent = parent;
             Parent?.RegisterCallback<GeometryChangedEvent>(OnGeometryChanged);
         }
         
         private void OnUnmounted(DetachFromPanelEvent evt)
         {
+            image = null;
+            sprite = null;
+            vectorImage = null;
+            tintColor = Color.white;
+            scaleMode = ScaleMode.StretchToFill;
+
+            Loader = null;
+            
             Parent?.UnregisterCallback<GeometryChangedEvent>(OnGeometryChanged);
             Parent = null;
+            
+            Width = default;
+            Height = default;
+            TextureAddress = default;
+            SpriteAddress = default;
+            VectorAddress = default;
+            RenderTextureAddress = default;
+            InlineWidth = default;
+            InlineHeight = default;
         }
 
         private void OnInlineStyle(InlineStyleEvent evt)
@@ -253,10 +358,23 @@ namespace Roots
     [RishValueType]
     public struct ImageProps
     {
-        public Sprite sprite;
-        public VectorImage vectorImage;
-        public Texture2D texture;
-        public RenderTexture renderTexture;
+        /// <summary>
+        /// Styled Prop as --prop-texture
+        /// </summary>
+        public FixedString128Bytes? textureAddress;
+        /// <summary>
+        /// Styled Prop as --prop-sprite
+        /// </summary>
+        public FixedString128Bytes? spriteAddress;
+        /// <summary>
+        /// Styled Prop as --prop-vector
+        /// </summary>
+        public FixedString128Bytes? vectorAddress;
+        /// <summary>
+        /// Styled Prop as --prop-render-texture
+        /// </summary>
+        public FixedString128Bytes? renderTextureAddress;
+        
         /// <summary>
         /// Styled Prop as --prop-scale-mode
         /// </summary>

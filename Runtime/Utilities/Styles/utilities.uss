@@ -246,40 +246,40 @@
 .mt-n5 {
     margin-top: var(--rs-spacer-n5);
 }
-/* end */.mr-0 {
+.mr-0 {
     margin-right: 0;
 }
-/* end */.mr-1 {
+.mr-1 {
     margin-right: var(--rs-spacer-1);
 }
-/* end */.mr-2 {
+.mr-2 {
     margin-right: var(--rs-spacer-2);
 }
-/* end */.mr-3 {
+.mr-3 {
     margin-right: var(--rs-spacer-3);
 }
-/* end */.mr-4 {
+.mr-4 {
     margin-right: var(--rs-spacer-4);
 }
-/* end */.mr-5 {
+.mr-5 {
     margin-right: var(--rs-spacer-5);
 }
-/* end */.mr-auto {
+.mr-auto {
      margin-right: auto;
 }
-/* end */.mr-n1 {
+.mr-n1 {
     margin-right: var(--rs-spacer-n1);
 }
-/* end */.mr-n2 {
+.mr-n2 {
     margin-right: var(--rs-spacer-n2);
 }
-/* end */.mr-n3 {
+.mr-n3 {
     margin-right: var(--rs-spacer-n3);
 }
-/* end */.mr-n4 {
+.mr-n4 {
     margin-right: var(--rs-spacer-n4);
 }
-/* end */.mr-n5 {
+.mr-n5 {
     margin-right: var(--rs-spacer-n5);
 }
 .mb-0 {
@@ -318,40 +318,40 @@
 .mb-n5 {
     margin-bottom: var(--rs-spacer-n5);
 }
-/* start */.ml-0 {
+.ml-0 {
     margin-left: 0;
 }
-/* start */.ml-1 {
+.ml-1 {
     margin-left: var(--rs-spacer-1);
 }
-/* start */.ml-2 {
+.ml-2 {
     margin-left: var(--rs-spacer-2);
 }
-/* start */.ml-3 {
+.ml-3 {
     margin-left: var(--rs-spacer-3);
 }
-/* start */.ml-4 {
+.ml-4 {
     margin-left: var(--rs-spacer-4);
 }
-/* start */.ml-5 {
+.ml-5 {
     margin-left: var(--rs-spacer-5);
 }
-/* start */.ml-auto {
+.ml-auto {
     margin-left: auto;
 }
-/* start */.ml-n1 {
+.ml-n1 {
     margin-left: var(--rs-spacer-n1);
 }
-/* start */.ml-n2 {
+.ml-n2 {
     margin-left: var(--rs-spacer-n2);
 }
-/* start */.ml-n3 {
+.ml-n3 {
     margin-left: var(--rs-spacer-n3);
 }
-/* start */.ml-n4 {
+.ml-n4 {
     margin-left: var(--rs-spacer-n4);
 }
-/* start */.ml-n5 {
+.ml-n5 {
     margin-left: var(--rs-spacer-n5);
 }
 .mx-0 {
@@ -509,25 +509,25 @@
 .pt-auto {
     padding-top: auto;
 }
-/* end */.pr-0 {
+.pr-0 {
     padding-right: 0;
 }
-/* end */.pr-1 {
+.pr-1 {
     padding-right: var(--rs-spacer-1);
 }
-/* end */.pr-2 {
+.pr-2 {
     padding-right: var(--rs-spacer-2);
 }
-/* end */.pr-3 {
+.pr-3 {
     padding-right: var(--rs-spacer-3);
 }
-/* end */.pr-4 {
+.pr-4 {
     padding-right: var(--rs-spacer-4);
 }
-/* end */.pr-5 {
+.pr-5 {
     padding-right: var(--rs-spacer-5);
 }
-/* end */.pr-auto {
+.pr-auto {
      padding-right: auto;
 }
 .pb-0 {
@@ -551,25 +551,25 @@
 .pb-auto {
     padding-bottom: auto;
 }
-/* start */.pl-0 {
+.pl-0 {
     padding-left: 0;
 }
-/* start */.pl-1 {
+.pl-1 {
     padding-left: var(--rs-spacer-1);
 }
-/* start */.pl-2 {
+.pl-2 {
     padding-left: var(--rs-spacer-2);
 }
-/* start */.pl-3 {
+.pl-3 {
     padding-left: var(--rs-spacer-3);
 }
-/* start */.pl-4 {
+.pl-4 {
     padding-left: var(--rs-spacer-4);
 }
-/* start */.pl-5 {
+.pl-5 {
     padding-left: var(--rs-spacer-5);
 }
-/* start */.pl-auto {
+.pl-auto {
     padding-left: auto;
 }
 .px-0 {
@@ -794,6 +794,17 @@
 
 
 
+
+
+/* --- Absolute Fill - */
+.absolute-fill {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
 /* --- Opacity - */
 .opacity-0 {
     opacity: 0;
@@ -837,13 +848,13 @@
 .top-100 {
     top: 100%;
 }
-/* end */.right-0 {
+.right-0 {
     right: 0;
 }
-/* end */.right-50 {
+.right-50 {
     right: 50%;
 }
-/* end */.right-100 {
+.right-100 {
     right: 100%;
 }
 .bottom-0 {
@@ -855,13 +866,13 @@
 .bottom-100 {
     bottom: 100%;
 }
-/* start */.left-0 {
+.left-0 {
     left: 0;
 }
-/* start */.left-50 {
+.left-50 {
     left: 50%;
 }
-/* start */.left-100 {
+.left-100 {
     left: 100%;
 }
 .translate-middle {
@@ -967,14 +978,14 @@
 .bg-dark-subtle {
     background-color: var(--rs-dark-bg-subtle)!important;
 }
+.bg-body {
+    background-color: var(--rs-body-bg)!important;
+}
 .bg-body-secondary {
     background-color: var(--rs-secondary-bg)!important;
 }
 .bg-body-tertiary {
     background-color: var(--rs-tertiary-bg)!important;
-}
-.bg-body {
-    background-color: var(--rs-body-bg)!important;
 }
 .bg-black {
     background-color: var(--rs-black)!important;
@@ -989,7 +1000,7 @@
 /* --- Borders - */
 .border {
     border-width: var(--rs-border-width);
-    border-color: var(--rs-border-color);
+    border-color: var(--r-border-color);
 }
 .border-top {
     border-top-width: var(--rs-border-width);

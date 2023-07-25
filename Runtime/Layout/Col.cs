@@ -1,5 +1,4 @@
 using RishUI;
-using RishUI.Elements;
 
 namespace Roots
 {
@@ -16,10 +15,10 @@ namespace Roots
             
             if (!xsSet && !smSet && !mdSet && !lgSet && !xlSet && !xxlSet)
             {
-                return Div.Create(className: "col", children: Props.children);
+                return Div.Create(className: "col", utilities: Props.utilities, children: Props.children);
             }
 
-            return Div.Create(className: (Props.xs.GetClassName(null), Props.sm.GetClassName("sm"), Props.md.GetClassName("md"), Props.lg.GetClassName("lg"), Props.xl.GetClassName("xl"), Props.xxl.GetClassName("xxl")), children: Props.children);
+            return Div.Create(className: (Props.xs.GetClassName(null), Props.sm.GetClassName("sm"), Props.md.GetClassName("md"), Props.lg.GetClassName("lg"), Props.xl.GetClassName("xl"), Props.xxl.GetClassName("xxl")), utilities: Props.utilities, children: Props.children);
         }
     }
 

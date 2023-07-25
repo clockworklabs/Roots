@@ -1,6 +1,5 @@
 using System;
 using RishUI;
-using RishUI.Elements;
 
 namespace Roots
 {
@@ -20,7 +19,7 @@ namespace Roots
                 _ => throw new ArgumentOutOfRangeException()
             };
 
-            return Div.Create(className: containerClass, children: Props.children);
+            return Div.Create(className: containerClass, utilities: Props.utilities, children: Props.children);
         }
     }
     

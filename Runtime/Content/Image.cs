@@ -115,6 +115,8 @@ namespace Roots
                     sprite = null;
                 }
             }
+            
+            this.AddClassNames(props.utilities);
         }
 
         void IStyledProps<Image, ImageProps>.OnCustomStyle(ref ImageProps props)
@@ -394,5 +396,7 @@ namespace Roots
         /// Styled Prop as --prop-image-height
         /// </summary>
         public ImageSize? height;
+
+        public Utilities utilities;
     }
 }

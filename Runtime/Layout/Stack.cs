@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using RishUI;
-using RishUI.Elements;
 
 namespace Roots
 {
@@ -18,7 +17,7 @@ namespace Roots
                 Children.Add(child);
             }
             
-            return Div.Create(className: (Props.stackClassName, Props.xsGapClassName, Props.smGapClassName, Props.mdGapClassName, Props.lgGapClassName, Props.xlGapClassName, Props.xxlGapClassName), children: Children);
+            return Div.Create(className: (Props.stackClassName, Props.xsGapClassName, Props.smGapClassName, Props.mdGapClassName, Props.lgGapClassName, Props.xlGapClassName, Props.xxlGapClassName), utilities: Props.utilities, children: Children);
         }
     }
     

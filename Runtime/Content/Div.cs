@@ -4,7 +4,7 @@ using UnityEngine.UIElements;
 
 namespace Roots
 {
-    public partial class Div : VisualElement, IVisualElement
+    public partial class Div : VisualElement, IVisualElement<DivProps>
     {
         VisualElement IElement.GetDOMChild() => this;
         
@@ -16,8 +16,16 @@ namespace Roots
             PickingManager = new RectPickingManager(this);
         }
 
-        void IVisualElement.Setup() { }
+        void IVisualElement<DivProps>.Setup(DivProps props)
+        {
+            this.AddClassNames(props.utilities);
+        }
 
         public override bool ContainsPoint(Vector2 localPoint) => PickingManager.ContainsPoint(localPoint);
+    }
+
+    public struct DivProps
+    {
+        public Utilities utilities;
     }
 }

@@ -1,6 +1,5 @@
 using System;
 using RishUI;
-using RishUI.Elements;
 
 namespace Roots
 {
@@ -38,22 +37,28 @@ namespace Roots
                 _ => string.Empty
             });
 
-            var pressedClassName = className.Add("active");
+            var pressedClassName = new ClassName(className)
+            {
+                "active"
+            };
             var normalClassName = Props.active ? pressedClassName : className;
-            var disabledClassName = normalClassName.Add("disabled");
+            var disabledClassName = new ClassName(normalClassName) {
+                "disabled"
+            };
             
-            var normal = Content.Create(className: normalClassName, children: Props.children);
-            var pressed = Content.Create(className: pressedClassName, children: Props.children);
-            var disabled = Content.Create(className: disabledClassName, children: Props.children);
+            var normal = Content.Create(className: normalClassName, utilities: Props.utilities, children: Props.children);
+            var pressed = Content.Create(className: pressedClassName, utilities: Props.utilities, children: Props.children);
+            var disabled = Content.Create(className: disabledClassName, utilities: Props.utilities, children: Props.children);
 
             return AbstractButton.Create(interactable: !Props.disabled, normal: normal, pressed: pressed, disabled: disabled, action: Props.action);
         }
         
-        private static Element ContentElement(ContentProps props) => Div.Create(className: props.className, children: props.children);
+        private static Element ContentElement(ContentProps props) => Div.Create(className: props.className, utilities: props.utilities, children: props.children);
         [RishValueType]
         public struct ContentProps
         {
             public ClassName className;
+            public Utilities utilities;
             public Children children;
         }
     }
@@ -63,6 +68,8 @@ namespace Roots
     {
         public Button.Variant variant;
         public Button.Size size;
+
+        public Utilities utilities;
 
         public bool disabled;
         public bool active;

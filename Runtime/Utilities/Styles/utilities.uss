@@ -1000,7 +1000,7 @@
 /* --- Borders - */
 .border {
     border-width: var(--rs-border-width);
-    border-color: var(--r-border-color);
+    border-color: var(--rs-border-color);
 }
 .border-top {
     border-top-width: var(--rs-border-width);

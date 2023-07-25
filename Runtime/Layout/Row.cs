@@ -1,11 +1,10 @@
 using RishUI;
-using RishUI.Elements;
 
 namespace Roots
 {
     public partial class Row : RishElement<RowProps>
     {
-        protected override Element Render() => Div.Create(className: ("row", Props.xsClassName, Props.smClassName, Props.mdClassName, Props.lgClassName, Props.xlClassName, Props.xxlClassName), children: Props.children);
+        protected override Element Render() => Div.Create(className: ("row", Props.xsClassName, Props.smClassName, Props.mdClassName, Props.lgClassName, Props.xlClassName, Props.xxlClassName), utilities: Props.utilities, children: Props.children);
     }
 
     // public struct Gutter

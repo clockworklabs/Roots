@@ -6,7 +6,7 @@ namespace Roots
 {
     internal delegate void OnResponsiveContextResize(ResponsiveContext body, float oldWidth, float newWidth);
     
-    public partial class ResponsiveContext : VisualElement, IVisualElement
+    public partial class ResponsiveContext : VisualElement, IVisualElement<ResponsiveContextProps>
     {
         internal static event OnResponsiveContextResize OnResize;
         
@@ -22,7 +22,10 @@ namespace Roots
             RegisterCallback<GeometryChangedEvent>(GeometryChanged);
         }
 
-        void IVisualElement.Setup() { }
+        void IVisualElement<ResponsiveContextProps>.Setup(ResponsiveContextProps props)
+        {
+            this.AddClassNames(props.utilities);
+        }
 
         public override bool ContainsPoint(Vector2 localPoint) => PickingManager.ContainsPoint(localPoint);
 
@@ -38,5 +41,10 @@ namespace Roots
             
             OnResize?.Invoke(this, oldWidth, newWidth);
         }
+    }
+
+    public struct ResponsiveContextProps
+    {
+        public Utilities utilities;
     }
 }

@@ -417,90 +417,90 @@ namespace Roots
         }
         
         // Margins
-        private Utilities MarginTop0(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginTop(MarginsFlags.Zero, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginTop1(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginTop(MarginsFlags.Spacer1, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginTop2(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginTop(MarginsFlags.Spacer2, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginTop3(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginTop(MarginsFlags.Spacer3, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginTop4(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginTop(MarginsFlags.Spacer4, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginTop5(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginTop(MarginsFlags.Spacer5, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginTopAuto(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginTop(MarginsFlags.Auto, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginTopNeg1(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginTop(MarginsFlags.NegSpacer1, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginTopNeg2(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginTop(MarginsFlags.NegSpacer2, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginTopNeg3(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginTop(MarginsFlags.NegSpacer3, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginTopNeg4(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginTop(MarginsFlags.NegSpacer4, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginTopNeg5(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginTop(MarginsFlags.NegSpacer5, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginEnd0(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginEnd(MarginsFlags.Zero, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginEnd1(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginEnd(MarginsFlags.Spacer1, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginEnd2(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginEnd(MarginsFlags.Spacer2, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginEnd3(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginEnd(MarginsFlags.Spacer3, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginEnd4(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginEnd(MarginsFlags.Spacer4, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginEnd5(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginEnd(MarginsFlags.Spacer5, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginEndAuto(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginEnd(MarginsFlags.Auto, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginEndNeg1(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginEnd(MarginsFlags.NegSpacer1, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginEndNeg2(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginEnd(MarginsFlags.NegSpacer2, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginEndNeg3(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginEnd(MarginsFlags.NegSpacer3, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginEndNeg4(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginEnd(MarginsFlags.NegSpacer4, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginEndNeg5(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginEnd(MarginsFlags.NegSpacer5, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginBottom0(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginBottom(MarginsFlags.Zero, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginBottom1(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginBottom(MarginsFlags.Spacer1, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginBottom2(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginBottom(MarginsFlags.Spacer2, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginBottom3(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginBottom(MarginsFlags.Spacer3, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginBottom4(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginBottom(MarginsFlags.Spacer4, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginBottom5(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginBottom(MarginsFlags.Spacer5, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginBottomAuto(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginBottom(MarginsFlags.Auto, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginBottomNeg1(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginBottom(MarginsFlags.NegSpacer1, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginBottomNeg2(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginBottom(MarginsFlags.NegSpacer2, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginBottomNeg3(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginBottom(MarginsFlags.NegSpacer3, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginBottomNeg4(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginBottom(MarginsFlags.NegSpacer4, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginBottomNeg5(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginBottom(MarginsFlags.NegSpacer5, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginStart0(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginStart(MarginsFlags.Zero, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginStart1(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginStart(MarginsFlags.Spacer1, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginStart2(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginStart(MarginsFlags.Spacer2, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginStart3(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginStart(MarginsFlags.Spacer3, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginStart4(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginStart(MarginsFlags.Spacer4, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginStart5(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginStart(MarginsFlags.Spacer5, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginStartAuto(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginStart(MarginsFlags.Auto, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginStartNeg1(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginStart(MarginsFlags.NegSpacer1, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginStartNeg2(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginStart(MarginsFlags.NegSpacer2, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginStartNeg3(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginStart(MarginsFlags.NegSpacer3, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginStartNeg4(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginStart(MarginsFlags.NegSpacer4, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginStartNeg5(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginStart(MarginsFlags.NegSpacer5, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginX0(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginX(MarginsFlags.Zero, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginX1(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginX(MarginsFlags.Spacer1, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginX2(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginX(MarginsFlags.Spacer2, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginX3(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginX(MarginsFlags.Spacer3, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginX4(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginX(MarginsFlags.Spacer4, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginX5(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginX(MarginsFlags.Spacer5, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginXAuto(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginX(MarginsFlags.Auto, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginXNeg1(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginX(MarginsFlags.NegSpacer1, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginXNeg2(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginX(MarginsFlags.NegSpacer2, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginXNeg3(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginX(MarginsFlags.NegSpacer3, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginXNeg4(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginX(MarginsFlags.NegSpacer4, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginXNeg5(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginX(MarginsFlags.NegSpacer5, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginY0(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginY(MarginsFlags.Zero, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginY1(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginY(MarginsFlags.Spacer1, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginY2(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginY(MarginsFlags.Spacer2, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginY3(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginY(MarginsFlags.Spacer3, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginY4(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginY(MarginsFlags.Spacer4, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginY5(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginY(MarginsFlags.Spacer5, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginYAuto(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginY(MarginsFlags.Auto, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginYNeg1(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginY(MarginsFlags.NegSpacer1, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginYNeg2(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginY(MarginsFlags.NegSpacer2, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginYNeg3(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginY(MarginsFlags.NegSpacer3, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginYNeg4(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginY(MarginsFlags.NegSpacer4, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginYNeg5(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginY(MarginsFlags.NegSpacer5, xs, sm, md, lg, xl, xxl);
-        private Utilities Margin0(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMargin(MarginsFlags.Zero, xs, sm, md, lg, xl, xxl);
-        private Utilities Margin1(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMargin(MarginsFlags.Spacer1, xs, sm, md, lg, xl, xxl);
-        private Utilities Margin2(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMargin(MarginsFlags.Spacer2, xs, sm, md, lg, xl, xxl);
-        private Utilities Margin3(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMargin(MarginsFlags.Spacer3, xs, sm, md, lg, xl, xxl);
-        private Utilities Margin4(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMargin(MarginsFlags.Spacer4, xs, sm, md, lg, xl, xxl);
-        private Utilities Margin5(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMargin(MarginsFlags.Spacer5, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginAuto(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMargin(MarginsFlags.Auto, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginNeg1(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMargin(MarginsFlags.NegSpacer1, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginNeg2(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMargin(MarginsFlags.NegSpacer2, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginNeg3(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMargin(MarginsFlags.NegSpacer3, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginNeg4(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMargin(MarginsFlags.NegSpacer4, xs, sm, md, lg, xl, xxl);
-        private Utilities MarginNeg5(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMargin(MarginsFlags.NegSpacer5, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginTop0(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginTop(MarginsFlags.Zero, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginTop1(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginTop(MarginsFlags.Spacer1, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginTop2(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginTop(MarginsFlags.Spacer2, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginTop3(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginTop(MarginsFlags.Spacer3, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginTop4(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginTop(MarginsFlags.Spacer4, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginTop5(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginTop(MarginsFlags.Spacer5, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginTopAuto(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginTop(MarginsFlags.Auto, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginTopNeg1(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginTop(MarginsFlags.NegSpacer1, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginTopNeg2(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginTop(MarginsFlags.NegSpacer2, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginTopNeg3(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginTop(MarginsFlags.NegSpacer3, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginTopNeg4(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginTop(MarginsFlags.NegSpacer4, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginTopNeg5(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginTop(MarginsFlags.NegSpacer5, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginEnd0(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginEnd(MarginsFlags.Zero, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginEnd1(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginEnd(MarginsFlags.Spacer1, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginEnd2(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginEnd(MarginsFlags.Spacer2, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginEnd3(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginEnd(MarginsFlags.Spacer3, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginEnd4(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginEnd(MarginsFlags.Spacer4, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginEnd5(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginEnd(MarginsFlags.Spacer5, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginEndAuto(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginEnd(MarginsFlags.Auto, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginEndNeg1(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginEnd(MarginsFlags.NegSpacer1, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginEndNeg2(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginEnd(MarginsFlags.NegSpacer2, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginEndNeg3(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginEnd(MarginsFlags.NegSpacer3, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginEndNeg4(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginEnd(MarginsFlags.NegSpacer4, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginEndNeg5(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginEnd(MarginsFlags.NegSpacer5, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginBottom0(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginBottom(MarginsFlags.Zero, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginBottom1(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginBottom(MarginsFlags.Spacer1, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginBottom2(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginBottom(MarginsFlags.Spacer2, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginBottom3(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginBottom(MarginsFlags.Spacer3, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginBottom4(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginBottom(MarginsFlags.Spacer4, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginBottom5(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginBottom(MarginsFlags.Spacer5, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginBottomAuto(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginBottom(MarginsFlags.Auto, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginBottomNeg1(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginBottom(MarginsFlags.NegSpacer1, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginBottomNeg2(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginBottom(MarginsFlags.NegSpacer2, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginBottomNeg3(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginBottom(MarginsFlags.NegSpacer3, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginBottomNeg4(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginBottom(MarginsFlags.NegSpacer4, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginBottomNeg5(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginBottom(MarginsFlags.NegSpacer5, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginStart0(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginStart(MarginsFlags.Zero, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginStart1(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginStart(MarginsFlags.Spacer1, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginStart2(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginStart(MarginsFlags.Spacer2, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginStart3(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginStart(MarginsFlags.Spacer3, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginStart4(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginStart(MarginsFlags.Spacer4, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginStart5(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginStart(MarginsFlags.Spacer5, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginStartAuto(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginStart(MarginsFlags.Auto, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginStartNeg1(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginStart(MarginsFlags.NegSpacer1, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginStartNeg2(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginStart(MarginsFlags.NegSpacer2, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginStartNeg3(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginStart(MarginsFlags.NegSpacer3, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginStartNeg4(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginStart(MarginsFlags.NegSpacer4, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginStartNeg5(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginStart(MarginsFlags.NegSpacer5, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginX0(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginX(MarginsFlags.Zero, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginX1(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginX(MarginsFlags.Spacer1, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginX2(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginX(MarginsFlags.Spacer2, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginX3(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginX(MarginsFlags.Spacer3, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginX4(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginX(MarginsFlags.Spacer4, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginX5(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginX(MarginsFlags.Spacer5, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginXAuto(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginX(MarginsFlags.Auto, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginXNeg1(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginX(MarginsFlags.NegSpacer1, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginXNeg2(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginX(MarginsFlags.NegSpacer2, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginXNeg3(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginX(MarginsFlags.NegSpacer3, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginXNeg4(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginX(MarginsFlags.NegSpacer4, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginXNeg5(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginX(MarginsFlags.NegSpacer5, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginY0(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginY(MarginsFlags.Zero, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginY1(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginY(MarginsFlags.Spacer1, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginY2(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginY(MarginsFlags.Spacer2, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginY3(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginY(MarginsFlags.Spacer3, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginY4(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginY(MarginsFlags.Spacer4, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginY5(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginY(MarginsFlags.Spacer5, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginYAuto(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginY(MarginsFlags.Auto, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginYNeg1(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginY(MarginsFlags.NegSpacer1, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginYNeg2(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginY(MarginsFlags.NegSpacer2, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginYNeg3(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginY(MarginsFlags.NegSpacer3, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginYNeg4(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginY(MarginsFlags.NegSpacer4, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginYNeg5(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginY(MarginsFlags.NegSpacer5, xs, sm, md, lg, xl, xxl);
+        public Utilities Margin0(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMargin(MarginsFlags.Zero, xs, sm, md, lg, xl, xxl);
+        public Utilities Margin1(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMargin(MarginsFlags.Spacer1, xs, sm, md, lg, xl, xxl);
+        public Utilities Margin2(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMargin(MarginsFlags.Spacer2, xs, sm, md, lg, xl, xxl);
+        public Utilities Margin3(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMargin(MarginsFlags.Spacer3, xs, sm, md, lg, xl, xxl);
+        public Utilities Margin4(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMargin(MarginsFlags.Spacer4, xs, sm, md, lg, xl, xxl);
+        public Utilities Margin5(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMargin(MarginsFlags.Spacer5, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginAuto(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMargin(MarginsFlags.Auto, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginNeg1(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMargin(MarginsFlags.NegSpacer1, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginNeg2(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMargin(MarginsFlags.NegSpacer2, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginNeg3(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMargin(MarginsFlags.NegSpacer3, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginNeg4(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMargin(MarginsFlags.NegSpacer4, xs, sm, md, lg, xl, xxl);
+        public Utilities MarginNeg5(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMargin(MarginsFlags.NegSpacer5, xs, sm, md, lg, xl, xxl);
         private Utilities OrMarginTop(MarginsFlags value, bool xs, bool sm, bool md, bool lg, bool xl, bool xxl)
         {
             if (!xs && !sm && !md && !lg && !xl && !xxl)
@@ -762,55 +762,55 @@ namespace Roots
         }
 
         // Paddings
-        private Utilities PaddingTop0(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingTop(PaddingsFlags.Zero, xs, sm, md, lg, xl, xxl);
-        private Utilities PaddingTop1(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingTop(PaddingsFlags.Spacer1, xs, sm, md, lg, xl, xxl);
-        private Utilities PaddingTop2(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingTop(PaddingsFlags.Spacer2, xs, sm, md, lg, xl, xxl);
-        private Utilities PaddingTop3(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingTop(PaddingsFlags.Spacer3, xs, sm, md, lg, xl, xxl);
-        private Utilities PaddingTop4(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingTop(PaddingsFlags.Spacer4, xs, sm, md, lg, xl, xxl);
-        private Utilities PaddingTop5(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingTop(PaddingsFlags.Spacer5, xs, sm, md, lg, xl, xxl);
-        private Utilities PaddingTopAuto(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingTop(PaddingsFlags.Auto, xs, sm, md, lg, xl, xxl);
-        private Utilities PaddingEnd0(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingEnd(PaddingsFlags.Zero, xs, sm, md, lg, xl, xxl);
-        private Utilities PaddingEnd1(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingEnd(PaddingsFlags.Spacer1, xs, sm, md, lg, xl, xxl);
-        private Utilities PaddingEnd2(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingEnd(PaddingsFlags.Spacer2, xs, sm, md, lg, xl, xxl);
-        private Utilities PaddingEnd3(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingEnd(PaddingsFlags.Spacer3, xs, sm, md, lg, xl, xxl);
-        private Utilities PaddingEnd4(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingEnd(PaddingsFlags.Spacer4, xs, sm, md, lg, xl, xxl);
-        private Utilities PaddingEnd5(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingEnd(PaddingsFlags.Spacer5, xs, sm, md, lg, xl, xxl);
-        private Utilities PaddingEndAuto(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingEnd(PaddingsFlags.Auto, xs, sm, md, lg, xl, xxl);
-        private Utilities PaddingBottom0(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingBottom(PaddingsFlags.Zero, xs, sm, md, lg, xl, xxl);
-        private Utilities PaddingBottom1(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingBottom(PaddingsFlags.Spacer1, xs, sm, md, lg, xl, xxl);
-        private Utilities PaddingBottom2(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingBottom(PaddingsFlags.Spacer2, xs, sm, md, lg, xl, xxl);
-        private Utilities PaddingBottom3(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingBottom(PaddingsFlags.Spacer3, xs, sm, md, lg, xl, xxl);
-        private Utilities PaddingBottom4(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingBottom(PaddingsFlags.Spacer4, xs, sm, md, lg, xl, xxl);
-        private Utilities PaddingBottom5(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingBottom(PaddingsFlags.Spacer5, xs, sm, md, lg, xl, xxl);
-        private Utilities PaddingBottomAuto(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingBottom(PaddingsFlags.Auto, xs, sm, md, lg, xl, xxl);
-        private Utilities PaddingStart0(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingStart(PaddingsFlags.Zero, xs, sm, md, lg, xl, xxl);
-        private Utilities PaddingStart1(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingStart(PaddingsFlags.Spacer1, xs, sm, md, lg, xl, xxl);
-        private Utilities PaddingStart2(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingStart(PaddingsFlags.Spacer2, xs, sm, md, lg, xl, xxl);
-        private Utilities PaddingStart3(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingStart(PaddingsFlags.Spacer3, xs, sm, md, lg, xl, xxl);
-        private Utilities PaddingStart4(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingStart(PaddingsFlags.Spacer4, xs, sm, md, lg, xl, xxl);
-        private Utilities PaddingStart5(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingStart(PaddingsFlags.Spacer5, xs, sm, md, lg, xl, xxl);
-        private Utilities PaddingStartAuto(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingStart(PaddingsFlags.Auto, xs, sm, md, lg, xl, xxl);
-        private Utilities PaddingX0(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingX(PaddingsFlags.Zero, xs, sm, md, lg, xl, xxl);
-        private Utilities PaddingX1(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingX(PaddingsFlags.Spacer1, xs, sm, md, lg, xl, xxl);
-        private Utilities PaddingX2(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingX(PaddingsFlags.Spacer2, xs, sm, md, lg, xl, xxl);
-        private Utilities PaddingX3(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingX(PaddingsFlags.Spacer3, xs, sm, md, lg, xl, xxl);
-        private Utilities PaddingX4(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingX(PaddingsFlags.Spacer4, xs, sm, md, lg, xl, xxl);
-        private Utilities PaddingX5(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingX(PaddingsFlags.Spacer5, xs, sm, md, lg, xl, xxl);
-        private Utilities PaddingXAuto(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingX(PaddingsFlags.Auto, xs, sm, md, lg, xl, xxl);
-        private Utilities PaddingY0(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingY(PaddingsFlags.Zero, xs, sm, md, lg, xl, xxl);
-        private Utilities PaddingY1(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingY(PaddingsFlags.Spacer1, xs, sm, md, lg, xl, xxl);
-        private Utilities PaddingY2(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingY(PaddingsFlags.Spacer2, xs, sm, md, lg, xl, xxl);
-        private Utilities PaddingY3(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingY(PaddingsFlags.Spacer3, xs, sm, md, lg, xl, xxl);
-        private Utilities PaddingY4(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingY(PaddingsFlags.Spacer4, xs, sm, md, lg, xl, xxl);
-        private Utilities PaddingY5(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingY(PaddingsFlags.Spacer5, xs, sm, md, lg, xl, xxl);
-        private Utilities PaddingYAuto(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingY(PaddingsFlags.Auto, xs, sm, md, lg, xl, xxl);
-        private Utilities Padding0(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPadding(PaddingsFlags.Zero, xs, sm, md, lg, xl, xxl);
-        private Utilities Padding1(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPadding(PaddingsFlags.Spacer1, xs, sm, md, lg, xl, xxl);
-        private Utilities Padding2(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPadding(PaddingsFlags.Spacer2, xs, sm, md, lg, xl, xxl);
-        private Utilities Padding3(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPadding(PaddingsFlags.Spacer3, xs, sm, md, lg, xl, xxl);
-        private Utilities Padding4(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPadding(PaddingsFlags.Spacer4, xs, sm, md, lg, xl, xxl);
-        private Utilities Padding5(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPadding(PaddingsFlags.Spacer5, xs, sm, md, lg, xl, xxl);
-        private Utilities PaddingAuto(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPadding(PaddingsFlags.Auto, xs, sm, md, lg, xl, xxl);
+        public Utilities PaddingTop0(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingTop(PaddingsFlags.Zero, xs, sm, md, lg, xl, xxl);
+        public Utilities PaddingTop1(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingTop(PaddingsFlags.Spacer1, xs, sm, md, lg, xl, xxl);
+        public Utilities PaddingTop2(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingTop(PaddingsFlags.Spacer2, xs, sm, md, lg, xl, xxl);
+        public Utilities PaddingTop3(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingTop(PaddingsFlags.Spacer3, xs, sm, md, lg, xl, xxl);
+        public Utilities PaddingTop4(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingTop(PaddingsFlags.Spacer4, xs, sm, md, lg, xl, xxl);
+        public Utilities PaddingTop5(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingTop(PaddingsFlags.Spacer5, xs, sm, md, lg, xl, xxl);
+        public Utilities PaddingTopAuto(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingTop(PaddingsFlags.Auto, xs, sm, md, lg, xl, xxl);
+        public Utilities PaddingEnd0(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingEnd(PaddingsFlags.Zero, xs, sm, md, lg, xl, xxl);
+        public Utilities PaddingEnd1(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingEnd(PaddingsFlags.Spacer1, xs, sm, md, lg, xl, xxl);
+        public Utilities PaddingEnd2(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingEnd(PaddingsFlags.Spacer2, xs, sm, md, lg, xl, xxl);
+        public Utilities PaddingEnd3(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingEnd(PaddingsFlags.Spacer3, xs, sm, md, lg, xl, xxl);
+        public Utilities PaddingEnd4(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingEnd(PaddingsFlags.Spacer4, xs, sm, md, lg, xl, xxl);
+        public Utilities PaddingEnd5(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingEnd(PaddingsFlags.Spacer5, xs, sm, md, lg, xl, xxl);
+        public Utilities PaddingEndAuto(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingEnd(PaddingsFlags.Auto, xs, sm, md, lg, xl, xxl);
+        public Utilities PaddingBottom0(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingBottom(PaddingsFlags.Zero, xs, sm, md, lg, xl, xxl);
+        public Utilities PaddingBottom1(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingBottom(PaddingsFlags.Spacer1, xs, sm, md, lg, xl, xxl);
+        public Utilities PaddingBottom2(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingBottom(PaddingsFlags.Spacer2, xs, sm, md, lg, xl, xxl);
+        public Utilities PaddingBottom3(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingBottom(PaddingsFlags.Spacer3, xs, sm, md, lg, xl, xxl);
+        public Utilities PaddingBottom4(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingBottom(PaddingsFlags.Spacer4, xs, sm, md, lg, xl, xxl);
+        public Utilities PaddingBottom5(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingBottom(PaddingsFlags.Spacer5, xs, sm, md, lg, xl, xxl);
+        public Utilities PaddingBottomAuto(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingBottom(PaddingsFlags.Auto, xs, sm, md, lg, xl, xxl);
+        public Utilities PaddingStart0(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingStart(PaddingsFlags.Zero, xs, sm, md, lg, xl, xxl);
+        public Utilities PaddingStart1(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingStart(PaddingsFlags.Spacer1, xs, sm, md, lg, xl, xxl);
+        public Utilities PaddingStart2(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingStart(PaddingsFlags.Spacer2, xs, sm, md, lg, xl, xxl);
+        public Utilities PaddingStart3(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingStart(PaddingsFlags.Spacer3, xs, sm, md, lg, xl, xxl);
+        public Utilities PaddingStart4(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingStart(PaddingsFlags.Spacer4, xs, sm, md, lg, xl, xxl);
+        public Utilities PaddingStart5(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingStart(PaddingsFlags.Spacer5, xs, sm, md, lg, xl, xxl);
+        public Utilities PaddingStartAuto(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingStart(PaddingsFlags.Auto, xs, sm, md, lg, xl, xxl);
+        public Utilities PaddingX0(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingX(PaddingsFlags.Zero, xs, sm, md, lg, xl, xxl);
+        public Utilities PaddingX1(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingX(PaddingsFlags.Spacer1, xs, sm, md, lg, xl, xxl);
+        public Utilities PaddingX2(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingX(PaddingsFlags.Spacer2, xs, sm, md, lg, xl, xxl);
+        public Utilities PaddingX3(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingX(PaddingsFlags.Spacer3, xs, sm, md, lg, xl, xxl);
+        public Utilities PaddingX4(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingX(PaddingsFlags.Spacer4, xs, sm, md, lg, xl, xxl);
+        public Utilities PaddingX5(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingX(PaddingsFlags.Spacer5, xs, sm, md, lg, xl, xxl);
+        public Utilities PaddingXAuto(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingX(PaddingsFlags.Auto, xs, sm, md, lg, xl, xxl);
+        public Utilities PaddingY0(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingY(PaddingsFlags.Zero, xs, sm, md, lg, xl, xxl);
+        public Utilities PaddingY1(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingY(PaddingsFlags.Spacer1, xs, sm, md, lg, xl, xxl);
+        public Utilities PaddingY2(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingY(PaddingsFlags.Spacer2, xs, sm, md, lg, xl, xxl);
+        public Utilities PaddingY3(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingY(PaddingsFlags.Spacer3, xs, sm, md, lg, xl, xxl);
+        public Utilities PaddingY4(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingY(PaddingsFlags.Spacer4, xs, sm, md, lg, xl, xxl);
+        public Utilities PaddingY5(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingY(PaddingsFlags.Spacer5, xs, sm, md, lg, xl, xxl);
+        public Utilities PaddingYAuto(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPaddingY(PaddingsFlags.Auto, xs, sm, md, lg, xl, xxl);
+        public Utilities Padding0(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPadding(PaddingsFlags.Zero, xs, sm, md, lg, xl, xxl);
+        public Utilities Padding1(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPadding(PaddingsFlags.Spacer1, xs, sm, md, lg, xl, xxl);
+        public Utilities Padding2(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPadding(PaddingsFlags.Spacer2, xs, sm, md, lg, xl, xxl);
+        public Utilities Padding3(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPadding(PaddingsFlags.Spacer3, xs, sm, md, lg, xl, xxl);
+        public Utilities Padding4(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPadding(PaddingsFlags.Spacer4, xs, sm, md, lg, xl, xxl);
+        public Utilities Padding5(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPadding(PaddingsFlags.Spacer5, xs, sm, md, lg, xl, xxl);
+        public Utilities PaddingAuto(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrPadding(PaddingsFlags.Auto, xs, sm, md, lg, xl, xxl);
         private Utilities OrPaddingTop(PaddingsFlags value, bool xs, bool sm, bool md, bool lg, bool xl, bool xxl)
         {
             if (!xs && !sm && !md && !lg && !xl && !xxl)
@@ -1072,24 +1072,24 @@ namespace Roots
         }
         
         // Gaps
-        private Utilities RowGap0(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrRowGap(GapsFlags.Zero, xs, sm, md, lg, xl, xxl);
-        private Utilities RowGap1(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrRowGap(GapsFlags.Spacer1, xs, sm, md, lg, xl, xxl);
-        private Utilities RowGap2(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrRowGap(GapsFlags.Spacer2, xs, sm, md, lg, xl, xxl);
-        private Utilities RowGap3(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrRowGap(GapsFlags.Spacer3, xs, sm, md, lg, xl, xxl);
-        private Utilities RowGap4(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrRowGap(GapsFlags.Spacer4, xs, sm, md, lg, xl, xxl);
-        private Utilities RowGap5(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrRowGap(GapsFlags.Spacer5, xs, sm, md, lg, xl, xxl);
-        private Utilities ColumnGap0(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrColumnGap(GapsFlags.Zero, xs, sm, md, lg, xl, xxl);
-        private Utilities ColumnGap1(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrColumnGap(GapsFlags.Spacer1, xs, sm, md, lg, xl, xxl);
-        private Utilities ColumnGap2(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrColumnGap(GapsFlags.Spacer2, xs, sm, md, lg, xl, xxl);
-        private Utilities ColumnGap3(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrColumnGap(GapsFlags.Spacer3, xs, sm, md, lg, xl, xxl);
-        private Utilities ColumnGap4(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrColumnGap(GapsFlags.Spacer4, xs, sm, md, lg, xl, xxl);
-        private Utilities ColumnGap5(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrColumnGap(GapsFlags.Spacer5, xs, sm, md, lg, xl, xxl);
-        private Utilities Gap0(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrGap(GapsFlags.Zero, xs, sm, md, lg, xl, xxl);
-        private Utilities Gap1(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrGap(GapsFlags.Spacer1, xs, sm, md, lg, xl, xxl);
-        private Utilities Gap2(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrGap(GapsFlags.Spacer2, xs, sm, md, lg, xl, xxl);
-        private Utilities Gap3(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrGap(GapsFlags.Spacer3, xs, sm, md, lg, xl, xxl);
-        private Utilities Gap4(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrGap(GapsFlags.Spacer4, xs, sm, md, lg, xl, xxl);
-        private Utilities Gap5(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrGap(GapsFlags.Spacer5, xs, sm, md, lg, xl, xxl);
+        public Utilities RowGap0(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrRowGap(GapsFlags.Zero, xs, sm, md, lg, xl, xxl);
+        public Utilities RowGap1(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrRowGap(GapsFlags.Spacer1, xs, sm, md, lg, xl, xxl);
+        public Utilities RowGap2(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrRowGap(GapsFlags.Spacer2, xs, sm, md, lg, xl, xxl);
+        public Utilities RowGap3(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrRowGap(GapsFlags.Spacer3, xs, sm, md, lg, xl, xxl);
+        public Utilities RowGap4(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrRowGap(GapsFlags.Spacer4, xs, sm, md, lg, xl, xxl);
+        public Utilities RowGap5(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrRowGap(GapsFlags.Spacer5, xs, sm, md, lg, xl, xxl);
+        public Utilities ColumnGap0(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrColumnGap(GapsFlags.Zero, xs, sm, md, lg, xl, xxl);
+        public Utilities ColumnGap1(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrColumnGap(GapsFlags.Spacer1, xs, sm, md, lg, xl, xxl);
+        public Utilities ColumnGap2(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrColumnGap(GapsFlags.Spacer2, xs, sm, md, lg, xl, xxl);
+        public Utilities ColumnGap3(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrColumnGap(GapsFlags.Spacer3, xs, sm, md, lg, xl, xxl);
+        public Utilities ColumnGap4(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrColumnGap(GapsFlags.Spacer4, xs, sm, md, lg, xl, xxl);
+        public Utilities ColumnGap5(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrColumnGap(GapsFlags.Spacer5, xs, sm, md, lg, xl, xxl);
+        public Utilities Gap0(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrGap(GapsFlags.Zero, xs, sm, md, lg, xl, xxl);
+        public Utilities Gap1(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrGap(GapsFlags.Spacer1, xs, sm, md, lg, xl, xxl);
+        public Utilities Gap2(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrGap(GapsFlags.Spacer2, xs, sm, md, lg, xl, xxl);
+        public Utilities Gap3(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrGap(GapsFlags.Spacer3, xs, sm, md, lg, xl, xxl);
+        public Utilities Gap4(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrGap(GapsFlags.Spacer4, xs, sm, md, lg, xl, xxl);
+        public Utilities Gap5(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrGap(GapsFlags.Spacer5, xs, sm, md, lg, xl, xxl);
         private Utilities OrRowGap(GapsFlags value, bool xs, bool sm, bool md, bool lg, bool xl, bool xxl)
         {
             if (!xs && !sm && !md && !lg && !xl && !xxl)
@@ -1495,46 +1495,37 @@ namespace Roots
         }
         
 
-        public ClassName GetClassName(VisualElement visualElement)
+        public void AddClassNamesTo(VisualElement visualElement)
         {
-            var direction = LanguageDirection.Inherit;
-            while(direction == LanguageDirection.Inherit && visualElement != null)
+            if (RishUtils.MemCmp(this, None))
             {
-                direction = visualElement.languageDirection;
-                visualElement = visualElement.parent;
-            }
-            if (direction == LanguageDirection.Inherit)
-            {
-                direction = LanguageDirection.LTR;
+                return;
             }
             
-            var className = new ClassName();
-            display.AddClassNames(ref className, AddClassNames);
-            flexDirection.AddClassNames(ref className, AddClassNames);
-            justifyContent.AddClassNames(ref className, AddClassNames);
-            alignItems.AddClassNames(ref className, AddAlignItemsClassNames);
-            alignSelf.AddClassNames(ref className, AddAlignSelfClassNames);
-            fill.AddClassNames(ref className, AddClassNames);
-            growAndShrink.AddClassNames(ref className, AddClassNames);
-            wrap.AddClassNames(ref className, AddClassNames);
-            alignContent.AddClassNames(ref className, AddAlignContentClassNames);
-            margins.AddClassNames(ref className, direction, AddClassNames);
-            paddings.AddClassNames(ref className, direction, AddClassNames);
-            gaps.AddClassNames(ref className, AddClassNames);
-            visibility.AddClassNames(ref className, AddClassNames);
+            display.AddClassNamesTo(visualElement, AddClassNamesTo);
+            flexDirection.AddClassNamesTo(visualElement, AddClassNamesTo);
+            justifyContent.AddClassNamesTo(visualElement, AddClassNamesTo);
+            alignItems.AddClassNamesTo(visualElement, AddAlignItemsClassNames);
+            alignSelf.AddClassNamesTo(visualElement, AddAlignSelfClassNames);
+            fill.AddClassNamesTo(visualElement, AddClassNamesTo);
+            growAndShrink.AddClassNamesTo(visualElement, AddClassNamesTo);
+            wrap.AddClassNamesTo(visualElement, AddClassNamesTo);
+            alignContent.AddClassNamesTo(visualElement, AddAlignContentClassNames);
+            margins.AddClassNamesTo(visualElement, AddClassNamesTo);
+            paddings.AddClassNamesTo(visualElement, AddClassNamesTo);
+            gaps.AddClassNamesTo(visualElement, AddClassNamesTo);
+            visibility.AddClassNamesTo(visualElement, AddClassNamesTo);
 
-            AddClassNames(absoluteFill, ref className);
-            AddClassNames(opacity, ref className);
-            AddClassNames(overflow, ref className);
-            AddClassNames(position, ref className);
-            AddClassNames(arrangeElements, direction, ref className);
-            AddClassNames(sizing, ref className);
-            AddClassNames(background, ref className);
-            AddClassNames(borders, ref className);
-            AddClassNames(colors, ref className);
-            AddClassNames(roundedCorners, ref className);
-
-            return className;
+            AddClassNamesTo(visualElement, absoluteFill);
+            AddClassNamesTo(visualElement, opacity);
+            AddClassNamesTo(visualElement, overflow);
+            AddClassNamesTo(visualElement, position);
+            AddClassNamesTo(visualElement, arrangeElements);
+            AddClassNamesTo(visualElement, sizing);
+            AddClassNamesTo(visualElement, background);
+            AddClassNamesTo(visualElement, borders);
+            AddClassNamesTo(visualElement, colors);
+            AddClassNamesTo(visualElement, roundedCorners);
         }
         
         private enum Breakpoint { XS, SM, MD, LG, XL, XXL }
@@ -1548,831 +1539,835 @@ namespace Roots
             _ => string.Empty,
         };
 
-        private static void AddClassNames(DisplayFlags flags, ref ClassName className, Breakpoint breakpoint)
+        private static void AddClassNamesTo(VisualElement visualElement, DisplayFlags flags, Breakpoint breakpoint)
         {
             var prefix = $"display{GetBreakpoint(breakpoint)}";
             if ((flags & DisplayFlags.None) > 0)
             {
-                className.Add($"{prefix}-none");
+                visualElement.AddToClassList($"{prefix}-none");
             }
             if ((flags & DisplayFlags.Flex) > 0)
             {
-                className.Add($"{prefix}-flex");
+                visualElement.AddToClassList($"{prefix}-flex");
             }
         }
-        private static void AddClassNames(FlexDirectionFlags flags, ref ClassName className, Breakpoint breakpoint)
+        private static void AddClassNamesTo(VisualElement visualElement, FlexDirectionFlags flags, Breakpoint breakpoint)
         {
             var prefix = $"flex{GetBreakpoint(breakpoint)}";
             if ((flags & FlexDirectionFlags.Column) > 0)
             {
-                className.Add($"{prefix}-column");
+                visualElement.AddToClassList($"{prefix}-column");
             }
             if ((flags & FlexDirectionFlags.ColumnReverse) > 0)
             {
-                className.Add($"{prefix}-column-reverse");
+                visualElement.AddToClassList($"{prefix}-column-reverse");
             }
             if ((flags & FlexDirectionFlags.Row) > 0)
             {
-                className.Add($"{prefix}-row");
+                visualElement.AddToClassList($"{prefix}-row");
             }
             if ((flags & FlexDirectionFlags.RowReverse) > 0)
             {
-                className.Add($"{prefix}-row-reverse");
+                visualElement.AddToClassList($"{prefix}-row-reverse");
             }
         }
-        private static void AddClassNames(JustifyContentFlags flags, ref ClassName className, Breakpoint breakpoint)
+        private static void AddClassNamesTo(VisualElement visualElement, JustifyContentFlags flags, Breakpoint breakpoint)
         {
             var prefix = $"justify-content{GetBreakpoint(breakpoint)}";
             if ((flags & JustifyContentFlags.Start) > 0)
             {
-                className.Add($"{prefix}-start");
+                visualElement.AddToClassList($"{prefix}-start");
             }
             if ((flags & JustifyContentFlags.End) > 0)
             {
-                className.Add($"{prefix}-end");
+                visualElement.AddToClassList($"{prefix}-end");
             }
             if ((flags & JustifyContentFlags.Center) > 0)
             {
-                className.Add($"{prefix}-center");
+                visualElement.AddToClassList($"{prefix}-center");
             }
             if ((flags & JustifyContentFlags.Between) > 0)
             {
-                className.Add($"{prefix}-between");
+                visualElement.AddToClassList($"{prefix}-between");
             }
             if ((flags & JustifyContentFlags.Around) > 0)
             {
-                className.Add($"{prefix}-around");
+                visualElement.AddToClassList($"{prefix}-around");
             }
         }
 
-        private static void AddAlignItemsClassNames(AlignFlags flags, ref ClassName className, Breakpoint breakpoint) =>
-            AddClassNames(flags, ref className, "align-items", breakpoint);
-        private static void AddAlignSelfClassNames(AlignFlags flags, ref ClassName className, Breakpoint breakpoint) =>
-            AddClassNames(flags, ref className, "align-items", breakpoint);
-        private static void AddAlignContentClassNames(AlignFlags flags, ref ClassName className, Breakpoint breakpoint) =>
-            AddClassNames(flags, ref className, "align-content", breakpoint);
-        private static void AddClassNames(AlignFlags flags, ref ClassName className, string prefix, Breakpoint breakpoint)
+        private static void AddAlignItemsClassNames(VisualElement visualElement, AlignFlags flags, Breakpoint breakpoint) =>
+            AddClassNamesTo(visualElement, flags, "align-items", breakpoint);
+        private static void AddAlignSelfClassNames(VisualElement visualElement, AlignFlags flags, Breakpoint breakpoint) =>
+            AddClassNamesTo(visualElement, flags, "align-items", breakpoint);
+        private static void AddAlignContentClassNames(VisualElement visualElement, AlignFlags flags, Breakpoint breakpoint) =>
+            AddClassNamesTo(visualElement, flags, "align-content", breakpoint);
+        private static void AddClassNamesTo(VisualElement visualElement, AlignFlags flags, string prefix, Breakpoint breakpoint)
         {
             prefix = $"{prefix}{GetBreakpoint(breakpoint)}";
             if ((flags & AlignFlags.Start) > 0)
             {
-                className.Add($"{prefix}-start");
+                visualElement.AddToClassList($"{prefix}-start");
             }
             if ((flags & AlignFlags.End) > 0)
             {
-                className.Add($"{prefix}-end");
+                visualElement.AddToClassList($"{prefix}-end");
             }
             if ((flags & AlignFlags.Center) > 0)
             {
-                className.Add($"{prefix}-center");
+                visualElement.AddToClassList($"{prefix}-center");
             }
             if ((flags & AlignFlags.Stretch) > 0)
             {
-                className.Add($"{prefix}-between");
+                visualElement.AddToClassList($"{prefix}-between");
             }
         }
         
-        private static void AddClassNames(FillFlags flags, ref ClassName className, Breakpoint breakpoint)
+        private static void AddClassNamesTo(VisualElement visualElement, FillFlags flags, Breakpoint breakpoint)
         {
             var prefix = $"flex{GetBreakpoint(breakpoint)}";
             if ((flags & FillFlags.Set) > 0)
             {
-                className.Add($"{prefix}-fill");
+                visualElement.AddToClassList($"{prefix}-fill");
             }
         }
         
-        private static void AddClassNames(GrowAndShrinkFlags flags, ref ClassName className, Breakpoint breakpoint)
+        private static void AddClassNamesTo(VisualElement visualElement, GrowAndShrinkFlags flags, Breakpoint breakpoint)
         {
             var prefix = $"flex{GetBreakpoint(breakpoint)}";
             if ((flags & GrowAndShrinkFlags.Grow0) > 0)
             {
-                className.Add($"{prefix}-grow-0");
+                visualElement.AddToClassList($"{prefix}-grow-0");
             }
             if ((flags & GrowAndShrinkFlags.Grow1) > 0)
             {
-                className.Add($"{prefix}-grow-1");
+                visualElement.AddToClassList($"{prefix}-grow-1");
             }
             if ((flags & GrowAndShrinkFlags.Shrink0) > 0)
             {
-                className.Add($"{prefix}-shrink-0");
+                visualElement.AddToClassList($"{prefix}-shrink-0");
             }
             if ((flags & GrowAndShrinkFlags.Shrink1) > 0)
             {
-                className.Add($"{prefix}-shrink-1");
+                visualElement.AddToClassList($"{prefix}-shrink-1");
             }
         }
         
-        private static void AddClassNames(WrapFlags flags, ref ClassName className, Breakpoint breakpoint)
+        private static void AddClassNamesTo(VisualElement visualElement, WrapFlags flags, Breakpoint breakpoint)
         {
             var prefix = $"flex{GetBreakpoint(breakpoint)}";
             if ((flags & WrapFlags.NoWrap) > 0)
             {
-                className.Add($"{prefix}-nowrap");
+                visualElement.AddToClassList($"{prefix}-nowrap");
             }
             if ((flags & WrapFlags.Wrap) > 0)
             {
-                className.Add($"{prefix}-wrap");
+                visualElement.AddToClassList($"{prefix}-wrap");
             }
             if ((flags & WrapFlags.WrapReverse) > 0)
             {
-                className.Add($"{prefix}-wrap-reverse");
+                visualElement.AddToClassList($"{prefix}-wrap-reverse");
             }
         }
         
-        private static void AddClassNames(Margins margins, ref ClassName className, LanguageDirection languageDirection, Breakpoint breakpoint)
+        private static void AddClassNamesTo(VisualElement visualElement, Margins margins, Breakpoint breakpoint)
         {
-            AddClassNames(margins.top, ref className, "mt", breakpoint);
-            AddClassNames(margins.bottom, ref className, "mb", breakpoint);
-            AddClassNames(margins.start, ref className, languageDirection == LanguageDirection.RTL ? "mr" : "ml", breakpoint);
-            AddClassNames(margins.end, ref className, languageDirection == LanguageDirection.RTL ? "ml" : "mr", breakpoint);
-            AddClassNames(margins.x, ref className, "mx", breakpoint);
-            AddClassNames(margins.y, ref className, "my", breakpoint);
-            AddClassNames(margins.general, ref className, "m", breakpoint);
+            var languageDirection = visualElement.GetComputedLanguageDirection();
+            AddClassNamesTo(visualElement, margins.top, "mt", breakpoint);
+            AddClassNamesTo(visualElement, margins.bottom, "mb", breakpoint);
+            AddClassNamesTo(visualElement, margins.start, languageDirection == LanguageDirection.RTL ? "mr" : "ml", breakpoint);
+            AddClassNamesTo(visualElement, margins.end, languageDirection == LanguageDirection.RTL ? "ml" : "mr", breakpoint);
+            AddClassNamesTo(visualElement, margins.x, "mx", breakpoint);
+            AddClassNamesTo(visualElement, margins.y, "my", breakpoint);
+            AddClassNamesTo(visualElement, margins.general, "m", breakpoint);
         }
-        private static void AddClassNames(MarginsFlags flags, ref ClassName className, string prefix, Breakpoint breakpoint)
+        private static void AddClassNamesTo(VisualElement visualElement, MarginsFlags flags, string prefix, Breakpoint breakpoint)
         {
             prefix = $"{prefix}{GetBreakpoint(breakpoint)}";
             if ((flags & MarginsFlags.Zero) > 0)
             {
-                className.Add($"{prefix}-0");
+                visualElement.AddToClassList($"{prefix}-0");
             }
             if ((flags & MarginsFlags.Spacer1) > 0)
             {
-                className.Add($"{prefix}-1");
+                visualElement.AddToClassList($"{prefix}-1");
             }
             if ((flags & MarginsFlags.Spacer2) > 0)
             {
-                className.Add($"{prefix}-2");
+                visualElement.AddToClassList($"{prefix}-2");
             }
             if ((flags & MarginsFlags.Spacer3) > 0)
             {
-                className.Add($"{prefix}-3");
+                visualElement.AddToClassList($"{prefix}-3");
             }
             if ((flags & MarginsFlags.Spacer4) > 0)
             {
-                className.Add($"{prefix}-4");
+                visualElement.AddToClassList($"{prefix}-4");
             }
             if ((flags & MarginsFlags.Spacer5) > 0)
             {
-                className.Add($"{prefix}-5");
+                visualElement.AddToClassList($"{prefix}-5");
             }
             if ((flags & MarginsFlags.Auto) > 0)
             {
-                className.Add($"{prefix}-auto");
+                visualElement.AddToClassList($"{prefix}-auto");
             }
             if ((flags & MarginsFlags.NegSpacer1) > 0)
             {
-                className.Add($"{prefix}-n1");
+                visualElement.AddToClassList($"{prefix}-n1");
             }
             if ((flags & MarginsFlags.NegSpacer2) > 0)
             {
-                className.Add($"{prefix}-n2");
+                visualElement.AddToClassList($"{prefix}-n2");
             }
             if ((flags & MarginsFlags.NegSpacer3) > 0)
             {
-                className.Add($"{prefix}-n3");
+                visualElement.AddToClassList($"{prefix}-n3");
             }
             if ((flags & MarginsFlags.NegSpacer4) > 0)
             {
-                className.Add($"{prefix}-n4");
+                visualElement.AddToClassList($"{prefix}-n4");
             }
             if ((flags & MarginsFlags.NegSpacer5) > 0)
             {
-                className.Add($"{prefix}-n5");
+                visualElement.AddToClassList($"{prefix}-n5");
             }
         }
         
-        private static void AddClassNames(Paddings paddings, ref ClassName className, LanguageDirection languageDirection, Breakpoint breakpoint)
+        private static void AddClassNamesTo(VisualElement visualElement, Paddings paddings, Breakpoint breakpoint)
         {
-            AddClassNames(paddings.top, ref className, "pt", breakpoint);
-            AddClassNames(paddings.bottom, ref className, "pb", breakpoint);
-            AddClassNames(paddings.start, ref className, languageDirection == LanguageDirection.RTL ? "pr" : "pl", breakpoint);
-            AddClassNames(paddings.end, ref className, languageDirection == LanguageDirection.RTL ? "pl" : "pr", breakpoint);
-            AddClassNames(paddings.x, ref className, "px", breakpoint);
-            AddClassNames(paddings.y, ref className, "py", breakpoint);
-            AddClassNames(paddings.general, ref className, "p", breakpoint);
+            var languageDirection = visualElement.GetComputedLanguageDirection();
+            AddClassNamesTo(visualElement, paddings.top, "pt", breakpoint);
+            AddClassNamesTo(visualElement, paddings.bottom, "pb", breakpoint);
+            AddClassNamesTo(visualElement, paddings.start, languageDirection == LanguageDirection.RTL ? "pr" : "pl", breakpoint);
+            AddClassNamesTo(visualElement, paddings.end, languageDirection == LanguageDirection.RTL ? "pl" : "pr", breakpoint);
+            AddClassNamesTo(visualElement, paddings.x, "px", breakpoint);
+            AddClassNamesTo(visualElement, paddings.y, "py", breakpoint);
+            AddClassNamesTo(visualElement, paddings.general, "p", breakpoint);
         }
-        private static void AddClassNames(PaddingsFlags flags, ref ClassName className, string prefix, Breakpoint breakpoint)
+        private static void AddClassNamesTo(VisualElement visualElement, PaddingsFlags flags, string prefix, Breakpoint breakpoint)
         {
             prefix = $"{prefix}{GetBreakpoint(breakpoint)}";
             if ((flags & PaddingsFlags.Zero) > 0)
             {
-                className.Add($"{prefix}-0");
+                visualElement.AddToClassList($"{prefix}-0");
             }
             if ((flags & PaddingsFlags.Spacer1) > 0)
             {
-                className.Add($"{prefix}-1");
+                visualElement.AddToClassList($"{prefix}-1");
             }
             if ((flags & PaddingsFlags.Spacer2) > 0)
             {
-                className.Add($"{prefix}-2");
+                visualElement.AddToClassList($"{prefix}-2");
             }
             if ((flags & PaddingsFlags.Spacer3) > 0)
             {
-                className.Add($"{prefix}-3");
+                visualElement.AddToClassList($"{prefix}-3");
             }
             if ((flags & PaddingsFlags.Spacer4) > 0)
             {
-                className.Add($"{prefix}-4");
+                visualElement.AddToClassList($"{prefix}-4");
             }
             if ((flags & PaddingsFlags.Spacer5) > 0)
             {
-                className.Add($"{prefix}-5");
+                visualElement.AddToClassList($"{prefix}-5");
             }
             if ((flags & PaddingsFlags.Auto) > 0)
             {
-                className.Add($"{prefix}-auto");
+                visualElement.AddToClassList($"{prefix}-auto");
             }
         }
         
-        private static void AddClassNames(Gaps gaps, ref ClassName className, Breakpoint breakpoint)
+        private static void AddClassNamesTo(VisualElement visualElement, Gaps gaps, Breakpoint breakpoint)
         {
-            AddClassNames(gaps.row, ref className, "row-gap", breakpoint);
-            AddClassNames(gaps.column, ref className, "column-gap", breakpoint);
-            AddClassNames(gaps.general, ref className, "gap", breakpoint);
+            AddClassNamesTo(visualElement, gaps.row, "row-gap", breakpoint);
+            AddClassNamesTo(visualElement, gaps.column, "column-gap", breakpoint);
+            AddClassNamesTo(visualElement, gaps.general, "gap", breakpoint);
         }
-        private static void AddClassNames(GapsFlags flags, ref ClassName className, string prefix, Breakpoint breakpoint)
+        private static void AddClassNamesTo(VisualElement visualElement, GapsFlags flags, string prefix, Breakpoint breakpoint)
         {
             prefix = $"{prefix}{GetBreakpoint(breakpoint)}";
             if ((flags & GapsFlags.Zero) > 0)
             {
-                className.Add($"{prefix}-0");
+                visualElement.AddToClassList($"{prefix}-0");
             }
             if ((flags & GapsFlags.Spacer1) > 0)
             {
-                className.Add($"{prefix}-1");
+                visualElement.AddToClassList($"{prefix}-1");
             }
             if ((flags & GapsFlags.Spacer2) > 0)
             {
-                className.Add($"{prefix}-2");
+                visualElement.AddToClassList($"{prefix}-2");
             }
             if ((flags & GapsFlags.Spacer3) > 0)
             {
-                className.Add($"{prefix}-3");
+                visualElement.AddToClassList($"{prefix}-3");
             }
             if ((flags & GapsFlags.Spacer4) > 0)
             {
-                className.Add($"{prefix}-4");
+                visualElement.AddToClassList($"{prefix}-4");
             }
             if ((flags & GapsFlags.Spacer5) > 0)
             {
-                className.Add($"{prefix}-5");
+                visualElement.AddToClassList($"{prefix}-5");
             }
         }
         
-        private static void AddClassNames(VisibilityFlags flags, ref ClassName className, Breakpoint breakpoint)
+        private static void AddClassNamesTo(VisualElement visualElement, VisibilityFlags flags, Breakpoint breakpoint)
         {
             var postfix = GetBreakpoint(breakpoint);
             if ((flags & VisibilityFlags.Visible) > 0)
             {
-                className.Add($"visible{postfix}");
+                visualElement.AddToClassList($"visible{postfix}");
             }
             if ((flags & VisibilityFlags.Invisible) > 0)
             {
-                className.Add($"invisible{postfix}");
+                visualElement.AddToClassList($"invisible{postfix}");
             }
         }
         
-        private static void AddClassNames(AbsoluteFillFlags flags, ref ClassName className)
+        private static void AddClassNamesTo(VisualElement visualElement, AbsoluteFillFlags flags)
         {
             if ((flags & AbsoluteFillFlags.Set) > 0)
             {
-                className.Add("absolute-fill");
+                visualElement.AddToClassList("absolute-fill");
             }
         }
         
-        private static void AddClassNames(OpacityFlags flags, ref ClassName className)
+        private static void AddClassNamesTo(VisualElement visualElement, OpacityFlags flags)
         {
             if ((flags & OpacityFlags.V0) > 0)
             {
-                className.Add("opacity-0");
+                visualElement.AddToClassList("opacity-0");
             }
             if ((flags & OpacityFlags.V25) > 0)
             {
-                className.Add("opacity-25");
+                visualElement.AddToClassList("opacity-25");
             }
             if ((flags & OpacityFlags.V50) > 0)
             {
-                className.Add("opacity-50");
+                visualElement.AddToClassList("opacity-50");
             }
             if ((flags & OpacityFlags.V75) > 0)
             {
-                className.Add("opacity-75");
+                visualElement.AddToClassList("opacity-75");
             }
             if ((flags & OpacityFlags.V100) > 0)
             {
-                className.Add("opacity-100");
+                visualElement.AddToClassList("opacity-100");
             }
         }
         
-        private static void AddClassNames(OverflowFlags flags, ref ClassName className)
+        private static void AddClassNamesTo(VisualElement visualElement, OverflowFlags flags)
         {
             if ((flags & OverflowFlags.Hidden) > 0)
             {
-                className.Add("overflow-hidden");
+                visualElement.AddToClassList("overflow-hidden");
             }
             if ((flags & OverflowFlags.Visible) > 0)
             {
-                className.Add("overflow-visible");
+                visualElement.AddToClassList("overflow-visible");
             }
         }
         
-        private static void AddClassNames(PositionFlags flags, ref ClassName className)
+        private static void AddClassNamesTo(VisualElement visualElement, PositionFlags flags)
         {
             if ((flags & PositionFlags.Relative) > 0)
             {
-                className.Add("position-relative");
+                visualElement.AddToClassList("position-relative");
             }
             if ((flags & PositionFlags.Absolute) > 0)
             {
-                className.Add("position-absolute");
+                visualElement.AddToClassList("position-absolute");
             }
         }
         
-        private static void AddClassNames(ArrangeElementsFlags flags, LanguageDirection direction, ref ClassName className)
+        private static void AddClassNamesTo(VisualElement visualElement, ArrangeElementsFlags flags)
         {
+            var languageDirection = visualElement.GetComputedLanguageDirection();
+            
             if ((flags & ArrangeElementsFlags.Top0) > 0)
             {
-                className.Add("top-0");
+                visualElement.AddToClassList("top-0");
             }
             if ((flags & ArrangeElementsFlags.Top50) > 0)
             {
-                className.Add("top-50");
+                visualElement.AddToClassList("top-50");
             }
             if ((flags & ArrangeElementsFlags.Top100) > 0)
             {
-                className.Add("top-100");
+                visualElement.AddToClassList("top-100");
             }
             if ((flags & ArrangeElementsFlags.Bottom0) > 0)
             {
-                className.Add("bottom-0");
+                visualElement.AddToClassList("bottom-0");
             }
             if ((flags & ArrangeElementsFlags.Bottom50) > 0)
             {
-                className.Add("bottom-50");
+                visualElement.AddToClassList("bottom-50");
             }
             if ((flags & ArrangeElementsFlags.Bottom100) > 0)
             {
-                className.Add("bottom-100");
+                visualElement.AddToClassList("bottom-100");
             }
-            var startPrefix = direction == LanguageDirection.RTL ? "right" : "left";
+            var startPrefix = languageDirection == LanguageDirection.RTL ? "right" : "left";
             if ((flags & ArrangeElementsFlags.Start0) > 0)
             {
-                className.Add($"{startPrefix}-0");
+                visualElement.AddToClassList($"{startPrefix}-0");
             }
             if ((flags & ArrangeElementsFlags.Start50) > 0)
             {
-                className.Add($"{startPrefix}-50");
+                visualElement.AddToClassList($"{startPrefix}-50");
             }
             if ((flags & ArrangeElementsFlags.Start100) > 0)
             {
-                className.Add($"{startPrefix}-100");
+                visualElement.AddToClassList($"{startPrefix}-100");
             }
-            var endPrefix = direction == LanguageDirection.RTL ? "left" : "right";
+            var endPrefix = languageDirection == LanguageDirection.RTL ? "left" : "right";
             if ((flags & ArrangeElementsFlags.End0) > 0)
             {
-                className.Add($"{endPrefix}-0");
+                visualElement.AddToClassList($"{endPrefix}-0");
             }
             if ((flags & ArrangeElementsFlags.End50) > 0)
             {
-                className.Add($"{endPrefix}-50");
+                visualElement.AddToClassList($"{endPrefix}-50");
             }
             if ((flags & ArrangeElementsFlags.End100) > 0)
             {
-                className.Add($"{endPrefix}-100");
+                visualElement.AddToClassList($"{endPrefix}-100");
             }
             if ((flags & ArrangeElementsFlags.TranslateMiddle) > 0)
             {
-                className.Add("translate-middle");
+                visualElement.AddToClassList("translate-middle");
             }
             if ((flags & ArrangeElementsFlags.TranslateX) > 0)
             {
-                className.Add("translate-x");
+                visualElement.AddToClassList("translate-x");
             }
             if ((flags & ArrangeElementsFlags.TranslateY) > 0)
             {
-                className.Add("translate-y");
+                visualElement.AddToClassList("translate-y");
             }
         }
         
-        private static void AddClassNames(SizingFlags flags, ref ClassName className)
+        private static void AddClassNamesTo(VisualElement visualElement, SizingFlags flags)
         {
             if ((flags & SizingFlags.Width0) > 0)
             {
-                className.Add("w-0");
+                visualElement.AddToClassList("w-0");
             }
             if ((flags & SizingFlags.Width25) > 0)
             {
-                className.Add("w-25");
+                visualElement.AddToClassList("w-25");
             }
             if ((flags & SizingFlags.Width50) > 0)
             {
-                className.Add("w-50");
+                visualElement.AddToClassList("w-50");
             }
             if ((flags & SizingFlags.Width100) > 0)
             {
-                className.Add("w-100");
+                visualElement.AddToClassList("w-100");
             }
             if ((flags & SizingFlags.WidthAuto) > 0)
             {
-                className.Add("w-auto");
+                visualElement.AddToClassList("w-auto");
             }
             if ((flags & SizingFlags.MaxWidth100) > 0)
             {
-                className.Add("mw-100");
+                visualElement.AddToClassList("mw-100");
             }
             if ((flags & SizingFlags.Height0) > 0)
             {
-                className.Add("h-0");
+                visualElement.AddToClassList("h-0");
             }
             if ((flags & SizingFlags.Height25) > 0)
             {
-                className.Add("h-25");
+                visualElement.AddToClassList("h-25");
             }
             if ((flags & SizingFlags.Height50) > 0)
             {
-                className.Add("h-50");
+                visualElement.AddToClassList("h-50");
             }
             if ((flags & SizingFlags.Height100) > 0)
             {
-                className.Add("h-100");
+                visualElement.AddToClassList("h-100");
             }
             if ((flags & SizingFlags.HeightAuto) > 0)
             {
-                className.Add("h-auto");
+                visualElement.AddToClassList("h-auto");
             }
             if ((flags & SizingFlags.MaxHeight100) > 0)
             {
-                className.Add("mh-100");
+                visualElement.AddToClassList("mh-100");
             }
         }
         
-        private static void AddClassNames(BackgroundFlags flags, ref ClassName className)
+        private static void AddClassNamesTo(VisualElement visualElement, BackgroundFlags flags)
         {
             if ((flags & BackgroundFlags.Primary) > 0)
             {
-                className.Add("bg-primary");
+                visualElement.AddToClassList("bg-primary");
             }
             if ((flags & BackgroundFlags.PrimarySubtle) > 0)
             {
-                className.Add("bg-primary-subtle");
+                visualElement.AddToClassList("bg-primary-subtle");
             }
             if ((flags & BackgroundFlags.Secondary) > 0)
             {
-                className.Add("bg-secondary");
+                visualElement.AddToClassList("bg-secondary");
             }
             if ((flags & BackgroundFlags.SecondarySubtle) > 0)
             {
-                className.Add("bg-secondary-subtle");
+                visualElement.AddToClassList("bg-secondary-subtle");
             }
             if ((flags & BackgroundFlags.Success) > 0)
             {
-                className.Add("bg-success");
+                visualElement.AddToClassList("bg-success");
             }
             if ((flags & BackgroundFlags.SuccessSubtle) > 0)
             {
-                className.Add("bg-success-subtle");
+                visualElement.AddToClassList("bg-success-subtle");
             }
             if ((flags & BackgroundFlags.Danger) > 0)
             {
-                className.Add("bg-danger");
+                visualElement.AddToClassList("bg-danger");
             }
             if ((flags & BackgroundFlags.DangerSubtle) > 0)
             {
-                className.Add("bg-danger-subtle");
+                visualElement.AddToClassList("bg-danger-subtle");
             }
             if ((flags & BackgroundFlags.Warning) > 0)
             {
-                className.Add("bg-warning");
+                visualElement.AddToClassList("bg-warning");
             }
             if ((flags & BackgroundFlags.WarningSubtle) > 0)
             {
-                className.Add("bg-warning-subtle");
+                visualElement.AddToClassList("bg-warning-subtle");
             }
             if ((flags & BackgroundFlags.Info) > 0)
             {
-                className.Add("bg-info");
+                visualElement.AddToClassList("bg-info");
             }
             if ((flags & BackgroundFlags.InfoSubtle) > 0)
             {
-                className.Add("bg-info-subtle");
+                visualElement.AddToClassList("bg-info-subtle");
             }
             if ((flags & BackgroundFlags.Light) > 0)
             {
-                className.Add("bg-light");
+                visualElement.AddToClassList("bg-light");
             }
             if ((flags & BackgroundFlags.LightSubtle) > 0)
             {
-                className.Add("bg-light-subtle");
+                visualElement.AddToClassList("bg-light-subtle");
             }
             if ((flags & BackgroundFlags.Dark) > 0)
             {
-                className.Add("bg-dark");
+                visualElement.AddToClassList("bg-dark");
             }
             if ((flags & BackgroundFlags.DarkSubtle) > 0)
             {
-                className.Add("bg-dark-subtle");
+                visualElement.AddToClassList("bg-dark-subtle");
             }
             if ((flags & BackgroundFlags.Body) > 0)
             {
-                className.Add("bg-body");
+                visualElement.AddToClassList("bg-body");
             }
             if ((flags & BackgroundFlags.BodySecondary) > 0)
             {
-                className.Add("bg-body-tertiary");
+                visualElement.AddToClassList("bg-body-tertiary");
             }
             if ((flags & BackgroundFlags.BodyTertiary) > 0)
             {
-                className.Add("bg-body-tertiary");
+                visualElement.AddToClassList("bg-body-tertiary");
             }
             if ((flags & BackgroundFlags.Black) > 0)
             {
-                className.Add("bg-black");
+                visualElement.AddToClassList("bg-black");
             }
             if ((flags & BackgroundFlags.White) > 0)
             {
-                className.Add("bg-white");
+                visualElement.AddToClassList("bg-white");
             }
             if ((flags & BackgroundFlags.Transparent) > 0)
             {
-                className.Add("bg-transparent");
+                visualElement.AddToClassList("bg-transparent");
             }
         }
 
-        private static void AddClassNames(Borders borders, ref ClassName className)
+        private static void AddClassNamesTo(VisualElement visualElement, Borders borders)
         {
-            AddClassNames(borders.width, ref className);
-            AddClassNames(borders.color, ref className);
+            AddClassNamesTo(visualElement, borders.width);
+            AddClassNamesTo(visualElement, borders.color);
         }
-        private static void AddClassNames(BordersWidthFlags flags, ref ClassName className)
+        private static void AddClassNamesTo(VisualElement visualElement, BordersWidthFlags flags)
         {
             if ((flags & BordersWidthFlags.Set) > 0)
             {
-                className.Add("border");
+                visualElement.AddToClassList("border");
             }
             if ((flags & BordersWidthFlags.Top) > 0)
             {
-                className.Add("border-top");
+                visualElement.AddToClassList("border-top");
             }
             if ((flags & BordersWidthFlags.Right) > 0)
             {
-                className.Add("border-right");
+                visualElement.AddToClassList("border-right");
             }
             if ((flags & BordersWidthFlags.Left) > 0)
             {
-                className.Add("border-left");
+                visualElement.AddToClassList("border-left");
             }
             if ((flags & BordersWidthFlags.Top0) > 0)
             {
-                className.Add("border-top-0");
+                visualElement.AddToClassList("border-top-0");
             }
             if ((flags & BordersWidthFlags.Right0) > 0)
             {
-                className.Add("border-right-0");
+                visualElement.AddToClassList("border-right-0");
             }
             if ((flags & BordersWidthFlags.Left0) > 0)
             {
-                className.Add("border-left-0");
+                visualElement.AddToClassList("border-left-0");
             }
             if ((flags & BordersWidthFlags.V1) > 0)
             {
-                className.Add("border-1");
+                visualElement.AddToClassList("border-1");
             }
             if ((flags & BordersWidthFlags.V2) > 0)
             {
-                className.Add("border-2");
+                visualElement.AddToClassList("border-2");
             }
             if ((flags & BordersWidthFlags.V3) > 0)
             {
-                className.Add("border-3");
+                visualElement.AddToClassList("border-3");
             }
             if ((flags & BordersWidthFlags.V4) > 0)
             {
-                className.Add("border-4");
+                visualElement.AddToClassList("border-4");
             }
             if ((flags & BordersWidthFlags.V5) > 0)
             {
-                className.Add("border-5");
+                visualElement.AddToClassList("border-5");
             }
         }
-        private static void AddClassNames(BordersColorFlags flags, ref ClassName className)
+        private static void AddClassNamesTo(VisualElement visualElement, BordersColorFlags flags)
         {
             if ((flags & BordersColorFlags.Primary) > 0)
             {
-                className.Add("border-primary");
+                visualElement.AddToClassList("border-primary");
             }
             if ((flags & BordersColorFlags.PrimarySubtle) > 0)
             {
-                className.Add("border-primary-subtle");
+                visualElement.AddToClassList("border-primary-subtle");
             }
             if ((flags & BordersColorFlags.Secondary) > 0)
             {
-                className.Add("border-secondary");
+                visualElement.AddToClassList("border-secondary");
             }
             if ((flags & BordersColorFlags.SecondarySubtle) > 0)
             {
-                className.Add("border-secondary-subtle");
+                visualElement.AddToClassList("border-secondary-subtle");
             }
             if ((flags & BordersColorFlags.Success) > 0)
             {
-                className.Add("border-success");
+                visualElement.AddToClassList("border-success");
             }
             if ((flags & BordersColorFlags.SuccessSubtle) > 0)
             {
-                className.Add("border-success-subtle");
+                visualElement.AddToClassList("border-success-subtle");
             }
             if ((flags & BordersColorFlags.Danger) > 0)
             {
-                className.Add("border-danger");
+                visualElement.AddToClassList("border-danger");
             }
             if ((flags & BordersColorFlags.DangerSubtle) > 0)
             {
-                className.Add("border-danger-subtle");
+                visualElement.AddToClassList("border-danger-subtle");
             }
             if ((flags & BordersColorFlags.Warning) > 0)
             {
-                className.Add("border-warning");
+                visualElement.AddToClassList("border-warning");
             }
             if ((flags & BordersColorFlags.WarningSubtle) > 0)
             {
-                className.Add("border-warning-subtle");
+                visualElement.AddToClassList("border-warning-subtle");
             }
             if ((flags & BordersColorFlags.Info) > 0)
             {
-                className.Add("border-info");
+                visualElement.AddToClassList("border-info");
             }
             if ((flags & BordersColorFlags.InfoSubtle) > 0)
             {
-                className.Add("border-info-subtle");
+                visualElement.AddToClassList("border-info-subtle");
             }
             if ((flags & BordersColorFlags.Light) > 0)
             {
-                className.Add("border-light");
+                visualElement.AddToClassList("border-light");
             }
             if ((flags & BordersColorFlags.LightSubtle) > 0)
             {
-                className.Add("border-light-subtle");
+                visualElement.AddToClassList("border-light-subtle");
             }
             if ((flags & BordersColorFlags.Dark) > 0)
             {
-                className.Add("border-dark");
+                visualElement.AddToClassList("border-dark");
             }
             if ((flags & BordersColorFlags.DarkSubtle) > 0)
             {
-                className.Add("border-dark-subtle");
+                visualElement.AddToClassList("border-dark-subtle");
             }
             if ((flags & BordersColorFlags.Black) > 0)
             {
-                className.Add("border-black");
+                visualElement.AddToClassList("border-black");
             }
             if ((flags & BordersColorFlags.White) > 0)
             {
-                className.Add("border-white");
+                visualElement.AddToClassList("border-white");
             }
         }
         
-        private static void AddClassNames(ColorsFlags flags, ref ClassName className)
+        private static void AddClassNamesTo(VisualElement visualElement, ColorsFlags flags)
         {
             if ((flags & ColorsFlags.Primary) > 0)
             {
-                className.Add("text-primary");
+                visualElement.AddToClassList("text-primary");
             }
             if ((flags & ColorsFlags.PrimaryEmphasis) > 0)
             {
-                className.Add("text-primary-emphasis");
+                visualElement.AddToClassList("text-primary-emphasis");
             }
             if ((flags & ColorsFlags.Secondary) > 0)
             {
-                className.Add("text-secondary");
+                visualElement.AddToClassList("text-secondary");
             }
             if ((flags & ColorsFlags.SecondaryEmphasis) > 0)
             {
-                className.Add("text-secondary-emphasis");
+                visualElement.AddToClassList("text-secondary-emphasis");
             }
             if ((flags & ColorsFlags.Success) > 0)
             {
-                className.Add("text-success");
+                visualElement.AddToClassList("text-success");
             }
             if ((flags & ColorsFlags.SuccessEmphasis) > 0)
             {
-                className.Add("text-success-emphasis");
+                visualElement.AddToClassList("text-success-emphasis");
             }
             if ((flags & ColorsFlags.Danger) > 0)
             {
-                className.Add("text-danger");
+                visualElement.AddToClassList("text-danger");
             }
             if ((flags & ColorsFlags.DangerEmphasis) > 0)
             {
-                className.Add("text-danger-emphasis");
+                visualElement.AddToClassList("text-danger-emphasis");
             }
             if ((flags & ColorsFlags.Warning) > 0)
             {
-                className.Add("text-warning");
+                visualElement.AddToClassList("text-warning");
             }
             if ((flags & ColorsFlags.WarningEmphasis) > 0)
             {
-                className.Add("text-warning-emphasis");
+                visualElement.AddToClassList("text-warning-emphasis");
             }
             if ((flags & ColorsFlags.Info) > 0)
             {
-                className.Add("text-info");
+                visualElement.AddToClassList("text-info");
             }
             if ((flags & ColorsFlags.InfoEmphasis) > 0)
             {
-                className.Add("text-info-emphasis");
+                visualElement.AddToClassList("text-info-emphasis");
             }
             if ((flags & ColorsFlags.Light) > 0)
             {
-                className.Add("text-light");
+                visualElement.AddToClassList("text-light");
             }
             if ((flags & ColorsFlags.LightEmphasis) > 0)
             {
-                className.Add("text-light-emphasis");
+                visualElement.AddToClassList("text-light-emphasis");
             }
             if ((flags & ColorsFlags.Dark) > 0)
             {
-                className.Add("text-dark");
+                visualElement.AddToClassList("text-dark");
             }
             if ((flags & ColorsFlags.DarkEmphasis) > 0)
             {
-                className.Add("text-dark-emphasis");
+                visualElement.AddToClassList("text-dark-emphasis");
             }
             if ((flags & ColorsFlags.Body) > 0)
             {
-                className.Add("text-body");
+                visualElement.AddToClassList("text-body");
             }
             if ((flags & ColorsFlags.BodyEmphasis) > 0)
             {
-                className.Add("text-body-emphasis");
+                visualElement.AddToClassList("text-body-emphasis");
             }
             if ((flags & ColorsFlags.BodySecondary) > 0)
             {
-                className.Add("text-body-secondary");
+                visualElement.AddToClassList("text-body-secondary");
             }
             if ((flags & ColorsFlags.BodyTertiary) > 0)
             {
-                className.Add("text-body-tertiary");
+                visualElement.AddToClassList("text-body-tertiary");
             }
             if ((flags & ColorsFlags.Black) > 0)
             {
-                className.Add("text-black");
+                visualElement.AddToClassList("text-black");
             }
             if ((flags & ColorsFlags.White) > 0)
             {
-                className.Add("text-white");
+                visualElement.AddToClassList("text-white");
             }
             if ((flags & ColorsFlags.Black50) > 0)
             {
-                className.Add("text-black-50");
+                visualElement.AddToClassList("text-black-50");
             }
             if ((flags & ColorsFlags.White50) > 0)
             {
-                className.Add("text-white-50");
+                visualElement.AddToClassList("text-white-50");
             }
         }
 
-        private static void AddClassNames(RoundedCorners roundedCorners, ref ClassName className)
+        private static void AddClassNamesTo(VisualElement visualElement, RoundedCorners roundedCorners)
         {
-            AddClassNames(roundedCorners.general, string.Empty, ref className);
-            AddClassNames(roundedCorners.top, "-top", ref className);
-            AddClassNames(roundedCorners.right, "-right", ref className);
-            AddClassNames(roundedCorners.bottom, "-bottom", ref className);
-            AddClassNames(roundedCorners.left, "-left", ref className);
+            AddClassNamesTo(visualElement, roundedCorners.general, string.Empty);
+            AddClassNamesTo(visualElement, roundedCorners.top, "-top");
+            AddClassNamesTo(visualElement, roundedCorners.right, "-right");
+            AddClassNamesTo(visualElement, roundedCorners.bottom, "-bottom");
+            AddClassNamesTo(visualElement, roundedCorners.left, "-left");
         }
-        private static void AddClassNames(CornerRadiusFlags flags, string side, ref ClassName className)
+        private static void AddClassNamesTo(VisualElement visualElement, CornerRadiusFlags flags, string side)
         {
             var prefix = $"rounded{side}";
             if ((flags & CornerRadiusFlags.Set) > 0)
             {
-                className.Add(prefix);
+                visualElement.AddToClassList(prefix);
             }
             if ((flags & CornerRadiusFlags.Radius0) > 0)
             {
-                className.Add($"{prefix}-0");
+                visualElement.AddToClassList($"{prefix}-0");
             }
             if ((flags & CornerRadiusFlags.Radius1) > 0)
             {
-                className.Add($"{prefix}-1");
+                visualElement.AddToClassList($"{prefix}-1");
             }
             if ((flags & CornerRadiusFlags.Radius2) > 0)
             {
-                className.Add($"{prefix}-2");
+                visualElement.AddToClassList($"{prefix}-2");
             }
             if ((flags & CornerRadiusFlags.Radius3) > 0)
             {
-                className.Add($"{prefix}-3");
+                visualElement.AddToClassList($"{prefix}-3");
             }
             if ((flags & CornerRadiusFlags.Radius4) > 0)
             {
-                className.Add($"{prefix}-4");
+                visualElement.AddToClassList($"{prefix}-4");
             }
             if ((flags & CornerRadiusFlags.Radius5) > 0)
             {
-                className.Add($"{prefix}-5");
+                visualElement.AddToClassList($"{prefix}-5");
             }
             if ((flags & CornerRadiusFlags.Circle) > 0)
             {
-                className.Add($"{prefix}-circle");
+                visualElement.AddToClassList($"{prefix}-circle");
             }
         }
         
@@ -2701,8 +2696,7 @@ namespace Roots
             public CornerRadiusFlags left;
         }
         
-        private delegate void ResponsiveClassNameAction<in T>(T value, ref ClassName className, Breakpoint breakpoint) where T : unmanaged;
-        private delegate void ResponsiveDirectionClassNameAction<in T>(T value, ref ClassName className, LanguageDirection direction, Breakpoint breakpoint) where T : unmanaged;
+        private delegate void ResponsiveClassNameAction<in T>(VisualElement visualElement, T value, Breakpoint breakpoint) where T : unmanaged;
 
         private struct ResponsiveUtility<T> where T : unmanaged
         {
@@ -2713,34 +2707,19 @@ namespace Roots
             public T xl;
             public T xxl;
 
-            public void AddClassNames(ref ClassName className, ResponsiveClassNameAction<T> action)
+            public void AddClassNamesTo(VisualElement visualElement, ResponsiveClassNameAction<T> action)
             {
                 if (action == null)
                 {
                     return;
                 }
                 
-                action.Invoke(xs, ref className, Breakpoint.XS);
-                action.Invoke(sm, ref className, Breakpoint.SM);
-                action.Invoke(md, ref className, Breakpoint.MD);
-                action.Invoke(lg, ref className, Breakpoint.LG);
-                action.Invoke(xl, ref className, Breakpoint.XL);
-                action.Invoke(xxl, ref className, Breakpoint.XXL);
-            }
-
-            public void AddClassNames(ref ClassName className, LanguageDirection direction, ResponsiveDirectionClassNameAction<T> action)
-            {
-                if (action == null)
-                {
-                    return;
-                }
-                
-                action.Invoke(xs, ref className, direction, Breakpoint.XS);
-                action.Invoke(sm, ref className, direction, Breakpoint.SM);
-                action.Invoke(md, ref className, direction, Breakpoint.MD);
-                action.Invoke(lg, ref className, direction, Breakpoint.LG);
-                action.Invoke(xl, ref className, direction, Breakpoint.XL);
-                action.Invoke(xxl, ref className, direction, Breakpoint.XXL);
+                action.Invoke(visualElement, xs, Breakpoint.XS);
+                action.Invoke(visualElement, sm, Breakpoint.SM);
+                action.Invoke(visualElement, md, Breakpoint.MD);
+                action.Invoke(visualElement, lg, Breakpoint.LG);
+                action.Invoke(visualElement, xl, Breakpoint.XL);
+                action.Invoke(visualElement, xxl, Breakpoint.XXL);
             }
         }
     }

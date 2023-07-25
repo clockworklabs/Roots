@@ -1,30 +1,30 @@
 using RishUI;
-using RishUI.Elements;
 
 namespace Roots
 {
     public partial class Alert : RishElement<AlertProps>
     {
+        public enum Context { Primary, Secondary, Success, Danger, Warning, Info, Light, Dark }
+        
         protected override Element Render() => Div.Create(className:  ("alert", Props.context switch
         {
-            AlertProps.Context.Primary => "alert-primary",
-            AlertProps.Context.Secondary => "alert-secondary",
-            AlertProps.Context.Success => "alert-success",
-            AlertProps.Context.Danger => "alert-danger",
-            AlertProps.Context.Warning => "alert-warning",
-            AlertProps.Context.Info => "alert-info",
-            AlertProps.Context.Light => "alert-light",
-            AlertProps.Context.Dark => "alert-dark",
+            Context.Primary => "alert-primary",
+            Context.Secondary => "alert-secondary",
+            Context.Success => "alert-success",
+            Context.Danger => "alert-danger",
+            Context.Warning => "alert-warning",
+            Context.Info => "alert-info",
+            Context.Light => "alert-light",
+            Context.Dark => "alert-dark",
             _ => string.Empty
-        }), children: Props.children);
+        }), utilities: Props.utilities, children: Props.children);
     }
 
     [RishValueType]
     public struct AlertProps
     {
-        public enum Context { Primary, Secondary, Success, Danger, Warning, Info, Light, Dark }
-
-        public Context context;
+        public Alert.Context context;
+        public Utilities utilities;
         public Children children;
     }
 }

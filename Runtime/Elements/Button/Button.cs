@@ -37,12 +37,13 @@ namespace Roots
                 _ => string.Empty
             });
 
-            var pressedClassName = new ClassName(className)
-            {
+            var pressedClassName = new ClassName {
+                className,
                 "active"
             };
             var normalClassName = Props.active ? pressedClassName : className;
-            var disabledClassName = new ClassName(normalClassName) {
+            var disabledClassName = new ClassName {
+                normalClassName,
                 "disabled"
             };
             

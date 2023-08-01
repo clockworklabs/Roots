@@ -4,7 +4,7 @@ namespace Roots
 {
     public class ResourcesLoader : AssetsLoader
     {
-        public override bool LoadAsset<T>(string address, AssetLoaded<T> callback)
+        protected override bool LoadAsset<T>(string address, AssetLoaded<T> callback)
         {
             if (callback == null)
             {

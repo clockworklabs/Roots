@@ -28,9 +28,19 @@ namespace Roots
             Loaders.Remove(this);
         }
 
-        public abstract bool LoadAsset<T>(string address, AssetLoaded<T> callback) where T : Object;
+        protected abstract bool LoadAsset<T>(string address, AssetLoaded<T> callback) where T : Object;
         public void Load<T>(string address, AssetLoaded<T> callback) where T : Object
         {
+            if (string.IsNullOrWhiteSpace(address))
+            {
+                callback?.Invoke(new Asset<T>
+                {
+                    address = address,
+                    asset = null
+                });
+                return;
+            }
+            
             if (!LoadAsset(address, callback))
             {
                 callback?.Invoke(new Asset<T>

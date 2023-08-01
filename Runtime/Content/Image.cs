@@ -60,13 +60,23 @@ namespace Roots
             if (Loader != null)
             {
                 var textureAddress = props.textureAddress.Value;
+                var textureSet = !string.IsNullOrWhiteSpace(textureAddress.Value);
+                if (!textureSet)
+                {
+                    textureAddress = string.Empty;
+                }
                 if (textureAddress != TextureAddress)
                 {
                     TextureAddress = textureAddress;
-                    Loader.Load<Texture>(textureAddress.Value, OnTextureLoaded);
+                    Loader.Load<Texture2D>(textureAddress.Value, OnTextureLoaded);
                 }
 
                 var spriteAddress = props.spriteAddress.Value;
+                var spriteSet = !textureSet && !string.IsNullOrWhiteSpace(spriteAddress.Value);
+                if (!spriteSet)
+                {
+                    spriteAddress = string.Empty;
+                }
                 if (spriteAddress != SpriteAddress)
                 {
                     SpriteAddress = spriteAddress;
@@ -74,6 +84,11 @@ namespace Roots
                 }
 
                 var vectorAddress = props.vectorAddress.Value;
+                var vectorSet = !spriteSet && !string.IsNullOrWhiteSpace(vectorAddress.Value);
+                if (!vectorSet)
+                {
+                    vectorAddress = string.Empty;
+                }
                 if (vectorAddress != VectorAddress)
                 {
                     VectorAddress = vectorAddress;
@@ -81,6 +96,11 @@ namespace Roots
                 }
 
                 var renderTextureAddress = props.renderTextureAddress.Value;
+                var renderTextureSet = !vectorSet && !string.IsNullOrWhiteSpace(renderTextureAddress.Value);
+                if (!renderTextureSet)
+                {
+                    renderTextureAddress = string.Empty;
+                }
                 if (renderTextureAddress != RenderTextureAddress)
                 {
                     RenderTextureAddress = renderTextureAddress;
@@ -145,14 +165,21 @@ namespace Roots
             props.height ??= customStyle.TryGetValue(ImageHeightProp, out var customImageHeight) ? ImageSize.Parse(customImageHeight) : default;
         }
 
-        private void OnTextureLoaded(Asset<Texture> asset)
+        private void OnTextureLoaded(Asset<Texture2D> asset)
         {
             if (asset.address != TextureAddress)
             {
                 return;
             }
 
-            image = asset.asset;
+            SetTexture(asset.asset);
+        }
+        private void SetTexture(Texture2D texture)
+        {
+            image = texture;
+            if (texture == null) return;
+            sprite = null;
+            vectorImage = null;
         }
         private void OnSpriteLoaded(Asset<Sprite> asset)
         {
@@ -161,7 +188,30 @@ namespace Roots
                 return;
             }
 
-            sprite = asset.asset;
+            SetSprite(asset.asset);
+        }
+        private void SetSprite(Sprite sprite)
+        {
+            this.sprite = sprite;
+            if (sprite == null) return;
+            image = null;
+            vectorImage = null;
+            
+            var border = sprite.border;
+            if (border != Vector4.zero)
+            {
+                style.unitySliceTop = Mathf.RoundToInt(border.w);
+                style.unitySliceRight = Mathf.RoundToInt(border.z);
+                style.unitySliceBottom = Mathf.RoundToInt(border.y);
+                style.unitySliceLeft = Mathf.RoundToInt(border.x);
+                style.unitySliceScale = 100 / sprite.pixelsPerUnit;
+
+                style.backgroundImage = Background.FromSprite(sprite);
+
+                style.unityBackgroundImageTintColor = tintColor;
+                
+                this.sprite = null;
+            }
         }
         private void OnVectorLoaded(Asset<VectorImage> asset)
         {
@@ -170,7 +220,14 @@ namespace Roots
                 return;
             }
 
-            vectorImage = asset.asset;
+            SetVector(asset.asset);
+        }
+        private void SetVector(VectorImage vectorImage)
+        {
+            this.vectorImage = vectorImage;
+            if (vectorImage == null) return;
+            image = null;
+            sprite = null;
         }
         private void OnRenderTextureLoaded(Asset<RenderTexture> asset)
         {
@@ -179,7 +236,14 @@ namespace Roots
                 return;
             }
 
-            image = asset.asset;
+            SetRenderTexture(asset.asset);
+        }
+        private void SetRenderTexture(RenderTexture renderTexture)
+        {
+            image = renderTexture;
+            if (renderTexture == null) return;
+            sprite = null;
+            vectorImage = null;
         }
 
         private void OnMounted(AttachToPanelEvent evt)

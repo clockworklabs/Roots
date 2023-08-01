@@ -1,6 +1,6 @@
 {
   "name": "com.clockworklabs.roots",
-  "version": "1.0.0-pre.1",
+  "version": "1.0.0-pre.2",
   "displayName": "Roots",
   "description": "UI framework with ready-made components and solutions for Rish",
   "unity": "2022.3",
@@ -10,8 +10,7 @@
     "url": "https://lisandroct.com"
   },
   "dependencies": {
-    "com.unity.collections": "0.9.0-preview.6",
-    "com.clockworklabs.rish": "3.0.0-pre.87"
+    "com.clockworklabs.rish": "3.0.0-pre.95"
   },
   "type": "library"
 }

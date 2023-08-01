@@ -7,11 +7,12 @@ namespace Roots
         protected override Element Render()
         {
             var descriptor = Props.descriptor;
-            descriptor.className = new ClassName(descriptor.className) {
+            descriptor.className = new ClassName {
+                descriptor.className,
                 "body"
             };
             
-            return Div.Create(descriptor, Props.utilities, Props.children);
+            return Div.Create(descriptor, utilities: Props.utilities, children: Props.children);
         }
     }
 

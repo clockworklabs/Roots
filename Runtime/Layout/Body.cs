@@ -7,8 +7,7 @@ namespace Roots
         protected override Element Render()
         {
             var descriptor = Props.descriptor;
-            descriptor.className = new ClassName {
-                descriptor.className,
+            descriptor.className = new ClassName(descriptor.className) {
                 "body"
             };
             

@@ -59,52 +59,80 @@ namespace Roots
 
             if (Loader != null)
             {
-                var textureAddress = props.textureAddress.Value;
-                var textureSet = !string.IsNullOrWhiteSpace(textureAddress.Value);
-                if (!textureSet)
+                var directSet = false;
+                if (props.texture != null)
                 {
-                    textureAddress = string.Empty;
-                }
-                if (textureAddress != TextureAddress)
+                    directSet = true;
+                    SetTexture(props.texture);
+                } else if (props.sprite != null)
                 {
-                    TextureAddress = textureAddress;
-                    Loader.Load<Texture2D>(textureAddress.Value, OnTextureLoaded);
-                }
-
-                var spriteAddress = props.spriteAddress.Value;
-                var spriteSet = !textureSet && !string.IsNullOrWhiteSpace(spriteAddress.Value);
-                if (!spriteSet)
+                    directSet = true;
+                    SetSprite(props.sprite);
+                } else if (props.vector != null)
                 {
-                    spriteAddress = string.Empty;
-                }
-                if (spriteAddress != SpriteAddress)
+                    directSet = true;
+                    SetVector(props.vector);
+                } else if (props.renderTexture != null)
                 {
-                    SpriteAddress = spriteAddress;
-                    Loader.Load<Sprite>(spriteAddress.Value, OnSpriteLoaded);
+                    directSet = true;
+                    SetRenderTexture(props.renderTexture);
                 }
 
-                var vectorAddress = props.vectorAddress.Value;
-                var vectorSet = !spriteSet && !string.IsNullOrWhiteSpace(vectorAddress.Value);
-                if (!vectorSet)
+                if (directSet)
                 {
-                    vectorAddress = string.Empty;
-                }
-                if (vectorAddress != VectorAddress)
+                    TextureAddress = string.Empty;
+                    SpriteAddress = string.Empty;
+                    VectorAddress = string.Empty;
+                    RenderTextureAddress = string.Empty;
+                } else 
                 {
-                    VectorAddress = vectorAddress;
-                    Loader.Load<VectorImage>(vectorAddress.Value, OnVectorLoaded);
-                }
+                    var textureAddress = props.textureAddress.Value;
+                    var textureSet = !string.IsNullOrWhiteSpace(textureAddress.Value);
+                    if (!textureSet)
+                    {
+                        textureAddress = string.Empty;
+                    }
+                    if (textureAddress != TextureAddress)
+                    {
+                        TextureAddress = textureAddress;
+                        Loader.Load<Texture2D>(textureAddress.Value, OnTextureLoaded);
+                    }
 
-                var renderTextureAddress = props.renderTextureAddress.Value;
-                var renderTextureSet = !vectorSet && !string.IsNullOrWhiteSpace(renderTextureAddress.Value);
-                if (!renderTextureSet)
-                {
-                    renderTextureAddress = string.Empty;
-                }
-                if (renderTextureAddress != RenderTextureAddress)
-                {
-                    RenderTextureAddress = renderTextureAddress;
-                    Loader.Load<RenderTexture>(renderTextureAddress.Value, OnRenderTextureLoaded);
+                    var spriteAddress = props.spriteAddress.Value;
+                    var spriteSet = !textureSet && !string.IsNullOrWhiteSpace(spriteAddress.Value);
+                    if (!spriteSet)
+                    {
+                        spriteAddress = string.Empty;
+                    }
+                    if (spriteAddress != SpriteAddress)
+                    {
+                        SpriteAddress = spriteAddress;
+                        Loader.Load<Sprite>(spriteAddress.Value, OnSpriteLoaded);
+                    }
+
+                    var vectorAddress = props.vectorAddress.Value;
+                    var vectorSet = !spriteSet && !string.IsNullOrWhiteSpace(vectorAddress.Value);
+                    if (!vectorSet)
+                    {
+                        vectorAddress = string.Empty;
+                    }
+                    if (vectorAddress != VectorAddress)
+                    {
+                        VectorAddress = vectorAddress;
+                        Loader.Load<VectorImage>(vectorAddress.Value, OnVectorLoaded);
+                    }
+
+                    var renderTextureAddress = props.renderTextureAddress.Value;
+                    var renderTextureSet = !vectorSet && !string.IsNullOrWhiteSpace(renderTextureAddress.Value);
+                    if (!renderTextureSet)
+                    {
+                        renderTextureAddress = string.Empty;
+                    }
+                    if (renderTextureAddress != RenderTextureAddress)
+                    {
+                        RenderTextureAddress = renderTextureAddress;
+                        Loader.Load<RenderTexture>(renderTextureAddress.Value, OnRenderTextureLoaded);
+                    }
                 }
             }
             else
@@ -421,9 +449,13 @@ namespace Roots
         }
     }
     
-    [RishValueType]
     public struct ImageProps
     {
+        public Texture2D texture;
+        public Sprite sprite;
+        public VectorImage vector;
+        public RenderTexture renderTexture;
+        
         /// <summary>
         /// Styled Prop as --prop-texture
         /// </summary>

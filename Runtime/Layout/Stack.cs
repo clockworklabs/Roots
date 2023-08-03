@@ -10,7 +10,7 @@ namespace Roots
         protected override Element Render()
         {
             Children.Clear();
-            foreach (var child in Children)
+            foreach (var child in Props.children)
             {
                 // Children.Add(Div.Create(className: Props.IsVertical ? "flex-column" : "flex-row", children: child));
                 Children.Add(child);

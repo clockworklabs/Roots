@@ -684,6 +684,44 @@
     padding: var(--rs-spacer-h5);
 }
 
+/* Text Alignment */
+.text-lg-left {
+    -unity-text-align: upper-left!important;
+}
+.text-lg-right {
+    -unity-text-align: upper-right!important;
+}
+.text-lg-center {
+    -unity-text-align: upper-center!important;
+}
+.text-lg-upper-left {
+    -unity-text-align: upper-left!important;
+}
+.text-lg-upper-right {
+    -unity-text-align: upper-right!important;
+}
+.text-lg-upper-center {
+    -unity-text-align: upper-center!important;
+}
+.text-lg-middle-left {
+    -unity-text-align: middle-left!important;
+}
+.text-lg-middle-right {
+    -unity-text-align: middle-right!important;
+}
+.text-lg-middle-center {
+    -unity-text-align: middle-center!important;
+}
+.text-lg-lower-left {
+    -unity-text-align: lower-left!important;
+}
+.text-lg-lower-right {
+    -unity-text-align: lower-right!important;
+}
+.text-lg-lower-center {
+    -unity-text-align: lower-center!important;
+}
+
 /* --- Visibility - */
 .visible-lg {
     visibility: visible !important;

@@ -95,6 +95,8 @@
     --rs-border-radius-3: 8px;
     --rs-border-radius-4: 16px;
     --rs-border-radius-5: 32px;
+
+    --rs-border-color-translucent: rgba(255, 255, 255, 0.15);
 }
 
 /* --- Display - */
@@ -784,6 +786,44 @@
     padding: var(--rs-spacer-h5);
 }
 
+/* Text Alignment */
+.text-left {
+    -unity-text-align: upper-left!important;
+}
+.text-right {
+    -unity-text-align: upper-right!important;
+}
+.text-center {
+    -unity-text-align: upper-center!important;
+}
+.text-upper-left {
+    -unity-text-align: upper-left!important;
+}
+.text-upper-right {
+    -unity-text-align: upper-right!important;
+}
+.text-upper-center {
+    -unity-text-align: upper-center!important;
+}
+.text-middle-left {
+    -unity-text-align: middle-left!important;
+}
+.text-middle-right {
+    -unity-text-align: middle-right!important;
+}
+.text-middle-center {
+    -unity-text-align: middle-center!important;
+}
+.text-lower-left {
+    -unity-text-align: lower-left!important;
+}
+.text-lower-right {
+    -unity-text-align: lower-right!important;
+}
+.text-lower-center {
+    -unity-text-align: lower-center!important;
+}
+
 /* --- Visibility - */
 .visible {
     visibility: visible !important;
@@ -1326,4 +1366,43 @@
 .rounded-left-circle {
     border-top-left-radius: 50%!important;
     border-bottom-left-radius: 50%!important;
+}
+
+/* Text wrapping */
+.text-wrap {
+    white-space: normal!important;
+}
+.text-nowrap {
+    white-space: nowrap!important;
+}
+
+/* Font Size */
+.fs-1 {
+    font-size: 40px;
+}
+.fs-2 {
+    font-size: 32px;
+}
+.fs-3 {
+    font-size: 28px;
+}
+.fs-4 {
+    font-size: 24px;
+}
+.fs-5 {
+    font-size: 20px;
+}
+.fs-6 {
+    font-size: 16px;
+}
+
+/* Font Style */
+.fst-bold {
+    -unity-font-style: bold;
+}
+.fst-italic {
+    -unity-font-style: italic;
+}
+.fst-normal {
+    -unity-font-style: normal;
 }

@@ -19,6 +19,7 @@ namespace Roots
         private ResponsiveUtility<Margins> margins;
         private ResponsiveUtility<Paddings> paddings;
         private ResponsiveUtility<Gaps> gaps;
+        private ResponsiveUtility<TextAlignmentFlags> textAlignment;
         private ResponsiveUtility<VisibilityFlags> visibility;
         // Not Responsive
         private AbsoluteFillFlags absoluteFill;
@@ -31,6 +32,9 @@ namespace Roots
         private Borders borders;
         private ColorsFlags colors;
         private RoundedCorners roundedCorners;
+        private TextWrappingFlags textWrapping;
+        private FontSizeFlags fontSize;
+        private FontStyleFlags fontStyle;
         
         public static Utilities None => default;
         
@@ -441,6 +445,91 @@ namespace Roots
         public Utilities MarginEndNeg3(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginEnd(MarginsFlags.NegSpacer3, xs, sm, md, lg, xl, xxl);
         public Utilities MarginEndNeg4(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginEnd(MarginsFlags.NegSpacer4, xs, sm, md, lg, xl, xxl);
         public Utilities MarginEndNeg5(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginEnd(MarginsFlags.NegSpacer5, xs, sm, md, lg, xl, xxl);
+        // TODO: Versions like this for every int value utility
+        // public Utilities MarginBottom(int? xs = default, int? sm = default, int? md = default, int? lg = default, int? xl = default, int? xxl = default)
+        // {
+        //     var utilities = this;
+        //     if (xs.HasValue)
+        //     {
+        //         var value = UnityEngine.Mathf.Clamp(xs.Value, 0, 5) switch
+        //         {
+        //             1 => MarginsFlags.Spacer1,
+        //             2 => MarginsFlags.Spacer2,
+        //             3 => MarginsFlags.Spacer3,
+        //             4 => MarginsFlags.Spacer4,
+        //             5 => MarginsFlags.Spacer5,
+        //             _ => MarginsFlags.Zero,
+        //         };
+        //         utilities = utilities.OrMarginBottom(value, true, false, false, false, false, false);
+        //     }
+        //     if (sm.HasValue)
+        //     {
+        //         var value = UnityEngine.Mathf.Clamp(sm.Value, 0, 5) switch
+        //         {
+        //             1 => MarginsFlags.Spacer1,
+        //             2 => MarginsFlags.Spacer2,
+        //             3 => MarginsFlags.Spacer3,
+        //             4 => MarginsFlags.Spacer4,
+        //             5 => MarginsFlags.Spacer5,
+        //             _ => MarginsFlags.Zero,
+        //         };
+        //         utilities = utilities.OrMarginBottom(value, false, true, false, false, false, false);
+        //     }
+        //     if (md.HasValue)
+        //     {
+        //         var value = UnityEngine.Mathf.Clamp(md.Value, 0, 5) switch
+        //         {
+        //             1 => MarginsFlags.Spacer1,
+        //             2 => MarginsFlags.Spacer2,
+        //             3 => MarginsFlags.Spacer3,
+        //             4 => MarginsFlags.Spacer4,
+        //             5 => MarginsFlags.Spacer5,
+        //             _ => MarginsFlags.Zero,
+        //         };
+        //         utilities = utilities.OrMarginBottom(value, false, false, true, false, false, false);
+        //     }
+        //     if (lg.HasValue)
+        //     {
+        //         var value = UnityEngine.Mathf.Clamp(lg.Value, 0, 5) switch
+        //         {
+        //             1 => MarginsFlags.Spacer1,
+        //             2 => MarginsFlags.Spacer2,
+        //             3 => MarginsFlags.Spacer3,
+        //             4 => MarginsFlags.Spacer4,
+        //             5 => MarginsFlags.Spacer5,
+        //             _ => MarginsFlags.Zero,
+        //         };
+        //         utilities = utilities.OrMarginBottom(value, false, false, false, true, false, false);
+        //     }
+        //     if (xl.HasValue)
+        //     {
+        //         var value = UnityEngine.Mathf.Clamp(xl.Value, 0, 5) switch
+        //         {
+        //             1 => MarginsFlags.Spacer1,
+        //             2 => MarginsFlags.Spacer2,
+        //             3 => MarginsFlags.Spacer3,
+        //             4 => MarginsFlags.Spacer4,
+        //             5 => MarginsFlags.Spacer5,
+        //             _ => MarginsFlags.Zero,
+        //         };
+        //         utilities = utilities.OrMarginBottom(value, false, false, false, false, true, false);
+        //     }
+        //     if (xxl.HasValue)
+        //     {
+        //         var value = UnityEngine.Mathf.Clamp(xxl.Value, 0, 5) switch
+        //         {
+        //             1 => MarginsFlags.Spacer1,
+        //             2 => MarginsFlags.Spacer2,
+        //             3 => MarginsFlags.Spacer3,
+        //             4 => MarginsFlags.Spacer4,
+        //             5 => MarginsFlags.Spacer5,
+        //             _ => MarginsFlags.Zero,
+        //         };
+        //         utilities = utilities.OrMarginBottom(value, false, false, false, false, false, true);
+        //     }
+        //
+        //     return utilities;
+        // }
         public Utilities MarginBottom0(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginBottom(MarginsFlags.Zero, xs, sm, md, lg, xl, xxl);
         public Utilities MarginBottom1(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginBottom(MarginsFlags.Spacer1, xs, sm, md, lg, xl, xxl);
         public Utilities MarginBottom2(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrMarginBottom(MarginsFlags.Spacer2, xs, sm, md, lg, xl, xxl);
@@ -1202,6 +1291,57 @@ namespace Roots
             return this;
         }
 
+        // Text Alignment
+        public Utilities TextStart(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrTextAlignment(TextAlignmentFlags.Start, xs, sm, md, lg, xl, xxl);
+        public Utilities TextEnd(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrTextAlignment(TextAlignmentFlags.End, xs, sm, md, lg, xl, xxl);
+        public Utilities TextCenter(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrTextAlignment(TextAlignmentFlags.Center, xs, sm, md, lg, xl, xxl);
+        public Utilities TextUpperStart(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrTextAlignment(TextAlignmentFlags.UpperStart, xs, sm, md, lg, xl, xxl);
+        public Utilities TextUpperEnd(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrTextAlignment(TextAlignmentFlags.UpperEnd, xs, sm, md, lg, xl, xxl);
+        public Utilities TextUpperCenter(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrTextAlignment(TextAlignmentFlags.UpperCenter, xs, sm, md, lg, xl, xxl);
+        public Utilities TextMiddleStart(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrTextAlignment(TextAlignmentFlags.MiddleStart, xs, sm, md, lg, xl, xxl);
+        public Utilities TextMiddleEnd(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrTextAlignment(TextAlignmentFlags.MiddleEnd, xs, sm, md, lg, xl, xxl);
+        public Utilities TextMiddleCenter(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrTextAlignment(TextAlignmentFlags.MiddleCenter, xs, sm, md, lg, xl, xxl);
+        public Utilities TextLowerStart(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrTextAlignment(TextAlignmentFlags.LowerStart, xs, sm, md, lg, xl, xxl);
+        public Utilities TextLowerEnd(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrTextAlignment(TextAlignmentFlags.LowerEnd, xs, sm, md, lg, xl, xxl);
+        public Utilities TextLowerCenter(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrTextAlignment(TextAlignmentFlags.LowerCenter, xs, sm, md, lg, xl, xxl);
+        private Utilities OrTextAlignment(TextAlignmentFlags value, bool xs, bool sm, bool md, bool lg, bool xl, bool xxl)
+        {
+            if (!xs && !sm && !md && !lg && !xl && !xxl)
+            {
+                return OrTextAlignment(value);
+            }
+        
+            return OrTextAlignment(xs ? value : null, sm ? value : null, md ? value : null, lg ? value : null, xl ? value : null, xxl ? value : null);
+        }
+        private Utilities OrTextAlignment(TextAlignmentFlags? xs, TextAlignmentFlags? sm = default, TextAlignmentFlags? md = default, TextAlignmentFlags? lg = default, TextAlignmentFlags? xl = default, TextAlignmentFlags? xxl = default)
+        {
+            if (xs.HasValue)
+            {
+                textAlignment.xs |= xs.Value;
+            }
+            if (sm.HasValue)
+            {
+                textAlignment.sm |= sm.Value;
+            }
+            if (md.HasValue)
+            {
+                textAlignment.md |= md.Value;
+            }
+            if (lg.HasValue)
+            {
+                textAlignment.lg |= lg.Value;
+            }
+            if (xl.HasValue)
+            {
+                textAlignment.xl |= xl.Value;
+            }
+            if (xxl.HasValue)
+            {
+                textAlignment.xxl |= xxl.Value;
+            }
+            return this;
+        }
+
         // Visibility
         public Utilities Visible(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrVisibility(VisibilityFlags.Visible, xs, sm, md, lg, xl, xxl);
         public Utilities Invisible(bool xs = false, bool sm = false, bool md = false, bool lg = false, bool xl = false, bool xxl = false) => OrVisibility(VisibilityFlags.Invisible, xs, sm, md, lg, xl, xxl);
@@ -1493,6 +1633,38 @@ namespace Roots
             roundedCorners.general |= value;
             return this;
         }
+
+        // Text Wrapping
+        public Utilities TextWrap() => OrTextWrapping(TextWrappingFlags.Wrap);
+        public Utilities TextNoWrap() => OrTextWrapping(TextWrappingFlags.NoWrap);
+        private Utilities OrTextWrapping(TextWrappingFlags value)
+        {
+            textWrapping |= value;
+            return this;
+        }
+
+        // Font Size
+        public Utilities FontSize1() => OrFontSize(FontSizeFlags.Size1);
+        public Utilities FontSize2() => OrFontSize(FontSizeFlags.Size2);
+        public Utilities FontSize3() => OrFontSize(FontSizeFlags.Size3);
+        public Utilities FontSize4() => OrFontSize(FontSizeFlags.Size4);
+        public Utilities FontSize5() => OrFontSize(FontSizeFlags.Size5);
+        public Utilities FontSize6() => OrFontSize(FontSizeFlags.Size6);
+        private Utilities OrFontSize(FontSizeFlags value)
+        {
+            fontSize |= value;
+            return this;
+        }
+
+        // Font Style
+        public Utilities FontStyleBold() => OrFontStyle(FontStyleFlags.Bold);
+        public Utilities FontStyleItalic() => OrFontStyle(FontStyleFlags.Italic);
+        public Utilities FontStyleNormal() => OrFontStyle(FontStyleFlags.Normal);
+        private Utilities OrFontStyle(FontStyleFlags value)
+        {
+            fontStyle |= value;
+            return this;
+        }
         
 
         public void AddClassNamesTo(VisualElement visualElement)
@@ -1514,6 +1686,7 @@ namespace Roots
             margins.AddClassNamesTo(visualElement, AddClassNamesTo);
             paddings.AddClassNamesTo(visualElement, AddClassNamesTo);
             gaps.AddClassNamesTo(visualElement, AddClassNamesTo);
+            textAlignment.AddClassNamesTo(visualElement, AddClassNamesTo);
             visibility.AddClassNamesTo(visualElement, AddClassNamesTo);
 
             AddClassNamesTo(visualElement, absoluteFill);
@@ -1526,6 +1699,9 @@ namespace Roots
             AddClassNamesTo(visualElement, borders);
             AddClassNamesTo(visualElement, colors);
             AddClassNamesTo(visualElement, roundedCorners);
+            AddClassNamesTo(visualElement, textWrapping);
+            AddClassNamesTo(visualElement, fontSize);
+            AddClassNamesTo(visualElement, fontStyle);
         }
         
         private enum Breakpoint { XS, SM, MD, LG, XL, XXL }
@@ -1599,7 +1775,7 @@ namespace Roots
         private static void AddAlignItemsClassNames(VisualElement visualElement, AlignFlags flags, Breakpoint breakpoint) =>
             AddClassNamesTo(visualElement, flags, "align-items", breakpoint);
         private static void AddAlignSelfClassNames(VisualElement visualElement, AlignFlags flags, Breakpoint breakpoint) =>
-            AddClassNamesTo(visualElement, flags, "align-items", breakpoint);
+            AddClassNamesTo(visualElement, flags, "align-self", breakpoint);
         private static void AddAlignContentClassNames(VisualElement visualElement, AlignFlags flags, Breakpoint breakpoint) =>
             AddClassNamesTo(visualElement, flags, "align-content", breakpoint);
         private static void AddClassNamesTo(VisualElement visualElement, AlignFlags flags, string prefix, Breakpoint breakpoint)
@@ -1823,6 +1999,67 @@ namespace Roots
             if ((flags & VisibilityFlags.Invisible) > 0)
             {
                 visualElement.AddToClassList($"invisible{postfix}");
+            }
+        }
+        
+        private static void AddClassNamesTo(VisualElement visualElement, TextAlignmentFlags flags, Breakpoint breakpoint)
+        {
+            var languageDirection = visualElement.GetComputedLanguageDirection();
+            var start = languageDirection == LanguageDirection.RTL ? "-right" : "-left";
+            var end = languageDirection == LanguageDirection.RTL ? "-left" : "-right";
+            const string center = "-center";
+            const string upper = "-upper";
+            const string middle = "-middle";
+            const string lower = "-lower";
+            
+            var prefix = $"text{GetBreakpoint(breakpoint)}";
+            if ((flags & TextAlignmentFlags.Start) > 0)
+            {
+                visualElement.AddToClassList($"{prefix}{start}");
+            }
+            if ((flags & TextAlignmentFlags.End) > 0)
+            {
+                visualElement.AddToClassList($"{prefix}{end}");
+            }
+            if ((flags & TextAlignmentFlags.Center) > 0)
+            {
+                visualElement.AddToClassList($"{prefix}{center}");
+            }
+            if ((flags & TextAlignmentFlags.UpperStart) > 0)
+            {
+                visualElement.AddToClassList($"{prefix}{upper}{start}");
+            }
+            if ((flags & TextAlignmentFlags.UpperEnd) > 0)
+            {
+                visualElement.AddToClassList($"{prefix}{upper}{end}");
+            }
+            if ((flags & TextAlignmentFlags.UpperCenter) > 0)
+            {
+                visualElement.AddToClassList($"{prefix}{upper}{center}");
+            }
+            if ((flags & TextAlignmentFlags.MiddleStart) > 0)
+            {
+                visualElement.AddToClassList($"{prefix}{middle}{start}");
+            }
+            if ((flags & TextAlignmentFlags.MiddleEnd) > 0)
+            {
+                visualElement.AddToClassList($"{prefix}{middle}{end}");
+            }
+            if ((flags & TextAlignmentFlags.MiddleCenter) > 0)
+            {
+                visualElement.AddToClassList($"{prefix}{middle}{center}");
+            }
+            if ((flags & TextAlignmentFlags.LowerStart) > 0)
+            {
+                visualElement.AddToClassList($"{prefix}{lower}{start}");
+            }
+            if ((flags & TextAlignmentFlags.LowerEnd) > 0)
+            {
+                visualElement.AddToClassList($"{prefix}{lower}{end}");
+            }
+            if ((flags & TextAlignmentFlags.LowerCenter) > 0)
+            {
+                visualElement.AddToClassList($"{prefix}{lower}{center}");
             }
         }
         
@@ -2371,6 +2608,62 @@ namespace Roots
             }
         }
         
+        private static void AddClassNamesTo(VisualElement visualElement, TextWrappingFlags flags)
+        {
+            if ((flags & TextWrappingFlags.Wrap) > 0)
+            {
+                visualElement.AddToClassList("text-wrap");
+            }
+            if ((flags & TextWrappingFlags.NoWrap) > 0)
+            {
+                visualElement.AddToClassList("text-nowrap");
+            }
+        }
+        
+        private static void AddClassNamesTo(VisualElement visualElement, FontSizeFlags flags)
+        {
+            if ((flags & FontSizeFlags.Size1) > 0)
+            {
+                visualElement.AddToClassList("fs-1");
+            }
+            if ((flags & FontSizeFlags.Size2) > 0)
+            {
+                visualElement.AddToClassList("fs-2");
+            }
+            if ((flags & FontSizeFlags.Size3) > 0)
+            {
+                visualElement.AddToClassList("fs-3");
+            }
+            if ((flags & FontSizeFlags.Size4) > 0)
+            {
+                visualElement.AddToClassList("fs-4");
+            }
+            if ((flags & FontSizeFlags.Size5) > 0)
+            {
+                visualElement.AddToClassList("fs-5");
+            }
+            if ((flags & FontSizeFlags.Size6) > 0)
+            {
+                visualElement.AddToClassList("fs-6");
+            }
+        }
+        
+        private static void AddClassNamesTo(VisualElement visualElement, FontStyleFlags flags)
+        {
+            if ((flags & FontStyleFlags.Bold) > 0)
+            {
+                visualElement.AddToClassList("fst-bold");
+            }
+            if ((flags & FontStyleFlags.Italic) > 0)
+            {
+                visualElement.AddToClassList("fst-italic");
+            }
+            if ((flags & FontStyleFlags.Normal) > 0)
+            {
+                visualElement.AddToClassList("fst-normal");
+            }
+        }
+        
         [Flags]
         private enum DisplayFlags
         {
@@ -2494,6 +2787,23 @@ namespace Roots
             public GapsFlags general;
             public GapsFlags row;
             public GapsFlags column;
+        }
+        [Flags]
+        private enum TextAlignmentFlags
+        {
+            Unset = 0,
+            Start = 1,
+            End = 1<<2,
+            Center = 1<<3,
+            UpperStart = 1<<4,
+            UpperEnd = 1<<5,
+            UpperCenter = 1<<6,
+            MiddleStart = 1<<7,
+            MiddleEnd = 1<<8,
+            MiddleCenter = 1<<9,
+            LowerStart = 1<<10,
+            LowerEnd = 1<<11,
+            LowerCenter = 1<<12,
         }
         [Flags]
         private enum VisibilityFlags
@@ -2694,6 +3004,32 @@ namespace Roots
             public CornerRadiusFlags right;
             public CornerRadiusFlags bottom;
             public CornerRadiusFlags left;
+        }
+        [Flags]
+        private enum TextWrappingFlags
+        {
+            Unset = 0,
+            Wrap = 1,
+            NoWrap = 1<<2,
+        }
+        [Flags]
+        private enum FontSizeFlags
+        {
+            Unset = 0,
+            Size1 = 1,
+            Size2 = 1<<2,
+            Size3 = 1<<3,
+            Size4 = 1<<4,
+            Size5 = 1<<5,
+            Size6 = 1<<6,
+        }
+        [Flags]
+        private enum FontStyleFlags
+        {
+            Unset = 0,
+            Bold = 1,
+            Italic = 1<<2,
+            Normal = 1<<3,
         }
         
         private delegate void ResponsiveClassNameAction<in T>(VisualElement visualElement, T value, Breakpoint breakpoint) where T : unmanaged;

@@ -43,9 +43,16 @@
     margin-top: 0;
     margin-bottom: 16px;
 }
+.small {
+    font-size: 14px;
+}
 .lead {
     font-size: 20px;
     font-weight: 300;
+}
+
+Image {
+    overflow: hidden;
 }
 
 .img-fluid {

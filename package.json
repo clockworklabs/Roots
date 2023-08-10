@@ -10,7 +10,8 @@
     "url": "https://lisandroct.com"
   },
   "dependencies": {
-    "com.clockworklabs.rish": "3.0.0-pre.100"
+    "com.clockworklabs.rish": "3.0.0-pre.100",
+    "com.clockworklabs.motion": "1.7.1"
   },
   "type": "library"
 }

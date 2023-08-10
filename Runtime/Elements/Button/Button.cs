@@ -50,8 +50,10 @@ namespace Roots
             var pressed = Content.Create(className: pressedClassName, utilities: Props.utilities, children: Props.children);
             var disabled = Content.Create(className: disabledClassName, utilities: Props.utilities, children: Props.children);
 
-            return AbstractButton.Create(interactable: !Props.disabled, normal: normal, pressed: pressed, disabled: disabled, action: Props.action);
+            return AbstractButton.Create(interactable: !Props.disabled, normal: normal, pressed: pressed, disabled: disabled, action: (Action) OnAction);
         }
+
+        private void OnAction() => Props.action?.Invoke();
         
         private static Element ContentElement(ContentProps props) => Div.Create(className: props.className, utilities: props.utilities, children: props.children);
         [RishValueType]

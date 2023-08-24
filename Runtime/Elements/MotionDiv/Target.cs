@@ -831,18 +831,18 @@ namespace Roots
 
     public struct TargetColorsShorthand
     {
-        public Color top;
-        public Color right;
-        public Color bottom;
-        public Color left;
+        public Color? top;
+        public Color? right;
+        public Color? bottom;
+        public Color? left;
 
-        public TargetColorsShorthand(Color value) : this(value, value, value, value) { }
+        public TargetColorsShorthand(Color? value) : this(value, value, value, value) { }
 
-        public TargetColorsShorthand(Color topBottom, Color leftRight) : this(topBottom, leftRight, topBottom, leftRight) { }
+        public TargetColorsShorthand(Color? topBottom, Color? leftRight) : this(topBottom, leftRight, topBottom, leftRight) { }
 
-        public TargetColorsShorthand(Color top, Color leftRight, Color bottom) : this(top, leftRight, bottom, leftRight) { }
+        public TargetColorsShorthand(Color? top, Color? leftRight, Color? bottom) : this(top, leftRight, bottom, leftRight) { }
 
-        public TargetColorsShorthand(Color top, Color right, Color bottom, Color left)
+        public TargetColorsShorthand(Color? top, Color? right, Color? bottom, Color? left)
         {
             this.top = top;
             this.right = right;
@@ -850,10 +850,10 @@ namespace Roots
             this.left = left;
         }
 
-        public static implicit operator TargetColorsShorthand(Color value) => new(value);
-        public static implicit operator TargetColorsShorthand((Color, Color) values) => new(values.Item1, values.Item2);
-        public static implicit operator TargetColorsShorthand((Color, Color, Color) values) => new(values.Item1, values.Item2, values.Item3);
-        public static implicit operator TargetColorsShorthand((Color, Color, Color, Color) values) => new(values.Item1, values.Item2, values.Item3, values.Item4);
+        public static implicit operator TargetColorsShorthand(Color? value) => new(value);
+        public static implicit operator TargetColorsShorthand((Color?, Color?) values) => new(values.Item1, values.Item2);
+        public static implicit operator TargetColorsShorthand((Color?, Color?, Color?) values) => new(values.Item1, values.Item2, values.Item3);
+        public static implicit operator TargetColorsShorthand((Color?, Color?, Color?, Color?) values) => new(values.Item1, values.Item2, values.Item3, values.Item4);
     }
 
     public struct TargetLengthsShorthand

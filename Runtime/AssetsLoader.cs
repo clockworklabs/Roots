@@ -61,6 +61,16 @@ namespace Roots
                 }
             }
 
+            var uiDocuments = FindObjectsByType<UIDocument>(FindObjectsSortMode.None);
+            foreach (var uiDocument in uiDocuments)
+            {
+                if (uiDocument.rootVisualElement.Contains(visualElement))
+                {
+                    var loader = uiDocument.gameObject.AddComponent<ResourcesLoader>();
+                    return loader;
+                }
+            }
+
             return null;
         }
 

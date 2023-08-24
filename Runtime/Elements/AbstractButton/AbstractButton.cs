@@ -60,7 +60,7 @@ namespace Roots
 
             if (Props.focusable && Props.autoFocus)
             {
-                    Focus();
+                Focus();
             }
         }
 

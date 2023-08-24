@@ -432,6 +432,7 @@ namespace Roots
             this.left = left;
         }
 
+        public static implicit operator InitialColorsShorthand(bool animate) => new (animate);
         public static implicit operator InitialColorsShorthand(Color value) => new (value);
         public static implicit operator InitialColorsShorthand(InitialColor value) => new (value);
         public static implicit operator InitialColorsShorthand((Color, Color) values) => new (values.Item1, values.Item2);

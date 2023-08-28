@@ -2,7 +2,7 @@ using RishUI;
 using RishUI.Events;
 using UnityEngine;
 
-namespace RishWindows
+namespace Roots
 {
     public partial class WindowHeader : RishElement<WindowHeaderProps>, IMountingListener
     {

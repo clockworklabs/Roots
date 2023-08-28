@@ -1,3 +1,4 @@
+using System.Text;
 using RishUI;
 using RishUI.Events;
 using Unity.Collections;
@@ -40,6 +41,8 @@ namespace Roots
         private StyleLength InlineWidth;
         private StyleLength InlineHeight;
 
+        private StringBuilder StringBuilder { get; } = new();
+        
         public Image()
         {
             PickingManager = new RectPickingManager(this);
@@ -164,7 +167,7 @@ namespace Roots
                 }
             }
             
-            this.AddClassNames(props.utilities);
+            this.AddClassNames(props.utilities, StringBuilder);
         }
 
         void IStyledProps<Image, ImageProps>.OnCustomStyle(ref ImageProps props)

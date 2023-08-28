@@ -1,3 +1,4 @@
+using System.Text;
 using RishUI;
 using Unity.Collections;
 using UnityEngine;
@@ -26,6 +27,8 @@ namespace Roots
         private FixedString128Bytes BackgroundSpriteAddress;
         private FixedString128Bytes BackgroundVectorAddress;
         private FixedString128Bytes BackgroundRenderTextureAddress;
+        
+        private StringBuilder StringBuilder { get; } = new();
         
         public Div()
         {
@@ -94,7 +97,7 @@ namespace Roots
                 Debug.LogError("App needs an Asset Loader");
             }
             
-            this.AddClassNames(props.utilities);
+            this.AddClassNames(props.utilities, StringBuilder);
         }
 
         void IStyledProps<Div, DivProps>.OnCustomStyle(ref DivProps props)

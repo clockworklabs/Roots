@@ -2,7 +2,7 @@
 using RishUI.Events;
 using UnityEngine;
 
-namespace RishWindows
+namespace Roots
 {
     [AutoKey]
     public partial class Window : RishElement<WindowProps>, IMountingListener, IPropsListener

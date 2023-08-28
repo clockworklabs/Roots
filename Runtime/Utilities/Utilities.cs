@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 using RishUI;
 using UnityEngine.UIElements;
 
@@ -1667,38 +1668,38 @@ namespace Roots
         }
         
 
-        public void AddClassNamesTo(VisualElement visualElement)
+        public void AddClassNamesTo(VisualElement visualElement, StringBuilder stringBuilder)
         {
             if (RishUtils.MemCmp(this, None))
             {
                 return;
             }
             
-            display.AddClassNamesTo(visualElement, AddClassNamesTo);
-            flexDirection.AddClassNamesTo(visualElement, AddClassNamesTo);
-            justifyContent.AddClassNamesTo(visualElement, AddClassNamesTo);
-            alignItems.AddClassNamesTo(visualElement, AddAlignItemsClassNames);
-            alignSelf.AddClassNamesTo(visualElement, AddAlignSelfClassNames);
-            fill.AddClassNamesTo(visualElement, AddClassNamesTo);
-            growAndShrink.AddClassNamesTo(visualElement, AddClassNamesTo);
-            wrap.AddClassNamesTo(visualElement, AddClassNamesTo);
-            alignContent.AddClassNamesTo(visualElement, AddAlignContentClassNames);
-            margins.AddClassNamesTo(visualElement, AddClassNamesTo);
-            paddings.AddClassNamesTo(visualElement, AddClassNamesTo);
-            gaps.AddClassNamesTo(visualElement, AddClassNamesTo);
-            textAlignment.AddClassNamesTo(visualElement, AddClassNamesTo);
-            visibility.AddClassNamesTo(visualElement, AddClassNamesTo);
+            display.AddClassNamesTo(visualElement, stringBuilder, AddClassNamesTo);
+            flexDirection.AddClassNamesTo(visualElement, stringBuilder, AddClassNamesTo);
+            justifyContent.AddClassNamesTo(visualElement, stringBuilder, AddClassNamesTo);
+            alignItems.AddClassNamesTo(visualElement, stringBuilder, AddAlignItemsClassNames);
+            alignSelf.AddClassNamesTo(visualElement, stringBuilder, AddAlignSelfClassNames);
+            fill.AddClassNamesTo(visualElement, stringBuilder, AddClassNamesTo);
+            growAndShrink.AddClassNamesTo(visualElement, stringBuilder, AddClassNamesTo);
+            wrap.AddClassNamesTo(visualElement, stringBuilder, AddClassNamesTo);
+            alignContent.AddClassNamesTo(visualElement, stringBuilder, AddAlignContentClassNames);
+            margins.AddClassNamesTo(visualElement, stringBuilder, AddClassNamesTo);
+            paddings.AddClassNamesTo(visualElement, stringBuilder, AddClassNamesTo);
+            gaps.AddClassNamesTo(visualElement, stringBuilder, AddClassNamesTo);
+            textAlignment.AddClassNamesTo(visualElement, stringBuilder, AddClassNamesTo);
+            visibility.AddClassNamesTo(visualElement, stringBuilder, AddClassNamesTo);
 
             AddClassNamesTo(visualElement, absoluteFill);
             AddClassNamesTo(visualElement, opacity);
             AddClassNamesTo(visualElement, overflow);
             AddClassNamesTo(visualElement, position);
-            AddClassNamesTo(visualElement, arrangeElements);
+            AddClassNamesTo(visualElement, arrangeElements, stringBuilder);
             AddClassNamesTo(visualElement, sizing);
             AddClassNamesTo(visualElement, background);
             AddClassNamesTo(visualElement, borders);
             AddClassNamesTo(visualElement, colors);
-            AddClassNamesTo(visualElement, roundedCorners);
+            AddClassNamesTo(visualElement, roundedCorners, stringBuilder);
             AddClassNamesTo(visualElement, textWrapping);
             AddClassNamesTo(visualElement, fontSize);
             AddClassNamesTo(visualElement, fontStyle);
@@ -1715,294 +1716,339 @@ namespace Roots
             _ => string.Empty,
         };
 
-        private static void AddClassNamesTo(VisualElement visualElement, DisplayFlags flags, Breakpoint breakpoint)
+        private static void AddClassNamesTo(VisualElement visualElement, DisplayFlags flags, Breakpoint breakpoint, StringBuilder stringBuilder)
         {
-            var prefix = $"display{GetBreakpoint(breakpoint)}";
+            const string prefix = "display";
             if ((flags & DisplayFlags.None) > 0)
             {
-                visualElement.AddToClassList($"{prefix}-none");
+                var className = BuildResponsiveClassName(prefix, breakpoint, "-none", stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & DisplayFlags.Flex) > 0)
             {
-                visualElement.AddToClassList($"{prefix}-flex");
+                var className = BuildResponsiveClassName(prefix, breakpoint, "-flex", stringBuilder);
+                visualElement.AddToClassList(className);
             }
         }
-        private static void AddClassNamesTo(VisualElement visualElement, FlexDirectionFlags flags, Breakpoint breakpoint)
+        private static void AddClassNamesTo(VisualElement visualElement, FlexDirectionFlags flags, Breakpoint breakpoint, StringBuilder stringBuilder)
         {
-            var prefix = $"flex{GetBreakpoint(breakpoint)}";
+            const string prefix = "flex";
             if ((flags & FlexDirectionFlags.Column) > 0)
             {
-                visualElement.AddToClassList($"{prefix}-column");
+                var className = BuildResponsiveClassName(prefix, breakpoint, "-column", stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & FlexDirectionFlags.ColumnReverse) > 0)
             {
-                visualElement.AddToClassList($"{prefix}-column-reverse");
+                var className = BuildResponsiveClassName(prefix, breakpoint, "-column-reverse", stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & FlexDirectionFlags.Row) > 0)
             {
-                visualElement.AddToClassList($"{prefix}-row");
+                var className = BuildResponsiveClassName(prefix, breakpoint, "-row", stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & FlexDirectionFlags.RowReverse) > 0)
             {
-                visualElement.AddToClassList($"{prefix}-row-reverse");
+                var className = BuildResponsiveClassName(prefix, breakpoint, "-row-reverse", stringBuilder);
+                visualElement.AddToClassList(className);
             }
         }
-        private static void AddClassNamesTo(VisualElement visualElement, JustifyContentFlags flags, Breakpoint breakpoint)
+        private static void AddClassNamesTo(VisualElement visualElement, JustifyContentFlags flags, Breakpoint breakpoint, StringBuilder stringBuilder)
         {
-            var prefix = $"justify-content{GetBreakpoint(breakpoint)}";
+            const string prefix = "justify-content";
             if ((flags & JustifyContentFlags.Start) > 0)
             {
-                visualElement.AddToClassList($"{prefix}-start");
+                var className = BuildResponsiveClassName(prefix, breakpoint, "-start", stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & JustifyContentFlags.End) > 0)
             {
-                visualElement.AddToClassList($"{prefix}-end");
+                var className = BuildResponsiveClassName(prefix, breakpoint, "-end", stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & JustifyContentFlags.Center) > 0)
             {
-                visualElement.AddToClassList($"{prefix}-center");
+                var className = BuildResponsiveClassName(prefix, breakpoint, "-center", stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & JustifyContentFlags.Between) > 0)
             {
-                visualElement.AddToClassList($"{prefix}-between");
+                var className = BuildResponsiveClassName(prefix, breakpoint, "-between", stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & JustifyContentFlags.Around) > 0)
             {
-                visualElement.AddToClassList($"{prefix}-around");
+                var className = BuildResponsiveClassName(prefix, breakpoint, "-around", stringBuilder);
+                visualElement.AddToClassList(className);
             }
         }
 
-        private static void AddAlignItemsClassNames(VisualElement visualElement, AlignFlags flags, Breakpoint breakpoint) =>
-            AddClassNamesTo(visualElement, flags, "align-items", breakpoint);
-        private static void AddAlignSelfClassNames(VisualElement visualElement, AlignFlags flags, Breakpoint breakpoint) =>
-            AddClassNamesTo(visualElement, flags, "align-self", breakpoint);
-        private static void AddAlignContentClassNames(VisualElement visualElement, AlignFlags flags, Breakpoint breakpoint) =>
-            AddClassNamesTo(visualElement, flags, "align-content", breakpoint);
-        private static void AddClassNamesTo(VisualElement visualElement, AlignFlags flags, string prefix, Breakpoint breakpoint)
+        private static void AddAlignItemsClassNames(VisualElement visualElement, AlignFlags flags, Breakpoint breakpoint, StringBuilder stringBuilder) =>
+            AddClassNamesTo(visualElement, flags, "align-items", breakpoint, stringBuilder);
+        private static void AddAlignSelfClassNames(VisualElement visualElement, AlignFlags flags, Breakpoint breakpoint, StringBuilder stringBuilder) =>
+            AddClassNamesTo(visualElement, flags, "align-self", breakpoint, stringBuilder);
+        private static void AddAlignContentClassNames(VisualElement visualElement, AlignFlags flags, Breakpoint breakpoint, StringBuilder stringBuilder) =>
+            AddClassNamesTo(visualElement, flags, "align-content", breakpoint, stringBuilder);
+        private static void AddClassNamesTo(VisualElement visualElement, AlignFlags flags, string prefix, Breakpoint breakpoint, StringBuilder stringBuilder)
         {
-            prefix = $"{prefix}{GetBreakpoint(breakpoint)}";
             if ((flags & AlignFlags.Start) > 0)
             {
-                visualElement.AddToClassList($"{prefix}-start");
+                var className = BuildResponsiveClassName(prefix, breakpoint, "-start", stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & AlignFlags.End) > 0)
             {
-                visualElement.AddToClassList($"{prefix}-end");
+                var className = BuildResponsiveClassName(prefix, breakpoint, "-end", stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & AlignFlags.Center) > 0)
             {
-                visualElement.AddToClassList($"{prefix}-center");
+                var className = BuildResponsiveClassName(prefix, breakpoint, "-center", stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & AlignFlags.Stretch) > 0)
             {
-                visualElement.AddToClassList($"{prefix}-between");
+                var className = BuildResponsiveClassName(prefix, breakpoint, "-between", stringBuilder);
+                visualElement.AddToClassList(className);
             }
         }
         
-        private static void AddClassNamesTo(VisualElement visualElement, FillFlags flags, Breakpoint breakpoint)
+        private static void AddClassNamesTo(VisualElement visualElement, FillFlags flags, Breakpoint breakpoint, StringBuilder stringBuilder)
         {
-            var prefix = $"flex{GetBreakpoint(breakpoint)}";
+            const string prefix = "flex";
             if ((flags & FillFlags.Set) > 0)
             {
-                visualElement.AddToClassList($"{prefix}-fill");
+                var className = BuildResponsiveClassName(prefix, breakpoint, "-fill", stringBuilder);
+                visualElement.AddToClassList(className);
             }
         }
         
-        private static void AddClassNamesTo(VisualElement visualElement, GrowAndShrinkFlags flags, Breakpoint breakpoint)
+        private static void AddClassNamesTo(VisualElement visualElement, GrowAndShrinkFlags flags, Breakpoint breakpoint, StringBuilder stringBuilder)
         {
-            var prefix = $"flex{GetBreakpoint(breakpoint)}";
+            const string prefix = "flex";
             if ((flags & GrowAndShrinkFlags.Grow0) > 0)
             {
-                visualElement.AddToClassList($"{prefix}-grow-0");
+                var className = BuildResponsiveClassName(prefix, breakpoint, "-grow-0", stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & GrowAndShrinkFlags.Grow1) > 0)
             {
-                visualElement.AddToClassList($"{prefix}-grow-1");
+                var className = BuildResponsiveClassName(prefix, breakpoint, "-grow-1", stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & GrowAndShrinkFlags.Shrink0) > 0)
             {
-                visualElement.AddToClassList($"{prefix}-shrink-0");
+                var className = BuildResponsiveClassName(prefix, breakpoint, "-shrink-0", stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & GrowAndShrinkFlags.Shrink1) > 0)
             {
-                visualElement.AddToClassList($"{prefix}-shrink-1");
+                var className = BuildResponsiveClassName(prefix, breakpoint, "-shrink-1", stringBuilder);
+                visualElement.AddToClassList(className);
             }
         }
         
-        private static void AddClassNamesTo(VisualElement visualElement, WrapFlags flags, Breakpoint breakpoint)
+        private static void AddClassNamesTo(VisualElement visualElement, WrapFlags flags, Breakpoint breakpoint, StringBuilder stringBuilder)
         {
-            var prefix = $"flex{GetBreakpoint(breakpoint)}";
+            const string prefix = "flex";
             if ((flags & WrapFlags.NoWrap) > 0)
             {
-                visualElement.AddToClassList($"{prefix}-nowrap");
+                var className = BuildResponsiveClassName(prefix, breakpoint, "-nowrap", stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & WrapFlags.Wrap) > 0)
             {
-                visualElement.AddToClassList($"{prefix}-wrap");
+                var className = BuildResponsiveClassName(prefix, breakpoint, "-wrap", stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & WrapFlags.WrapReverse) > 0)
             {
-                visualElement.AddToClassList($"{prefix}-wrap-reverse");
+                var className = BuildResponsiveClassName(prefix, breakpoint, "-wrap-reverse", stringBuilder);
+                visualElement.AddToClassList(className);
             }
         }
         
-        private static void AddClassNamesTo(VisualElement visualElement, Margins margins, Breakpoint breakpoint)
+        private static void AddClassNamesTo(VisualElement visualElement, Margins margins, Breakpoint breakpoint, StringBuilder stringBuilder)
         {
             var languageDirection = visualElement.GetComputedLanguageDirection();
-            AddClassNamesTo(visualElement, margins.top, "mt", breakpoint);
-            AddClassNamesTo(visualElement, margins.bottom, "mb", breakpoint);
-            AddClassNamesTo(visualElement, margins.start, languageDirection == LanguageDirection.RTL ? "mr" : "ml", breakpoint);
-            AddClassNamesTo(visualElement, margins.end, languageDirection == LanguageDirection.RTL ? "ml" : "mr", breakpoint);
-            AddClassNamesTo(visualElement, margins.x, "mx", breakpoint);
-            AddClassNamesTo(visualElement, margins.y, "my", breakpoint);
-            AddClassNamesTo(visualElement, margins.general, "m", breakpoint);
+            AddClassNamesTo(visualElement, margins.top, "mt", breakpoint, stringBuilder);
+            AddClassNamesTo(visualElement, margins.bottom, "mb", breakpoint, stringBuilder);
+            AddClassNamesTo(visualElement, margins.start, languageDirection == LanguageDirection.RTL ? "mr" : "ml", breakpoint, stringBuilder);
+            AddClassNamesTo(visualElement, margins.end, languageDirection == LanguageDirection.RTL ? "ml" : "mr", breakpoint, stringBuilder);
+            AddClassNamesTo(visualElement, margins.x, "mx", breakpoint, stringBuilder);
+            AddClassNamesTo(visualElement, margins.y, "my", breakpoint, stringBuilder);
+            AddClassNamesTo(visualElement, margins.general, "m", breakpoint, stringBuilder);
         }
-        private static void AddClassNamesTo(VisualElement visualElement, MarginsFlags flags, string prefix, Breakpoint breakpoint)
+        private static void AddClassNamesTo(VisualElement visualElement, MarginsFlags flags, string prefix, Breakpoint breakpoint, StringBuilder stringBuilder)
         {
-            prefix = $"{prefix}{GetBreakpoint(breakpoint)}";
             if ((flags & MarginsFlags.Zero) > 0)
             {
-                visualElement.AddToClassList($"{prefix}-0");
+                var className = BuildResponsiveClassName(prefix, breakpoint, "-0", stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & MarginsFlags.Spacer1) > 0)
             {
-                visualElement.AddToClassList($"{prefix}-1");
+                var className = BuildResponsiveClassName(prefix, breakpoint, "-1", stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & MarginsFlags.Spacer2) > 0)
             {
-                visualElement.AddToClassList($"{prefix}-2");
+                var className = BuildResponsiveClassName(prefix, breakpoint, "-2", stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & MarginsFlags.Spacer3) > 0)
             {
-                visualElement.AddToClassList($"{prefix}-3");
+                var className = BuildResponsiveClassName(prefix, breakpoint, "-3", stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & MarginsFlags.Spacer4) > 0)
             {
-                visualElement.AddToClassList($"{prefix}-4");
+                var className = BuildResponsiveClassName(prefix, breakpoint, "-4", stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & MarginsFlags.Spacer5) > 0)
             {
-                visualElement.AddToClassList($"{prefix}-5");
+                var className = BuildResponsiveClassName(prefix, breakpoint, "-5", stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & MarginsFlags.Auto) > 0)
             {
-                visualElement.AddToClassList($"{prefix}-auto");
+                var className = BuildResponsiveClassName(prefix, breakpoint, "-auto", stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & MarginsFlags.NegSpacer1) > 0)
             {
-                visualElement.AddToClassList($"{prefix}-n1");
+                var className = BuildResponsiveClassName(prefix, breakpoint, "-n1", stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & MarginsFlags.NegSpacer2) > 0)
             {
-                visualElement.AddToClassList($"{prefix}-n2");
+                var className = BuildResponsiveClassName(prefix, breakpoint, "-n2", stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & MarginsFlags.NegSpacer3) > 0)
             {
-                visualElement.AddToClassList($"{prefix}-n3");
+                var className = BuildResponsiveClassName(prefix, breakpoint, "-n3", stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & MarginsFlags.NegSpacer4) > 0)
             {
-                visualElement.AddToClassList($"{prefix}-n4");
+                var className = BuildResponsiveClassName(prefix, breakpoint, "-n4", stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & MarginsFlags.NegSpacer5) > 0)
             {
-                visualElement.AddToClassList($"{prefix}-n5");
+                var className = BuildResponsiveClassName(prefix, breakpoint, "-n5", stringBuilder);
+                visualElement.AddToClassList(className);
             }
         }
         
-        private static void AddClassNamesTo(VisualElement visualElement, Paddings paddings, Breakpoint breakpoint)
+        private static void AddClassNamesTo(VisualElement visualElement, Paddings paddings, Breakpoint breakpoint, StringBuilder stringBuilder)
         {
             var languageDirection = visualElement.GetComputedLanguageDirection();
-            AddClassNamesTo(visualElement, paddings.top, "pt", breakpoint);
-            AddClassNamesTo(visualElement, paddings.bottom, "pb", breakpoint);
-            AddClassNamesTo(visualElement, paddings.start, languageDirection == LanguageDirection.RTL ? "pr" : "pl", breakpoint);
-            AddClassNamesTo(visualElement, paddings.end, languageDirection == LanguageDirection.RTL ? "pl" : "pr", breakpoint);
-            AddClassNamesTo(visualElement, paddings.x, "px", breakpoint);
-            AddClassNamesTo(visualElement, paddings.y, "py", breakpoint);
-            AddClassNamesTo(visualElement, paddings.general, "p", breakpoint);
+            AddClassNamesTo(visualElement, paddings.top, "pt", breakpoint, stringBuilder);
+            AddClassNamesTo(visualElement, paddings.bottom, "pb", breakpoint, stringBuilder);
+            AddClassNamesTo(visualElement, paddings.start, languageDirection == LanguageDirection.RTL ? "pr" : "pl", breakpoint, stringBuilder);
+            AddClassNamesTo(visualElement, paddings.end, languageDirection == LanguageDirection.RTL ? "pl" : "pr", breakpoint, stringBuilder);
+            AddClassNamesTo(visualElement, paddings.x, "px", breakpoint, stringBuilder);
+            AddClassNamesTo(visualElement, paddings.y, "py", breakpoint, stringBuilder);
+            AddClassNamesTo(visualElement, paddings.general, "p", breakpoint, stringBuilder);
         }
-        private static void AddClassNamesTo(VisualElement visualElement, PaddingsFlags flags, string prefix, Breakpoint breakpoint)
+        private static void AddClassNamesTo(VisualElement visualElement, PaddingsFlags flags, string prefix, Breakpoint breakpoint, StringBuilder stringBuilder)
         {
-            prefix = $"{prefix}{GetBreakpoint(breakpoint)}";
             if ((flags & PaddingsFlags.Zero) > 0)
             {
-                visualElement.AddToClassList($"{prefix}-0");
+                var className = BuildResponsiveClassName(prefix, breakpoint, "-0", stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & PaddingsFlags.Spacer1) > 0)
             {
-                visualElement.AddToClassList($"{prefix}-1");
+                var className = BuildResponsiveClassName(prefix, breakpoint, "-1", stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & PaddingsFlags.Spacer2) > 0)
             {
-                visualElement.AddToClassList($"{prefix}-2");
+                var className = BuildResponsiveClassName(prefix, breakpoint, "-2", stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & PaddingsFlags.Spacer3) > 0)
             {
-                visualElement.AddToClassList($"{prefix}-3");
+                var className = BuildResponsiveClassName(prefix, breakpoint, "-3", stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & PaddingsFlags.Spacer4) > 0)
             {
-                visualElement.AddToClassList($"{prefix}-4");
+                var className = BuildResponsiveClassName(prefix, breakpoint, "-4", stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & PaddingsFlags.Spacer5) > 0)
             {
-                visualElement.AddToClassList($"{prefix}-5");
+                var className = BuildResponsiveClassName(prefix, breakpoint, "-5", stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & PaddingsFlags.Auto) > 0)
             {
-                visualElement.AddToClassList($"{prefix}-auto");
+                var className = BuildResponsiveClassName(prefix, breakpoint, "-auto", stringBuilder);
+                visualElement.AddToClassList(className);
             }
         }
         
-        private static void AddClassNamesTo(VisualElement visualElement, Gaps gaps, Breakpoint breakpoint)
+        private static void AddClassNamesTo(VisualElement visualElement, Gaps gaps, Breakpoint breakpoint, StringBuilder stringBuilder)
         {
-            AddClassNamesTo(visualElement, gaps.row, "row-gap", breakpoint);
-            AddClassNamesTo(visualElement, gaps.column, "column-gap", breakpoint);
-            AddClassNamesTo(visualElement, gaps.general, "gap", breakpoint);
+            AddClassNamesTo(visualElement, gaps.row, "row-gap", breakpoint, stringBuilder);
+            AddClassNamesTo(visualElement, gaps.column, "column-gap", breakpoint, stringBuilder);
+            AddClassNamesTo(visualElement, gaps.general, "gap", breakpoint, stringBuilder);
         }
-        private static void AddClassNamesTo(VisualElement visualElement, GapsFlags flags, string prefix, Breakpoint breakpoint)
+        private static void AddClassNamesTo(VisualElement visualElement, GapsFlags flags, string prefix, Breakpoint breakpoint, StringBuilder stringBuilder)
         {
-            prefix = $"{prefix}{GetBreakpoint(breakpoint)}";
             if ((flags & GapsFlags.Zero) > 0)
             {
-                visualElement.AddToClassList($"{prefix}-0");
+                var className = BuildResponsiveClassName(prefix, breakpoint, "-0", stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & GapsFlags.Spacer1) > 0)
             {
-                visualElement.AddToClassList($"{prefix}-1");
+                var className = BuildResponsiveClassName(prefix, breakpoint, "-1", stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & GapsFlags.Spacer2) > 0)
             {
-                visualElement.AddToClassList($"{prefix}-2");
+                var className = BuildResponsiveClassName(prefix, breakpoint, "-2", stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & GapsFlags.Spacer3) > 0)
             {
-                visualElement.AddToClassList($"{prefix}-3");
+                var className = BuildResponsiveClassName(prefix, breakpoint, "-3", stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & GapsFlags.Spacer4) > 0)
             {
-                visualElement.AddToClassList($"{prefix}-4");
+                var className = BuildResponsiveClassName(prefix, breakpoint, "-4", stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & GapsFlags.Spacer5) > 0)
             {
-                visualElement.AddToClassList($"{prefix}-5");
+                var className = BuildResponsiveClassName(prefix, breakpoint, "-5", stringBuilder);
+                visualElement.AddToClassList(className);
             }
         }
         
-        private static void AddClassNamesTo(VisualElement visualElement, VisibilityFlags flags, Breakpoint breakpoint)
+        private static void AddClassNamesTo(VisualElement visualElement, VisibilityFlags flags, Breakpoint breakpoint, StringBuilder stringBuilder)
         {
-            var postfix = GetBreakpoint(breakpoint);
             if ((flags & VisibilityFlags.Visible) > 0)
             {
-                visualElement.AddToClassList($"visible{postfix}");
+                var className = BuildResponsiveClassName("visible", breakpoint, null, stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & VisibilityFlags.Invisible) > 0)
             {
-                visualElement.AddToClassList($"invisible{postfix}");
+                var className = BuildResponsiveClassName("invisible", breakpoint, null, stringBuilder);
+                visualElement.AddToClassList(className);
             }
         }
         
-        private static void AddClassNamesTo(VisualElement visualElement, TextAlignmentFlags flags, Breakpoint breakpoint)
+        private static void AddClassNamesTo(VisualElement visualElement, TextAlignmentFlags flags, Breakpoint breakpoint, StringBuilder stringBuilder)
         {
             var languageDirection = visualElement.GetComputedLanguageDirection();
             var start = languageDirection == LanguageDirection.RTL ? "-right" : "-left";
@@ -2012,55 +2058,86 @@ namespace Roots
             const string middle = "-middle";
             const string lower = "-lower";
             
-            var prefix = $"text{GetBreakpoint(breakpoint)}";
             if ((flags & TextAlignmentFlags.Start) > 0)
             {
-                visualElement.AddToClassList($"{prefix}{start}");
+                var className = BuildResponsiveClassName("text", breakpoint, start, stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & TextAlignmentFlags.End) > 0)
             {
-                visualElement.AddToClassList($"{prefix}{end}");
+                var className = BuildResponsiveClassName("text", breakpoint, end, stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & TextAlignmentFlags.Center) > 0)
             {
-                visualElement.AddToClassList($"{prefix}{center}");
+                var className = BuildResponsiveClassName("text", breakpoint, center, stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & TextAlignmentFlags.UpperStart) > 0)
             {
-                visualElement.AddToClassList($"{prefix}{upper}{start}");
+                var className = BuildResponsiveClassName("text", breakpoint, upper, start, stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & TextAlignmentFlags.UpperEnd) > 0)
             {
-                visualElement.AddToClassList($"{prefix}{upper}{end}");
+                var className = BuildResponsiveClassName("text", breakpoint, upper, end, stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & TextAlignmentFlags.UpperCenter) > 0)
             {
-                visualElement.AddToClassList($"{prefix}{upper}{center}");
+                var className = BuildResponsiveClassName("text", breakpoint, upper, center, stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & TextAlignmentFlags.MiddleStart) > 0)
             {
-                visualElement.AddToClassList($"{prefix}{middle}{start}");
+                var className = BuildResponsiveClassName("text", breakpoint, middle, start, stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & TextAlignmentFlags.MiddleEnd) > 0)
             {
-                visualElement.AddToClassList($"{prefix}{middle}{end}");
+                var className = BuildResponsiveClassName("text", breakpoint, middle, end, stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & TextAlignmentFlags.MiddleCenter) > 0)
             {
-                visualElement.AddToClassList($"{prefix}{middle}{center}");
+                var className = BuildResponsiveClassName("text", breakpoint, middle, center, stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & TextAlignmentFlags.LowerStart) > 0)
             {
-                visualElement.AddToClassList($"{prefix}{lower}{start}");
+                var className = BuildResponsiveClassName("text", breakpoint, lower, start, stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & TextAlignmentFlags.LowerEnd) > 0)
             {
-                visualElement.AddToClassList($"{prefix}{lower}{end}");
+                var className = BuildResponsiveClassName("text", breakpoint, lower, end, stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & TextAlignmentFlags.LowerCenter) > 0)
             {
-                visualElement.AddToClassList($"{prefix}{lower}{center}");
+                var className = BuildResponsiveClassName("text", breakpoint, lower, center, stringBuilder);
+                visualElement.AddToClassList(className);
             }
+        }
+
+        private static string BuildResponsiveClassName(string prefix, Breakpoint breakpoint, string postfix, StringBuilder stringBuilder) => BuildClassName(prefix, GetBreakpoint(breakpoint), postfix, stringBuilder);
+        private static string BuildResponsiveClassName(string prefix, Breakpoint breakpoint, string postfix0, string postfix1, StringBuilder stringBuilder) => BuildClassName(prefix, GetBreakpoint(breakpoint), postfix0, postfix1, stringBuilder);
+        private static string BuildClassName(string part0, string part1, StringBuilder stringBuilder) => BuildClassName(part0, part1, null, null, stringBuilder);
+        private static string BuildClassName(string part0, string part1, string part2, StringBuilder stringBuilder) => BuildClassName(part0, part1, part2, null, stringBuilder);
+        private static string BuildClassName(string part0, string part1, string part2, string part3, StringBuilder stringBuilder)
+        {
+            stringBuilder.Clear();
+            stringBuilder.Append(part0);
+            if(!string.IsNullOrWhiteSpace(part1)) {
+                stringBuilder.Append(part1);
+            }
+            if(!string.IsNullOrWhiteSpace(part2)) {
+                stringBuilder.Append(part2);
+            }
+            if(!string.IsNullOrWhiteSpace(part3)) {
+                stringBuilder.Append(part3);
+            }
+            return stringBuilder.ToString();
         }
         
         private static void AddClassNamesTo(VisualElement visualElement, AbsoluteFillFlags flags)
@@ -2119,7 +2196,7 @@ namespace Roots
             }
         }
         
-        private static void AddClassNamesTo(VisualElement visualElement, ArrangeElementsFlags flags)
+        private static void AddClassNamesTo(VisualElement visualElement, ArrangeElementsFlags flags, StringBuilder stringBuilder)
         {
             var languageDirection = visualElement.GetComputedLanguageDirection();
             
@@ -2150,28 +2227,34 @@ namespace Roots
             var startPrefix = languageDirection == LanguageDirection.RTL ? "right" : "left";
             if ((flags & ArrangeElementsFlags.Start0) > 0)
             {
-                visualElement.AddToClassList($"{startPrefix}-0");
+                var className = BuildClassName(startPrefix, "-0", stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & ArrangeElementsFlags.Start50) > 0)
             {
-                visualElement.AddToClassList($"{startPrefix}-50");
+                var className = BuildClassName(startPrefix, "-50", stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & ArrangeElementsFlags.Start100) > 0)
             {
-                visualElement.AddToClassList($"{startPrefix}-100");
+                var className = BuildClassName(startPrefix, "-100", stringBuilder);
+                visualElement.AddToClassList(className);
             }
             var endPrefix = languageDirection == LanguageDirection.RTL ? "left" : "right";
             if ((flags & ArrangeElementsFlags.End0) > 0)
             {
-                visualElement.AddToClassList($"{endPrefix}-0");
+                var className = BuildClassName(endPrefix, "-0", stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & ArrangeElementsFlags.End50) > 0)
             {
-                visualElement.AddToClassList($"{endPrefix}-50");
+                var className = BuildClassName(endPrefix, "-50", stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & ArrangeElementsFlags.End100) > 0)
             {
-                visualElement.AddToClassList($"{endPrefix}-100");
+                var className = BuildClassName(endPrefix, "-100", stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & ArrangeElementsFlags.TranslateMiddle) > 0)
             {
@@ -2563,48 +2646,56 @@ namespace Roots
             }
         }
 
-        private static void AddClassNamesTo(VisualElement visualElement, RoundedCorners roundedCorners)
+        private static void AddClassNamesTo(VisualElement visualElement, RoundedCorners roundedCorners, StringBuilder stringBuilder)
         {
-            AddClassNamesTo(visualElement, roundedCorners.general, string.Empty);
-            AddClassNamesTo(visualElement, roundedCorners.top, "-top");
-            AddClassNamesTo(visualElement, roundedCorners.right, "-right");
-            AddClassNamesTo(visualElement, roundedCorners.bottom, "-bottom");
-            AddClassNamesTo(visualElement, roundedCorners.left, "-left");
+            AddClassNamesTo(visualElement, roundedCorners.general, null, stringBuilder);
+            AddClassNamesTo(visualElement, roundedCorners.top, "-top", stringBuilder);
+            AddClassNamesTo(visualElement, roundedCorners.right, "-right", stringBuilder);
+            AddClassNamesTo(visualElement, roundedCorners.bottom, "-bottom", stringBuilder);
+            AddClassNamesTo(visualElement, roundedCorners.left, "-left", stringBuilder);
         }
-        private static void AddClassNamesTo(VisualElement visualElement, CornerRadiusFlags flags, string side)
+        private static void AddClassNamesTo(VisualElement visualElement, CornerRadiusFlags flags, string side, StringBuilder stringBuilder)
         {
-            var prefix = $"rounded{side}";
+            const string prefix = "rounded";
             if ((flags & CornerRadiusFlags.Set) > 0)
             {
-                visualElement.AddToClassList(prefix);
+                var className = BuildClassName(prefix, side, stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & CornerRadiusFlags.Radius0) > 0)
             {
-                visualElement.AddToClassList($"{prefix}-0");
+                var className = BuildClassName(prefix, side, "-0", stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & CornerRadiusFlags.Radius1) > 0)
             {
-                visualElement.AddToClassList($"{prefix}-1");
+                var className = BuildClassName(prefix, side, "-1", stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & CornerRadiusFlags.Radius2) > 0)
             {
-                visualElement.AddToClassList($"{prefix}-2");
+                var className = BuildClassName(prefix, side, "-2", stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & CornerRadiusFlags.Radius3) > 0)
             {
-                visualElement.AddToClassList($"{prefix}-3");
+                var className = BuildClassName(prefix, side, "-3", stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & CornerRadiusFlags.Radius4) > 0)
             {
-                visualElement.AddToClassList($"{prefix}-4");
+                var className = BuildClassName(prefix, side, "-4", stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & CornerRadiusFlags.Radius5) > 0)
             {
-                visualElement.AddToClassList($"{prefix}-5");
+                var className = BuildClassName(prefix, side, "-5", stringBuilder);
+                visualElement.AddToClassList(className);
             }
             if ((flags & CornerRadiusFlags.Circle) > 0)
             {
-                visualElement.AddToClassList($"{prefix}-circle");
+                var className = BuildClassName(prefix, side, "-circle", stringBuilder);
+                visualElement.AddToClassList(className);
             }
         }
         
@@ -3032,7 +3123,7 @@ namespace Roots
             Normal = 1<<3,
         }
         
-        private delegate void ResponsiveClassNameAction<in T>(VisualElement visualElement, T value, Breakpoint breakpoint) where T : unmanaged;
+        private delegate void ResponsiveClassNameAction<in T>(VisualElement visualElement, T value, Breakpoint breakpoint, StringBuilder stringBuilder) where T : unmanaged;
 
         private struct ResponsiveUtility<T> where T : unmanaged
         {
@@ -3043,19 +3134,19 @@ namespace Roots
             public T xl;
             public T xxl;
 
-            public void AddClassNamesTo(VisualElement visualElement, ResponsiveClassNameAction<T> action)
+            public void AddClassNamesTo(VisualElement visualElement, StringBuilder stringBuilder, ResponsiveClassNameAction<T> action)
             {
                 if (action == null)
                 {
                     return;
                 }
                 
-                action.Invoke(visualElement, xs, Breakpoint.XS);
-                action.Invoke(visualElement, sm, Breakpoint.SM);
-                action.Invoke(visualElement, md, Breakpoint.MD);
-                action.Invoke(visualElement, lg, Breakpoint.LG);
-                action.Invoke(visualElement, xl, Breakpoint.XL);
-                action.Invoke(visualElement, xxl, Breakpoint.XXL);
+                action.Invoke(visualElement, xs, Breakpoint.XS, stringBuilder);
+                action.Invoke(visualElement, sm, Breakpoint.SM, stringBuilder);
+                action.Invoke(visualElement, md, Breakpoint.MD, stringBuilder);
+                action.Invoke(visualElement, lg, Breakpoint.LG, stringBuilder);
+                action.Invoke(visualElement, xl, Breakpoint.XL, stringBuilder);
+                action.Invoke(visualElement, xxl, Breakpoint.XXL, stringBuilder);
             }
         }
     }

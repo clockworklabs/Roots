@@ -4,7 +4,7 @@ using Roots;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace RishWindows
+namespace Roots
 {
     public partial class WindowsContext : RishElement<WindowsContextProps>, ICustomComponent
     {

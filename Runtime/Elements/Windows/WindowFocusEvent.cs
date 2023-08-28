@@ -1,6 +1,6 @@
 using RishUI.Events;
 
-namespace RishWindows
+namespace Roots
 {
     public class WindowFocusEvent : RishEventBase<WindowFocusEvent>
     {

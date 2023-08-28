@@ -1,3 +1,4 @@
+using System.Text;
 using RishUI;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -15,6 +16,8 @@ namespace Roots
         private PickingManager PickingManager { get; }
         PickingManager ICustomPicking.Manager => PickingManager;
 
+        private StringBuilder StringBuilder { get; } = new();
+        
         public ResponsiveContext()
         {
             PickingManager = new RectPickingManager(this);
@@ -24,7 +27,7 @@ namespace Roots
 
         void IVisualElement<ResponsiveContextProps>.Setup(ResponsiveContextProps props)
         {
-            this.AddClassNames(props.utilities);
+            this.AddClassNames(props.utilities, StringBuilder);
         }
 
         public override bool ContainsPoint(Vector2 localPoint) => PickingManager.ContainsPoint(localPoint);

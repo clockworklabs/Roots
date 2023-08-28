@@ -1,7 +1,7 @@
 using RishUI;
 using UnityEngine.UIElements;
 
-namespace RishWindows
+namespace Roots
 {
     internal partial class InternalWindow : RishElement<InternalWindowProps>, IMountingListener
     {

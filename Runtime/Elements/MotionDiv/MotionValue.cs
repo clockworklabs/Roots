@@ -165,8 +165,6 @@ namespace Roots
             }
             
             var value = target.Value;
-            
-            var transitionDetails = CreateTransitionDetails(transition, defaultTransition, PropertyType);
             if (!_value.HasValue)
             {
                 Value = value;
@@ -175,8 +173,10 @@ namespace Roots
                 return false;
             }
             
+            var transitionDetails = CreateTransitionDetails(transition, defaultTransition, PropertyType);
+            
             Value = Adjust(Value, value).Value;
-        
+            
             switch (transitionDetails.type)
             {
                 case TransitionType.Spring:
@@ -187,10 +187,7 @@ namespace Roots
                         {
                             velocity = current.Velocity;
                         }
-                
-                        Animation.Stop();
                     }
-            
                     velocity = Adjust(velocity, value);
                     
                     var springAnimation = DoMotion.Spring<T, TSA>(GetValue, SetValue, value, transitionDetails.spring);
@@ -233,6 +230,7 @@ namespace Roots
                 }
             }
 
+            Animation.Stop();
             Animation = animation;
         
             return true;

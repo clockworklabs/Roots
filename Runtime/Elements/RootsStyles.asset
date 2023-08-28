@@ -25,3 +25,6 @@ MonoBehaviour:
   - _minWidth: 0
     _styleSheet: {fileID: 7433441132597879392, guid: 8b6b28ed1d1f04c4ca37210a27f075cf,
       type: 3}
+  - _minWidth: 0
+    _styleSheet: {fileID: 7433441132597879392, guid: 566021367b1034644bac147fe6cc4040,
+      type: 3}

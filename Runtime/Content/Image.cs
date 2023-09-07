@@ -173,16 +173,16 @@ namespace Roots
         void IStyledProps<Image, ImageProps>.OnCustomStyle(ref ImageProps props)
         {
             props.textureAddress ??= customStyle.TryGetValue(TextureAddressProp, out var customTextureAddress) 
-                ? AssetsLoader.GetAddressFromUSSUrl(customTextureAddress)
+                ? customTextureAddress
                 : string.Empty;
             props.spriteAddress ??= customStyle.TryGetValue(SpriteAddressProp, out var customSpriteAddress) 
-                ? AssetsLoader.GetAddressFromUSSUrl(customSpriteAddress)
+                ? customSpriteAddress
                 : string.Empty;
             props.vectorAddress ??= customStyle.TryGetValue(VectorAddressProp, out var customVectorAddress) 
-                ? AssetsLoader.GetAddressFromUSSUrl(customVectorAddress)
+                ? customVectorAddress
                 : string.Empty;
             props.renderTextureAddress ??= customStyle.TryGetValue(RenderTextureAddressProp, out var customRenderTextureAddress) 
-                ? AssetsLoader.GetAddressFromUSSUrl(customRenderTextureAddress)
+                ? customRenderTextureAddress
                 : string.Empty;
             
             props.tintColor ??= customStyle.TryGetValue(TintColorProp, out var customTintColor) ? customTintColor : Color.white;
@@ -460,39 +460,39 @@ namespace Roots
         public RenderTexture renderTexture;
         
         /// <summary>
-        /// Styled Prop as --prop-texture
+        /// Styled Prop as --props-texture
         /// </summary>
         public FixedString128Bytes? textureAddress;
         /// <summary>
-        /// Styled Prop as --prop-sprite
+        /// Styled Prop as --props-sprite
         /// </summary>
         public FixedString128Bytes? spriteAddress;
         /// <summary>
-        /// Styled Prop as --prop-vector
+        /// Styled Prop as --props-vector
         /// </summary>
         public FixedString128Bytes? vectorAddress;
         /// <summary>
-        /// Styled Prop as --prop-render-texture
+        /// Styled Prop as --props-render-texture
         /// </summary>
         public FixedString128Bytes? renderTextureAddress;
         
         /// <summary>
-        /// Styled Prop as --prop-scale-mode
+        /// Styled Prop as --props-scale-mode
         /// </summary>
         public ScaleMode? scaleMode;
         // TODO: public Rect? uv;
         
         /// <summary>
-        /// Styled Prop as --prop-tint-color
+        /// Styled Prop as --props-tint-color
         /// </summary>
         public Color? tintColor;
         
         /// <summary>
-        /// Styled Prop as --prop-image-width
+        /// Styled Prop as --props-image-width
         /// </summary>
         public ImageSize? width;
         /// <summary>
-        /// Styled Prop as --prop-image-height
+        /// Styled Prop as --props-image-height
         /// </summary>
         public ImageSize? height;
 

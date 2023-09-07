@@ -103,16 +103,16 @@ namespace Roots
         void IStyledProps<Div, DivProps>.OnCustomStyle(ref DivProps props)
         {
             props.backgroundTextureAddress ??= customStyle.TryGetValue(BackgroundTextureAddressProp, out var customTextureAddress) 
-                ? AssetsLoader.GetAddressFromUSSUrl(customTextureAddress)
+                ? customTextureAddress
                 : string.Empty;
             props.backgroundSpriteAddress ??= customStyle.TryGetValue(BackgroundSpriteAddressProp, out var customSpriteAddress) 
-                ? AssetsLoader.GetAddressFromUSSUrl(customSpriteAddress)
+                ? customSpriteAddress
                 : string.Empty;
             props.backgroundVectorAddress ??= customStyle.TryGetValue(BackgroundVectorAddressProp, out var customVectorAddress) 
-                ? AssetsLoader.GetAddressFromUSSUrl(customVectorAddress)
+                ? customVectorAddress
                 : string.Empty;
             props.backgroundRenderTextureAddress ??= customStyle.TryGetValue(BackgroundRenderTextureAddressProp, out var customRenderTextureAddress) 
-                ? AssetsLoader.GetAddressFromUSSUrl(customRenderTextureAddress)
+                ? customRenderTextureAddress
                 : string.Empty;
         }
 

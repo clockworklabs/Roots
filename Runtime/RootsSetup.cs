@@ -19,6 +19,8 @@ namespace Roots
 
         private IReadOnlyList<MediaQueryStyleSheet> _sortedStyleSheets;
         private IReadOnlyList<MediaQueryStyleSheet> SortedStyleSheets => _sortedStyleSheets;
+
+        private List<StyleSheet> BaseStyleSheets { get; } = new();
         
         private void Awake()
         {
@@ -43,6 +45,18 @@ namespace Roots
             {
                 return;
             }
+
+            var root = UIDocument.rootVisualElement;
+            
+            BaseStyleSheets.Clear();
+            var baseStyleSheetsCount = root.styleSheets.count;
+            for(var i = 0; i < baseStyleSheetsCount; i++)
+            {
+                var styleSheet = root.styleSheets[i];
+                BaseStyleSheets.Add(styleSheet);
+            }
+            
+            root.styleSheets.Clear();
             
             foreach (var responsiveStyleSheet in SortedStyleSheets)
             {
@@ -51,7 +65,13 @@ namespace Roots
                     break;
                 }
                 
-                rishRoot.AddStyleSheet(responsiveStyleSheet.StyleSheet);
+                root.styleSheets.Add(responsiveStyleSheet.StyleSheet);
+            }
+            
+            for(var i = 0; i < baseStyleSheetsCount; i++)
+            {
+                var styleSheet = BaseStyleSheets[i];
+                root.styleSheets.Add(styleSheet);
             }
         }
         

@@ -73,9 +73,5 @@ namespace Roots
 
             return null;
         }
-
-        public static string GetAddressFromUSSUrl(string url) => url.StartsWith("url(") && url.EndsWith(")")
-            ? url.Substring(3, url.Length - 5)
-            : string.Empty;
     }
 }

@@ -97,7 +97,7 @@ namespace Roots
                 Debug.LogError("App needs an Asset Loader");
             }
             
-            this.AddClassNames(props.utilities, StringBuilder);
+            // this.AddClassNames(props.utilities, StringBuilder);
         }
 
         void IStyledProps<Div, DivProps>.OnCustomStyle(ref DivProps props)
@@ -206,6 +206,6 @@ namespace Roots
         /// </summary>
         public FixedString128Bytes? backgroundRenderTextureAddress;
         
-        public Utilities utilities;
+        // public Utilities utilities;
     }
 }

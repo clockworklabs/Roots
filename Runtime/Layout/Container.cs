@@ -19,7 +19,7 @@ namespace Roots
                 _ => throw new ArgumentOutOfRangeException()
             };
 
-            return Div.Create(className: containerClass, utilities: Props.utilities, children: Props.children);
+            return Div.Create(className: containerClass, /*utilities: Props.utilities,*/ children: Props.children);
         }
     }
     
@@ -29,7 +29,7 @@ namespace Roots
     public struct ContainerProps
     {
         public Fluid fluid;
-        public Utilities utilities;
+        // public Utilities utilities;
         public Children children;
     }
 }

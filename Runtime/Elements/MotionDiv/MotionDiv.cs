@@ -98,7 +98,7 @@ namespace Roots
         {
             OnRender?.Invoke();
 
-            return Div.Create(descriptor: CustomDescriptor ?? Props.descriptor, utilities: Props.utilities, children: Props.children);
+            return Div.Create(descriptor: CustomDescriptor ?? Props.descriptor, /*utilities: Props.utilities,*/ children: Props.children);
         }
 
         private void OnVisualChange(VisualChangeEvent evt) => OnChange?.Invoke(evt.target as VisualElement);
@@ -125,7 +125,7 @@ namespace Roots
 
         [DOMDescriptor]
         public DOMDescriptor descriptor;
-        public Utilities utilities;
+        // public Utilities utilities;
         public Children children;
     }
 }

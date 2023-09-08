@@ -4,7 +4,23 @@ namespace Roots
 {
     public partial class Row : RishElement<RowProps>
     {
-        protected override Element Render() => Div.Create(className: ("row", Props.xsClassName, Props.smClassName, Props.mdClassName, Props.lgClassName, Props.xlClassName, Props.xxlClassName), utilities: Props.utilities, children: Props.children);
+        protected override Element Render()
+        {
+            var descriptor = Props.descriptor;
+            descriptor.className = new ClassName
+            {
+                "row",
+                Props.xsClassName,
+                Props.smClassName,
+                Props.mdClassName,
+                Props.lgClassName,
+                Props.xlClassName,
+                Props.xxlClassName,
+                descriptor.className
+            };
+            
+            return Div.Create(descriptor: descriptor, /*utilities: Props.utilities,*/ children: Props.children);
+        }
     }
 
     // public struct Gutter
@@ -147,7 +163,9 @@ namespace Roots
         // public Gutter lgGutter;
         // public Gutter xlGutter;
         // public Gutter xxlGutter;
-        public Utilities utilities;
+        // public Utilities utilities;
+        [DOMDescriptor]
+        public DOMDescriptor descriptor;
         public Children children;
 
         internal string xsClassName => GetColsClassName(xs);

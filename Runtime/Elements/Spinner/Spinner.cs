@@ -109,7 +109,7 @@ namespace Roots
         
         [DOMDescriptor]
         public DOMDescriptor descriptor;
-        public Utilities utilities;
+        // public Utilities utilities;
         public Children children;
     }
 

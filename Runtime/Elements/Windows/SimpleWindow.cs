@@ -19,7 +19,7 @@ namespace Roots
                     name: descriptor.name,
                     className: descriptor.className,
                     style: descriptor.style,
-                    utilities: Props.utilities,
+                    // utilities: Props.utilities,
                     children: new Children
                     {
                         WindowHeader.Create(content: CardHeader.Create(children: Props.title)),
@@ -33,7 +33,7 @@ namespace Roots
     {
         [DOMDescriptor]
         public DOMDescriptor descriptor;
-        public Utilities utilities;
+        // public Utilities utilities;
         public bool open;
         public bool fixedPosition;
         public bool alwaysOnTop;

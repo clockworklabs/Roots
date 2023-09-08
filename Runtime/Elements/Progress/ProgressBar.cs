@@ -12,7 +12,7 @@ namespace Roots
                 "progress-bar"
             };
             
-            return Div.Create(descriptor, utilities: Props.utilities, children: Props.children);
+            return Div.Create(descriptor, /*utilities: Props.utilities,*/ children: Props.children);
 
         }
     }
@@ -22,7 +22,7 @@ namespace Roots
     {
         [DOMDescriptor]
         public DOMDescriptor descriptor;
-        public Utilities utilities;
+        // public Utilities utilities;
         public Children children;
     }
 }

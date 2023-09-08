@@ -46,21 +46,21 @@ namespace Roots
                 "disabled"
             };
             
-            var normal = Content.Create(className: normalClassName, utilities: Props.utilities, children: Props.children);
-            var pressed = Content.Create(className: pressedClassName, utilities: Props.utilities, children: Props.children);
-            var disabled = Content.Create(className: disabledClassName, utilities: Props.utilities, children: Props.children);
+            var normal = Content.Create(className: normalClassName, /*utilities: Props.utilities,*/ children: Props.children);
+            var pressed = Content.Create(className: pressedClassName, /*utilities: Props.utilities,*/ children: Props.children);
+            var disabled = Content.Create(className: disabledClassName, /*utilities: Props.utilities,*/ children: Props.children);
 
             return AbstractButton.Create(interactable: !Props.disabled, normal: normal, pressed: pressed, disabled: disabled, action: (Action) OnAction);
         }
 
         private void OnAction() => Props.action?.Invoke();
         
-        private static Element ContentElement(ContentProps props) => Div.Create(className: props.className, utilities: props.utilities, children: props.children);
+        private static Element ContentElement(ContentProps props) => Div.Create(className: props.className, /*utilities: props.utilities,*/ children: props.children);
         [RishValueType]
         public struct ContentProps
         {
             public ClassName className;
-            public Utilities utilities;
+            // public Utilities utilities;
             public Children children;
         }
     }
@@ -71,7 +71,7 @@ namespace Roots
         public Button.Variant variant;
         public Button.Size size;
 
-        public Utilities utilities;
+        // public Utilities utilities;
 
         public bool disabled;
         public bool active;

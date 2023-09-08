@@ -167,7 +167,7 @@ namespace Roots
                 }
             }
             
-            this.AddClassNames(props.utilities, StringBuilder);
+            // this.AddClassNames(props.utilities, StringBuilder);
         }
 
         void IStyledProps<Image, ImageProps>.OnCustomStyle(ref ImageProps props)
@@ -496,6 +496,6 @@ namespace Roots
         /// </summary>
         public ImageSize? height;
 
-        public Utilities utilities;
+        // public Utilities utilities;
     }
 }

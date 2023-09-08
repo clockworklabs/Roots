@@ -12,13 +12,33 @@ namespace Roots
             var lgSet = Props.lg.IsSet;
             var xlSet = Props.xl.IsSet;
             var xxlSet = Props.xxl.IsSet;
-            
+
+            ClassName className;
             if (!xsSet && !smSet && !mdSet && !lgSet && !xlSet && !xxlSet)
             {
-                return Div.Create(className: "col", utilities: Props.utilities, children: Props.children);
+                className = "col";
+            }
+            else
+            {
+                className = new ClassName
+                {
+                    Props.xs.GetClassName(null),
+                    Props.sm.GetClassName("sm"), 
+                    Props.md.GetClassName("md"), 
+                    Props.lg.GetClassName("lg"),
+                    Props.xl.GetClassName("xl"), 
+                    Props.xxl.GetClassName("xxl")
+                };
             }
 
-            return Div.Create(className: (Props.xs.GetClassName(null), Props.sm.GetClassName("sm"), Props.md.GetClassName("md"), Props.lg.GetClassName("lg"), Props.xl.GetClassName("xl"), Props.xxl.GetClassName("xxl")), utilities: Props.utilities, children: Props.children);
+            var descriptor = new DOMDescriptor(Props.descriptor);
+            descriptor.className = new ClassName
+            {
+                className,
+                descriptor.className
+            };
+            
+            return Div.Create(descriptor: descriptor, /*utilities: Props.utilities,*/ children: Props.children);
         }
     }
 
@@ -86,7 +106,9 @@ namespace Roots
         public ColSize xl;
         public ColSize xxl;
 
-        public Utilities utilities;
+        [DOMDescriptor]
+        public DOMDescriptor descriptor;
+        // public Utilities utilities;
         public Children children;
     }
 }

@@ -5,8 +5,8 @@ namespace Roots
 {
     public static class Extensions
     {
-        public static void AddClassNames(this VisualElement visualElement, Utilities utilities, StringBuilder stringBuilder) =>
-            utilities.AddClassNamesTo(visualElement, stringBuilder);
+        // public static void AddClassNames(this VisualElement visualElement, Utilities utilities, StringBuilder stringBuilder) =>
+        //     utilities.AddClassNamesTo(visualElement, stringBuilder);
         
         public static LanguageDirection GetComputedLanguageDirection(this VisualElement visualElement) {
             var direction = LanguageDirection.Inherit;

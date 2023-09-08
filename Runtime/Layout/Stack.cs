@@ -16,7 +16,7 @@ namespace Roots
                 Children.Add(child);
             }
             
-            return Div.Create(className: (Props.stackClassName, Props.xsGapClassName, Props.smGapClassName, Props.mdGapClassName, Props.lgGapClassName, Props.xlGapClassName, Props.xxlGapClassName), utilities: Props.utilities, children: Children);
+            return Div.Create(className: (Props.stackClassName, Props.xsGapClassName, Props.smGapClassName, Props.mdGapClassName, Props.lgGapClassName, Props.xlGapClassName, Props.xxlGapClassName), /*utilities: Props.utilities,*/ children: Children);
         }
     }
     
@@ -32,7 +32,7 @@ namespace Roots
         public int? lgGap;
         public int? xlGap;
         public int? xxlGap;
-        public Utilities utilities;
+        // public Utilities utilities;
         public Children children;
 
         internal bool IsVertical => direction == StackDirection.Vertical;

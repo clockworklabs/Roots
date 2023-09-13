@@ -1,4 +1,3 @@
-using System.Text;
 using RishUI;
 using RishUI.Events;
 using Unity.Collections;
@@ -36,12 +35,11 @@ namespace Roots
         private ImageSize Height;
         private FixedString128Bytes TextureAddress;
         private FixedString128Bytes SpriteAddress;
+        private Sprite CachedSprite;
         private FixedString128Bytes VectorAddress;
         private FixedString128Bytes RenderTextureAddress;
         private StyleLength InlineWidth;
         private StyleLength InlineHeight;
-
-        private StringBuilder StringBuilder { get; } = new();
         
         public Image()
         {
@@ -103,14 +101,19 @@ namespace Roots
 
                     var spriteAddress = props.spriteAddress.Value;
                     var spriteSet = !textureSet && !string.IsNullOrWhiteSpace(spriteAddress.Value);
-                    if (!spriteSet)
+                    if (spriteSet)
                     {
-                        spriteAddress = string.Empty;
+                        SetSprite(CachedSprite);
+                        if (spriteAddress != SpriteAddress)
+                        {
+                            SpriteAddress = spriteAddress;
+                            Loader.Load<Sprite>(spriteAddress.Value, OnSpriteLoaded);
+                        }
                     }
-                    if (spriteAddress != SpriteAddress)
+                    else
                     {
-                        SpriteAddress = spriteAddress;
-                        Loader.Load<Sprite>(spriteAddress.Value, OnSpriteLoaded);
+                        CachedSprite = null;
+                        SpriteAddress = default;
                     }
 
                     var vectorAddress = props.vectorAddress.Value;
@@ -161,10 +164,14 @@ namespace Roots
 
                     style.backgroundImage = Background.FromSprite(sprite);
 
-                    style.unityBackgroundImageTintColor = props.tintColor.Value;
                 
                     sprite = null;
                 }
+            }
+
+            if (style.backgroundImage.keyword != StyleKeyword.Null)
+            {
+                style.unityBackgroundImageTintColor = tintColor;
             }
             
             // this.AddClassNames(props.utilities, StringBuilder);
@@ -224,6 +231,7 @@ namespace Roots
         private void SetSprite(Sprite sprite)
         {
             this.sprite = sprite;
+            CachedSprite = sprite;
             if (sprite == null) return;
             image = null;
             vectorImage = null;
@@ -259,6 +267,7 @@ namespace Roots
             if (vectorImage == null) return;
             image = null;
             sprite = null;
+            CachedSprite = null;
         }
         private void OnRenderTextureLoaded(Asset<RenderTexture> asset)
         {
@@ -274,6 +283,7 @@ namespace Roots
             image = renderTexture;
             if (renderTexture == null) return;
             sprite = null;
+            CachedSprite = null;
             vectorImage = null;
         }
 
@@ -302,6 +312,7 @@ namespace Roots
             Height = default;
             TextureAddress = default;
             SpriteAddress = default;
+            CachedSprite = null;
             VectorAddress = default;
             RenderTextureAddress = default;
             InlineWidth = default;

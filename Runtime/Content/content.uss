@@ -1,6 +1,8 @@
 :root {
     --rs-body-color: #adb5bd;
     --rs-heading-color: inherit;
+    /*--luiss-serif: resource("Fonts/Luiss Serif Regular SDF");*/
+    /*--luiss-sans: resource("Fonts/LuissSans-Regular SDF");*/
 }
 
 .body {
@@ -12,6 +14,7 @@
     
     color: var(--rs-body-color);
     font-size: 16px;
+    -unity-font-definition: var(--luiss-sans);
 }
 
 .h1, .h2, .h3, .h4, .h5, .h6 {
@@ -20,6 +23,7 @@
     -unity-font-style: bold;
     /*line-height: 1.2;*/
     color: var(--rs-heading-color);
+    -unity-font-definition: var(--luiss-serif);
 }
 .h1 {
     font-size: 40px;

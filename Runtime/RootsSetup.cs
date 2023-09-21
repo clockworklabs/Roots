@@ -12,8 +12,8 @@ namespace Roots
     public class RootsSetup : MonoBehaviour
     {
         [SerializeField]
-        private ResponsiveStyleSheet[] _responsiveStyleSheets;
-        private ResponsiveStyleSheet[] ResponsiveStyleSheets => _responsiveStyleSheets;
+        private RootsStyleSheet[] _styleSheets;
+        private RootsStyleSheet[] StyleSheets => _styleSheets;
         
         private UIDocument UIDocument { get; set; }
 
@@ -26,7 +26,7 @@ namespace Roots
         {
             UIDocument = GetComponent<UIDocument>();
             
-            var styleSheets = ResponsiveStyleSheets.SelectMany(group => group.StyleSheets).ToList();
+            var styleSheets = StyleSheets.SelectMany(ss => ss.GetResponsive().StyleSheets).ToList();
             styleSheets.Sort((a, b) => a.MinWidth.CompareTo(b.MinWidth));
             _sortedStyleSheets = styleSheets.AsReadOnly();
 

@@ -29,9 +29,12 @@ namespace Roots
         private MediaQueryStyleSheet[] _styleSheets;
         internal MediaQueryStyleSheet[] StyleSheets => _styleSheets;
 
-        public static implicit operator ResponsiveStyleSheet(StyleSheet styleSheet) => new()
+        public static implicit operator ResponsiveStyleSheet(StyleSheet styleSheet)
         {
-            _styleSheets = new MediaQueryStyleSheet[] { styleSheet }
-        };
+            var instance = CreateInstance<ResponsiveStyleSheet>();
+            instance._styleSheets = new MediaQueryStyleSheet[] { styleSheet };
+
+            return instance;
+        }
     }
 }

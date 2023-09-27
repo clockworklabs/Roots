@@ -36,6 +36,7 @@ namespace Roots
         private FixedString128Bytes TextureAddress;
         private FixedString128Bytes SpriteAddress;
         private Sprite CachedSprite;
+        private bool StyleBackgroundSet;
         private FixedString128Bytes VectorAddress;
         private FixedString128Bytes RenderTextureAddress;
         private StyleLength InlineWidth;
@@ -58,116 +59,115 @@ namespace Roots
             Width = props.width.Value;
             Height = props.height.Value;
 
-            if (Loader != null)
-            {
-                var directSet = false;
-                if (props.texture != null)
-                {
-                    directSet = true;
-                    SetTexture(props.texture);
-                } else if (props.sprite != null)
-                {
-                    directSet = true;
-                    SetSprite(props.sprite);
-                } else if (props.vector != null)
-                {
-                    directSet = true;
-                    SetVector(props.vector);
-                } else if (props.renderTexture != null)
-                {
-                    directSet = true;
-                    SetRenderTexture(props.renderTexture);
-                }
-
-                if (directSet)
-                {
-                    TextureAddress = string.Empty;
-                    SpriteAddress = string.Empty;
-                    VectorAddress = string.Empty;
-                    RenderTextureAddress = string.Empty;
-                } else 
-                {
-                    var textureAddress = props.textureAddress.Value;
-                    var textureSet = !string.IsNullOrWhiteSpace(textureAddress.Value);
-                    if (!textureSet)
-                    {
-                        textureAddress = string.Empty;
-                    }
-                    if (textureAddress != TextureAddress)
-                    {
-                        TextureAddress = textureAddress;
-                        Loader.Load<Texture2D>(textureAddress.Value, OnTextureLoaded);
-                    }
-
-                    var spriteAddress = props.spriteAddress.Value;
-                    var spriteSet = !textureSet && !string.IsNullOrWhiteSpace(spriteAddress.Value);
-                    if (spriteSet)
-                    {
-                        SetSprite(CachedSprite);
-                        if (spriteAddress != SpriteAddress)
-                        {
-                            SpriteAddress = spriteAddress;
-                            Loader.Load<Sprite>(spriteAddress.Value, OnSpriteLoaded);
-                        }
-                    }
-                    else
-                    {
-                        CachedSprite = null;
-                        SpriteAddress = default;
-                    }
-
-                    var vectorAddress = props.vectorAddress.Value;
-                    var vectorSet = !spriteSet && !string.IsNullOrWhiteSpace(vectorAddress.Value);
-                    if (!vectorSet)
-                    {
-                        vectorAddress = string.Empty;
-                    }
-                    if (vectorAddress != VectorAddress)
-                    {
-                        VectorAddress = vectorAddress;
-                        Loader.Load<VectorImage>(vectorAddress.Value, OnVectorLoaded);
-                    }
-
-                    var renderTextureAddress = props.renderTextureAddress.Value;
-                    var renderTextureSet = !vectorSet && !string.IsNullOrWhiteSpace(renderTextureAddress.Value);
-                    if (!renderTextureSet)
-                    {
-                        renderTextureAddress = string.Empty;
-                    }
-                    if (renderTextureAddress != RenderTextureAddress)
-                    {
-                        RenderTextureAddress = renderTextureAddress;
-                        Loader.Load<RenderTexture>(renderTextureAddress.Value, OnRenderTextureLoaded);
-                    }
-                }
-            }
-            else
-            {
-                Debug.LogError("App needs an Asset Loader");
-            }
-
             tintColor = props.tintColor.Value;
 
             // this.uv = Rect.MinMaxRect(0, 0, 1, 1);
             scaleMode = props.scaleMode.Value;
 
-            if (sprite != null)
+            var directSet = false;
+            if (props.texture != null)
             {
-                var border = sprite.border;
-                if (border != Vector4.zero)
+                directSet = true;
+                SetTexture(props.texture);
+            } else if (props.sprite != null)
+            {
+                directSet = true;
+                SetSprite(props.sprite);
+            } else if (props.vector != null)
+            {
+                directSet = true;
+                SetVector(props.vector);
+            } else if (props.renderTexture != null)
+            {
+                directSet = true;
+                SetRenderTexture(props.renderTexture);
+            }
+
+            if (directSet)
+            {
+                TextureAddress = string.Empty;
+                SpriteAddress = string.Empty;
+                VectorAddress = string.Empty;
+                RenderTextureAddress = string.Empty;
+            } else 
+            {
+                var textureAddress = props.textureAddress.Value;
+                var textureSet = !string.IsNullOrWhiteSpace(textureAddress.Value);
+                if (!textureSet)
                 {
-                    style.unitySliceTop = Mathf.RoundToInt(border.w);
-                    style.unitySliceRight = Mathf.RoundToInt(border.z);
-                    style.unitySliceBottom = Mathf.RoundToInt(border.y);
-                    style.unitySliceLeft = Mathf.RoundToInt(border.x);
-                    style.unitySliceScale = 100 / sprite.pixelsPerUnit;
+                    textureAddress = string.Empty;
+                }
+                if (textureAddress != TextureAddress)
+                {
+                    TextureAddress = textureAddress;
+                    Loader?.Load<Texture2D>(textureAddress.Value, OnTextureLoaded);
+                }
 
-                    style.backgroundImage = Background.FromSprite(sprite);
+                var spriteAddress = props.spriteAddress.Value;
+                var spriteSet = !textureSet && !string.IsNullOrWhiteSpace(spriteAddress.Value);
+                if (spriteSet)
+                {
+                    SetSprite(CachedSprite);
+                    if (spriteAddress != SpriteAddress)
+                    {
+                        SpriteAddress = spriteAddress;
+                        Loader?.Load<Sprite>(spriteAddress.Value, OnSpriteLoaded);
+                    }
+                }
+                else
+                {
+                    SpriteAddress = default;
+                }
 
-                
+                var vectorAddress = props.vectorAddress.Value;
+                var vectorSet = !spriteSet && !string.IsNullOrWhiteSpace(vectorAddress.Value);
+                if (!vectorSet)
+                {
+                    vectorAddress = string.Empty;
+                }
+                if (vectorAddress != VectorAddress)
+                {
+                    VectorAddress = vectorAddress;
+                    Loader?.Load<VectorImage>(vectorAddress.Value, OnVectorLoaded);
+                }
+
+                var renderTextureAddress = props.renderTextureAddress.Value;
+                var renderTextureSet = !vectorSet && !string.IsNullOrWhiteSpace(renderTextureAddress.Value);
+                if (!renderTextureSet)
+                {
+                    renderTextureAddress = string.Empty;
+                }
+                if (renderTextureAddress != RenderTextureAddress)
+                {
+                    RenderTextureAddress = renderTextureAddress;
+                    Loader?.Load<RenderTexture>(renderTextureAddress.Value, OnRenderTextureLoaded);
+                }
+
+                if (!textureSet && !spriteSet && !vectorSet && !renderTextureSet)
+                {
+                    image = null;
                     sprite = null;
+                    vectorImage = null;
+					CachedSprite = null;
                 }
             }
+
+            // if (sprite != null)
+            // {
+            //     var border = sprite.border;
+            //     if (border != Vector4.zero)
+            //     {
+            //         style.unitySliceTop = Mathf.RoundToInt(border.w);
+            //         style.unitySliceRight = Mathf.RoundToInt(border.z);
+            //         style.unitySliceBottom = Mathf.RoundToInt(border.y);
+            //         style.unitySliceLeft = Mathf.RoundToInt(border.x);
+            //         style.unitySliceScale = 100 / sprite.pixelsPerUnit;
+            //
+            //         style.backgroundImage = Background.FromSprite(sprite);
+            //
+            //         sprite = null;
+            //     }
+            // }
 
             if (style.backgroundImage.keyword != StyleKeyword.Null)
             {
@@ -214,9 +214,16 @@ namespace Roots
         }
         private void SetTexture(Texture2D texture)
         {
+            if (StyleBackgroundSet)
+            {
+                style.backgroundImage = StyleKeyword.Null;
+                StyleBackgroundSet = false;
+            }
+            
             image = texture;
             if (texture == null) return;
             sprite = null;
+			CachedSprite = null;
             vectorImage = null;
         }
         private void OnSpriteLoaded(Asset<Sprite> asset)
@@ -230,9 +237,17 @@ namespace Roots
         }
         private void SetSprite(Sprite sprite)
         {
+            if (StyleBackgroundSet)
+            {
+                style.backgroundImage = StyleKeyword.Null;
+                StyleBackgroundSet = false;
+            }
+            
             this.sprite = sprite;
             CachedSprite = sprite;
+            
             if (sprite == null) return;
+            
             image = null;
             vectorImage = null;
             
@@ -244,12 +259,14 @@ namespace Roots
                 style.unitySliceBottom = Mathf.RoundToInt(border.y);
                 style.unitySliceLeft = Mathf.RoundToInt(border.x);
                 style.unitySliceScale = 100 / sprite.pixelsPerUnit;
-
+            
                 style.backgroundImage = Background.FromSprite(sprite);
-
+            
                 style.unityBackgroundImageTintColor = tintColor;
                 
                 this.sprite = null;
+
+                StyleBackgroundSet = true;
             }
         }
         private void OnVectorLoaded(Asset<VectorImage> asset)
@@ -263,6 +280,12 @@ namespace Roots
         }
         private void SetVector(VectorImage vectorImage)
         {
+            if (StyleBackgroundSet)
+            {
+                style.backgroundImage = StyleKeyword.Null;
+                StyleBackgroundSet = false;
+            }
+            
             this.vectorImage = vectorImage;
             if (vectorImage == null) return;
             image = null;
@@ -280,6 +303,12 @@ namespace Roots
         }
         private void SetRenderTexture(RenderTexture renderTexture)
         {
+            if (StyleBackgroundSet)
+            {
+                style.backgroundImage = StyleKeyword.Null;
+                StyleBackgroundSet = false;
+            }
+            
             image = renderTexture;
             if (renderTexture == null) return;
             sprite = null;
@@ -313,6 +342,7 @@ namespace Roots
             TextureAddress = default;
             SpriteAddress = default;
             CachedSprite = null;
+            StyleBackgroundSet = false;
             VectorAddress = default;
             RenderTextureAddress = default;
             InlineWidth = default;

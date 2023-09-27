@@ -11,7 +11,7 @@ namespace Roots.Editor {
         private SerializedObject SerializedObject { get; set; }
         private SerializedProperty NativeProperty { get; set; }
         private SerializedProperty ResponsiveProperty { get; set; }
-        
+
         public override VisualElement CreatePropertyGUI(SerializedProperty property)
         {
             SerializedObject = property.serializedObject;

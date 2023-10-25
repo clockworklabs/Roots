@@ -5,7 +5,7 @@ namespace Roots
 {
     internal partial class InternalTooltip : RishElement<InternalTooltipProps>, IMountingListener
     {
-        private Holder Holder { get; set; }
+        private TooltipHolder TooltipHolder { get; set; }
 
         public InternalTooltip()
         {
@@ -14,7 +14,7 @@ namespace Roots
 
         void IMountingListener.ComponentDidMount()
         {
-            Holder = GetFirstAncestorOfType<Holder>();
+            TooltipHolder = GetFirstAncestorOfType<TooltipHolder>();
         }
         void IMountingListener.ComponentWillUnmount() { }
 
@@ -23,7 +23,7 @@ namespace Roots
             return Props.element;
         }
 
-        private void OnVisualChange(VisualChangeEvent evt) => Holder.OnLayout(WorldLayout);
+        private void OnVisualChange(VisualChangeEvent evt) => TooltipHolder.OnLayout(WorldLayout);
     }
 
     [RishValueType]

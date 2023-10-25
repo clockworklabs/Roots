@@ -5,14 +5,14 @@ using Roots;
 
 namespace Roots
 {
-    public partial class TooltipsContext : RishElement<TooltipsContextProps>, ICustomComponent
+    public partial class TooltipsContext : RishElement<TooltipsContextProps>, ICustomElement
     {
         private HashSet<Tooltip> Tooltips { get; } = new();
         private Stack<Tooltip> Stack { get; } = new();
         
         private uint Count { get; set; }
         
-        void ICustomComponent.Restart()
+        void ICustomElement.Restart()
         {
             Tooltips.Clear();
             Stack.Clear();
@@ -31,7 +31,7 @@ namespace Roots
                 // TODO: Support transformed elements
                 var localRect = WorldToLocal(owner.WorldBoundingBox);
 
-                tooltip = Holder.Create(Count, new HolderProps
+                tooltip = TooltipHolder.Create(Count, new HolderProps
                 {
                     rect = localRect,
                     ignoreFit = owner.Props.ignoreFit,

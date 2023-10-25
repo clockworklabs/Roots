@@ -1,12 +1,11 @@
 using RishUI;
-using Roots;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Translate = UnityEngine.UIElements.Translate;
 
 namespace Roots
 {
-    internal partial class Holder : RishElement<HolderProps, HolderState>, IMountingListener
+    internal partial class TooltipHolder : RishElement<HolderProps, HolderState>, IMountingListener
     {
         private TooltipsContext Context { get; set; }
 

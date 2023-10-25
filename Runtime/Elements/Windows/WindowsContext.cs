@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 
 namespace Roots
 {
-    public partial class WindowsContext : RishElement<WindowsContextProps>, ICustomComponent
+    public partial class WindowsContext : RishElement<WindowsContextProps>, ICustomElement
     {
         private const int _SafeZone = 10;
         internal int SafeZone => Props.safeZoneSize > 0 ? Props.safeZoneSize : _SafeZone;
@@ -24,7 +24,7 @@ namespace Roots
             RegisterCallback<GeometryChangedEvent>(OnGeometry);
         }
 
-        void ICustomComponent.Restart()
+        void ICustomElement.Restart()
         {
             Rendered = false;
             

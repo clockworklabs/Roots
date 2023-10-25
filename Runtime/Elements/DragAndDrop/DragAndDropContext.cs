@@ -7,7 +7,7 @@ using Translate = UnityEngine.UIElements.Translate;
 
 namespace Roots
 {
-    public partial class DragAndDropContext : RishElement<DragAndDropContextProps, DragAndDropContextState>, ICustomComponent
+    public partial class DragAndDropContext : RishElement<DragAndDropContextProps, DragAndDropContextState>, ICustomElement
     {
         private bool Primary { get; set; }
         private IElement Draggable { get; set; }
@@ -15,7 +15,7 @@ namespace Roots
 
         private List<IElement> MountedDropAreas { get; } = new();
         
-        void ICustomComponent.Restart()
+        void ICustomElement.Restart()
         {
             Draggable = null;
             DropAreas.Clear();

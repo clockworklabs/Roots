@@ -82,7 +82,7 @@ namespace Roots
             evt.StopPropagation();
         }
         
-        private partial class InternalElement : RishElement<AbstractButtonProps, InternalElementState>, ICustomElement
+        private partial class InternalElement : RishElement<AbstractButtonProps, InternalElementState>, IManualState
         {
             private bool Listening { get; set; }
             private int PointerId { get; set; }
@@ -100,7 +100,7 @@ namespace Roots
                 // TODO: Add longPress
             }
 
-            void ICustomElement.Restart()
+            void IManualState.Restart()
             {
                 Listening = false;
                 PointerId = 0;

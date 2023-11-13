@@ -5,14 +5,14 @@ using Roots;
 
 namespace Roots
 {
-    public partial class TooltipsContext : RishElement<TooltipsContextProps>, ICustomElement
+    public partial class TooltipsContext : RishElement<TooltipsContextProps>, IManualState
     {
         private HashSet<Tooltip> Tooltips { get; } = new();
         private Stack<Tooltip> Stack { get; } = new();
         
         private uint Count { get; set; }
         
-        void ICustomElement.Restart()
+        void IManualState.Restart()
         {
             Tooltips.Clear();
             Stack.Clear();

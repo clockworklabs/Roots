@@ -179,28 +179,20 @@ namespace Roots
 
         void IStyledProps<Image, ImageProps>.OnCustomStyle(ref ImageProps props)
         {
-            props.textureAddress ??= customStyle.TryGetValue(TextureAddressProp, out var customTextureAddress) 
-                ? customTextureAddress
-                : string.Empty;
-            props.spriteAddress ??= customStyle.TryGetValue(SpriteAddressProp, out var customSpriteAddress) 
-                ? customSpriteAddress
-                : string.Empty;
-            props.vectorAddress ??= customStyle.TryGetValue(VectorAddressProp, out var customVectorAddress) 
-                ? customVectorAddress
-                : string.Empty;
-            props.renderTextureAddress ??= customStyle.TryGetValue(RenderTextureAddressProp, out var customRenderTextureAddress) 
-                ? customRenderTextureAddress
-                : string.Empty;
+            PropsManager.SetValue(TextureAddressProp, ref props.textureAddress);
+            PropsManager.SetValue(SpriteAddressProp, ref props.spriteAddress);
+            PropsManager.SetValue(VectorAddressProp, ref props.vectorAddress);
+            PropsManager.SetValue(RenderTextureAddressProp, ref props.renderTextureAddress);
             
-            props.tintColor ??= customStyle.TryGetValue(TintColorProp, out var customTintColor) ? customTintColor : Color.white;
-            props.scaleMode ??= customStyle.TryGetValue(ScaleModeProp, out var customScaleMode) ? customScaleMode switch
+            PropsManager.SetValue(TintColorProp, ref props.tintColor, Color.white);
+            props.scaleMode ??= PropsManager.TryGetValue(ScaleModeProp, out var customScaleMode) ? customScaleMode switch
             {
                 "scale-and-crop" => ScaleMode.ScaleAndCrop,
                 "scale-to-fit" => ScaleMode.ScaleToFit,
                 _ => ScaleMode.StretchToFill
             } : default;
-            props.width ??= customStyle.TryGetValue(ImageWidthProp, out var customImageWidth) ? ImageSize.Parse(customImageWidth) : default;
-            props.height ??= customStyle.TryGetValue(ImageHeightProp, out var customImageHeight) ? ImageSize.Parse(customImageHeight) : default;
+            props.width ??= PropsManager.TryGetValue(ImageWidthProp, out var customImageWidth) ? ImageSize.Parse(customImageWidth) : default;
+            props.height ??= PropsManager.TryGetValue(ImageHeightProp, out var customImageHeight) ? ImageSize.Parse(customImageHeight) : default;
         }
 
         private void OnTextureLoaded(Asset<Texture2D> asset)

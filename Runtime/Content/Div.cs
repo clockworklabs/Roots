@@ -125,18 +125,10 @@ namespace Roots
 
         void IStyledProps<Div, DivProps>.OnCustomStyle(ref DivProps props)
         {
-            props.backgroundTextureAddress ??= customStyle.TryGetValue(BackgroundTextureAddressProp, out var customTextureAddress) 
-                ? customTextureAddress
-                : string.Empty;
-            props.backgroundSpriteAddress ??= customStyle.TryGetValue(BackgroundSpriteAddressProp, out var customSpriteAddress) 
-                ? customSpriteAddress
-                : string.Empty;
-            props.backgroundVectorAddress ??= customStyle.TryGetValue(BackgroundVectorAddressProp, out var customVectorAddress) 
-                ? customVectorAddress
-                : string.Empty;
-            props.backgroundRenderTextureAddress ??= customStyle.TryGetValue(BackgroundRenderTextureAddressProp, out var customRenderTextureAddress) 
-                ? customRenderTextureAddress
-                : string.Empty;
+            PropsManager.SetValue(BackgroundTextureAddressProp, ref props.backgroundTextureAddress);
+            PropsManager.SetValue(BackgroundSpriteAddressProp, ref props.backgroundSpriteAddress);
+            PropsManager.SetValue(BackgroundVectorAddressProp, ref props.backgroundVectorAddress);
+            PropsManager.SetValue(BackgroundRenderTextureAddressProp, ref props.backgroundRenderTextureAddress);
         }
 
         private void OnTextureLoaded(Asset<Texture2D> asset)

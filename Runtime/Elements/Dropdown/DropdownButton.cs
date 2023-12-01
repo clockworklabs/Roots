@@ -36,6 +36,11 @@ namespace Roots
         protected override Element Render()
         {
             Element element;
+            if (!Props.interactable)
+            {
+                return Props.disabled.Valid ? Props.disabled : Props.normal;
+            }
+            
             if (State.pressed && Props.pressed.Valid)
             {
                 element = Props.pressed;
@@ -72,7 +77,7 @@ namespace Roots
 
         private void OnPointerDown(PointerDownEvent evt)
         {
-            if (Listening || evt.button != 0)
+            if (!Props.interactable || Listening || evt.button != 0)
             {
                 return;
             }
@@ -169,12 +174,21 @@ namespace Roots
     [RishValueType]
     public struct DropdownButtonProps
     {
+        public bool interactable;
+        
         public Element normal;
         public Element hovered;
         public Element pressed;
+        public Element disabled;
         public Element open;
 
         public Element menu;
+
+        [Default]
+        private static DropdownButtonProps Default => new()
+        {
+            interactable = true
+        };
     }
 
     [RishValueType]

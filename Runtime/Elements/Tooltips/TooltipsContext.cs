@@ -31,15 +31,13 @@ namespace Roots
                 // TODO: Support transformed elements
                 var localRect = WorldToLocal(owner.WorldBoundingBox);
 
-                tooltip = TooltipHolder.Create(Count, new HolderProps
-                {
-                    rect = localRect,
-                    ignoreFit = owner.Props.ignoreFit,
-                    element = InternalTooltip.Create(new InternalTooltipProps
+                tooltip = TooltipHolder.Create(Count, 
+                    rect: localRect,
+                    ignoreFit: owner.Props.ignoreFit,
+                    element: InternalTooltip.Create(new InternalTooltipProps
                     {
                         element = owner.Props.tooltip
-                    })
-                });
+                    }));
             }
 
             return Div.Create(descriptor: Props.descriptor, children: new Children { content, tooltip });

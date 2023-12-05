@@ -41,17 +41,16 @@ namespace Roots
                 return Props.disabled.Valid ? Props.disabled : Props.normal;
             }
             
-            if (State.pressed && Props.pressed.Valid)
+            if (State.open && Props.open.Valid)
+            {
+                element = Props.open;
+            } else if (State.pressed && Props.pressed.Valid)
             {
                 element = Props.pressed;
             }
             else if (State.hovered && Props.hovered.Valid)
             {
                 element = Props.hovered;
-            }
-            else if (State.open && Props.open.Valid)
-            {
-                element = Props.open;
             }
             else
             {

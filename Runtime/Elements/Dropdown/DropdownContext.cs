@@ -9,7 +9,7 @@ namespace Roots
     public partial class DropdownContext : RishElement<DropdownContextProps>, IMountingListener
     {
         private DropdownButton DropdownButton { get; set; }
-        private DropdownMenu DropdownMenu { get; set; }
+        private InternalDropdown Dropdown { get; set; }
 
         private VisualElement _focusedElement;
         private VisualElement FocusedElement
@@ -23,7 +23,7 @@ namespace Roots
 
                 _focusedElement?.UnregisterCallback<PointerUpEvent>(OnPointerUp);
 
-                if (DropdownMenu == null || !DropdownMenu.ContainsInTree(value))
+                if (Dropdown == null || !Dropdown.ContainsInTree(value))
                 {
                     _focusedElement = null;
                     return;
@@ -38,7 +38,6 @@ namespace Roots
         {
             RegisterCallback<PointerDownEvent>(OnPointerDown, EventPhase.TrickleDown);
             RegisterCallback<PointerUpEvent>(OnPointerUp, EventPhase.TrickleDown);
-
             RegisterCallback<PointerCaptureEvent>(OnPointerCapture);
             RegisterCallback<PointerCaptureOutEvent>(OnPointerRelease);
         }
@@ -47,7 +46,7 @@ namespace Roots
         void IMountingListener.ComponentWillUnmount()
         {
             DropdownButton = null;
-            DropdownMenu = null;
+            Dropdown = null;
             FocusedElement = null;
         }
 
@@ -58,11 +57,14 @@ namespace Roots
 
             if (DropdownButton != null)
             {
-                menu = Roots.DropdownMenu.Create(new DropdownMenuProps
-                {
-                    rect = DropdownButton.WorldLayout,
-                    element = DropdownButton.Props.menu
-                });
+                // TODO: Support transformed elements
+                var localRect = WorldToLocal(DropdownButton.WorldBoundingBox);
+
+                menu = DropdownHolder.Create(
+                    rect: localRect,
+                    element: InternalDropdown.Create(
+                        element: DropdownButton.Props.menu));
+                
                 descriptor.style.pointerDetection = PointerDetectionMode.Rect;
             }
 
@@ -72,11 +74,16 @@ namespace Roots
 
         internal void ShowDropdownMenu(DropdownButton owner)
         {
+            if (DropdownButton != null)
+            {
+                return;
+            }
+            
             DropdownButton = owner;
             Dirty();
-
+            
             DropdownButton.OnOpen();
-
+            
             Props.onShow?.Invoke(true);
         }
 
@@ -91,43 +98,45 @@ namespace Roots
 
             DropdownButton = null;
             Dirty();
-
+            
             Props.onShow?.Invoke(false);
         }
 
-        internal void RegisterDropdownMenu(DropdownMenu menu)
+        internal void RegisterDropdown(InternalDropdown menu)
         {
-            if (DropdownMenu != null)
+            if (Dropdown != null)
             {
                 throw new UnityException("Context is already showing a dropdown menu");
             }
 
-            DropdownMenu = menu;
+            Dropdown = menu;
         }
-        internal void UnregisterDropdownMenu(DropdownMenu menu)
+        internal void UnregisterDropdown(InternalDropdown menu)
         {
-            if (DropdownMenu != menu)
+            if (Dropdown != menu)
             {
                 throw new UnityException("Context is showing a different menu");
             }
 
-            DropdownMenu = null;
+            Dropdown = null;
         }
 
         private void OnPointerDown(PointerDownEvent evt)
         {
-            if (DropdownButton == null || DropdownMenu == null)
+            if (DropdownButton == null || Dropdown == null)
             {
                 return;
             }
 
+            var worldPosition = evt.position;
+            
             // Ignore pointer events on dropdown button. These are handled by the button
-            if (DropdownButton.WorldContentRect.Contains(evt.position))
+            if (DropdownButton.ContainsPoint(DropdownButton.WorldToLocal(worldPosition)))
             {
                 return;
             }
 
-            if (DropdownMenu.WorldContentRect.Contains(evt.position))
+            if (Dropdown.ContainsPoint(Dropdown.WorldToLocal(worldPosition)))
             {
                 return;
             }
@@ -137,22 +146,24 @@ namespace Roots
 
         private void OnPointerUp(PointerUpEvent evt)
         {
-            if (DropdownButton == null || DropdownMenu == null)
+            if (DropdownButton == null || Dropdown == null)
             {
                 return;
             }
 
+            var worldPosition = evt.position;
+        
             // Ignore pointer events on dropdown button. These are handled by the button
-            if (DropdownButton.WorldContentRect.Contains(evt.position))
+            if (DropdownButton.ContainsPoint(DropdownButton.WorldToLocal(worldPosition)))
             {
                 return;
             }
-
-            if (!DropdownMenu.WorldContentRect.Contains(evt.position))
+        
+            if (!Dropdown.ContainsPoint(Dropdown.WorldToLocal(worldPosition)))
             {
                 return;
             }
-
+            
             HideDropdownMenu(DropdownButton);
         }
 
@@ -165,6 +176,7 @@ namespace Roots
     {
         [DOMDescriptor]
         public DOMDescriptor descriptor;
+        public bool forceFit;
         public Element content;
 
         [IgnoreComparison]

@@ -1,19 +1,18 @@
 using RishUI;
 using UnityEngine;
 using UnityEngine.UIElements;
-using Translate = UnityEngine.UIElements.Translate;
 
 namespace Roots
 {
-    internal partial class TooltipHolder : RishElement<TooltipHolderProps, TooltipHolderState>, IMountingListener
+    internal partial class DropdownHolder : RishElement<DropdownHolderProps, DropdownHolderState>, IMountingListener
     {
-        private TooltipsContext Context { get; set; }
-
+        private DropdownContext Context { get; set; }
+        
         void IMountingListener.ComponentDidMount()
-        {
-            Context = GetFirstAncestorOfType<TooltipsContext>();
-        }
-        void IMountingListener.ComponentWillUnmount() { }
+         {
+             Context = GetFirstAncestorOfType<DropdownContext>();
+         }
+         void IMountingListener.ComponentWillUnmount() { }
         
         protected override Element Render()
         {
@@ -26,9 +25,7 @@ namespace Roots
                 top = rect.y,
                 height = rect.height,
                 translate = new Translate(State.offset.x, State.offset.y, 0),
-                visibility = State.visible ? Visibility.Visible : Visibility.Hidden,
-                
-                pointerDetection = PointerDetectionMode.ForceIgnore
+                visibility = State.visible ? Visibility.Visible : Visibility.Hidden
             };
             
             return Div.Create(style, children: Props.element);
@@ -40,7 +37,7 @@ namespace Roots
             
             state.visible = true;
             
-            if (Context.Props.forceFit && !Props.ignoreFit)
+            if (Context.Props.forceFit)
             {
                 var offset = Vector2.zero;
     
@@ -70,15 +67,14 @@ namespace Roots
     }
 
     [RishValueType]
-    public struct TooltipHolderProps
+    public struct DropdownHolderProps
     {
         public Rect rect;
-        public bool ignoreFit;
         public Element element;
     }
 
     [RishValueType]
-    public struct TooltipHolderState
+    public struct DropdownHolderState
     {
         public Vector2 offset;
         public bool visible;

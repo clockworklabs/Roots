@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 
 namespace Roots
 {
-    public partial class AbstractButton : RishElement<AbstractButtonProps>, IMountingListener, IPropsListener
+    public partial class AbstractButton : RishElement<AbstractButtonProps>, IMountingListener, IPropsListener, IFormSubmit
     {
         private Form Form { get; set; }
         private bool JustMounted { get; set; }
@@ -23,13 +23,13 @@ namespace Roots
         void IMountingListener.ComponentDidMount()
         {
             Form = GetFirstAncestorOfType<Form>();
-            FocusIndex = Form?.RegisterElement() ?? 0;
+            FocusIndex = Form?.RegisterElement(this) ?? 0;
 
             JustMounted = true;
         }
         void IMountingListener.ComponentWillUnmount()
         {
-            Form?.UnregisterElement();
+            Form?.UnregisterElement(this);
             NotFocusable();
         }
 
@@ -46,8 +46,10 @@ namespace Roots
         }
         void IPropsListener.PropsWillChange() { }
 
-        
-        protected override Element Render() => InternalElement.Create(Props);
+        protected override Element Render() => InternalElement.Create(new AbstractButtonProps(Props)
+        {
+            action = OnAction
+        });
 
         private void OnVisualChange(VisualChangeEvent evt)
         {
@@ -80,6 +82,20 @@ namespace Roots
             Props.action?.Invoke();
 
             evt.StopPropagation();
+        }
+
+        private void OnAction() => Props.action?.Invoke();
+
+        bool IFormSubmit.OnFormSubmit()
+        {
+            if (Form == null || !Props.submitsForm)
+            {
+                return false;
+            }
+            
+            OnAction();
+
+            return true;
         }
         
         private partial class InternalElement : RishElement<AbstractButtonProps, InternalElementState>, IManualState
@@ -280,6 +296,8 @@ namespace Roots
         public bool focusable;
         public bool autoFocus;
 
+        public bool submitsForm;
+
         [Default]
         public static AbstractButtonProps Default => new AbstractButtonProps
         {
@@ -295,6 +313,7 @@ namespace Roots
             hovered = other.hovered;
             pressed = other.pressed;
             disabled = other.disabled;
+            submitsForm = other.submitsForm;
             focusable = other.focusable;
             autoFocus = other.autoFocus;
         }

@@ -194,7 +194,7 @@ namespace Roots
             #if UNITY_EDITOR
             if (AnimatingChildren.Count > 0)
             {
-                Debug.LogError("This should never happen");
+                Debug.LogWarning("This should never happen");
             }
             AnimatingChildren.Clear();
             #endif
@@ -500,7 +500,7 @@ namespace Roots
             if (AnimatingChildren.Contains(child))
             {
                 // TODO: This would be a very weird case
-                Debug.LogError("Something very weird just happened");
+                Debug.LogWarning("Something very weird just happened");
                 return 0;
             }
 
@@ -519,7 +519,7 @@ namespace Roots
             if (!AnimatingChildren.Contains(child))
             {
                 // throw new ArgumentException("Child must register animation first");
-                Debug.LogError("Child must register animation first");
+                Debug.LogWarning("Child must register animation first");
                 return 0;
             }
 

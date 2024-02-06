@@ -40,7 +40,7 @@ namespace Roots
                 Props.content
             };
             
-            if (!Props.hideAllWindows)
+            if (Rendered && !Props.hideAllWindows)
             {
                 foreach (var index in WindowsOrder)
                 {

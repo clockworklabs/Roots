@@ -76,6 +76,11 @@ namespace Roots
         {
             if (DropdownButton != null)
             {
+                if (DropdownButton == owner)
+                {
+                    Dirty();
+                }
+                
                 return;
             }
             

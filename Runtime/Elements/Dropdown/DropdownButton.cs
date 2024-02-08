@@ -4,7 +4,7 @@ using UnityEngine.UIElements;
 
 namespace Roots
 {
-    public partial class DropdownButton : RishElement<DropdownButtonProps, DropdownButtonState>, IMountingListener
+    public partial class DropdownButton : RishElement<DropdownButtonProps, DropdownButtonState>, IMountingListener, IPropsListener
     {
         private DropdownContext Context { get; set; }
 
@@ -19,7 +19,6 @@ namespace Roots
             RegisterCallback<PointerUpEvent>(OnPointerUp);
             RegisterCallback<PointerCancelEvent>(OnPointerCancel);
         }
-
         void IMountingListener.ComponentDidMount()
         {
             Context = GetFirstAncestorOfType<DropdownContext>();
@@ -27,6 +26,15 @@ namespace Roots
             Listening = false;
             PointerId = 0;
         }
+
+        void IPropsListener.PropsDidChange()
+        {
+            if (State.open)
+            {
+                Context.ShowDropdownMenu(this);
+            }
+        }
+        void IPropsListener.PropsWillChange() { }
 
         void IMountingListener.ComponentWillUnmount()
         {

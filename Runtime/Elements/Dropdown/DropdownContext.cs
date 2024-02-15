@@ -67,8 +67,7 @@ namespace Roots
                 
                 descriptor.style.pointerDetection = PointerDetectionMode.Rect;
             }
-
-
+            
             return Div.Create(descriptor, children: new Children { Props.content, menu });
         }
 

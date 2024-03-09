@@ -75,7 +75,7 @@ namespace Roots
             return Div.Create(descriptor, children: new Children { Props.content, menu });
         }
 
-        internal void ShowContextMenu(IContextual owner, Vector3 position)
+        public void ShowContextMenu(IContextual owner, Vector3 position)
         {
             Contextual = owner;
             Position = position;
@@ -84,7 +84,7 @@ namespace Roots
             Props.onShow?.Invoke(true);
         }
 
-        internal void HideContextMenu(IContextual owner)
+        public void HideContextMenu(IContextual owner)
         {
             if (owner != Contextual)
             {

@@ -64,7 +64,7 @@ namespace Roots
             var descriptor = Props.descriptor;
             if (Contextual != null)
             {
-                menu = Roots.Menu.Create(new MenuProps
+                menu = Menu.Create(new MenuProps
                 {
                     position = Position,
                     element = Contextual.Menu
@@ -75,7 +75,7 @@ namespace Roots
             return Div.Create(descriptor, children: new Children { Props.content, menu });
         }
 
-        public void ShowContextMenu(IContextual owner, Vector3 position)
+        internal void ShowContextMenu(IContextual owner, Vector3 position)
         {
             Contextual = owner;
             Position = position;
@@ -84,17 +84,14 @@ namespace Roots
             Props.onShow?.Invoke(true);
         }
 
-        public void HideContextMenu(IContextual owner)
+        internal void HideContextMenu(IContextual owner)
         {
             if (owner != Contextual)
             {
                 return;
             }
 
-            Contextual = null;
-            Dirty();
-            
-            Props.onShow?.Invoke(false);
+            HideContextMenu();
         }
         
         internal void RegisterMenu(Menu menu) {
@@ -112,6 +109,24 @@ namespace Roots
             }
 
             Menu = null;
+        }
+
+        internal void HideContextMenu(Menu menu)
+        {
+            if (Menu != menu)
+            {
+                throw new UnityException("Context is showing a different menu");
+            }
+
+            HideContextMenu();
+        }
+        
+        private void HideContextMenu()
+        {
+            Contextual = null;
+            Dirty();
+            
+            Props.onShow?.Invoke(false);
         }
 
         private void OnPointerDown(PointerDownEvent evt)

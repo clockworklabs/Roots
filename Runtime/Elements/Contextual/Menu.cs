@@ -12,6 +12,7 @@ namespace Roots
         
         public Menu()
         {
+            RegisterCallback<KeyDownEvent>(OnKeyDown);
             RegisterCallback<VisualChangeEvent>(OnVisualChange);
         }
         
@@ -19,9 +20,17 @@ namespace Roots
         {
             Context = GetFirstAncestorOfType<ContextualContext>();
             Context.RegisterMenu(this);
+            
+            Focusable();
+            Focus();
         }
         void IMountingListener.ComponentWillUnmount() { 
             Context?.UnregisterMenu(this);
+            
+            if (HasFocus)
+            {
+                Blur();
+            }
         }
 
         void IPropsListener.PropsDidChange()
@@ -34,16 +43,25 @@ namespace Roots
                 position = Position.Absolute,
                 left = local.x,
                 top = local.y,
-                visibility = Visibility.Hidden
+                // visibility = Visibility.Hidden, // Changing visibility blurs the element
+                opacity = 0
             };
             
             State = state;
+            
         }
         void IPropsListener.PropsWillChange() { }
 
-        protected override Element Render()
+        protected override Element Render() => Div.Create(State.style, children: Props.element);
+
+        private void OnKeyDown(KeyDownEvent evt)
         {
-            return Div.Create(State.style, children: Props.element);
+            if (!HasFocus || evt.keyCode != KeyCode.Escape)
+            {
+                return;
+            }
+
+            Context.HideContextMenu(this);
         }
 
         private void OnVisualChange(VisualChangeEvent evt)
@@ -56,7 +74,8 @@ namespace Roots
                 new Length(Layout.yMax < parentSize.y ? 0 : -100, LengthUnit.Percent),
                 0
             );
-            state.style.visibility = Visibility.Visible;
+            // state.style.visibility = Visibility.Visible;
+            state.style.opacity = 1;
             State = state;
         }
     }

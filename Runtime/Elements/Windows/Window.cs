@@ -1,6 +1,7 @@
 ﻿using RishUI;
 using RishUI.Events;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace Roots
 {
@@ -8,6 +9,7 @@ namespace Roots
     public partial class Window : RishElement<WindowProps>, IMountingListener, IPropsListener
     {
         private WindowsContext Context { get; set; }
+        private VisualElement VisualElementParent { get; set; }
         internal ulong NodeHashCode { get; private set; }
         internal int Index { get; private set; }
         
@@ -22,9 +24,16 @@ namespace Roots
             
             Context = GetFirstAncestorOfType<WindowsContext>();
             Index = Context?.RegisterWindow(this) ?? -1;
+
+            VisualElementParent = GetFirstAncestorOfType<VisualElement>();
+            VisualElementParent.RegisterCallback<GeometryChangedEvent>(ParentGeometryChanged);
         }
 
-        void IMountingListener.ComponentWillUnmount() => Context?.UnregisterWindow(this);
+        void IMountingListener.ComponentWillUnmount()
+        {
+            Context?.UnregisterWindow(this);
+            VisualElementParent.UnregisterCallback<GeometryChangedEvent>(ParentGeometryChanged);
+        }
 
         void IPropsListener.PropsDidChange()
         {
@@ -57,6 +66,16 @@ namespace Roots
             {
                 evt.StopPropagation();
             }
+        }
+
+        private void ParentGeometryChanged(GeometryChangedEvent evt)
+        {
+            if (evt.oldRect == evt.newRect)
+            {
+                return;
+            }
+
+            Context.WindowGeometryChanged();
         }
     }
 

@@ -15,7 +15,7 @@ namespace Roots
         private List<Window> RegisteredWindows { get; } = new();
         
         private List<int> WindowsOrder { get; } = new();
-        private Dictionary<ulong, Rect> WindowsPosition { get; } = new();
+        private Dictionary<ulong, Vector2> Offsets { get; } = new();
         
         private bool Rendered { get; set; }
 
@@ -30,7 +30,7 @@ namespace Roots
             
             RegisteredWindows.Clear();
             WindowsOrder.Clear();
-            WindowsPosition.Clear();
+            Offsets.Clear();
         }
         
         protected override Element Render()
@@ -51,16 +51,8 @@ namespace Roots
 
                     var window = RegisteredWindows[index];
                     var nodeHashCode = window.NodeHashCode;
-                    if (!WindowsPosition.TryGetValue(nodeHashCode, out var localRect))
-                    {
-                        // TODO: Support transformed elements
-                        // localRect = window.ChangeCoordinatesTo(this, window.contentRect);
-                        localRect = WorldToLocal(window.ParentWorldContentRect);
-                    }
 
                     var props = window.Props;
-
-                    WindowsPosition[nodeHashCode] = localRect;
 
                     var element = InternalWindow.Create(new InternalWindowProps
                     {
@@ -70,13 +62,20 @@ namespace Roots
                         draggable = props.draggable
                     });
 
+                    var local = WorldToLocal(window.ParentWorldContentRect);
+                    if (Offsets.TryGetValue(nodeHashCode, out var offset))
+                    {
+                        local.x += offset.x;
+                        local.y += offset.y;
+                    }
+
                     var holder = Div.Create((uint)index, new Style
                     {
                         position = Position.Absolute,
-                        left = localRect.x,
-                        width = localRect.width,
-                        top = localRect.y,
-                        height = localRect.height,
+                        left = local.x,
+                        width = local.width,
+                        top = local.y,
+                        height = local.height,
                         pointerDetection = PointerDetectionMode.Ignore
                     }, children: element);
 
@@ -197,15 +196,15 @@ namespace Roots
 
         internal void Drag(ulong nodeHashCode, Vector2 delta)
         {
-            if (!WindowsPosition.TryGetValue(nodeHashCode, out var rect))
+            if (!Offsets.TryGetValue(nodeHashCode, out var offset))
             {
-                return;
+                offset = Vector2.zero;
             }
 
-            rect.x += delta.x;
-            rect.y += delta.y;
+            offset.x += delta.x;
+            offset.y += delta.y;
 
-            WindowsPosition[nodeHashCode] = rect;
+            Offsets[nodeHashCode] = offset;
             
             Dirty(Rendered);
         }
@@ -226,6 +225,8 @@ namespace Roots
         {
             
         }
+
+        internal void WindowGeometryChanged() => Dirty();
 
         // internal void ResizeWindow(int index, int side, float delta)
         // {

@@ -95,9 +95,9 @@ namespace Roots
         }
         
         internal void RegisterMenu(Menu menu) {
-            if (Menu != null)
+            if (menu == null)
             {
-                throw new UnityException("Context is already showing a menu");
+                return;
             }
 
             Menu = menu;
@@ -105,7 +105,7 @@ namespace Roots
         internal void UnregisterMenu(Menu menu) {
             if (Menu != menu)
             {
-                throw new UnityException("Context is showing a different menu");
+                return;
             }
 
             Menu = null;
@@ -115,7 +115,7 @@ namespace Roots
         {
             if (Menu != menu)
             {
-                throw new UnityException("Context is showing a different menu");
+                return;
             }
 
             HideContextMenu();

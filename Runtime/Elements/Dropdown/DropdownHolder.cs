@@ -25,7 +25,8 @@ namespace Roots
                 top = rect.y,
                 height = rect.height,
                 translate = new Translate(State.offset.x, State.offset.y, 0),
-                visibility = State.visible ? Visibility.Visible : Visibility.Hidden
+                visibility = State.visible ? Visibility.Visible : Visibility.Hidden,
+                pointerDetection = PointerDetectionMode.Ignore
             };
             
             return Div.Create(style, children: Props.element);

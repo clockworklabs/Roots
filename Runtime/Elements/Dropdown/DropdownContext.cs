@@ -33,6 +33,8 @@ namespace Roots
                 _focusedElement?.RegisterCallback<PointerUpEvent>(OnPointerUp);
             }
         }
+        
+        private VisualElement Root { get; set; }
 
         public DropdownContext()
         {
@@ -48,6 +50,9 @@ namespace Roots
             DropdownButton = null;
             Dropdown = null;
             FocusedElement = null;
+            
+            Root?.UnregisterCallback<KeyDownEvent>(OnKeyDown);
+            Root = null;
         }
 
         protected override Element Render()
@@ -82,11 +87,20 @@ namespace Roots
                 
                 return;
             }
+
+            if (Root == null)
+            {
+                Root = GetFirstAncestorOfType<VisualElement>();
+                while (Root?.parent != null)
+                {
+                    Root = Root.parent;
+                }
+            }
+            Root?.RegisterCallback<KeyDownEvent>(OnKeyDown);
             
             DropdownButton = owner;
-            Dirty();
-            
             DropdownButton.OnOpen();
+            Dirty();
             
             Props.onShow?.Invoke(true);
         }
@@ -97,9 +111,10 @@ namespace Roots
             {
                 return;
             }
+            
+            Root?.UnregisterCallback<KeyDownEvent>(OnKeyDown);
 
             DropdownButton.OnClose();
-
             DropdownButton = null;
             Dirty();
             
@@ -123,6 +138,16 @@ namespace Roots
             }
 
             Dropdown = null;
+        }
+
+        private void OnKeyDown(KeyDownEvent evt)
+        {
+            if (evt.keyCode != KeyCode.Escape)
+            {
+                return;
+            }
+            
+            HideDropdownMenu(DropdownButton);
         }
 
         private void OnPointerDown(PointerDownEvent evt)

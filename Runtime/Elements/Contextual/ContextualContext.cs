@@ -39,6 +39,8 @@ namespace Roots
                 _focussedElement?.RegisterCallback<PointerUpEvent>(OnPointerUp);
             }
         }
+        
+        private VisualElement Root { get; set; }
 
         public ContextualContext()
         {
@@ -56,6 +58,9 @@ namespace Roots
             Menu = null;
             Position = Vector3.negativeInfinity;
             FocussedElement = null;
+            
+            Root?.UnregisterCallback<KeyDownEvent>(OnKeyDown);
+            Root = null;
         }
         
         protected override Element Render()
@@ -80,6 +85,16 @@ namespace Roots
             Contextual = owner;
             Position = position;
             Dirty();
+
+            if (Root == null)
+            {
+                Root = GetFirstAncestorOfType<VisualElement>();
+                while (Root?.parent != null)
+                {
+                    Root = Root.parent;
+                }
+            }
+            Root?.RegisterCallback<KeyDownEvent>(OnKeyDown);
             
             Props.onShow?.Invoke(true);
         }
@@ -91,7 +106,12 @@ namespace Roots
                 return;
             }
 
-            HideContextMenu();
+            Contextual = null;
+            Dirty();
+            
+            Root?.UnregisterCallback<KeyDownEvent>(OnKeyDown);
+            
+            Props.onShow?.Invoke(false);
         }
         
         internal void RegisterMenu(Menu menu) {
@@ -111,24 +131,16 @@ namespace Roots
             Menu = null;
         }
 
-        internal void HideContextMenu(Menu menu)
+        private void OnKeyDown(KeyDownEvent evt)
         {
-            if (Menu != menu)
+            if (evt.keyCode != KeyCode.Escape)
             {
                 return;
             }
-
-            HideContextMenu();
+            
+            HideContextMenu(Contextual);
         }
         
-        private void HideContextMenu()
-        {
-            Contextual = null;
-            Dirty();
-            
-            Props.onShow?.Invoke(false);
-        }
-
         private void OnPointerDown(PointerDownEvent evt)
         {
             if (Contextual == null || Menu == null || Position == evt.position)

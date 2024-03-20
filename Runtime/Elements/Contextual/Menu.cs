@@ -12,25 +12,16 @@ namespace Roots
         
         public Menu()
         {
-            RegisterCallback<KeyDownEvent>(OnKeyDown);
             RegisterCallback<VisualChangeEvent>(OnVisualChange);
         }
         
         void IMountingListener.ComponentDidMount()
         {
             Context = GetFirstAncestorOfType<ContextualContext>();
-            Context.RegisterMenu(this);
-            
-            Focusable();
-            Focus();
+            Context?.RegisterMenu(this);
         }
         void IMountingListener.ComponentWillUnmount() { 
             Context?.UnregisterMenu(this);
-            
-            if (HasFocus)
-            {
-                Blur();
-            }
         }
 
         void IPropsListener.PropsDidChange()
@@ -53,17 +44,7 @@ namespace Roots
         void IPropsListener.PropsWillChange() { }
 
         protected override Element Render() => Div.Create(State.style, children: Props.element);
-
-        private void OnKeyDown(KeyDownEvent evt)
-        {
-            if (!HasFocus || evt.keyCode != KeyCode.Escape)
-            {
-                return;
-            }
-
-            Context.HideContextMenu(this);
-        }
-
+        
         private void OnVisualChange(VisualChangeEvent evt)
         {
             var parentSize = Context.ContentRect.size;

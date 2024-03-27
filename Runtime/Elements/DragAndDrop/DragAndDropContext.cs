@@ -51,6 +51,7 @@ namespace Roots
             }
 
             Draggable = null;
+            SetDraggedElement<T>(null, false, false);
             ClearDropAreas<T>();
             
             Props.onDrag?.Invoke(false);

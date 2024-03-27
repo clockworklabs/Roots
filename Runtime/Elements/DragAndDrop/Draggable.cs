@@ -9,7 +9,11 @@ namespace Roots
     public partial class Draggable<T> : RishElement<DraggableProps<T>, DraggableState>, IMountingListener, IPropsListener where T : struct
     {
         private DragAndDropContext Context { get; set; }
+        private float Threshold { get; set; }
 
+        private int PointerId { get; set; } = -1;
+        private bool Valid { get; set; }
+        private float Delta { get; set; }
         private int LastDragFrame { get; set; }
 
         public Draggable()
@@ -24,12 +28,23 @@ namespace Roots
         void IMountingListener.ComponentDidMount()
         {
             Context = GetFirstAncestorOfType<DragAndDropContext>();
+
+            var root = GetFirstAncestorOfType<VisualElement>();
+            while (root.parent != null)
+            {
+                root = root.parent;
+            }
+
+            var screenSize = root.layout.size;
+            var shortSideSize = Mathf.Min(screenSize.x, screenSize.y);
+            Threshold = shortSideSize * 0.005f;
         }
 
         void IMountingListener.ComponentWillUnmount()
         {
-            
             Context?.UnmountDraggable(this);
+
+            PointerId = -1;
         }
 
         void IPropsListener.PropsDidChange()
@@ -61,11 +76,11 @@ namespace Roots
             var pointerId = evt.pointerId;
             
             // TODO: Support touch screen
-            if (pointerId != PointerId.mousePointerId)
+            if (PointerId >= 0 || pointerId != UnityEngine.UIElements.PointerId.mousePointerId)
             {
                 return;
             }
-
+            
             var pressedButtons = evt.pressedButtons;
             if(pressedButtons <= 0) 
             {
@@ -76,25 +91,42 @@ namespace Roots
             {
                 return;
             }
-            var start = Context.DraggableDragStart(this, primary);
-            if (!start)
-            {
-                return;
-            }
-
-            StartDragging(primary);
             
-            Props.onDragAction?.Invoke();
-            
-            CaptureMouse();
+            PointerId = pointerId;
+            Delta = Threshold;
+            Valid = true;
         }
 
         private void OnDrag(DragEvent evt)
         {
             var pointerId = evt.pointerId;
-            // TODO: Support touch screen
-            if (pointerId != PointerId.mousePointerId)
+            if (!Valid || pointerId != PointerId)
             {
+                return;
+            }
+
+            if (!State.dragging)
+            {
+                Delta -= evt.deltaPosition.magnitude;
+                if (Delta > 0)
+                {
+                    return;
+                }
+                var pressedButtons = evt.pressedButtons;
+                var primary = (pressedButtons & 1) > 0;
+                var start = Context.DraggableDragStart(this, primary);
+                if (!start)
+                {
+                    Valid = false;
+                    return;
+                }
+
+                StartDragging(primary);
+            
+                Props.onDragAction?.Invoke();
+            
+                CaptureMouse();
+
                 return;
             }
             
@@ -112,11 +144,12 @@ namespace Roots
         private void OnDragEnd(DragEndEvent evt)
         {
             var pointerId = evt.pointerId;
-            // TODO: Support touch screen
-            if (pointerId != PointerId.mousePointerId)
+            if (!Valid || pointerId != PointerId)
             {
                 return;
             }
+
+            PointerId = -1;
             
             EndDragging();
             

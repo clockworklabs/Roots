@@ -500,7 +500,9 @@ namespace Roots
             if (AnimatingChildren.Contains(child))
             {
                 // TODO: This would be a very weird case
+                #if UNITY_EDITOR
                 Debug.LogWarning("Something very weird just happened");
+                #endif
                 return 0;
             }
 
@@ -519,7 +521,9 @@ namespace Roots
             if (!AnimatingChildren.Contains(child))
             {
                 // throw new ArgumentException("Child must register animation first");
+                #if UNITY_EDITOR
                 Debug.LogWarning("Child must register animation first");
+                #endif
                 return 0;
             }
 

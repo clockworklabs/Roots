@@ -1,6 +1,5 @@
 using System;
 using RishUI;
-using Unity.Collections;
 
 namespace Roots
 {
@@ -37,7 +36,7 @@ namespace Roots
         public bool open;
         public bool fixedPosition;
         public bool alwaysOnTop;
-        public FixedString128Bytes title;
+        public RishString title;
         public Element content;
 
         [IgnoreComparison]

@@ -89,7 +89,7 @@ namespace Roots
 
             private void OnPointerUp(PointerUpEvent evt)
             {
-                if (!Listening || PointerId != evt.pointerId)
+                if ((!Listening || PointerId != evt.pointerId) && !Props.pointerUpIsSufficient)
                 {
                     return;
                 }

@@ -9,8 +9,8 @@ namespace Roots
     {
         private ContextualContext Context { get; set; }
 
-        private bool Listening { get; set; }
-        private int PointerId { get; set; }
+        // private bool Listening { get; set; }
+        // private int PointerId { get; set; }
 
         Element IContextual.Menu => Props.menu;
         
@@ -20,16 +20,16 @@ namespace Roots
             RegisterCallback<HoverEndEvent>(OnHoverEnd);
             
             RegisterCallback<PointerDownEvent>(OnPointerDown);
-            RegisterCallback<PointerUpEvent>(OnPointerUp);
-            RegisterCallback<PointerCancelEvent>(OnPointerCancel);
+            // RegisterCallback<PointerUpEvent>(OnPointerUp);
+            // RegisterCallback<PointerCancelEvent>(OnPointerCancel);
         }
 
         void IMountingListener.ComponentDidMount()
         {
             Context = GetFirstAncestorOfType<ContextualContext>();
             
-            Listening = false;
-            PointerId = 0;
+            // Listening = false;
+            // PointerId = 0;
         }
         
         void IMountingListener.ComponentWillUnmount()
@@ -71,16 +71,21 @@ namespace Roots
 
         private void OnPointerDown(PointerDownEvent evt)
         {
-            if (Listening || evt.button != 1)
+            // if (Listening || evt.button != 1)
+            // {
+            //     return;
+            // }
+            if (evt.button != 1)
             {
                 return;
             }
 
-            Listening = true;
-            PointerId = evt.pointerId;
+            // Listening = true;
+            // PointerId = evt.pointerId;
             
-            CapturePointer(PointerId);
-
+            // CapturePointer(PointerId);
+            OnAction(evt.position);
+            
             var state = State;
             state.pressed = true;
             State = state;
@@ -88,62 +93,62 @@ namespace Roots
             evt.StopPropagation();
         }
 
-        private void OnPointerUp(PointerUpEvent evt)
-        {
-            if (!Listening || PointerId != evt.pointerId)
-            {
-                return;
-            }
-            
-            ReleasePointer(PointerId);
-
-            Listening = false;
-            PointerId = 0;
-            
-            // TODO: Is it necessary?
-            if (ContainsPoint(WorldToLocal(evt.position)))
-            {
-                if (evt.button == 1)
-                {
-                    OnAction(evt.position);
-                }
-            }
-
-            var state = State;
-            state.pressed = false;
-            State = state;
-            
-            evt.StopPropagation();
-        }
-
-        // TODO: Is this necessary?
-        private void OnPointerCancel(PointerCancelEvent evt)
-        {
-            if (!Listening || PointerId != evt.pointerId)
-            {
-                return;
-            }
-
-            ReleasePointer(PointerId);
-
-            Listening = false;
-            PointerId = 0;
-            
-            // TODO: Is it necessary?
-            if (ContainsPoint(WorldToLocal(evt.position)))
-            {
-                if (evt.button == 1)
-                {
-                    OnAction(evt.position);
-                }
-            }
-
-            var state = State;
-            state.pressed = false;
-            State = state;
-            
-            evt.StopPropagation();
-        }
+        // private void OnPointerUp(PointerUpEvent evt)
+        // {
+        //     if (!Listening || PointerId != evt.pointerId)
+        //     {
+        //         return;
+        //     }
+        //     
+        //     ReleasePointer(PointerId);
+        //
+        //     Listening = false;
+        //     PointerId = 0;
+        //     
+        //     // TODO: Is it necessary?
+        //     if (ContainsPoint(WorldToLocal(evt.position)))
+        //     {
+        //         if (evt.button == 1)
+        //         {
+        //             OnAction(evt.position);
+        //         }
+        //     }
+        //
+        //     var state = State;
+        //     state.pressed = false;
+        //     State = state;
+        //     
+        //     evt.StopPropagation();
+        // }
+        //
+        // // TODO: Is this necessary?
+        // private void OnPointerCancel(PointerCancelEvent evt)
+        // {
+        //     if (!Listening || PointerId != evt.pointerId)
+        //     {
+        //         return;
+        //     }
+        //
+        //     ReleasePointer(PointerId);
+        //
+        //     Listening = false;
+        //     PointerId = 0;
+        //     
+        //     // TODO: Is it necessary?
+        //     if (ContainsPoint(WorldToLocal(evt.position)))
+        //     {
+        //         if (evt.button == 1)
+        //         {
+        //             OnAction(evt.position);
+        //         }
+        //     }
+        //
+        //     var state = State;
+        //     state.pressed = false;
+        //     State = state;
+        //     
+        //     evt.StopPropagation();
+        // }
 
         private void OnAction(Vector3 position)
         {

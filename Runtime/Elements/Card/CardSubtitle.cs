@@ -1,6 +1,5 @@
 using System;
 using RishUI;
-using Unity.Collections;
 using UnityEngine;
 
 namespace Roots
@@ -39,6 +38,6 @@ namespace Roots
         [DOMDescriptor]
         public DOMDescriptor descriptor;
         // public Utilities utilities;
-        public FixedString4096Bytes text;
+        public RishString text;
     }
 }

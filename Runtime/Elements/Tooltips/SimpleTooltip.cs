@@ -1,5 +1,4 @@
 using RishUI;
-using Unity.Collections;
 
 namespace Roots
 {
@@ -15,7 +14,7 @@ namespace Roots
     [RishValueType]
     public struct SimpleTooltipProps
     {
-        public FixedString4096Bytes tooltip;
+        public RishString tooltip;
         public Element content;
     }
 }

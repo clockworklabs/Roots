@@ -115,6 +115,8 @@ namespace Roots
         public Element disabled;
         // TODO: Add focused
 
+        public bool pointerUpIsSufficient;
+        
         public bool focusable;
         public bool autoFocus;
 
@@ -135,6 +137,7 @@ namespace Roots
             hovered = other.hovered;
             pressed = other.pressed;
             disabled = other.disabled;
+            pointerUpIsSufficient = other.pointerUpIsSufficient;
             submitsForm = other.submitsForm;
             focusable = other.focusable;
             autoFocus = other.autoFocus;

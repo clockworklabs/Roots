@@ -1,5 +1,4 @@
 using RishUI;
-using Unity.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -22,13 +21,13 @@ namespace Roots
 
         private AssetsLoader Loader { get; set; }
         
-        private FixedString128Bytes BackgroundTextureAddress;
+        private string BackgroundTextureAddress;
         private Texture2D CachedTexture { get; set; }
-        private FixedString128Bytes BackgroundSpriteAddress;
+        private string BackgroundSpriteAddress;
         private Sprite CachedSprite { get; set; }
-        private FixedString128Bytes BackgroundVectorAddress;
+        private string BackgroundVectorAddress;
         private VectorImage CachedVector { get; set; }
-        private FixedString128Bytes BackgroundRenderTextureAddress;
+        private string BackgroundRenderTextureAddress;
         private RenderTexture CachedRenderTexture { get; set; }
         
         public Div()
@@ -47,8 +46,8 @@ namespace Roots
             
             if (Loader != null)
             {
-                var textureAddress = props.backgroundTextureAddress.Value;
-                var textureSet = !string.IsNullOrWhiteSpace(textureAddress.Value);
+                var textureAddress = props.backgroundTextureAddress;
+                var textureSet = !string.IsNullOrWhiteSpace(textureAddress);
                 if (!textureSet)
                 {
                     BackgroundTextureAddress = default;
@@ -60,12 +59,12 @@ namespace Roots
                     if (textureAddress != BackgroundTextureAddress)
                     {
                         BackgroundTextureAddress = textureAddress;
-                        Loader.Load<Texture2D>(textureAddress.Value, OnTextureLoaded);
+                        Loader.Load<Texture2D>(textureAddress, OnTextureLoaded);
                     }
                 }
 
-                var spriteAddress = props.backgroundSpriteAddress.Value;
-                var spriteSet = !textureSet && !string.IsNullOrWhiteSpace(spriteAddress.Value);
+                var spriteAddress = props.backgroundSpriteAddress;
+                var spriteSet = !textureSet && !string.IsNullOrWhiteSpace(spriteAddress);
                 if (!spriteSet)
                 {
                     BackgroundSpriteAddress = default;
@@ -77,12 +76,12 @@ namespace Roots
                     if (spriteAddress != BackgroundSpriteAddress)
                     {
                         BackgroundSpriteAddress = spriteAddress;
-                        Loader.Load<Sprite>(spriteAddress.Value, OnSpriteLoaded);
+                        Loader.Load<Sprite>(spriteAddress, OnSpriteLoaded);
                     }
                 }
 
-                var vectorAddress = props.backgroundVectorAddress.Value;
-                var vectorSet = !spriteSet && !string.IsNullOrWhiteSpace(vectorAddress.Value);
+                var vectorAddress = props.backgroundVectorAddress;
+                var vectorSet = !spriteSet && !string.IsNullOrWhiteSpace(vectorAddress);
                 if (!vectorSet)
                 {
                     BackgroundVectorAddress = default;
@@ -94,12 +93,12 @@ namespace Roots
                     if (vectorAddress != BackgroundVectorAddress)
                     {
                         BackgroundVectorAddress = vectorAddress;
-                        Loader.Load<VectorImage>(vectorAddress.Value, OnVectorLoaded);
+                        Loader.Load<VectorImage>(vectorAddress, OnVectorLoaded);
                     }
                 }
 
-                var renderTextureAddress = props.backgroundRenderTextureAddress.Value;
-                var renderTextureSet = !vectorSet && !string.IsNullOrWhiteSpace(renderTextureAddress.Value);
+                var renderTextureAddress = props.backgroundRenderTextureAddress;
+                var renderTextureSet = !vectorSet && !string.IsNullOrWhiteSpace(renderTextureAddress);
                 if (!renderTextureSet)
                 {
                     BackgroundRenderTextureAddress = default;
@@ -111,7 +110,7 @@ namespace Roots
                     if (renderTextureAddress != BackgroundRenderTextureAddress)
                     {
                         BackgroundRenderTextureAddress = renderTextureAddress;
-                        Loader.Load<RenderTexture>(renderTextureAddress.Value, OnRenderTextureLoaded);
+                        Loader.Load<RenderTexture>(renderTextureAddress, OnRenderTextureLoaded);
                     }
                 }
             }
@@ -232,19 +231,19 @@ namespace Roots
         /// <summary>
         /// Styled Prop as --props-background-texture
         /// </summary>
-        public FixedString128Bytes? backgroundTextureAddress;
+        public RishString? backgroundTextureAddress;
         /// <summary>
         /// Styled Prop as --props-background-sprite
         /// </summary>
-        public FixedString128Bytes? backgroundSpriteAddress;
+        public RishString? backgroundSpriteAddress;
         /// <summary>
         /// Styled Prop as --props-background-vector
         /// </summary>
-        public FixedString128Bytes? backgroundVectorAddress;
+        public RishString? backgroundVectorAddress;
         /// <summary>
         /// Styled Prop as --props-background-render-texture
         /// </summary>
-        public FixedString128Bytes? backgroundRenderTextureAddress;
+        public RishString? backgroundRenderTextureAddress;
         
         // public Utilities utilities;
     }

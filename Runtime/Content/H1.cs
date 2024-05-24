@@ -1,6 +1,5 @@
 using RishUI;
 using RishUI.Elements;
-using Unity.Collections;
 
 namespace Roots
 {
@@ -13,7 +12,7 @@ namespace Roots
                 "h1"
             };
             
-            return Label.Create(descriptor: descriptor, /*utilities: Props.utilities,*/ text: Props.text.Value);
+            return Label.Create(descriptor: descriptor, /*utilities: Props.utilities,*/ text: Props.text);
         }
     }
 
@@ -23,6 +22,6 @@ namespace Roots
         [DOMDescriptor]
         public DOMDescriptor descriptor;
         // public Utilities utilities;
-        public FixedString4096Bytes text;
+        public RishString text;
     }
 }

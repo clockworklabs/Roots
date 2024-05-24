@@ -1,6 +1,5 @@
 using RishUI;
 using RishUI.Events;
-using Unity.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
 using StyleLength = UnityEngine.UIElements.StyleLength;
@@ -33,12 +32,12 @@ namespace Roots
         private VisualElement Parent { get; set; }
         private ImageSize Width;
         private ImageSize Height;
-        private FixedString128Bytes TextureAddress;
-        private FixedString128Bytes SpriteAddress;
+        private RishString TextureAddress;
+        private RishString SpriteAddress;
         private Sprite CachedSprite;
         private bool StyleBackgroundSet;
-        private FixedString128Bytes VectorAddress;
-        private FixedString128Bytes RenderTextureAddress;
+        private RishString VectorAddress;
+        private RishString RenderTextureAddress;
         private StyleLength InlineWidth;
         private StyleLength InlineHeight;
         
@@ -92,7 +91,7 @@ namespace Roots
             } else 
             {
                 var textureAddress = props.textureAddress.Value;
-                var textureSet = !string.IsNullOrWhiteSpace(textureAddress.Value);
+                var textureSet = !string.IsNullOrWhiteSpace(textureAddress);
                 if (!textureSet)
                 {
                     textureAddress = string.Empty;
@@ -100,18 +99,18 @@ namespace Roots
                 if (textureAddress != TextureAddress)
                 {
                     TextureAddress = textureAddress;
-                    Loader?.Load<Texture2D>(textureAddress.Value, OnTextureLoaded);
+                    Loader?.Load<Texture2D>(textureAddress, OnTextureLoaded);
                 }
 
                 var spriteAddress = props.spriteAddress.Value;
-                var spriteSet = !textureSet && !string.IsNullOrWhiteSpace(spriteAddress.Value);
+                var spriteSet = !textureSet && !string.IsNullOrWhiteSpace(spriteAddress);
                 if (spriteSet)
                 {
                     SetSprite(CachedSprite);
                     if (spriteAddress != SpriteAddress)
                     {
                         SpriteAddress = spriteAddress;
-                        Loader?.Load<Sprite>(spriteAddress.Value, OnSpriteLoaded);
+                        Loader?.Load<Sprite>(spriteAddress, OnSpriteLoaded);
                     }
                 }
                 else
@@ -120,7 +119,7 @@ namespace Roots
                 }
 
                 var vectorAddress = props.vectorAddress.Value;
-                var vectorSet = !spriteSet && !string.IsNullOrWhiteSpace(vectorAddress.Value);
+                var vectorSet = !spriteSet && !string.IsNullOrWhiteSpace(vectorAddress);
                 if (!vectorSet)
                 {
                     vectorAddress = string.Empty;
@@ -128,11 +127,11 @@ namespace Roots
                 if (vectorAddress != VectorAddress)
                 {
                     VectorAddress = vectorAddress;
-                    Loader?.Load<VectorImage>(vectorAddress.Value, OnVectorLoaded);
+                    Loader?.Load<VectorImage>(vectorAddress, OnVectorLoaded);
                 }
 
                 var renderTextureAddress = props.renderTextureAddress.Value;
-                var renderTextureSet = !vectorSet && !string.IsNullOrWhiteSpace(renderTextureAddress.Value);
+                var renderTextureSet = !vectorSet && !string.IsNullOrWhiteSpace(renderTextureAddress);
                 if (!renderTextureSet)
                 {
                     renderTextureAddress = string.Empty;
@@ -140,7 +139,7 @@ namespace Roots
                 if (renderTextureAddress != RenderTextureAddress)
                 {
                     RenderTextureAddress = renderTextureAddress;
-                    Loader?.Load<RenderTexture>(renderTextureAddress.Value, OnRenderTextureLoaded);
+                    Loader?.Load<RenderTexture>(renderTextureAddress, OnRenderTextureLoaded);
                 }
 
                 if (!textureSet && !spriteSet && !vectorSet && !renderTextureSet)
@@ -495,19 +494,19 @@ namespace Roots
         /// <summary>
         /// Styled Prop as --props-texture
         /// </summary>
-        public FixedString128Bytes? textureAddress;
+        public RishString? textureAddress;
         /// <summary>
         /// Styled Prop as --props-sprite
         /// </summary>
-        public FixedString128Bytes? spriteAddress;
+        public RishString? spriteAddress;
         /// <summary>
         /// Styled Prop as --props-vector
         /// </summary>
-        public FixedString128Bytes? vectorAddress;
+        public RishString? vectorAddress;
         /// <summary>
         /// Styled Prop as --props-render-texture
         /// </summary>
-        public FixedString128Bytes? renderTextureAddress;
+        public RishString? renderTextureAddress;
         
         /// <summary>
         /// Styled Prop as --props-scale-mode

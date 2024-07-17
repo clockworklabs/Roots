@@ -23,5 +23,15 @@ namespace Roots
         public DOMDescriptor descriptor;
         // public Utilities utilities;
         public RishString text;
+
+        public bool enableRichText;
+        public bool parseEscapeSequences;
+
+        [Default]
+        private static PProps Default => new()
+        {
+            enableRichText = true,
+            parseEscapeSequences = true
+        };
     }
 }

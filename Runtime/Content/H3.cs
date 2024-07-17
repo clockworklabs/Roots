@@ -7,12 +7,13 @@ namespace Roots
     {
         protected override Element Render()
         {
-            var descriptor = Props.descriptor;
-            descriptor.className = new ClassName(descriptor.className) {
-                "h3"
-            };
+            var descriptor = Props.descriptor + "h3";
             
-            return Label.Create(descriptor: descriptor, /*utilities: Props.utilities,*/ text: Props.text);
+            return Label.Create(
+                descriptor: descriptor,
+                text: Props.text,
+                enableRichText: Props.enableRichText,
+                parseEscapeSequences: Props.parseEscapeSequences);
         }
     }
 
@@ -23,5 +24,15 @@ namespace Roots
         public DOMDescriptor descriptor;
         // public Utilities utilities;
         public RishString text;
+
+        public bool enableRichText;
+        public bool parseEscapeSequences;
+
+        [Default]
+        private static H3Props Default => new()
+        {
+            enableRichText = true,
+            parseEscapeSequences = true
+        };
     }
 }

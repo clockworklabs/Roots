@@ -10,8 +10,9 @@ namespace Roots
     {
         private WindowsContext Context { get; set; }
         private VisualElement VisualElementParent { get; set; }
-        internal ulong NodeHashCode { get; private set; }
-        internal int Index { get; private set; }
+        private ulong NodeHashCode { get; set; }
+        private ulong GUID => Props.guid ?? NodeHashCode;
+        private ulong? PrevGUID { get; set; }
         
         public Window()
         {
@@ -21,9 +22,9 @@ namespace Roots
         void IMountingListener.ComponentDidMount()
         {
             NodeHashCode = GetNodeHashCode();
+            PrevGUID = null;
             
             Context = GetFirstAncestorOfType<WindowsContext>();
-            Index = Context?.RegisterWindow(this) ?? -1;
 
             VisualElementParent = GetFirstAncestorOfType<VisualElement>();
             VisualElementParent.RegisterCallback<GeometryChangedEvent>(ParentGeometryChanged);
@@ -31,12 +32,22 @@ namespace Roots
 
         void IMountingListener.ComponentWillUnmount()
         {
-            Context?.UnregisterWindow(this);
+            Context?.UnregisterWindow(GUID);
             VisualElementParent.UnregisterCallback<GeometryChangedEvent>(ParentGeometryChanged);
         }
 
         void IPropsListener.PropsDidChange()
         {
+            if (!PrevGUID.HasValue || PrevGUID.Value != GUID)
+            {
+                if (PrevGUID.HasValue)
+                {
+                    Context?.UnregisterWindow(PrevGUID.Value);
+                }
+                Context?.RegisterWindow(this, GUID);
+                PrevGUID = GUID;
+            }
+            
             if (Props.open)
             {
                 Open();
@@ -51,9 +62,9 @@ namespace Roots
 
         protected override Element Render() => Element.Null;
 
-        private void Open() => Context?.OpenWindow(Index);
+        private void Open() => Context?.OpenWindow(GUID);
 
-        private void Close() => Context?.CloseWindow(Index);
+        private void Close() => Context?.CloseWindow(GUID);
 
         private void OnWindowsFocus(WindowFocusEvent evt)
         {
@@ -62,7 +73,7 @@ namespace Roots
                 return;
             }
             
-            if (evt.WindowIndex != Index)
+            if (evt.WindowGUID != GUID)
             {
                 evt.StopPropagation();
             }
@@ -82,6 +93,8 @@ namespace Roots
     [RishValueType]
     public struct WindowProps
     {
+        public ulong? guid;
+        
         public bool open;
         public bool draggable;
         // public bool resizable;

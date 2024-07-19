@@ -4,7 +4,7 @@ namespace Roots
 {
     public class WindowFocusEvent : RishEventBase<WindowFocusEvent>
     {
-        public int WindowIndex { get; private set; }
+        public ulong WindowGUID { get; private set; }
         internal WindowsContext Context { get; private set; }
         public WindowFocusEvent() => LocalInit();
 
@@ -20,10 +20,10 @@ namespace Roots
             bubbles = true;
         }
         
-        public static WindowFocusEvent GetPooled(int windowIndex, WindowsContext context, IRishEventTarget target)
+        public static WindowFocusEvent GetPooled(ulong guid, WindowsContext context, IRishEventTarget target)
         {
             var pooled = RishEventBase<WindowFocusEvent>.GetPooled();
-            pooled.WindowIndex = windowIndex;
+            pooled.WindowGUID = guid;
             pooled.Context = context;
             
             pooled.target = target;

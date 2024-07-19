@@ -26,7 +26,7 @@ namespace Roots
 
         private void OnPointerDown(PointerDownEvent evt)
         {
-            Context.MoveWindowToFront(Props.index);
+            Context.MoveToFront(Props.guid);
             
             evt.StopPropagation();
         }
@@ -35,8 +35,7 @@ namespace Roots
     [RishValueType]
     internal struct InternalWindowProps
     {
-        public int index;
-        public ulong nodeHashCode;
+        public ulong guid;
         public Element content;
         public bool draggable;
         // public bool resizable;

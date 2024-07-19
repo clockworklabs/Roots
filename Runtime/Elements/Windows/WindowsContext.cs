@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using RishUI;
-using Roots;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -11,11 +10,10 @@ namespace Roots
         private const int _SafeZone = 10;
         internal int SafeZone => Props.safeZoneSize > 0 ? Props.safeZoneSize : _SafeZone;
 
-        private HashSet<ulong> RegisteredWindowsSet { get; } = new();
-        private List<Window> RegisteredWindows { get; } = new();
-        
-        private List<int> WindowsOrder { get; } = new();
+        private Dictionary<ulong, Window> RegisteredWindows { get; } = new();
         private Dictionary<ulong, Vector2> Offsets { get; } = new();
+        
+        private List<ulong> WindowsOrder { get; } = new();
         
         private bool Rendered { get; set; }
 
@@ -29,8 +27,8 @@ namespace Roots
             Rendered = false;
             
             RegisteredWindows.Clear();
-            WindowsOrder.Clear();
             Offsets.Clear();
+            WindowsOrder.Clear();
         }
         
         protected override Element Render()
@@ -42,34 +40,27 @@ namespace Roots
             
             if (Rendered && !Props.hideAllWindows)
             {
-                foreach (var index in WindowsOrder)
+                foreach (var guid in WindowsOrder)
                 {
-                    if (index < 0 || index >= RegisteredWindows.Count)
-                    {
-                        continue;
-                    }
-
-                    var window = RegisteredWindows[index];
-                    var nodeHashCode = window.NodeHashCode;
+                    var window = RegisteredWindows[guid];
 
                     var props = window.Props;
 
                     var element = InternalWindow.Create(new InternalWindowProps
                     {
-                        index = index,
-                        nodeHashCode = nodeHashCode,
+                        guid = guid,
                         content = props.content,
                         draggable = props.draggable
                     });
 
                     var local = WorldToLocal(window.ParentWorldContentRect);
-                    if (Offsets.TryGetValue(nodeHashCode, out var offset))
+                    if (Offsets.TryGetValue(guid, out var offset))
                     {
                         local.x += offset.x;
                         local.y += offset.y;
                     }
 
-                    var holder = Div.Create((uint)index, new Style
+                    var holder = Div.Create((uint)guid, new Style
                     {
                         position = Position.Absolute,
                         left = local.x,
@@ -86,117 +77,88 @@ namespace Roots
             return Div.Create(Props.descriptor, children: children);
         }
 
-        internal int RegisterWindow(Window window)
+        internal void RegisterWindow(Window window, ulong guid)
         {
             if (window == null)
             {
-                return -1;
+                return;
             }
 
-            var nodeHashCode = window.NodeHashCode;
-            if (RegisteredWindowsSet.Contains(nodeHashCode))
+            if (!RegisteredWindows.TryAdd(guid, window))
             {
-                Debug.LogError("Window already registered. Make sure the window has a unique branch in the tree.");
-                return -1;
+                Debug.LogError("Window already registered. Make sure the window has a unique guid.");
             }
-
-            var index = RegisteredWindows.Count;
-            
-            RegisteredWindowsSet.Add(nodeHashCode);
-            RegisteredWindows.Add(window);
-
-            return index;
         }
 
-        internal bool UnregisterWindow(Window window)
+        internal void UnregisterWindow(ulong guid)
         {
-            if (window == null)
+            if (!RegisteredWindows.ContainsKey(guid))
             {
-                return false;
-            }
-            var index = window.Index;
-            if (index < 0)
-            {
-                return false;
+                return;
             }
 
-            var nodeHashCode = window.NodeHashCode;
-            if (!RegisteredWindowsSet.Contains(nodeHashCode))
-            {
-                return false;
-            }
-            
-            if (RegisteredWindows[index] != window)
-            {
-                return false;
-            }
+            RegisteredWindows.Remove(guid);
 
-            RegisteredWindowsSet.Remove(nodeHashCode);
-            
-            if (index == RegisteredWindows.Count - 1)
+            var position = WindowsOrder.IndexOf(guid);
+            if (position >= 0)
             {
-                RegisteredWindows.RemoveAt(index);
-                while (RegisteredWindows.Count > 0)
-                {
-                    var lastIndex = RegisteredWindows.Count - 1;
-                    if (RegisteredWindows[lastIndex] != null)
-                    {
-                        break;
-                    }
-                    
-                    RegisteredWindows.RemoveAt(lastIndex);
-                }
-            }
-            else
-            {
-                RegisteredWindows[index] = null;
-            }
-
-            var order = WindowsOrder.IndexOf(index);
-            if (order >= 0)
-            {
-                WindowsOrder.RemoveAt(order);
-                if (order == 0)
+                WindowsOrder.RemoveAt(position);
+                if (position >= WindowsOrder.Count)
                 {
                     BroadcastFocusEvent();
                 }
             }
             
             Dirty(Rendered);
-
-            return true;
         }
 
-        internal void OpenWindow(int index)
+        internal void OpenWindow(ulong guid)
         {
-            if (index < 0 || index >= RegisteredWindows.Count)
+            if (!RegisteredWindows.ContainsKey(guid))
             {
                 return;
             }
             
-            if (WindowsOrder.Contains(index))
+            if (WindowsOrder.Contains(guid))
             {
                 Dirty(true);
                 return;
             }
             
-            MoveWindowToFront(index);
+            MoveToFront(guid, true);
         }
 
-        internal void CloseWindow(int index)
+        internal void CloseWindow(ulong guid)
         {
-            var dirty = WindowsOrder.Remove(index);
-
-            if (dirty)
+            if (!RegisteredWindows.ContainsKey(guid))
+            {
+                return;
+            }
+            
+            var position = WindowsOrder.IndexOf(guid);
+            if (position < 0)
+            {
+                return;
+            }
+            
+            WindowsOrder.RemoveAt(position);
+            
+            if (position >= WindowsOrder.Count)
             {
                 BroadcastFocusEvent();
-                Dirty(Rendered);
             }
+
+            Dirty(Rendered);
         }
 
-        internal void Drag(ulong nodeHashCode, Vector2 delta)
+        internal void Drag(ulong guid, Vector2 delta)
         {
-            if (!Offsets.TryGetValue(nodeHashCode, out var offset))
+            if (!RegisteredWindows.ContainsKey(guid))
+            {
+                return;
+            }
+            
+            if (!Offsets.TryGetValue(guid, out var offset))
             {
                 offset = Vector2.zero;
             }
@@ -204,7 +166,7 @@ namespace Roots
             offset.x += delta.x;
             offset.y += delta.y;
 
-            Offsets[nodeHashCode] = offset;
+            Offsets[guid] = offset;
             
             Dirty(Rendered);
         }
@@ -290,30 +252,46 @@ namespace Roots
         //     Dirty();
         // }
 
-        internal void MoveWindowToFront(int index)
+        public void MoveToFront(ulong guid) => MoveToFront(guid, false);
+        
+        private void MoveToFront(ulong guid, bool open)
         {
-            var totalCount = WindowsOrder.Count;
-            if (totalCount == 0)
+            if (!RegisteredWindows.ContainsKey(guid))
             {
-                WindowsOrder.Add(index);
+                return;
+            }
+            
+            if (!open)
+            {
+                var position = WindowsOrder.IndexOf(guid);
+                if (position < 0)
+                {
+                    return;
+                }
+            }
+            
+            var totalCount = WindowsOrder.Count;
+            if (totalCount <= 0)
+            {
+                WindowsOrder.Add(guid);
             }
             else
             {
                 var lastPosition = totalCount - 1;
-                if (WindowsOrder[lastPosition] == index)
+                if (WindowsOrder[lastPosition] == guid)
                 {
                     return;
                 }
 
-                var alwaysOnTop = RegisteredWindows[index].Props.alwaysOnTop;
+                var alwaysOnTop = RegisteredWindows[guid].Props.alwaysOnTop;
                 if (alwaysOnTop)
                 {
-                    if (WindowsOrder.Contains(index))
+                    if (WindowsOrder.Contains(guid))
                     {
                         return;
                     }
                     
-                    WindowsOrder.Add(index);
+                    WindowsOrder.Add(guid);
                 }
                 else
                 {
@@ -323,13 +301,13 @@ namespace Roots
                         targetPosition--;
                     }
                 
-                    if (WindowsOrder.Count > targetPosition && WindowsOrder[targetPosition] == index)
+                    if (WindowsOrder.Count > targetPosition && WindowsOrder[targetPosition] == guid)
                     {
                         return;
                     }
 
-                    var removed = WindowsOrder.Remove(index);
-                    WindowsOrder.Insert(removed ? targetPosition - 1 : targetPosition, index);
+                    var removed = WindowsOrder.Remove(guid);
+                    WindowsOrder.Insert(removed ? targetPosition - 1 : targetPosition, guid);
                 }
             }
 
@@ -398,13 +376,8 @@ namespace Roots
             
             for (int i = 0, n = WindowsOrder.Count; i < n; i++)
             {
-                var index = WindowsOrder[i];
-                if (index < 0 || index >= RegisteredWindows.Count)
-                {
-                    continue;
-                }
-
-                var window = RegisteredWindows[index];
+                var guid = WindowsOrder[i];
+                var window = RegisteredWindows[guid];
                 using var pooledEvent = WindowFocusEvent.GetPooled(focusedWindow, this, window);
                 window.SendEvent(pooledEvent);
             }

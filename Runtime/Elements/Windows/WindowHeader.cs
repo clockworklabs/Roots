@@ -109,7 +109,7 @@ namespace Roots
             delta.x = Mathf.Clamp(delta.x, minDeltaX, maxDeltaX);
             delta.y = Mathf.Clamp(delta.y, minDeltaY, maxDeltaY);
                     
-            Context?.Drag(Window.Props.nodeHashCode, delta);
+            Context?.Drag(Window.Props.guid, delta);
         }
     }
 

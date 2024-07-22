@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using RishUI;
 using RishUI.Events;
 using UnityEngine;
@@ -42,6 +43,7 @@ namespace Roots
             RegisterCallback<PointerUpEvent>(OnPointerUp, EventPhase.TrickleDown);
             RegisterCallback<PointerCaptureEvent>(OnPointerCapture);
             RegisterCallback<PointerCaptureOutEvent>(OnPointerRelease);
+            RegisterCallback<HideDropdownEvent>(OnDropdownClose);
         }
 
         void IMountingListener.ComponentDidMount() { }
@@ -160,12 +162,12 @@ namespace Roots
             var worldPosition = evt.position;
             
             // Ignore pointer events on dropdown button. These are handled by the button
-            if (DropdownButton.ContainsPoint(DropdownButton.WorldToLocal(worldPosition)))
+            if (DropdownButton.ContainsPoint(DropdownButton.WorldToLocal(worldPosition)) || DropdownButton.WorldContentRect.Contains(worldPosition))
             {
                 return;
             }
 
-            if (Dropdown.ContainsPoint(Dropdown.WorldToLocal(worldPosition)))
+            if (Dropdown.ContainsPoint(Dropdown.WorldToLocal(worldPosition)) || Dropdown.WorldContentRect.Contains(worldPosition))
             {
                 return;
             }
@@ -183,18 +185,23 @@ namespace Roots
             var worldPosition = evt.position;
         
             // Ignore pointer events on dropdown button. These are handled by the button
-            if (DropdownButton.ContainsPoint(DropdownButton.WorldToLocal(worldPosition)))
+            if (DropdownButton.ContainsPoint(DropdownButton.WorldToLocal(worldPosition)) || DropdownButton.WorldContentRect.Contains(worldPosition))
             {
                 return;
             }
         
-            if (!Dropdown.ContainsPoint(Dropdown.WorldToLocal(worldPosition)))
+            if (!Dropdown.ContainsPoint(Dropdown.WorldToLocal(worldPosition)) && !Dropdown.WorldContentRect.Contains(worldPosition))
             {
                 return;
             }
+
+            var target = evt.target;
             
-            HideDropdownMenu(DropdownButton);
+            using var closeEvt = HideDropdownEvent.GetPooled(target);
+            target.SendEvent(closeEvt);
         }
+
+        private void OnDropdownClose(HideDropdownEvent evt) => HideDropdownMenu(DropdownButton);
 
         private void OnPointerCapture(PointerCaptureEvent evt) => FocusedElement = evt.target as VisualElement;
         private void OnPointerRelease(PointerCaptureOutEvent evt) => FocusedElement = null;

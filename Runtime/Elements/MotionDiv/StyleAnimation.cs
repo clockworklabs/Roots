@@ -889,14 +889,10 @@ namespace Roots
 
         private class ActiveState : State
         {
-            private Target Target { get; set; }
-
             public ActiveState(StateMachine machine, StyleAnimation element) : base(machine, element) { }
 
             public override void Enter()
             {
-                Target = default;
-
                 Element.OnRender += Animate;
                 Element.OnUnmountRequested += StartUnmounting;
                 Element.OnUnmounted += OnUnmounted;
@@ -911,17 +907,7 @@ namespace Roots
                 Element.OnUnmounted -= OnUnmounted;
             }
 
-            private void Animate()
-            {
-                var animate = Element.Animate;
-                if (RishUtils.MemCmp(Target, animate))
-                {
-                    return;
-                }
-
-                Target = animate;
-                Element.To(animate);
-            }
+            private void Animate() => Element.To(Element.Animate);
 
             private void StartUnmounting() => GoTo<UnmountingState>();
             private void OnUnmounted() => GoTo<UnmountedState>();

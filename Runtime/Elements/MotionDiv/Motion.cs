@@ -433,8 +433,7 @@ namespace Roots
                 GroupAnimations.Add(wordSpacingAnimation);
             }
 
-            // TODO: Maybe stop previous animation?
-            // Animation.Stop();
+            Animation.Stop();
 
             // TODO: If parent animates before children, delay animation start
             // TODO: If parent animates after children, start animation

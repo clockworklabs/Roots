@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using RishUI;
 using RishUI.Events;
 using UnityEngine;
@@ -59,9 +58,8 @@ namespace Roots
 
         protected override Element Render()
         {
-            var menu = Element.Null;
-            var descriptor = Props.descriptor;
-
+            Element menu;
+            DOMDescriptor descriptor;
             if (DropdownButton != null)
             {
                 // TODO: Support transformed elements
@@ -71,11 +69,25 @@ namespace Roots
                     rect: localRect,
                     element: InternalDropdown.Create(
                         element: DropdownButton.Props.menu));
-                
-                descriptor.style.pointerDetection = PointerDetectionMode.Rect;
+
+                descriptor = Props.descriptor + new Style
+                {
+                    pointerDetection = PointerDetectionMode.Rect
+                };
+            }
+            else
+            {
+                menu = Element.Null;
+                descriptor = Props.descriptor;
             }
             
-            return Div.Create(descriptor, children: new Children { Props.content, menu });
+            return Div.Create(
+                descriptor: descriptor,
+                children: new Children
+                {
+                    Props.content,
+                    menu
+                });
         }
 
         internal void ShowDropdownMenu(DropdownButton owner)

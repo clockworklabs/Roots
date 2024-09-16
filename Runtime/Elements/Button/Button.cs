@@ -10,41 +10,40 @@ namespace Roots
         
         protected override Element Render()
         {
-            var className = (ClassName) ("btn", Props.variant switch
-            {
-                Variant.Primary => "btn-primary",
-                Variant.PrimaryOutline => "btn-outline-primary",
-                Variant.Secondary => "btn-secondary",
-                Variant.SecondaryOutline => "btn-outline-secondary",
-                Variant.Success => "btn-success",
-                Variant.SuccessOutline => "btn-outline-success",
-                Variant.Danger => "btn-danger",
-                Variant.DangerOutline => "btn-outline-danger",
-                Variant.Warning => "btn-warning",
-                Variant.WarningOutline => "btn-outline-warning",
-                Variant.Info => "btn-info",
-                Variant.InfoOutline => "btn-outline-info",
-                Variant.Light => "btn-light",
-                Variant.LightOutline => "btn-outline-light",
-                Variant.Dark => "btn-dark",
-                Variant.DarkOutline => "btn-outline-dark",
-                Variant.Link => "btn-link",
-                _ => string.Empty
-            }, Props.size switch
-            {
-                Size.Small => "btn-sm",
-                Size.Large => "btn-lg",
-                _ => string.Empty
-            });
+            var className = new ClassName {
+                "btn", 
+                Props.variant switch
+                {
+                    Variant.Primary => "btn-primary",
+                    Variant.PrimaryOutline => "btn-outline-primary",
+                    Variant.Secondary => "btn-secondary",
+                    Variant.SecondaryOutline => "btn-outline-secondary",
+                    Variant.Success => "btn-success",
+                    Variant.SuccessOutline => "btn-outline-success",
+                    Variant.Danger => "btn-danger",
+                    Variant.DangerOutline => "btn-outline-danger",
+                    Variant.Warning => "btn-warning",
+                    Variant.WarningOutline => "btn-outline-warning",
+                    Variant.Info => "btn-info",
+                    Variant.InfoOutline => "btn-outline-info",
+                    Variant.Light => "btn-light",
+                    Variant.LightOutline => "btn-outline-light",
+                    Variant.Dark => "btn-dark",
+                    Variant.DarkOutline => "btn-outline-dark",
+                    Variant.Link => "btn-link",
+                    _ => string.Empty
+                },
+                Props.size switch
+                {
+                    Size.Small => "btn-sm",
+                    Size.Large => "btn-lg",
+                    _ => string.Empty
+                }
+            };
 
-            var pressedClassName = new ClassName(className)
-            {
-                "active"
-            };
+            var pressedClassName = className + "active";
             var normalClassName = Props.active ? pressedClassName : className;
-            var disabledClassName = new ClassName(normalClassName) {
-                "disabled"
-            };
+            var disabledClassName = normalClassName + "disabled";
             
             var normal = Content.Create(className: normalClassName, /*utilities: Props.utilities,*/ children: Props.children);
             var pressed = Content.Create(className: pressedClassName, /*utilities: Props.utilities,*/ children: Props.children);

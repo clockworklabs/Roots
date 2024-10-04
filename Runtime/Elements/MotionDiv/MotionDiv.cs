@@ -5,7 +5,6 @@ using UnityEngine.UIElements;
 
 namespace Roots
 {
-    [AutoKey]
     public partial class MotionDiv : RishElement<MotionDivProps>, IAnimatedElement, IMountingListener, ICustomUnmountListener, IPropsListener/*, IManualStyling*/
     {
         private event Action OnMounted;

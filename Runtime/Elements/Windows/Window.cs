@@ -5,7 +5,6 @@ using UnityEngine.UIElements;
 
 namespace Roots
 {
-    [AutoKey]
     public partial class Window : RishElement<WindowProps>, IMountingListener, IPropsListener
     {
         private WindowsContext Context { get; set; }

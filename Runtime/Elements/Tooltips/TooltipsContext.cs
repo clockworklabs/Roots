@@ -1,7 +1,6 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using RishUI;
-using Roots;
 
 namespace Roots
 {
@@ -10,7 +9,7 @@ namespace Roots
         private HashSet<Tooltip> Tooltips { get; } = new();
         private Stack<Tooltip> Stack { get; } = new();
         
-        private uint Count { get; set; }
+        private ulong Count { get; set; }
         
         void IManualState.Restart()
         {
@@ -31,7 +30,8 @@ namespace Roots
                 // TODO: Support transformed elements
                 var localRect = WorldToLocal(owner.WorldBoundingBox);
 
-                tooltip = TooltipHolder.Create(Count, 
+                tooltip = TooltipHolder.Create(
+                    key: Count,
                     rect: localRect,
                     ignoreFit: owner.Props.ignoreFit,
                     element: InternalTooltip.Create(new InternalTooltipProps
@@ -62,7 +62,7 @@ namespace Roots
                 forceRender = true;
             }
 
-            if (Count == 1)
+            if (Stack.Count == 1)
             {
                 Props.onShow?.Invoke(true);
             }
@@ -90,7 +90,7 @@ namespace Roots
                 forceRender = true;
             }
 
-            if (Count == 0)
+            if (Stack.Count == 0)
             {
                 Props.onShow?.Invoke(false);
             }

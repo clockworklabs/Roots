@@ -13,7 +13,6 @@ namespace Roots
         event Action OnUnmounted;
         event OnAnimatedProps OnProps;
         event Action<VisualElement> OnChange;
-        event Action OnRender;
         event Action OnUnmountRequested;
         void OnAnimateComplete();
         void OnExitComplete();
@@ -27,6 +26,11 @@ namespace Roots
 
     public class StyleAnimation
     {
+        private event OnAnimatedProps OnProps
+        {
+            add => Element.OnProps += value;
+            remove => Element.OnProps -= value;
+        }
         private event Action OnMounted
         {
             add => Element.OnMounted += value;
@@ -41,11 +45,6 @@ namespace Roots
         {
             add => Element.OnChange += value;
             remove => Element.OnChange -= value;
-        }
-        private event Action OnRender
-        {
-            add => Element.OnRender += value;
-            remove => Element.OnRender -= value;
         }
         private event Action OnUnmountRequested
         {
@@ -784,7 +783,6 @@ namespace Roots
 
         private class SettingUpState : State
         {
-            private bool Rendered { get; set; }
             private bool LayoutComputed { get; set; }
             private bool ParentReady { get; set; }
 
@@ -795,7 +793,6 @@ namespace Roots
 
             public override void Enter()
             {
-                Rendered = false;
                 LayoutComputed = false;
 
                 Parent = Element.GetParent();
@@ -810,9 +807,7 @@ namespace Roots
                     ParentReady = true;
                 }
 
-                Element.OnRender += OnRender;
                 Element.OnChange += OnChange;
-
                 Element.OnUnmountRequested += Unmount;
                 Element.OnUnmounted += Unmount;
             }
@@ -824,25 +819,9 @@ namespace Roots
                     Parent.Machine.OnStateChange -= ParentStateChanged;
                 }
 
-                Element.OnRender -= OnRender;
                 Element.OnChange -= OnChange;
-
                 Element.OnUnmountRequested -= Unmount;
                 Element.OnUnmounted -= Unmount;
-            }
-
-            private void OnRender()
-            {
-                if (Rendered)
-                {
-                    return;
-                }
-
-                Rendered = true;
-
-                Element.SetupDescriptor();
-
-                TryTransition();
             }
 
             private void OnChange(VisualElement element)
@@ -868,10 +847,12 @@ namespace Roots
 
             private void TryTransition()
             {
-                if (!Rendered || !LayoutComputed || !ParentReady)
+                if (!LayoutComputed || !ParentReady)
                 {
                     return;
                 }
+                
+                Element.SetupDescriptor();
 
                 Element.Initialize(VisualElement, Parent);
 
@@ -893,7 +874,7 @@ namespace Roots
 
             public override void Enter()
             {
-                Element.OnRender += Animate;
+                Element.OnProps += OnPropsChange;
                 Element.OnUnmountRequested += StartUnmounting;
                 Element.OnUnmounted += OnUnmounted;
 
@@ -902,11 +883,16 @@ namespace Roots
 
             public override void Exit()
             {
-                Element.OnRender -= Animate;
+                Element.OnProps -= OnPropsChange;
                 Element.OnUnmountRequested -= StartUnmounting;
                 Element.OnUnmounted -= OnUnmounted;
             }
 
+            private void OnPropsChange(DOMDescriptor descriptor, Initial initial, Target animate, Target exit)
+            {
+                Animate();
+            }
+            
             private void Animate() => Element.To(Element.Animate);
 
             private void StartUnmounting() => GoTo<UnmountingState>();

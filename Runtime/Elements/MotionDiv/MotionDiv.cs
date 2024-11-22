@@ -31,12 +31,6 @@ namespace Roots
             add => OnChange += value;
             remove => OnChange -= value;
         }
-        private event Action OnRender;
-        event Action IAnimatedElement.OnRender
-        {
-            add => OnRender += value;
-            remove => OnRender -= value;
-        }
         private event Action OnUnmountRequested;
         event Action IAnimatedElement.OnUnmountRequested
         {
@@ -93,12 +87,8 @@ namespace Roots
             CustomDescriptor = descriptor;
         }
 
-        protected override Element Render()
-        {
-            OnRender?.Invoke();
-
-            return Div.Create(descriptor: CustomDescriptor ?? Props.descriptor, /*utilities: Props.utilities,*/ children: Props.children);
-        }
+        protected override Element Render() => 
+            Div.Create(descriptor: CustomDescriptor ?? Props.descriptor, /*utilities: Props.utilities,*/ children: Props.children);
 
         private void OnVisualChange(VisualChangeEvent evt) => OnChange?.Invoke(evt.target as VisualElement);
     }

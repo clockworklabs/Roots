@@ -264,6 +264,8 @@ namespace Roots
 
         public void To(Target target)
         {
+            if (RishUtils.SmartCompare(LastTarget, target)) return;
+            
             LastTarget = target;
             
             if (!target.IsValid())

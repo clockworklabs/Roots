@@ -272,7 +272,7 @@ namespace Roots
             {
                 return;
             }
-
+            
             Animation.OnComplete(null);
 
             GroupAnimations.Clear();
@@ -441,8 +441,8 @@ namespace Roots
             // TODO: If parent animates after children, start animation
             Animation = DoMotion.Group(GroupAnimations).OnStep(OnStep).OnComplete(OnComplete);
 
-            if (Parent != null)
-            {
+            // if (Parent != null)
+            // {
                 // Debug.Log("Animate child");
                 // if (Parent.Animation.IsPlaying(out var playing))
                 // {
@@ -452,11 +452,11 @@ namespace Roots
                 // {
                 //     Debug.Log("Not found");
                 // }
-            }
-            else
-            {
+            // }
+            // else
+            // {
                 // Debug.Log("Animate parent");
-            }
+            // }
             // switch (transition.when)
             // {
             //     case Transition.When.Default:

@@ -1,138 +1,47 @@
 using System;
-using System.Reflection;
 using Motion;
 using RishUI;
 using UnityEngine;
 using UnityEngine.UIElements;
-using StyleInt = UnityEngine.UIElements.StyleInt;
-using StyleFloat = UnityEngine.UIElements.StyleFloat;
-using StyleLength = UnityEngine.UIElements.StyleLength;
-using StyleColor = UnityEngine.UIElements.StyleColor;
-using StyleRotate = UnityEngine.UIElements.StyleRotate;
-using StyleScale = UnityEngine.UIElements.StyleScale;
-using StyleTransformOrigin = UnityEngine.UIElements.StyleTransformOrigin;
-using StyleTranslate = UnityEngine.UIElements.StyleTranslate;
 
 namespace Roots
 {
     public enum PropertyType { Physical, NonPhysical }
-
-    public abstract class MotionValue<T, TI, TS, TSA, TTA> where T : struct, IEquatable<T> where TI : struct, IInitialValue<T> where TS : struct, IStyleValue<T> where TSA : SpringAnimation<T>, new() where TTA : TweenAnimation<T>, new()
+     
+    public abstract class MotionValue<T, TI, TS, TT> where T : struct, IEquatable<T> where TI : struct, RishUI.IStyleValue<T> where TS : SpringAnimation<T>, new() where TT : TweenAnimation<T>, new()
     {
-        private delegate void IntSetter(IStyle style, StyleInt value);
-        private delegate void FloatSetter(IStyle style, StyleFloat value);
-        private delegate void LengthSetter(IStyle style, StyleLength value);
-        private delegate void ColorSetter(IStyle style, StyleColor value);
-        private delegate void RotateSetter(IStyle style, StyleRotate value);
-        private delegate void ScaleSetter(IStyle style, StyleScale value);
-        private delegate void TransformOriginSetter(IStyle style, StyleTransformOrigin value);
-        private delegate void TranslateSetter(IStyle style, StyleTranslate value);
-
-        private string PropertyName { get; }
-        private Delegate InlineSetter { get; }
+        public delegate TI InlineGetter(IStyle inlineStyle);
+        public delegate TI ResolvedGetter(IResolvedStyle resolvedStyle);
+        
         private PropertyType PropertyType { get; }
+        private InlineGetter Inline { get; }
+        private ResolvedGetter Resolved { get; }
 
         protected VisualElement Element { get; private set; }
         private bool Initialized => Element != null;
-        
-        private T? _value;
-        private T Value
-        {
-            get => _value.Value;
-            set
-            {
-                _value = value;
 
-                switch (value)
-                {
-                    case int intValue:
-                        ((IntSetter) InlineSetter).Invoke(Element.style, intValue);
-                        break;
-                    case float floatValue:
-                        ((FloatSetter) InlineSetter).Invoke(Element.style, floatValue);
-                        break;
-                    case Length lengthValue:
-                        ((LengthSetter) InlineSetter).Invoke(Element.style, lengthValue);
-                        break;
-                    case Color colorValue:
-                        ((ColorSetter) InlineSetter).Invoke(Element.style, colorValue);
-                        break;
-                    case Angle rotateValue:
-                        ((RotateSetter) InlineSetter).Invoke(Element.style, new Rotate(rotateValue));
-                        break;
-                    case Vector3 scaleValue:
-                        ((ScaleSetter) InlineSetter).Invoke(Element.style, new Scale(scaleValue));
-                        break;
-                    case TransformOrigin transformOriginValue:
-                        ((TransformOriginSetter) InlineSetter).Invoke(Element.style, transformOriginValue);
-                        break;
-                    case Translate translateValue:
-                        ((TranslateSetter) InlineSetter).Invoke(Element.style, translateValue);
-                        break;
-                }
-            }
-        }
+        public T? Value { get; private set; }
         
         private AnimationId Animation { get; set; }
 
-        protected MotionValue(string propertyName, PropertyType propertyType)
+        protected MotionValue(PropertyType propertyType, InlineGetter inline, ResolvedGetter resolved)
         {
-            var type = typeof(T);
-            
-            PropertyName = propertyName;
-            
-            var inlinePropertyInfo = typeof(IStyle).GetProperty(propertyName, BindingFlags.Instance | BindingFlags.Public);
-            if (inlinePropertyInfo == null)
-            {
-                throw new ArgumentException("Invalid property");
-            }
-            
-            Type setterType;
-            if (type == typeof(int))
-            {
-                setterType = typeof(IntSetter);
-            } else if (type == typeof(float))
-            {
-                setterType = typeof(FloatSetter);
-            } else if (type == typeof(Length))
-            {
-                setterType = typeof(LengthSetter);
-            } else if (type == typeof(Color))
-            {
-                setterType = typeof(ColorSetter);
-            } else if (type == typeof(Angle))
-            {
-                setterType = typeof(RotateSetter);
-            } else if (type == typeof(Vector3))
-            {
-                setterType = typeof(ScaleSetter);
-            } else if (type == typeof(TransformOrigin))
-            {
-                setterType = typeof(TransformOriginSetter);
-            } else if (type == typeof(Translate))
-            {
-                setterType = typeof(TranslateSetter);
-            } else
-            {
-                throw new ArgumentException("Invalid type");
-            }
-            
-            InlineSetter = Delegate.CreateDelegate(setterType, inlinePropertyInfo.GetSetMethod());
-
             PropertyType = propertyType;
+            Inline = inline;
+            Resolved = resolved;
         }
 
         public void Reset()
         {
             Element = null;
-            _value = null;
+            Value = null;
             Animation.Stop();
         }
 
-        private T GetValue() => Value;
+        private T GetValue() => Value ?? default;
         private void SetValue(T value) => Value = value;
         
-        public void Init(VisualElement element, TS inline, TS resolved)
+        public void Init(VisualElement element)
         {
             if (Initialized)
             {
@@ -140,14 +49,11 @@ namespace Roots
             }
             
             Element = element;
-
-            if (inline.keyword == RishStyleKeyword.Undefined)
+            
+            var inline = Inline?.Invoke(element.style);
+            if (inline is { keyword: RishStyleKeyword.Undefined })
             {
-                _value = inline.value;
-            }
-            else if(resolved.keyword == RishStyleKeyword.Undefined)
-            {
-                _value = resolved.value;
+                Value = inline.Value.value;
             }
         } 
 
@@ -164,13 +70,20 @@ namespace Roots
                 return false;
             }
             
-            var value = target.Value;
-            if (!_value.HasValue)
+            var value = target.Value; 
+            if (!Value.HasValue)
             {
-                Value = value;
-                animation = default;
-                
-                return false;
+                var resolved = Resolved?.Invoke(Element.resolvedStyle);
+                if (resolved is { keyword: RishStyleKeyword.Undefined })
+                {
+                    Value = resolved.Value.value;
+                }
+                else
+                {
+                    Value = value;
+                    animation = default;
+                    return false;
+                }
             }
             
             var transitionDetails = CreateTransitionDetails(transition, defaultTransition, PropertyType);
@@ -190,7 +103,7 @@ namespace Roots
                     }
                     velocity = Adjust(velocity, value);
                     
-                    var springAnimation = DoMotion.Spring<T, TSA>(GetValue, SetValue, value, transitionDetails.spring);
+                    var springAnimation = DoMotion.Spring<T, TS>(GetValue, SetValue, value, transitionDetails.spring);
                     if (velocity.HasValue)
                     {
                         springAnimation.SetInitialVelocity(velocity.Value);
@@ -199,15 +112,12 @@ namespace Roots
                     animation = springAnimation;
                     break;
                 case TransitionType.Tween:
-                    animation = DoMotion.Tween<T, TTA>(GetValue, SetValue, value, transitionDetails.tween);
+                    animation = DoMotion.Tween<T, TT>(GetValue, SetValue, value, transitionDetails.tween);
                     break;
                 case TransitionType.None:
-                    animation = DoMotion.Tween<T, TTA>(GetValue, SetValue, value, new Tween
-                    {
-                        duration = 0,
-                        ease = Ease.Linear
-                    });
-                    break;
+                    Value = value;
+                    animation = default;
+                    return false;
                 default:
                     throw new UnityException("Transition type not supported");
             }
@@ -255,30 +165,35 @@ namespace Roots
         protected virtual T? Adjust(T? value, T target) => value;
     }
 
-    // TODO: Sort all these classes alphabetically
+    public class MotionColor : MotionValue<Color, RishUI.StyleColor, ColorSpring, ColorTween>
+    {
+        public MotionColor(InlineGetter inline, ResolvedGetter resolved) : base(PropertyType.NonPhysical, inline, resolved) { }
+    }
     
-    public class MotionFloat : MotionValue<float, InitialFloat, RishUI.StyleFloat, FloatSpring, FloatTween>
+    public class MotionFloat : MotionValue<float, RishUI.StyleFloat, FloatSpring, FloatTween>
     {
-        public MotionFloat(string propertyName, PropertyType propertyType) : base(propertyName, propertyType) { }
+        public MotionFloat(PropertyType propertyType, InlineGetter inline, ResolvedGetter resolved) : base(propertyType, inline, resolved) { }
     }
 
-    public class MotionInt : MotionValue<int, InitialInt, RishUI.StyleInt, IntSpring, IntTween>
+    public class MotionInt : MotionValue<int, RishUI.StyleInt, IntSpring, IntTween>
     {
-        public MotionInt(string propertyName) : base(propertyName, PropertyType.NonPhysical) { }
+        public MotionInt(InlineGetter inline, ResolvedGetter resolved) : base(PropertyType.NonPhysical, inline, resolved) { }
     }
 
-    public class MotionLength : MotionValue<Length, InitialLength, RishUI.StyleLength, LengthSpring, LengthTween>
+    public class MotionLength : MotionValue<Length, RishUI.StyleLength, LengthSpring, LengthTween>
     {
-        private Func<VisualElement, float> BasisGetter { get; }
+        public delegate float BasisGetter(VisualElement element);
         
-        public MotionLength(string propertyName, Func<VisualElement, float> basisGetter) : base(propertyName, PropertyType.Physical)
+        private BasisGetter Basis { get; }
+        
+        public MotionLength(InlineGetter inline, ResolvedGetter resolved, BasisGetter basis) : base(PropertyType.Physical, inline, resolved)
         {
-            BasisGetter = basisGetter ?? throw new ArgumentException("Length properties need a basis for percentage values");
+            Basis = basis ?? throw new ArgumentException("Length properties need a basis for percentage values");
         }
 
         protected override Length? Adjust(Length? value, Length target) => !value.HasValue 
             ? new Length(0, target.unit)
-            : Fix(value.Value, target.unit, BasisGetter.Invoke(Element));
+            : Fix(value.Value, target.unit, Basis.Invoke(Element));
 
         private static Length Fix(Length value, LengthUnit unit, float basis)
         {
@@ -296,24 +211,19 @@ namespace Roots
         }
     }
 
-    public class MotionColor : MotionValue<Color, InitialColor, RishUI.StyleColor, ColorSpring, ColorTween>
+    public class MotionRotate : MotionValue<Angle, RishUI.StyleRotate, AngleSpring, AngleTween>
     {
-        public MotionColor(string propertyName) : base(propertyName, PropertyType.NonPhysical) { }
+        public MotionRotate(InlineGetter inline, ResolvedGetter resolved) : base(PropertyType.Physical, inline, resolved) { }
     }
 
-    public class MotionRotate : MotionValue<Angle, InitialRotate, RishUI.StyleRotate, AngleSpring, AngleTween>
+    public class MotionScale : MotionValue<Vector3, RishUI.StyleScale, Vector3Spring, Vector3Tween>
     {
-        public MotionRotate(string propertyName) : base(propertyName, PropertyType.Physical) { }
+        public MotionScale(InlineGetter inline, ResolvedGetter resolved) : base(PropertyType.Physical, inline, resolved) { }
     }
 
-    public class MotionScale : MotionValue<Vector3, InitialScale, RishUI.StyleScale, Vector3Spring, Vector3Tween>
+    public class MotionTransformOrigin : MotionValue<TransformOrigin, RishUI.StyleTransformOrigin, TransformOriginSpring, TransformOriginTween>
     {
-        public MotionScale(string propertyName) : base(propertyName, PropertyType.Physical) { }
-    }
-
-    public class MotionTransformOrigin : MotionValue<TransformOrigin, InitialTransformOrigin, RishUI.StyleTransformOrigin, TransformOriginSpring, TransformOriginTween>
-    {
-        public MotionTransformOrigin(string propertyName) : base(propertyName, PropertyType.Physical) { }
+        public MotionTransformOrigin(InlineGetter inline, ResolvedGetter resolved) : base(PropertyType.Physical, inline, resolved) { }
 
         protected override TransformOrigin? Adjust(TransformOrigin? value, TransformOrigin target)
         {
@@ -350,9 +260,9 @@ namespace Roots
         }
     }
 
-    public class MotionTranslate : MotionValue<Translate, InitialTranslate, RishUI.StyleTranslate, TranslateSpring, TranslateTween>
+    public class MotionTranslate : MotionValue<Translate, RishUI.StyleTranslate, TranslateSpring, TranslateTween>
     {
-        public MotionTranslate(string propertyName) : base(propertyName, PropertyType.Physical) { }
+        public MotionTranslate(InlineGetter inline, ResolvedGetter resolved) : base(PropertyType.Physical, inline, resolved) { }
 
         protected override Translate? Adjust(Translate? value, Translate target)
         {
@@ -388,207 +298,207 @@ namespace Roots
             };
         }
     }
-    
-    public class IntSpring : SpringAnimation<int>
-    {
-        protected override int Add(int a, int b) => a + b;
+     
+     public class IntSpring : SpringAnimation<int>
+     {
+         protected override int Add(int a, int b) => a + b;
 
-        protected override int Subtract(int a, int b) => a - b;
+         protected override int Subtract(int a, int b) => a - b;
 
-        protected override int Multiply(int a, float b) => Mathf.RoundToInt(a * b);
+         protected override int Multiply(int a, float b) => Mathf.RoundToInt(a * b);
 
-        protected override float SqrMagnitude(int a) => a * a;
-    }
-    
-    public class LengthSpring : SpringAnimation<Length>
-    {
-        protected override Length Add(Length a, Length b) => a.unit != b.unit ? throw new ArgumentException("Both Lengths must have the same unit") : new Length(a.value + b.value, a.unit);
+         protected override float SqrMagnitude(int a) => a * a;
+     }
+     
+     public class LengthSpring : SpringAnimation<Length>
+     {
+         protected override Length Add(Length a, Length b) => a.unit != b.unit ? throw new ArgumentException("Both Lengths must have the same unit") : new Length(a.value + b.value, a.unit);
 
-        protected override Length Subtract(Length a, Length b) => a.unit != b.unit ? throw new ArgumentException("Both Lengths must have the same unit") : new Length(a.value - b.value, a.unit);
+         protected override Length Subtract(Length a, Length b) => a.unit != b.unit ? throw new ArgumentException("Both Lengths must have the same unit") : new Length(a.value - b.value, a.unit);
 
-        protected override Length Multiply(Length a, float b) => new (a.value * b, a.unit);
+         protected override Length Multiply(Length a, float b) => new (a.value * b, a.unit);
 
-        protected override float SqrMagnitude(Length a) => a.value * a.value;
-    }
-        
-    public class LengthTween : TweenAnimation<Length>
-    {
-        protected override Length LinearInterpolation(Length a, Length b, float t) => a.unit != b.unit ? throw new ArgumentException("Both Lengths must have the same unit") : new Length(Mathf.Lerp(a.value, b.value, t), a.unit);
+         protected override float SqrMagnitude(Length a) => a.value * a.value;
+     }
+         
+     public class LengthTween : TweenAnimation<Length>
+     {
+         protected override Length LinearInterpolation(Length a, Length b, float t) => a.unit != b.unit ? throw new ArgumentException("Both Lengths must have the same unit") : new Length(Mathf.Lerp(a.value, b.value, t), a.unit);
 
-        protected override Length GetVelocity(Length a, Length b, float dt) => a.unit != b.unit ? throw new ArgumentException("Both Lengths must have the same unit") : new Length((b.value - a.value) / dt, a.unit);
-    }
-    
-    public class AngleSpring : SpringAnimation<Angle>
-    {
-        protected override Angle Add(Angle a, Angle b) => a.ToDegrees() + b.ToDegrees();
+         protected override Length GetVelocity(Length a, Length b, float dt) => a.unit != b.unit ? throw new ArgumentException("Both Lengths must have the same unit") : new Length((b.value - a.value) / dt, a.unit);
+     }
+     
+     public class AngleSpring : SpringAnimation<Angle>
+     {
+         protected override Angle Add(Angle a, Angle b) => a.ToDegrees() + b.ToDegrees();
 
-        protected override Angle Subtract(Angle a, Angle b) => a.ToDegrees() - b.ToDegrees();
+         protected override Angle Subtract(Angle a, Angle b) => a.ToDegrees() - b.ToDegrees();
 
-        protected override Angle Multiply(Angle a, float b) => a.ToDegrees() * b;
+         protected override Angle Multiply(Angle a, float b) => a.ToDegrees() * b;
 
-        protected override float SqrMagnitude(Angle a) => a.ToDegrees() * a.ToDegrees();
-    }
-        
-    public class AngleTween : TweenAnimation<Angle>
-    {
-        protected override Angle LinearInterpolation(Angle a, Angle b, float t) => Mathf.Lerp(a.ToDegrees(), b.ToDegrees(), t);
+         protected override float SqrMagnitude(Angle a) => a.ToDegrees() * a.ToDegrees();
+     }
+         
+     public class AngleTween : TweenAnimation<Angle>
+     {
+         protected override Angle LinearInterpolation(Angle a, Angle b, float t) => Mathf.Lerp(a.ToDegrees(), b.ToDegrees(), t);
 
-        protected override Angle GetVelocity(Angle a, Angle b, float dt) => (b.ToDegrees() - a.ToDegrees()) / dt;
-    }
-    
-    public class TransformOriginSpring : SpringAnimation<TransformOrigin>
-    {
-        protected override TransformOrigin Add(TransformOrigin a, TransformOrigin b)
-        {
-            var x = a.x.unit != b.x.unit
-                ? throw new ArgumentException($"Both Lengths must have the same unit. Instead: a.x = {a.x} and b.x = {b.x}")
-                : new Length(a.x.value + b.x.value, a.x.unit);
-            var y = a.y.unit != b.y.unit
-                ? throw new ArgumentException($"Both Lengths must have the same unit. Instead: a.y = {a.y} and b.y = {b.y}")
-                : new Length(a.y.value + b.y.value, a.y.unit);
-            var z = a.z + b.z;
+         protected override Angle GetVelocity(Angle a, Angle b, float dt) => (b.ToDegrees() - a.ToDegrees()) / dt;
+     }
+     
+     public class TransformOriginSpring : SpringAnimation<TransformOrigin>
+     {
+         protected override TransformOrigin Add(TransformOrigin a, TransformOrigin b)
+         {
+             var x = a.x.unit != b.x.unit
+                 ? throw new ArgumentException($"Both Lengths must have the same unit. Instead: a.x = {a.x} and b.x = {b.x}")
+                 : new Length(a.x.value + b.x.value, a.x.unit);
+             var y = a.y.unit != b.y.unit
+                 ? throw new ArgumentException($"Both Lengths must have the same unit. Instead: a.y = {a.y} and b.y = {b.y}")
+                 : new Length(a.y.value + b.y.value, a.y.unit);
+             var z = a.z + b.z;
 
-            return new TransformOrigin(x, y, z);
-        }
+             return new TransformOrigin(x, y, z);
+         }
 
-        protected override TransformOrigin Subtract(TransformOrigin a, TransformOrigin b)
-        {
-            var x = a.x.unit != b.x.unit
-                ? throw new ArgumentException($"Both Lengths must have the same unit. Instead: a.x = {a.x} and b.x = {b.x}")
-                : new Length(a.x.value - b.x.value, a.x.unit);
-            var y = a.y.unit != b.y.unit
-                ? throw new ArgumentException($"Both Lengths must have the same unit. Instead: a.y = {a.y} and b.y = {b.y}")
-                : new Length(a.y.value - b.y.value, a.y.unit);
-            var z = a.z - b.z;
+         protected override TransformOrigin Subtract(TransformOrigin a, TransformOrigin b)
+         {
+             var x = a.x.unit != b.x.unit
+                 ? throw new ArgumentException($"Both Lengths must have the same unit. Instead: a.x = {a.x} and b.x = {b.x}")
+                 : new Length(a.x.value - b.x.value, a.x.unit);
+             var y = a.y.unit != b.y.unit
+                 ? throw new ArgumentException($"Both Lengths must have the same unit. Instead: a.y = {a.y} and b.y = {b.y}")
+                 : new Length(a.y.value - b.y.value, a.y.unit);
+             var z = a.z - b.z;
 
-            return new TransformOrigin(x, y, z);
-        }
+             return new TransformOrigin(x, y, z);
+         }
 
-        protected override TransformOrigin Multiply(TransformOrigin a, float b)
-        {
-            var x = new Length(a.x.value * b, a.x.unit);
-            var y = new Length(a.y.value * b, a.y.unit);
-            var z = a.z * b;
+         protected override TransformOrigin Multiply(TransformOrigin a, float b)
+         {
+             var x = new Length(a.x.value * b, a.x.unit);
+             var y = new Length(a.y.value * b, a.y.unit);
+             var z = a.z * b;
 
-            return new TransformOrigin(x, y, z);
-        }
+             return new TransformOrigin(x, y, z);
+         }
 
-        protected override float SqrMagnitude(TransformOrigin a)
-        {
-            var xSqr = a.x.value * a.x.value;
-            var ySqr = a.y.value * a.y.value;
-            var zSqr = a.z * a.z;
+         protected override float SqrMagnitude(TransformOrigin a)
+         {
+             var xSqr = a.x.value * a.x.value;
+             var ySqr = a.y.value * a.y.value;
+             var zSqr = a.z * a.z;
 
-            return xSqr + ySqr + zSqr;
-        }
-    }
-        
-    public class TransformOriginTween : TweenAnimation<TransformOrigin>
-    {
-        protected override TransformOrigin LinearInterpolation(TransformOrigin a, TransformOrigin b, float t)
-        {
-            var x = a.x.unit != b.x.unit
-                ? throw new ArgumentException($"Both Lengths must have the same unit. Instead: a.x = {a.x} and b.x = {b.x}")
-                : new Length(Mathf.Lerp(a.x.value, b.x.value, t), a.x.unit);
-            var y = a.y.unit != b.y.unit
-                ? throw new ArgumentException($"Both Lengths must have the same unit. Instead: a.y = {a.y} and b.y = {b.y}")
-                : new Length(Mathf.Lerp(a.y.value, b.y.value, t), a.y.unit);
-            var z = Mathf.Lerp(a.z, b.z, t);
+             return xSqr + ySqr + zSqr;
+         }
+     }
+         
+     public class TransformOriginTween : TweenAnimation<TransformOrigin>
+     {
+         protected override TransformOrigin LinearInterpolation(TransformOrigin a, TransformOrigin b, float t)
+         {
+             var x = a.x.unit != b.x.unit
+                 ? throw new ArgumentException($"Both Lengths must have the same unit. Instead: a.x = {a.x} and b.x = {b.x}")
+                 : new Length(Mathf.Lerp(a.x.value, b.x.value, t), a.x.unit);
+             var y = a.y.unit != b.y.unit
+                 ? throw new ArgumentException($"Both Lengths must have the same unit. Instead: a.y = {a.y} and b.y = {b.y}")
+                 : new Length(Mathf.Lerp(a.y.value, b.y.value, t), a.y.unit);
+             var z = Mathf.Lerp(a.z, b.z, t);
 
-            return new TransformOrigin(x, y, z);
-        }
+             return new TransformOrigin(x, y, z);
+         }
 
-        protected override TransformOrigin GetVelocity(TransformOrigin a, TransformOrigin b, float dt)
-        {
-            var inv = 1 / dt;
-            
-            var x = a.x.unit != b.x.unit
-                ? throw new ArgumentException($"Both Lengths must have the same unit. Instead: a.x = {a.x} and b.x = {b.x}")
-                : new Length((b.x.value - a.x.value) * inv, a.x.unit);
-            var y = a.y.unit != b.y.unit
-                ? throw new ArgumentException($"Both Lengths must have the same unit. Instead: a.y = {a.y} and b.y = {b.y}")
-                : new Length((b.y.value - a.y.value) * inv, a.y.unit);
-            var z = (b.z - a.z) * inv;
+         protected override TransformOrigin GetVelocity(TransformOrigin a, TransformOrigin b, float dt)
+         {
+             var inv = 1 / dt;
+             
+             var x = a.x.unit != b.x.unit
+                 ? throw new ArgumentException($"Both Lengths must have the same unit. Instead: a.x = {a.x} and b.x = {b.x}")
+                 : new Length((b.x.value - a.x.value) * inv, a.x.unit);
+             var y = a.y.unit != b.y.unit
+                 ? throw new ArgumentException($"Both Lengths must have the same unit. Instead: a.y = {a.y} and b.y = {b.y}")
+                 : new Length((b.y.value - a.y.value) * inv, a.y.unit);
+             var z = (b.z - a.z) * inv;
 
-            return new TransformOrigin(x, y, z);
-        }
-    }
-    
-    public class TranslateSpring : SpringAnimation<Translate>
-    {
-        protected override Translate Add(Translate a, Translate b)
-        {
-            var x = a.x.unit != b.x.unit
-                ? throw new ArgumentException("Both Lengths must have the same unit")
-                : new Length(a.x.value + b.x.value, a.x.unit);
-            var y = a.y.unit != b.y.unit
-                ? throw new ArgumentException("Both Lengths must have the same unit")
-                : new Length(a.y.value + b.y.value, a.y.unit);
-            var z = a.z + b.z;
+             return new TransformOrigin(x, y, z);
+         }
+     }
+     
+     public class TranslateSpring : SpringAnimation<Translate>
+     {
+         protected override Translate Add(Translate a, Translate b)
+         {
+             var x = a.x.unit != b.x.unit
+                 ? throw new ArgumentException("Both Lengths must have the same unit")
+                 : new Length(a.x.value + b.x.value, a.x.unit);
+             var y = a.y.unit != b.y.unit
+                 ? throw new ArgumentException("Both Lengths must have the same unit")
+                 : new Length(a.y.value + b.y.value, a.y.unit);
+             var z = a.z + b.z;
 
-            return new Translate(x, y, z);
-        }
+             return new Translate(x, y, z);
+         }
 
-        protected override Translate Subtract(Translate a, Translate b)
-        {
-            var x = a.x.unit != b.x.unit
-                ? throw new ArgumentException("Both Lengths must have the same unit")
-                : new Length(a.x.value - b.x.value, a.x.unit);
-            var y = a.y.unit != b.y.unit
-                ? throw new ArgumentException("Both Lengths must have the same unit")
-                : new Length(a.y.value - b.y.value, a.y.unit);
-            var z = a.z - b.z;
+         protected override Translate Subtract(Translate a, Translate b)
+         {
+             var x = a.x.unit != b.x.unit
+                 ? throw new ArgumentException("Both Lengths must have the same unit")
+                 : new Length(a.x.value - b.x.value, a.x.unit);
+             var y = a.y.unit != b.y.unit
+                 ? throw new ArgumentException("Both Lengths must have the same unit")
+                 : new Length(a.y.value - b.y.value, a.y.unit);
+             var z = a.z - b.z;
 
-            return new Translate(x, y, z);
-        }
+             return new Translate(x, y, z);
+         }
 
-        protected override Translate Multiply(Translate a, float b)
-        {
-            var x = new Length(a.x.value * b, a.x.unit);
-            var y = new Length(a.y.value * b, a.y.unit);
-            var z = a.z * b;
+         protected override Translate Multiply(Translate a, float b)
+         {
+             var x = new Length(a.x.value * b, a.x.unit);
+             var y = new Length(a.y.value * b, a.y.unit);
+             var z = a.z * b;
 
-            return new Translate(x, y, z);
-        }
+             return new Translate(x, y, z);
+         }
 
-        protected override float SqrMagnitude(Translate a)
-        {
-            var xSqr = a.x.value * a.x.value;
-            var ySqr = a.y.value * a.y.value;
-            var zSqr = a.z * a.z;
+         protected override float SqrMagnitude(Translate a)
+         {
+             var xSqr = a.x.value * a.x.value;
+             var ySqr = a.y.value * a.y.value;
+             var zSqr = a.z * a.z;
 
-            return xSqr + ySqr + zSqr;
-        }
-    }
-        
-    public class TranslateTween : TweenAnimation<Translate>
-    {
-        protected override Translate LinearInterpolation(Translate a, Translate b, float t)
-        {
-            var x = a.x.unit != b.x.unit
-                ? throw new ArgumentException("Both Lengths must have the same unit")
-                : new Length(Mathf.Lerp(a.x.value, b.x.value, t), a.x.unit);
-            var y = a.y.unit != b.y.unit
-                ? throw new ArgumentException("Both Lengths must have the same unit")
-                : new Length(Mathf.Lerp(a.y.value, b.y.value, t), a.y.unit);
-            var z = Mathf.Lerp(a.z, b.z, t);
+             return xSqr + ySqr + zSqr;
+         }
+     }
+         
+     public class TranslateTween : TweenAnimation<Translate>
+     {
+         protected override Translate LinearInterpolation(Translate a, Translate b, float t)
+         {
+             var x = a.x.unit != b.x.unit
+                 ? throw new ArgumentException("Both Lengths must have the same unit")
+                 : new Length(Mathf.Lerp(a.x.value, b.x.value, t), a.x.unit);
+             var y = a.y.unit != b.y.unit
+                 ? throw new ArgumentException("Both Lengths must have the same unit")
+                 : new Length(Mathf.Lerp(a.y.value, b.y.value, t), a.y.unit);
+             var z = Mathf.Lerp(a.z, b.z, t);
 
-            return new Translate(x, y, z);
-        }
+             return new Translate(x, y, z);
+         }
 
-        protected override Translate GetVelocity(Translate a, Translate b, float dt)
-        {
-            var inv = 1 / dt;
-            
-            var x = a.x.unit != b.x.unit
-                ? throw new ArgumentException("Both Lengths must have the same unit")
-                : new Length((b.x.value - a.x.value) * inv, a.x.unit);
-            var y = a.y.unit != b.y.unit
-                ? throw new ArgumentException("Both Lengths must have the same unit")
-                : new Length((b.y.value - a.y.value) * inv, a.y.unit);
-            var z = (b.z - a.z) * inv;
+         protected override Translate GetVelocity(Translate a, Translate b, float dt)
+         {
+             var inv = 1 / dt;
+             
+             var x = a.x.unit != b.x.unit
+                 ? throw new ArgumentException("Both Lengths must have the same unit")
+                 : new Length((b.x.value - a.x.value) * inv, a.x.unit);
+             var y = a.y.unit != b.y.unit
+                 ? throw new ArgumentException("Both Lengths must have the same unit")
+                 : new Length((b.y.value - a.y.value) * inv, a.y.unit);
+             var z = (b.z - a.z) * inv;
 
-            return new Translate(x, y, z);
-        }
-    }
+             return new Translate(x, y, z);
+         }
+     }
 }

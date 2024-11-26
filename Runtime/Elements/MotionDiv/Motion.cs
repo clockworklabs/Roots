@@ -75,57 +75,57 @@ namespace Roots
 
         public Motion()
         {
-            BackgroundColor = new MotionColor("backgroundColor");
-            BorderBottomColor = new MotionColor("borderBottomColor");
-            BorderBottomLeftRadius = new MotionLength("borderBottomLeftRadius", e => Mathf.Max(e.layout.width, e.layout.height));
-            BorderBottomRightRadius = new MotionLength("borderBottomRightRadius", e => Mathf.Max(e.layout.width, e.layout.height));
-            BorderBottomWidth = new MotionFloat("borderBottomWidth", PropertyType.Physical);
-            BorderLeftColor = new MotionColor("borderLeftColor");
-            BorderLeftWidth = new MotionFloat("borderLeftWidth", PropertyType.Physical);
-            BorderRightColor = new MotionColor("borderRightColor");
-            BorderRightWidth = new MotionFloat("borderRightWidth", PropertyType.Physical);
-            BorderTopColor = new MotionColor("borderTopColor");
-            BorderTopLeftRadius = new MotionLength("borderTopLeftRadius", e => Mathf.Max(e.layout.width, e.layout.height));
-            BorderTopRightRadius = new MotionLength("borderTopRightRadius", e => Mathf.Max(e.layout.width, e.layout.height));
-            BorderTopWidth = new MotionFloat("borderTopWidth", PropertyType.Physical);
-            Bottom = new MotionLength("bottom", e => e?.parent?.layout.height ?? default);
-            Color = new MotionColor("color");
-            FlexBasis = new MotionLength("flexBasis", e => e?.parent?.resolvedStyle.flexDirection is FlexDirection.Column or FlexDirection.ColumnReverse ? e.parent.layout.height : e.parent.layout.width);
-            FlexGrow = new MotionFloat("flexGrow", PropertyType.Physical);
-            FlexShrink = new MotionFloat("flexShrink", PropertyType.Physical);
-            FontSize = new MotionLength("fontSize", e => e?.parent?.resolvedStyle.fontSize ?? default);
-            Height = new MotionLength("height", e => e?.parent?.layout.height ?? default);
-            Left = new MotionLength("left", e => e?.parent?.layout.width ?? default);
-            LetterSpacing = new MotionLength("letterSpacing", e => e?.parent?.resolvedStyle.letterSpacing ?? default);
-            MarginBottom = new MotionLength("marginBottom", e => e?.parent?.layout.height ?? default);
-            MarginLeft = new MotionLength("marginLeft", e => e?.parent?.layout.width ?? default);
-            MarginRight = new MotionLength("marginRight", e => e?.parent?.layout.width ?? default);
-            MarginTop = new MotionLength("marginTop", e => e?.parent?.layout.height ?? default);
-            MaxHeight = new MotionLength("maxHeight", e => e?.parent?.layout.height ?? default);
-            MaxWidth = new MotionLength("maxWidth", e => e?.parent?.layout.width ?? default);
-            MinHeight = new MotionLength("minHeight", e => e?.parent?.layout.height ?? default);
-            MinWidth = new MotionLength("minWidth", e => e?.parent?.layout.width ?? default);
-            Opacity = new MotionFloat("opacity", PropertyType.NonPhysical);
-            PaddingBottom = new MotionLength("paddingBottom", e => e?.parent?.layout.height ?? default);
-            PaddingLeft = new MotionLength("paddingLeft", e => e?.parent?.layout.width ?? default);
-            PaddingRight = new MotionLength("paddingRight", e => e?.parent?.layout.width ?? default);
-            PaddingTop = new MotionLength("paddingTop", e => e?.parent?.layout.height ?? default);
-            Right = new MotionLength("right", e => e?.parent?.layout.width ?? default);
-            Rotate = new MotionRotate("rotate");
-            Scale = new MotionScale("scale");
-            Top = new MotionLength("top", e => e?.parent?.layout.height ?? default);
-            TransformOrigin = new MotionTransformOrigin("transformOrigin");
-            Translate = new MotionTranslate("translate");
-            UnityBackgroundImageTintColor = new MotionColor("unityBackgroundImageTintColor");
-            UnityParagraphSpacing = new MotionLength("unityParagraphSpacing", e => e?.parent?.resolvedStyle.unityParagraphSpacing ?? default);
-            UnitySliceBottom = new MotionInt("unitySliceBottom");
-            UnitySliceLeft = new MotionInt("unitySliceLeft");
-            UnitySliceRight = new MotionInt("unitySliceRight");
-            UnitySliceTop = new MotionInt("unitySliceTop");
-            UnityTextOutlineColor = new MotionColor("unityTextOutlineColor");
-            UnityTextOutlineWidth = new MotionFloat("unityTextOutlineWidth", PropertyType.Physical);
-            Width = new MotionLength("width", e => e?.parent?.layout.width ?? default);
-            WordSpacing = new MotionLength("wordSpacing", e => e?.parent?.resolvedStyle.wordSpacing ?? default);
+            BackgroundColor = new MotionColor(s => s.backgroundColor, s => s.backgroundColor);
+            BorderBottomColor = new MotionColor(s => s.borderBottomColor, s => s.borderBottomColor);
+            BorderBottomLeftRadius = new MotionLength(s => s.borderBottomLeftRadius, s => s.borderBottomLeftRadius, e => Mathf.Max(e.layout.width, e.layout.height));
+            BorderBottomRightRadius = new MotionLength(s => s.borderBottomRightRadius, s => s.borderBottomRightRadius, e => Mathf.Max(e.layout.width, e.layout.height));
+            BorderBottomWidth = new MotionFloat(PropertyType.Physical, s => s.borderBottomWidth, s => s.borderBottomWidth);
+            BorderLeftColor = new MotionColor(s => s.borderLeftColor, s => s.borderLeftColor);
+            BorderLeftWidth = new MotionFloat(PropertyType.Physical, s => s.borderLeftWidth, s => s.borderLeftWidth);
+            BorderRightColor = new MotionColor(s => s.borderRightColor, s => s.borderRightColor);
+            BorderRightWidth = new MotionFloat(PropertyType.Physical, s => s.borderRightWidth, s => s.borderRightWidth);
+            BorderTopColor = new MotionColor(s => s.borderTopColor, s => s.borderTopColor);
+            BorderTopLeftRadius = new MotionLength(s => s.borderTopLeftRadius, s => s.borderTopLeftRadius, e => Mathf.Max(e.layout.width, e.layout.height));
+            BorderTopRightRadius = new MotionLength(s => s.borderTopRightRadius, s => s.borderTopRightRadius, e => Mathf.Max(e.layout.width, e.layout.height));
+            BorderTopWidth = new MotionFloat(PropertyType.Physical, s => s.borderTopWidth, s => s.borderTopWidth);
+            Bottom = new MotionLength(s => s.bottom, s => s.bottom, e => e?.parent?.layout.height ?? default);
+            Color = new MotionColor(s => s.color, s => s.color);
+            FlexBasis = new MotionLength(s => s.flexBasis, s => s.flexBasis, e => e?.parent?.resolvedStyle.flexDirection is FlexDirection.Column or FlexDirection.ColumnReverse ? e.parent.layout.height : e.parent.layout.width);
+            FlexGrow = new MotionFloat(PropertyType.Physical, s => s.flexGrow, s => s.flexGrow);
+            FlexShrink = new MotionFloat(PropertyType.Physical, s => s.flexShrink, s => s.flexShrink);
+            FontSize = new MotionLength(s => s.fontSize, s => s.fontSize, e => e?.parent?.resolvedStyle.fontSize ?? default);
+            Height = new MotionLength(s => s.height, s => s.height, e => e?.parent?.layout.height ?? default);
+            Left = new MotionLength(s => s.left, s => s.left, e => e?.parent?.layout.width ?? default);
+            LetterSpacing = new MotionLength(s => s.letterSpacing, s => s.letterSpacing, e => e?.parent?.resolvedStyle.letterSpacing ?? default);
+            MarginBottom = new MotionLength(s => s.marginBottom, s => s.marginBottom, e => e?.parent?.layout.height ?? default);
+            MarginLeft = new MotionLength(s => s.marginLeft, s => s.marginLeft, e => e?.parent?.layout.width ?? default);
+            MarginRight = new MotionLength(s => s.marginRight, s => s.marginRight, e => e?.parent?.layout.width ?? default);
+            MarginTop = new MotionLength(s => s.marginTop, s => s.marginTop, e => e?.parent?.layout.height ?? default);
+            MaxHeight = new MotionLength(s => s.maxHeight, s => s.maxHeight, e => e?.parent?.layout.height ?? default);
+            MaxWidth = new MotionLength(s => s.maxWidth, s => s.maxWidth, e => e?.parent?.layout.width ?? default);
+            MinHeight = new MotionLength(s => s.minHeight, s => s.minHeight, e => e?.parent?.layout.height ?? default);
+            MinWidth = new MotionLength(s => s.minWidth, s => s.minWidth, e => e?.parent?.layout.width ?? default);
+            Opacity = new MotionFloat(PropertyType.NonPhysical, s => s.opacity, s => s.opacity);
+            PaddingBottom = new MotionLength(s => s.paddingBottom, s => s.paddingBottom, e => e?.parent?.layout.height ?? default);
+            PaddingLeft = new MotionLength(s => s.paddingLeft, s => s.paddingLeft, e => e?.parent?.layout.width ?? default);
+            PaddingRight = new MotionLength(s => s.paddingRight, s => s.paddingRight, e => e?.parent?.layout.width ?? default);
+            PaddingTop = new MotionLength(s => s.paddingTop, s => s.paddingTop, e => e?.parent?.layout.height ?? default);
+            Right = new MotionLength(s => s.right, s => s.right, e => e?.parent?.layout.width ?? default);
+            Rotate = new MotionRotate(s => s.rotate, s => s.rotate.angle); // TODO: Test
+            Scale = new MotionScale(s => s.scale, s => s.scale.value); // TODO: Test
+            Top = new MotionLength(s => s.top, s => s.top, e => e?.parent?.layout.height ?? default);
+            TransformOrigin = new MotionTransformOrigin(s => s.transformOrigin, s => new TransformOrigin(s.transformOrigin.x, s.transformOrigin.y, s.transformOrigin.z)); // TODO: Test
+            Translate = new MotionTranslate(s => s.translate, s => new Translate(s.translate.x, s.translate.y, s.translate.z)); // TODO: Test
+            UnityBackgroundImageTintColor = new MotionColor(s => s.unityBackgroundImageTintColor, s => s.unityBackgroundImageTintColor);
+            UnityParagraphSpacing = new MotionLength(s => s.unityParagraphSpacing, s => s.unityParagraphSpacing, e => e?.parent?.resolvedStyle.unityParagraphSpacing ?? default);
+            UnitySliceBottom = new MotionInt(s => s.unitySliceBottom, s => s.unitySliceBottom);
+            UnitySliceLeft = new MotionInt(s => s.unitySliceLeft, s => s.unitySliceLeft);
+            UnitySliceRight = new MotionInt(s => s.unitySliceRight, s => s.unitySliceRight);
+            UnitySliceTop = new MotionInt(s => s.unitySliceTop, s => s.unitySliceTop);
+            UnityTextOutlineColor = new MotionColor(s => s.unityTextOutlineColor, s => s.unityTextOutlineColor);
+            UnityTextOutlineWidth = new MotionFloat(PropertyType.Physical, s => s.unityTextOutlineWidth, s => s.unityTextOutlineWidth);
+            Width = new MotionLength(s => s.width, s => s.width, e => e?.parent?.layout.width ?? default);
+            WordSpacing = new MotionLength(s => s.wordSpacing, s => s.wordSpacing, e => e?.parent?.resolvedStyle.wordSpacing ?? default);
         }
 
         public void Reset()
@@ -204,60 +204,57 @@ namespace Roots
         {
             Element = element;
             
-            var inlineStyle = element.style;
-            var resolvedStyle = element.resolvedStyle;
-
-            BackgroundColor.Init(element, inlineStyle.backgroundColor, resolvedStyle.backgroundColor);
-            BorderBottomColor.Init(element, inlineStyle.borderBottomColor, resolvedStyle.borderBottomColor);
-            BorderBottomLeftRadius.Init(element, inlineStyle.borderBottomLeftRadius, resolvedStyle.borderBottomLeftRadius);
-            BorderBottomRightRadius.Init(element, inlineStyle.borderBottomRightRadius, resolvedStyle.borderBottomRightRadius);
-            BorderBottomWidth.Init(element, inlineStyle.borderBottomWidth, resolvedStyle.borderBottomWidth);
-            BorderLeftColor.Init(element, inlineStyle.borderLeftColor, resolvedStyle.borderLeftColor);
-            BorderLeftWidth.Init(element, inlineStyle.borderLeftWidth, resolvedStyle.borderLeftWidth);
-            BorderRightColor.Init(element, inlineStyle.borderRightColor, resolvedStyle.borderRightColor);
-            BorderRightWidth.Init(element, inlineStyle.borderRightWidth, resolvedStyle.borderRightWidth);
-            BorderTopColor.Init(element, inlineStyle.borderTopColor, resolvedStyle.borderTopColor);
-            BorderTopLeftRadius.Init(element, inlineStyle.borderTopLeftRadius, resolvedStyle.borderTopLeftRadius);
-            BorderTopRightRadius.Init(element, inlineStyle.borderTopRightRadius, resolvedStyle.borderTopRightRadius);
-            BorderTopWidth.Init(element, inlineStyle.borderTopWidth, resolvedStyle.borderTopWidth);
-            Bottom.Init(element, inlineStyle.bottom, resolvedStyle.bottom);
-            Color.Init(element, inlineStyle.color, resolvedStyle.color);
-            FlexBasis.Init(element, inlineStyle.flexBasis, resolvedStyle.flexBasis);
-            FlexGrow.Init(element, inlineStyle.flexGrow, resolvedStyle.flexGrow);
-            FlexShrink.Init(element, inlineStyle.flexShrink, resolvedStyle.flexShrink);
-            FontSize.Init(element, inlineStyle.fontSize, resolvedStyle.fontSize);
-            Height.Init(element, inlineStyle.height, resolvedStyle.height);
-            Left.Init(element, inlineStyle.left, resolvedStyle.left);
-            LetterSpacing.Init(element, inlineStyle.letterSpacing, resolvedStyle.letterSpacing);
-            MarginBottom.Init(element, inlineStyle.marginBottom, resolvedStyle.marginBottom);
-            MarginLeft.Init(element, inlineStyle.marginLeft, resolvedStyle.marginLeft);
-            MarginRight.Init(element, inlineStyle.marginRight, resolvedStyle.marginRight);
-            MarginTop.Init(element, inlineStyle.marginTop, resolvedStyle.marginTop);
-            MaxHeight.Init(element, inlineStyle.maxHeight, resolvedStyle.maxHeight);
-            MaxWidth.Init(element, inlineStyle.maxWidth, resolvedStyle.maxWidth);
-            MinHeight.Init(element, inlineStyle.minHeight, resolvedStyle.minHeight);
-            MinWidth.Init(element, inlineStyle.minWidth, resolvedStyle.minWidth);
-            Opacity.Init(element, inlineStyle.opacity, resolvedStyle.opacity);
-            PaddingBottom.Init(element, inlineStyle.paddingBottom, resolvedStyle.paddingBottom);
-            PaddingLeft.Init(element, inlineStyle.paddingLeft, resolvedStyle.paddingLeft);
-            PaddingRight.Init(element, inlineStyle.paddingRight, resolvedStyle.paddingRight);
-            PaddingTop.Init(element, inlineStyle.paddingTop, resolvedStyle.paddingTop);
-            Right.Init(element, inlineStyle.right, resolvedStyle.right);
-            Rotate.Init(element, inlineStyle.rotate, resolvedStyle.rotate.angle); // TODO: Test
-            Scale.Init(element, inlineStyle.scale, resolvedStyle.scale.value); // TODO: Test
-            Top.Init(element, inlineStyle.top, resolvedStyle.top);
-            TransformOrigin.Init(element, inlineStyle.transformOrigin, new TransformOrigin(resolvedStyle.transformOrigin.x, resolvedStyle.transformOrigin.y, resolvedStyle.transformOrigin.z)); // TODO: Test
-            Translate.Init(element, inlineStyle.translate, new Translate(resolvedStyle.translate.x, resolvedStyle.translate.y, resolvedStyle.translate.z)); // TODO: Test
-            UnityBackgroundImageTintColor.Init(element, inlineStyle.unityBackgroundImageTintColor, resolvedStyle.unityBackgroundImageTintColor);
-            UnityParagraphSpacing.Init(element, inlineStyle.unityParagraphSpacing, resolvedStyle.unityParagraphSpacing);
-            UnitySliceBottom.Init(element, inlineStyle.unitySliceBottom, resolvedStyle.unitySliceBottom);
-            UnitySliceLeft.Init(element, inlineStyle.unitySliceLeft, resolvedStyle.unitySliceLeft);
-            UnitySliceRight.Init(element, inlineStyle.unitySliceRight, resolvedStyle.unitySliceRight);
-            UnitySliceTop.Init(element, inlineStyle.unitySliceTop, resolvedStyle.unitySliceTop);
-            UnityTextOutlineColor.Init(element, inlineStyle.unityTextOutlineColor, resolvedStyle.unityTextOutlineColor);
-            UnityTextOutlineWidth.Init(element, inlineStyle.unityTextOutlineWidth, resolvedStyle.unityTextOutlineWidth);
-            Width.Init(element, inlineStyle.width, resolvedStyle.width);
-            WordSpacing.Init(element, inlineStyle.wordSpacing, resolvedStyle.wordSpacing);
+            BackgroundColor.Init(element);
+            BorderBottomColor.Init(element);
+            BorderBottomLeftRadius.Init(element);
+            BorderBottomRightRadius.Init(element);
+            BorderBottomWidth.Init(element);
+            BorderLeftColor.Init(element);
+            BorderLeftWidth.Init(element);
+            BorderRightColor.Init(element);
+            BorderRightWidth.Init(element);
+            BorderTopColor.Init(element);
+            BorderTopLeftRadius.Init(element);
+            BorderTopRightRadius.Init(element);
+            BorderTopWidth.Init(element);
+            Bottom.Init(element);
+            Color.Init(element);
+            FlexBasis.Init(element);
+            FlexGrow.Init(element);
+            FlexShrink.Init(element);
+            FontSize.Init(element);
+            Height.Init(element);
+            Left.Init(element);
+            LetterSpacing.Init(element);
+            MarginBottom.Init(element);
+            MarginLeft.Init(element);
+            MarginRight.Init(element);
+            MarginTop.Init(element);
+            MaxHeight.Init(element);
+            MaxWidth.Init(element);
+            MinHeight.Init(element);
+            MinWidth.Init(element);
+            Opacity.Init(element);
+            PaddingBottom.Init(element);
+            PaddingLeft.Init(element);
+            PaddingRight.Init(element);
+            PaddingTop.Init(element);
+            Right.Init(element);
+            Rotate.Init(element);
+            Scale.Init(element);
+            Top.Init(element);
+            TransformOrigin.Init(element);
+            Translate.Init(element);
+            UnityBackgroundImageTintColor.Init(element);
+            UnityParagraphSpacing.Init(element);
+            UnitySliceBottom.Init(element);
+            UnitySliceLeft.Init(element);
+            UnitySliceRight.Init(element);
+            UnitySliceTop.Init(element);
+            UnityTextOutlineColor.Init(element);
+            UnityTextOutlineWidth.Init(element);
+            Width.Init(element);
+            WordSpacing.Init(element);
 
             Parent = parent;
         }
@@ -474,11 +471,167 @@ namespace Roots
             {
                 Animation.OnAboutToStart(SetDelay);
             }
+            
+            OnStep();
         }
 
         private void OnStep()
         {
-            var style = Style.FromElement(Element);
+            var style = new Style();
+            if(BackgroundColor.Value.HasValue) {
+                style.backgroundColor = BackgroundColor.Value.Value;
+            }
+            if(BorderBottomColor.Value.HasValue) {
+                style.borderBottomColor = BorderBottomColor.Value.Value;
+            }
+            if(BorderBottomLeftRadius.Value.HasValue) {
+                style.borderBottomLeftRadius = BorderBottomLeftRadius.Value.Value;
+            }
+            if(BorderBottomRightRadius.Value.HasValue) {
+                style.borderBottomRightRadius = BorderBottomRightRadius.Value.Value;
+            }
+            if(BorderBottomWidth.Value.HasValue) {
+                style.borderBottomWidth = BorderBottomWidth.Value.Value;
+            }
+            if(BorderLeftColor.Value.HasValue) {
+                style.borderLeftColor = BorderLeftColor.Value.Value;
+            }
+            if(BorderLeftWidth.Value.HasValue) {
+                style.borderLeftWidth = BorderLeftWidth.Value.Value;
+            }
+            if(BorderRightColor.Value.HasValue) {
+                style.borderRightColor = BorderRightColor.Value.Value;
+            }
+            if(BorderRightWidth.Value.HasValue) {
+                style.borderRightWidth = BorderRightWidth.Value.Value;
+            }
+            if(BorderTopColor.Value.HasValue) {
+                style.borderTopColor = BorderTopColor.Value.Value;
+            }
+            if(BorderTopLeftRadius.Value.HasValue) {
+                style.borderTopLeftRadius = BorderTopLeftRadius.Value.Value;
+            }
+            if(BorderTopRightRadius.Value.HasValue) {
+                style.borderTopRightRadius = BorderTopRightRadius.Value.Value;
+            }
+            if(BorderTopWidth.Value.HasValue) {
+                style.borderTopWidth = BorderTopWidth.Value.Value;
+            }
+            if(Bottom.Value.HasValue) {
+                style.bottom = Bottom.Value.Value;
+            }
+            if(Color.Value.HasValue) {
+                style.color = Color.Value.Value;
+            }
+            if(FlexBasis.Value.HasValue) {
+                style.flexBasis = FlexBasis.Value.Value;
+            }
+            if(FlexGrow.Value.HasValue) {
+                style.flexGrow = FlexGrow.Value.Value;
+            }
+            if(FlexShrink.Value.HasValue) {
+                style.flexShrink = FlexShrink.Value.Value;
+            }
+            if(FontSize.Value.HasValue) {
+                style.fontSize = FontSize.Value.Value;
+            }
+            if(Height.Value.HasValue) {
+                style.height = Height.Value.Value;
+            }
+            if(Left.Value.HasValue) {
+                style.left = Left.Value.Value;
+            }
+            if(LetterSpacing.Value.HasValue) {
+                style.letterSpacing = LetterSpacing.Value.Value;
+            }
+            if(MarginBottom.Value.HasValue) {
+                style.marginBottom = MarginBottom.Value.Value;
+            }
+            if(MarginLeft.Value.HasValue) {
+                style.marginLeft = MarginLeft.Value.Value;
+            }
+            if(MarginRight.Value.HasValue) {
+                style.marginRight = MarginRight.Value.Value;
+            }
+            if(MarginTop.Value.HasValue) {
+                style.marginTop = MarginTop.Value.Value;
+            }
+            if(MaxHeight.Value.HasValue) {
+                style.maxHeight = MaxHeight.Value.Value;
+            }
+            if(MaxWidth.Value.HasValue) {
+                style.maxWidth = MaxWidth.Value.Value;
+            }
+            if(MinHeight.Value.HasValue) {
+                style.minHeight = MinHeight.Value.Value;
+            }
+            if(MinWidth.Value.HasValue) {
+                style.minWidth = MinWidth.Value.Value;
+            }
+            if(Opacity.Value.HasValue) {
+                style.opacity = Opacity.Value.Value;
+            }
+            if(PaddingBottom.Value.HasValue) {
+                style.paddingBottom = PaddingBottom.Value.Value;
+            }
+            if(PaddingLeft.Value.HasValue) {
+                style.paddingLeft = PaddingLeft.Value.Value;
+            }
+            if(PaddingRight.Value.HasValue) {
+                style.paddingRight = PaddingRight.Value.Value;
+            }
+            if(PaddingTop.Value.HasValue) {
+                style.paddingTop = PaddingTop.Value.Value;
+            }
+            if(Right.Value.HasValue) {
+                style.right = Right.Value.Value;
+            }
+            if(Rotate.Value.HasValue) {
+                style.rotate = Rotate.Value.Value;
+            }
+            if(Scale.Value.HasValue) {
+                style.scale = Scale.Value.Value;
+            }
+            if(Top.Value.HasValue) {
+                style.top = Top.Value.Value;
+            }
+            if(TransformOrigin.Value.HasValue) {
+                style.transformOrigin = TransformOrigin.Value.Value;
+            }
+            if(Translate.Value.HasValue) {
+                style.translate = Translate.Value.Value;
+            }
+            if(UnityBackgroundImageTintColor.Value.HasValue) {
+                style.unityBackgroundImageTintColor = UnityBackgroundImageTintColor.Value.Value;
+            }
+            if(UnityParagraphSpacing.Value.HasValue) {
+                style.unityParagraphSpacing = UnityParagraphSpacing.Value.Value;
+            }
+            if(UnitySliceBottom.Value.HasValue) {
+                style.unitySliceBottom = UnitySliceBottom.Value.Value;
+            }
+            if(UnitySliceLeft.Value.HasValue) {
+                style.unitySliceLeft = UnitySliceLeft.Value.Value;
+            }
+            if(UnitySliceRight.Value.HasValue) {
+                style.unitySliceRight = UnitySliceRight.Value.Value;
+            }
+            if(UnitySliceTop.Value.HasValue) {
+                style.unitySliceTop = UnitySliceTop.Value.Value;
+            }
+            if(UnityTextOutlineColor.Value.HasValue) {
+                style.unityTextOutlineColor = UnityTextOutlineColor.Value.Value;
+            }
+            if(UnityTextOutlineWidth.Value.HasValue) {
+                style.unityTextOutlineWidth = UnityTextOutlineWidth.Value.Value;
+            }
+            if(Width.Value.HasValue) {
+                style.width = Width.Value.Value;
+            }
+            if(WordSpacing.Value.HasValue) {
+                style.wordSpacing = WordSpacing.Value.Value;
+            }
+            
             OnStyle?.Invoke(style);
         }
 

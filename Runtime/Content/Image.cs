@@ -48,7 +48,7 @@ namespace Roots
             Width = props.width;
             Height = props.height;
 
-            tintColor = props.tintColor;
+            tintColor = props.tintColor ?? Color.white;
 
             // this.uv = Rect.MinMaxRect(0, 0, 1, 1);
             scaleMode = props.scaleMode;
@@ -471,7 +471,7 @@ namespace Roots
         public ScaleMode scaleMode;
         // TODO: public Rect? uv;
         
-        public Color tintColor;
+        public Color? tintColor;
         
         public ImageSize width;
         public ImageSize height;

@@ -58,13 +58,13 @@ namespace Roots
                     richTextEnabled = Props.richTextEnabled,
                     parseEscapeSequences = Props.parseEscapeSequences,
                     readOnly = Props.readOnly,
-                    maxLength = Props.maxLength ?? -1,
-                    multiClickInteraction = Props.multiClickInteraction ?? true,
-                    selectOnFocus = Props.selectOnFocus ?? false,
+                    maxLength = Props.maxLength,
+                    multiClickInteraction = Props.multiClickInteraction,
+                    selectOnFocus = Props.selectOnFocus,
                     textInputDescriptor = Props.textInputDescriptor,
                     textElementDescriptor = Props.textElementDescriptor,
-                    cursorColor = Props.cursorColor ?? Color.black,
-                    selectionColor = Props.selectionColor ?? new Color(0.39f, 0.58f, 0.93f, 0.4f),
+                    cursorColor = Props.cursorColor,
+                    selectionColor = Props.selectionColor,
                     onValidation = OnValidation,
                     onChange = OnChange
                 });
@@ -246,9 +246,8 @@ namespace Roots
             }
         }
 
-        // TODO: Setup not only when props dirty
         [IgnoreWarnings]
-        private class RishTextField : TextField, IVisualElement<RishTextFieldProps>
+        private class RishTextField : TextField, IVisualElement<RishTextFieldProps>, IStyledProps<RishTextField, RishTextFieldProps>
         {
             private RishBridge<RishTextFieldProps> RishBridge { get; }
             RishBridge<RishTextFieldProps> IVisualElement<RishTextFieldProps>.Bridge => RishBridge;
@@ -257,9 +256,18 @@ namespace Roots
             
             private PickingManager PickingManager { get; }
             PickingManager ICustomPicking.Manager => PickingManager;
+        
+            private StyledPropsManager<RishTextField, RishTextFieldProps> PropsManager { get; }
+            StyledPropsManager<RishTextField, RishTextFieldProps> IStyledProps<RishTextField, RishTextFieldProps>.Manager => PropsManager;
             
             private string[] TextInputClasses { get; }
             private string[] TextElementClasses { get; }
+            
+            private static readonly CustomStyleProperty<int> MaxLengthProp = new("--props-max-length"); 
+            private static readonly CustomStyleProperty<bool> MultiClickInteractionProp = new("--props-multi-click-interaction");
+            private static readonly CustomStyleProperty<bool> SelectOnFocusProp = new("--props-select-on-focus");
+            private static readonly CustomStyleProperty<Color> CursorColorProp = new("--props-cursor-color"); 
+            private static readonly CustomStyleProperty<Color> SelectionColorProp = new("--props-selection-color");
 
             private RishTextFieldProps _props;
             
@@ -276,6 +284,7 @@ namespace Roots
                 this.RegisterValueChangedCallback(OnNewValue);
                 
                 PickingManager = new RectPickingManager(this);
+                PropsManager = new StyledPropsManager<RishTextField, RishTextFieldProps>(this);
                 
                 textInputBase.name = null;
                 TextInputClasses = textInputBase.GetClasses().ToArray();
@@ -292,7 +301,8 @@ namespace Roots
                 TextElementClasses = TextElement.GetClasses().ToArray();
             }
 
-            void IVisualElement<RishTextFieldProps>.Setup(RishTextFieldProps props)
+            void IVisualElement<RishTextFieldProps>.Setup(RishTextFieldProps props) => PropsManager.Setup(props);
+            void IStyledProps<RishTextField, RishTextFieldProps>.Setup(RishTextFieldProps props)
             {
                 var targetValue = props.value;
                 if (value != targetValue)
@@ -317,12 +327,12 @@ namespace Roots
                 // focusable = !props.readOnly;
                 // textInputBase.focusable = !props.readOnly;
 
-                var targetMaxLength = props.maxLength;
+                var targetMaxLength = props.maxLength.Value;
                 if (maxLength != targetMaxLength)
                 {
                     maxLength = targetMaxLength;
                 }
-                var targetMultiClickInteraction = props.multiClickInteraction;
+                var targetMultiClickInteraction = props.multiClickInteraction.Value;
                 if (doubleClickSelectsWord != targetMultiClickInteraction)
                 {
                     doubleClickSelectsWord = targetMultiClickInteraction;
@@ -332,18 +342,18 @@ namespace Roots
                     tripleClickSelectsLine = targetMultiClickInteraction;
                 }
 
-                var selectOnFocus = props.selectOnFocus;
+                var selectOnFocus = props.selectOnFocus.Value;
                 if (selectAllOnFocus != selectOnFocus)
                 {
                     selectAllOnFocus = selectOnFocus;
                 }
 
-                var targetCursorColor = props.cursorColor;
+                var targetCursorColor = props.cursorColor.Value;
                 if (textInputBase.cursorColor != targetCursorColor)
                 {
                     textInputBase.cursorColor = targetCursorColor;
                 }
-                var targetSelectionColor = props.selectionColor;
+                var targetSelectionColor = props.selectionColor.Value;
                 if (textInputBase.selectionColor != targetSelectionColor)
                 {
                     textInputBase.selectionColor = targetSelectionColor;
@@ -397,6 +407,15 @@ namespace Roots
                 
                 _props = props;
             }
+
+            void IStyledProps<RishTextField, RishTextFieldProps>.OnCustomStyle(ref RishTextFieldProps props)
+            {
+                PropsManager.SetValue(MaxLengthProp, ref props.maxLength, -1);
+                PropsManager.SetValue(MultiClickInteractionProp, ref props.multiClickInteraction, true);
+                PropsManager.SetValue(SelectOnFocusProp, ref props.selectOnFocus, false);
+                PropsManager.SetValue(CursorColorProp, ref props.cursorColor, Color.black);
+                PropsManager.SetValue(SelectionColorProp, ref props.selectionColor, new Color(0.39f, 0.58f, 0.93f, 0.4f));
+            }
             
             public override bool ContainsPoint(Vector2 localPoint) => PickingManager.ContainsPoint(localPoint);
             
@@ -449,15 +468,33 @@ namespace Roots
             public bool richTextEnabled;
             public bool parseEscapeSequences;
 
-            public int maxLength;
-            public bool multiClickInteraction;
-            public bool selectOnFocus;
+            /// <summary>
+            /// Styled Prop as --props-max-length
+            /// </summary>
+            public int? maxLength;
+
+            /// <summary>
+            /// Styled Prop as --props-multi-click-interaction
+            /// </summary>
+            public bool? multiClickInteraction;
+
+            /// <summary>
+            /// Styled Prop as --props-select-on-focus
+            /// </summary>
+            public bool? selectOnFocus;
             
             public DOMDescriptor textInputDescriptor;
             public DOMDescriptor textElementDescriptor;
 
-            public Color cursorColor;
-            public Color selectionColor;
+            /// <summary>
+            /// Styled Prop as --props-cursor-color
+            /// </summary>
+            public Color? cursorColor;
+
+            /// <summary>
+            /// Styled Prop as --props-selection-color
+            /// </summary>
+            public Color? selectionColor;
 
             [IgnoreComparison]
             public Func<string, string> onValidation;

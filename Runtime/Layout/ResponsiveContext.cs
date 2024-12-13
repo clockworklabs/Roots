@@ -9,6 +9,9 @@ namespace Roots
     
     public partial class ResponsiveContext : VisualElement, IVisualElement/*<ResponsiveContextProps>*/
     {
+        private RishBridge RishBridge { get; }
+        RishBridge IVisualElement.Bridge => RishBridge;
+        
         internal static event OnResponsiveContextResize OnResize;
         
         VisualElement IElement.GetDOMChild() => this;
@@ -20,6 +23,7 @@ namespace Roots
         
         public ResponsiveContext()
         {
+            RishBridge = new RishBridge(this);
             PickingManager = new RectPickingManager(this);
             
             RegisterCallback<GeometryChangedEvent>(GeometryChanged);

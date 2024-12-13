@@ -86,7 +86,7 @@ namespace Roots
 
             if (!RegisteredWindows.TryAdd(guid, window))
             {
-                Debug.LogError("Window already registered. Make sure the window has a unique guid.");
+                Debug.LogError($"Another window with guid {guid} is already registered. Make sure the window has a unique guid.");
             }
         }
 

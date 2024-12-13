@@ -8,25 +8,16 @@ using VectorImage = UnityEngine.UIElements.VectorImage;
 
 namespace Roots
 {
-    public partial class Image : UnityEngine.UIElements.Image, IVisualElement<ImageProps>, IStyledProps<Image, ImageProps>
+    public partial class Image : UnityEngine.UIElements.Image, IVisualElement<ImageProps>
     {
+        private RishBridge<ImageProps> RishBridge { get; }
+        RishBridge<ImageProps> IVisualElement<ImageProps>.Bridge => RishBridge;
+        
         VisualElement IElement.GetDOMChild() => this;
         
         private PickingManager PickingManager { get; }
         PickingManager ICustomPicking.Manager => PickingManager;
         
-        private StyledPropsManager<Image, ImageProps> PropsManager { get; }
-        StyledPropsManager<Image, ImageProps> IStyledProps<Image, ImageProps>.Manager => PropsManager;
-
-        private static readonly CustomStyleProperty<string> TextureAddressProp = new("--props-texture"); 
-        private static readonly CustomStyleProperty<string> SpriteAddressProp = new("--props-sprite"); 
-        private static readonly CustomStyleProperty<string> VectorAddressProp = new("--props-vector"); 
-        private static readonly CustomStyleProperty<string> RenderTextureAddressProp = new("--props-render-texture"); 
-        private static readonly CustomStyleProperty<Color> TintColorProp = new("--props-tint-color"); 
-        private static readonly CustomStyleProperty<string> ScaleModeProp = new("--props-scale-mode"); 
-        private static readonly CustomStyleProperty<string> ImageWidthProp = new("--props-image-width"); 
-        private static readonly CustomStyleProperty<string> ImageHeightProp = new("--props-image-height"); 
-
         private AssetsLoader Loader { get; set; }
         
         private VisualElement Parent { get; set; }
@@ -43,8 +34,8 @@ namespace Roots
         
         public Image()
         {
+            RishBridge = new RishBridge<ImageProps>(this);
             PickingManager = new RectPickingManager(this);
-            PropsManager = new StyledPropsManager<Image, ImageProps>(this);
             
             RegisterCallback<AttachToPanelEvent>(OnMounted);
             RegisterCallback<DetachFromPanelEvent>(OnUnmounted);
@@ -52,9 +43,7 @@ namespace Roots
             RegisterCallback<GeometryChangedEvent>(OnGeometryChanged);
         }
         
-        void IVisualElement<ImageProps>.Setup(ImageProps props) => PropsManager.Setup(props);
-        void IStyledProps<Image, ImageProps>.Setup(ImageProps props, bool dirty)
-        {
+        void IVisualElement<ImageProps>.Setup(ImageProps props) {
             Width = props.width.Value;
             Height = props.height.Value;
 
@@ -174,24 +163,6 @@ namespace Roots
             }
             
             // this.AddClassNames(props.utilities, StringBuilder);
-        }
-
-        void IStyledProps<Image, ImageProps>.OnCustomStyle(ref ImageProps props)
-        {
-            PropsManager.SetValue(TextureAddressProp, ref props.textureAddress);
-            PropsManager.SetValue(SpriteAddressProp, ref props.spriteAddress);
-            PropsManager.SetValue(VectorAddressProp, ref props.vectorAddress);
-            PropsManager.SetValue(RenderTextureAddressProp, ref props.renderTextureAddress);
-            
-            PropsManager.SetValue(TintColorProp, ref props.tintColor, Color.white);
-            props.scaleMode ??= PropsManager.TryGetValue(ScaleModeProp, out var customScaleMode) ? customScaleMode switch
-            {
-                "scale-and-crop" => ScaleMode.ScaleAndCrop,
-                "scale-to-fit" => ScaleMode.ScaleToFit,
-                _ => ScaleMode.StretchToFill
-            } : default;
-            props.width ??= PropsManager.TryGetValue(ImageWidthProp, out var customImageWidth) ? ImageSize.Parse(customImageWidth) : default;
-            props.height ??= PropsManager.TryGetValue(ImageHeightProp, out var customImageHeight) ? ImageSize.Parse(customImageHeight) : default;
         }
 
         private void OnTextureLoaded(Asset<Texture2D> asset)
@@ -491,41 +462,17 @@ namespace Roots
         public VectorImage vector;
         public RenderTexture renderTexture;
         
-        /// <summary>
-        /// Styled Prop as --props-texture
-        /// </summary>
         public RishString? textureAddress;
-        /// <summary>
-        /// Styled Prop as --props-sprite
-        /// </summary>
         public RishString? spriteAddress;
-        /// <summary>
-        /// Styled Prop as --props-vector
-        /// </summary>
         public RishString? vectorAddress;
-        /// <summary>
-        /// Styled Prop as --props-render-texture
-        /// </summary>
         public RishString? renderTextureAddress;
         
-        /// <summary>
-        /// Styled Prop as --props-scale-mode
-        /// </summary>
         public ScaleMode? scaleMode;
         // TODO: public Rect? uv;
         
-        /// <summary>
-        /// Styled Prop as --props-tint-color
-        /// </summary>
         public Color? tintColor;
         
-        /// <summary>
-        /// Styled Prop as --props-image-width
-        /// </summary>
         public ImageSize? width;
-        /// <summary>
-        /// Styled Prop as --props-image-height
-        /// </summary>
         public ImageSize? height;
 
         // public Utilities utilities;

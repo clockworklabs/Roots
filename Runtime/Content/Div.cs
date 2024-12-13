@@ -4,20 +4,15 @@ using UnityEngine.UIElements;
 
 namespace Roots
 {
-    public partial class Div : VisualElement, IVisualElement<DivProps>, IStyledProps<Div, DivProps>
+    public partial class Div : VisualElement, IVisualElement<DivProps>
     {
+        private RishBridge<DivProps> RishBridge { get; }
+        RishBridge<DivProps> IVisualElement<DivProps>.Bridge => RishBridge;
+        
         VisualElement IElement.GetDOMChild() => this;
         
         private PickingManager PickingManager { get; }
         PickingManager ICustomPicking.Manager => PickingManager;
-        
-        private StyledPropsManager<Div, DivProps> PropsManager { get; }
-        StyledPropsManager<Div, DivProps> IStyledProps<Div, DivProps>.Manager => PropsManager;
-
-        private static readonly CustomStyleProperty<string> BackgroundTextureAddressProp = new("--props-background-texture"); 
-        private static readonly CustomStyleProperty<string> BackgroundSpriteAddressProp = new("--props-background-sprite"); 
-        private static readonly CustomStyleProperty<string> BackgroundVectorAddressProp = new("--props-background-vector"); 
-        private static readonly CustomStyleProperty<string> BackgroundRenderTextureAddressProp = new("--props-background-render-texture"); 
 
         private AssetsLoader Loader { get; set; }
         
@@ -32,15 +27,14 @@ namespace Roots
         
         public Div()
         {
+            RishBridge = new RishBridge<DivProps>(this);
             PickingManager = new RectPickingManager(this);
-            PropsManager = new StyledPropsManager<Div, DivProps>(this);
             
             RegisterCallback<AttachToPanelEvent>(OnMounted);
             RegisterCallback<DetachFromPanelEvent>(OnUnmounted);
         }
 
-        void IVisualElement<DivProps>.Setup(DivProps props) => PropsManager.Setup(props);
-        void IStyledProps<Div, DivProps>.Setup(DivProps props, bool dirty)
+        void IVisualElement<DivProps>.Setup(DivProps props) 
         {
             ClearBackground();
             
@@ -120,14 +114,6 @@ namespace Roots
             }
             
             // this.AddClassNames(props.utilities, StringBuilder);
-        }
-
-        void IStyledProps<Div, DivProps>.OnCustomStyle(ref DivProps props)
-        {
-            PropsManager.SetValue(BackgroundTextureAddressProp, ref props.backgroundTextureAddress);
-            PropsManager.SetValue(BackgroundSpriteAddressProp, ref props.backgroundSpriteAddress);
-            PropsManager.SetValue(BackgroundVectorAddressProp, ref props.backgroundVectorAddress);
-            PropsManager.SetValue(BackgroundRenderTextureAddressProp, ref props.backgroundRenderTextureAddress);
         }
 
         private void OnTextureLoaded(Asset<Texture2D> asset)
@@ -228,21 +214,9 @@ namespace Roots
 
     public struct DivProps
     {
-        /// <summary>
-        /// Styled Prop as --props-background-texture
-        /// </summary>
         public RishString? backgroundTextureAddress;
-        /// <summary>
-        /// Styled Prop as --props-background-sprite
-        /// </summary>
         public RishString? backgroundSpriteAddress;
-        /// <summary>
-        /// Styled Prop as --props-background-vector
-        /// </summary>
         public RishString? backgroundVectorAddress;
-        /// <summary>
-        /// Styled Prop as --props-background-render-texture
-        /// </summary>
         public RishString? backgroundRenderTextureAddress;
         
         // public Utilities utilities;

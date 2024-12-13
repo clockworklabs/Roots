@@ -214,10 +214,10 @@ namespace Roots
 
     public struct DivProps
     {
-        public RishString? backgroundTextureAddress;
-        public RishString? backgroundSpriteAddress;
-        public RishString? backgroundVectorAddress;
-        public RishString? backgroundRenderTextureAddress;
+        public RishString backgroundTextureAddress;
+        public RishString backgroundSpriteAddress;
+        public RishString backgroundVectorAddress;
+        public RishString backgroundRenderTextureAddress;
         
         // public Utilities utilities;
     }

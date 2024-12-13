@@ -58,13 +58,13 @@ namespace Roots
                     richTextEnabled = Props.richTextEnabled,
                     parseEscapeSequences = Props.parseEscapeSequences,
                     readOnly = Props.readOnly,
-                    maxLength = Props.maxLength,
-                    multiClickInteraction = Props.multiClickInteraction,
-                    selectOnFocus = Props.selectOnFocus,
+                    maxLength = Props.maxLength ?? -1,
+                    multiClickInteraction = Props.multiClickInteraction ?? true,
+                    selectOnFocus = Props.selectOnFocus ?? false,
                     textInputDescriptor = Props.textInputDescriptor,
                     textElementDescriptor = Props.textElementDescriptor,
-                    cursorColor = Props.cursorColor,
-                    selectionColor = Props.selectionColor,
+                    cursorColor = Props.cursorColor ?? Color.black,
+                    selectionColor = Props.selectionColor ?? new Color(0.39f, 0.58f, 0.93f, 0.4f),
                     onValidation = OnValidation,
                     onChange = OnChange
                 });
@@ -269,7 +269,7 @@ namespace Roots
             
             public RishTextField()
             {
-                RishBridge = new RishBridge<RishTextFieldProps>(this);
+                RishBridge = new RishBridge<RishTextFieldProps>(this, true);
                 
                 RegisterCallback<KeyDownEvent>(OnKeyDown);
                 RegisterCallback<BlurEvent>(OnBlur);
@@ -317,12 +317,12 @@ namespace Roots
                 // focusable = !props.readOnly;
                 // textInputBase.focusable = !props.readOnly;
 
-                var targetMaxLength = props.maxLength.Value;
+                var targetMaxLength = props.maxLength;
                 if (maxLength != targetMaxLength)
                 {
                     maxLength = targetMaxLength;
                 }
-                var targetMultiClickInteraction = props.multiClickInteraction.Value;
+                var targetMultiClickInteraction = props.multiClickInteraction;
                 if (doubleClickSelectsWord != targetMultiClickInteraction)
                 {
                     doubleClickSelectsWord = targetMultiClickInteraction;
@@ -332,18 +332,18 @@ namespace Roots
                     tripleClickSelectsLine = targetMultiClickInteraction;
                 }
 
-                var selectOnFocus = props.selectOnFocus.Value;
+                var selectOnFocus = props.selectOnFocus;
                 if (selectAllOnFocus != selectOnFocus)
                 {
                     selectAllOnFocus = selectOnFocus;
                 }
 
-                var targetCursorColor = props.cursorColor.Value;
+                var targetCursorColor = props.cursorColor;
                 if (textInputBase.cursorColor != targetCursorColor)
                 {
                     textInputBase.cursorColor = targetCursorColor;
                 }
-                var targetSelectionColor = props.selectionColor.Value;
+                var targetSelectionColor = props.selectionColor;
                 if (textInputBase.selectionColor != targetSelectionColor)
                 {
                     textInputBase.selectionColor = targetSelectionColor;
@@ -449,33 +449,15 @@ namespace Roots
             public bool richTextEnabled;
             public bool parseEscapeSequences;
 
-            /// <summary>
-            /// Styled Prop as --props-max-length
-            /// </summary>
-            public int? maxLength;
-
-            /// <summary>
-            /// Styled Prop as --props-multi-click-interaction
-            /// </summary>
-            public bool? multiClickInteraction;
-
-            /// <summary>
-            /// Styled Prop as --props-select-on-focus
-            /// </summary>
-            public bool? selectOnFocus;
+            public int maxLength;
+            public bool multiClickInteraction;
+            public bool selectOnFocus;
             
             public DOMDescriptor textInputDescriptor;
             public DOMDescriptor textElementDescriptor;
 
-            /// <summary>
-            /// Styled Prop as --props-cursor-color
-            /// </summary>
-            public Color? cursorColor;
-
-            /// <summary>
-            /// Styled Prop as --props-selection-color
-            /// </summary>
-            public Color? selectionColor;
+            public Color cursorColor;
+            public Color selectionColor;
 
             [IgnoreComparison]
             public Func<string, string> onValidation;

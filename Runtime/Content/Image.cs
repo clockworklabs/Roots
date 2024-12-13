@@ -43,14 +43,15 @@ namespace Roots
             RegisterCallback<GeometryChangedEvent>(OnGeometryChanged);
         }
         
-        void IVisualElement<ImageProps>.Setup(ImageProps props) {
-            Width = props.width.Value;
-            Height = props.height.Value;
+        void IVisualElement<ImageProps>.Setup(ImageProps props)
+        {
+            Width = props.width;
+            Height = props.height;
 
-            tintColor = props.tintColor.Value;
+            tintColor = props.tintColor;
 
             // this.uv = Rect.MinMaxRect(0, 0, 1, 1);
-            scaleMode = props.scaleMode.Value;
+            scaleMode = props.scaleMode;
 
             var directSet = false;
             if (props.texture != null)
@@ -79,7 +80,7 @@ namespace Roots
                 RenderTextureAddress = string.Empty;
             } else 
             {
-                var textureAddress = props.textureAddress.Value;
+                var textureAddress = props.textureAddress;
                 var textureSet = !string.IsNullOrWhiteSpace(textureAddress);
                 if (!textureSet)
                 {
@@ -91,7 +92,7 @@ namespace Roots
                     Loader?.Load<Texture2D>(textureAddress, OnTextureLoaded);
                 }
 
-                var spriteAddress = props.spriteAddress.Value;
+                var spriteAddress = props.spriteAddress;
                 var spriteSet = !textureSet && !string.IsNullOrWhiteSpace(spriteAddress);
                 if (spriteSet)
                 {
@@ -107,7 +108,7 @@ namespace Roots
                     SpriteAddress = default;
                 }
 
-                var vectorAddress = props.vectorAddress.Value;
+                var vectorAddress = props.vectorAddress;
                 var vectorSet = !spriteSet && !string.IsNullOrWhiteSpace(vectorAddress);
                 if (!vectorSet)
                 {
@@ -119,7 +120,7 @@ namespace Roots
                     Loader?.Load<VectorImage>(vectorAddress, OnVectorLoaded);
                 }
 
-                var renderTextureAddress = props.renderTextureAddress.Value;
+                var renderTextureAddress = props.renderTextureAddress;
                 var renderTextureSet = !vectorSet && !string.IsNullOrWhiteSpace(renderTextureAddress);
                 if (!renderTextureSet)
                 {
@@ -462,18 +463,18 @@ namespace Roots
         public VectorImage vector;
         public RenderTexture renderTexture;
         
-        public RishString? textureAddress;
-        public RishString? spriteAddress;
-        public RishString? vectorAddress;
-        public RishString? renderTextureAddress;
+        public RishString textureAddress;
+        public RishString spriteAddress;
+        public RishString vectorAddress;
+        public RishString renderTextureAddress;
         
-        public ScaleMode? scaleMode;
+        public ScaleMode scaleMode;
         // TODO: public Rect? uv;
         
-        public Color? tintColor;
+        public Color tintColor;
         
-        public ImageSize? width;
-        public ImageSize? height;
+        public ImageSize width;
+        public ImageSize height;
 
         // public Utilities utilities;
     }

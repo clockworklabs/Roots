@@ -350,6 +350,16 @@ namespace Roots
             RenderTextureAddress = default;
             InlineWidth = default;
             InlineHeight = default;
+
+            style.width = StyleKeyword.Null;
+            style.height = StyleKeyword.Null;
+            style.backgroundImage = StyleKeyword.Null;
+            style.unitySliceTop = StyleKeyword.Null;
+            style.unitySliceRight = StyleKeyword.Null;
+            style.unitySliceBottom = StyleKeyword.Null;
+            style.unitySliceLeft = StyleKeyword.Null;
+            style.unitySliceScale = StyleKeyword.Null;
+            style.unityBackgroundImageTintColor = StyleKeyword.Null;
         }
 
         private void OnInlineStyle(InlineStyleEvent evt)
@@ -475,13 +485,13 @@ namespace Roots
 
             if (customValue.EndsWith("px"))
             {
-                if (int.TryParse(customValue.Substring(0, customValue.Length - 2), out var pixels))
+                if (int.TryParse(customValue[..^2], out var pixels))
                 {
                     return Pixel(pixels);
                 }
             } else if (customValue.EndsWith("%"))
             {
-                if (int.TryParse(customValue.Substring(0, customValue.Length - 1), out var percent))
+                if (int.TryParse(customValue[..^1], out var percent))
                 {
                     return Percent(percent);
                 }

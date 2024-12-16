@@ -11,8 +11,8 @@ namespace Roots
     // If you set up backgroundImage or backgroundTint, behavior is undefined and will give unexpected results
     public partial class Image : UnityEngine.UIElements.Image, IVisualElement<ImageProps>, IStyledProps<Image, ImageProps>
     {
-        private RishBridge<ImageProps> RishBridge { get; }
-        RishBridge<ImageProps> IVisualElement<ImageProps>.Bridge => RishBridge;
+        private Bridge<ImageProps> Bridge { get; }
+        Bridge<ImageProps> IVisualElement<ImageProps>.Bridge => Bridge;
         
         VisualElement IElement.GetDOMChild() => this;
         
@@ -102,12 +102,12 @@ namespace Roots
         
         public Image()
         {
-            RishBridge = new RishBridge<ImageProps>(this);
+            Bridge = new Bridge<ImageProps>(this);
             PickingManager = new RectPickingManager(this);
             PropsManager = new StyledPropsManager<Image, ImageProps>(this);
             
-            RegisterCallback<AttachToPanelEvent>(OnMounted);
-            RegisterCallback<DetachFromPanelEvent>(OnUnmounted);
+            RegisterCallback<MountedEvent>(OnMounted);
+            RegisterCallback<UnmountedEvent>(OnUnmounted);
             RegisterCallback<InlineStyleEvent>(OnInlineStyle);
             RegisterCallback<GeometryChangedEvent>(OnGeometryChanged);
         }
@@ -261,6 +261,8 @@ namespace Roots
             var border = value.border;
             if (border != Vector4.zero)
             {
+                var style = this.style;
+                
                 style.unitySliceTop = Mathf.RoundToInt(border.w);
                 style.unitySliceRight = Mathf.RoundToInt(border.z);
                 style.unitySliceBottom = Mathf.RoundToInt(border.y);
@@ -320,7 +322,7 @@ namespace Roots
             vectorImage = null;
         }
 
-        private void OnMounted(AttachToPanelEvent evt)
+        private void OnMounted(MountedEvent evt)
         {
             Loader = AssetsLoader.GetLoader(this);
             
@@ -328,7 +330,7 @@ namespace Roots
             Parent?.RegisterCallback<GeometryChangedEvent>(OnGeometryChanged);
         }
         
-        private void OnUnmounted(DetachFromPanelEvent evt)
+        private void OnUnmounted(UnmountedEvent evt)
         {
             image = null;
             sprite = null;
@@ -350,22 +352,13 @@ namespace Roots
             RenderTextureAddress = default;
             InlineWidth = default;
             InlineHeight = default;
-
-            style.width = StyleKeyword.Null;
-            style.height = StyleKeyword.Null;
-            style.backgroundImage = StyleKeyword.Null;
-            style.unitySliceTop = StyleKeyword.Null;
-            style.unitySliceRight = StyleKeyword.Null;
-            style.unitySliceBottom = StyleKeyword.Null;
-            style.unitySliceLeft = StyleKeyword.Null;
-            style.unitySliceScale = StyleKeyword.Null;
-            style.unityBackgroundImageTintColor = StyleKeyword.Null;
         }
 
         private void OnInlineStyle(InlineStyleEvent evt)
         {
             if (evt.target != this) return;
             
+            var style = this.style;
             InlineWidth = style.width;
             InlineHeight = style.height;
         }
@@ -374,6 +367,8 @@ namespace Roots
         
         private void SetSize()
         {
+            var style = this.style;
+            
             var aspectRatio = GetAspectRatio();
             if (aspectRatio < 0)
             {

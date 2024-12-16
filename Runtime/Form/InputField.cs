@@ -249,8 +249,8 @@ namespace Roots
         [IgnoreWarnings]
         private class RishTextField : TextField, IVisualElement<RishTextFieldProps>, IStyledProps<RishTextField, RishTextFieldProps>
         {
-            private RishBridge<RishTextFieldProps> RishBridge { get; }
-            RishBridge<RishTextFieldProps> IVisualElement<RishTextFieldProps>.Bridge => RishBridge;
+            private Bridge<RishTextFieldProps> Bridge { get; }
+            Bridge<RishTextFieldProps> IVisualElement<RishTextFieldProps>.Bridge => Bridge;
             
             VisualElement IElement.GetDOMChild() => this;
             
@@ -277,7 +277,7 @@ namespace Roots
             
             public RishTextField()
             {
-                RishBridge = new RishBridge<RishTextFieldProps>(this, true);
+                Bridge = new Bridge<RishTextFieldProps>(this, true);
                 
                 RegisterCallback<KeyDownEvent>(OnKeyDown);
                 RegisterCallback<BlurEvent>(OnBlur);

@@ -100,25 +100,22 @@ namespace Roots
         private StyleLength InlineWidth { get; set; }
         private StyleLength InlineHeight { get; set; }
         
-        private bool Mounted { get; set; } // TODO: Remove. The color issue must come from MotionDiv.
-        
         public Image()
         {
             Bridge = new Bridge<ImageProps>(this);
-            PickingManager = new RectPickingManager(this);
+            PickingManager = new RectPickingManager(Bridge);
             PropsManager = new StyledPropsManager<Image, ImageProps>(this);
             
-            RegisterCallback<MountedEvent>(OnMounted);
-            RegisterCallback<UnmountedEvent>(OnUnmounted);
-            RegisterCallback<InlineStyleEvent>(OnInlineStyle);
+            RegisterCallback<AttachToPanelEvent>(OnMounted);
+            RegisterCallback<DetachFromPanelEvent>(OnUnmounted);
             RegisterCallback<GeometryChangedEvent>(OnGeometryChanged);
+
+            Bridge.OnStyle += OnInlineStyle;
         }
         
         void IVisualElement<ImageProps>.Setup(ImageProps props) => PropsManager.Setup(props);
         void IStyledProps<Image, ImageProps>.Setup(ImageProps props)
         {
-            if (!Mounted) return;
-            
             Width = props.width.Value;
             Height = props.height.Value;
 
@@ -228,8 +225,6 @@ namespace Roots
         }
         private void SetTexture(Texture2D value)
         {
-            if (!Mounted) return;
-
             if (StyleBackgroundSet)
             {
                 style.backgroundImage = StyleKeyword.Null;
@@ -252,8 +247,6 @@ namespace Roots
         }
         private void SetSprite(Sprite value)
         {
-            if (!Mounted) return;
-
             if (StyleBackgroundSet)
             {
                 style.backgroundImage = StyleKeyword.Null;
@@ -295,8 +288,6 @@ namespace Roots
         }
         private void SetVector(VectorImage value)
         {
-            if (!Mounted) return;
-
             if (StyleBackgroundSet)
             {
                 style.backgroundImage = StyleKeyword.Null;
@@ -319,8 +310,6 @@ namespace Roots
         }
         private void SetRenderTexture(RenderTexture value)
         {
-            if (!Mounted) return;
-
             if (StyleBackgroundSet)
             {
                 style.backgroundImage = StyleKeyword.Null;
@@ -333,22 +322,18 @@ namespace Roots
             vectorImage = null;
         }
 
-        private void OnMounted(MountedEvent evt)
+        private void OnMounted(AttachToPanelEvent evt)
         {
             Loader = AssetsLoader.GetLoader(this);
-
-            Mounted = true;
             
             Parent = parent;
             Parent?.RegisterCallback<GeometryChangedEvent>(OnGeometryChanged);
         }
         
-        private void OnUnmounted(UnmountedEvent evt)
+        private void OnUnmounted(DetachFromPanelEvent evt)
         {
             Parent?.UnregisterCallback<GeometryChangedEvent>(OnGeometryChanged);
             Parent = null;
-
-            Mounted = false;
 
             image = null;
             sprite = null;
@@ -369,11 +354,8 @@ namespace Roots
             InlineHeight = default;
         }
 
-        private void OnInlineStyle(InlineStyleEvent evt)
+        private void OnInlineStyle(Style style)
         {
-            if (!Mounted || evt.target != this) return;
-            
-            var style = this.style;
             InlineWidth = style.width;
             InlineHeight = style.height;
         }
@@ -382,8 +364,6 @@ namespace Roots
         
         private void SetSize()
         {
-            if (!Mounted) return;
-
             var style = this.style;
             
             var aspectRatio = GetAspectRatio();

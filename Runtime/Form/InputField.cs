@@ -283,7 +283,7 @@ namespace Roots
                 RegisterCallback<BlurEvent>(OnBlur);
                 this.RegisterValueChangedCallback(OnNewValue);
                 
-                PickingManager = new RectPickingManager(this);
+                PickingManager = new RectPickingManager(Bridge);
                 PropsManager = new StyledPropsManager<RishTextField, RishTextFieldProps>(this);
                 
                 textInputBase.name = null;

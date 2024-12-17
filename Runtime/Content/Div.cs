@@ -17,7 +17,7 @@ namespace Roots
         public Div()
         {
             Bridge = new Bridge(this);
-            PickingManager = new RectPickingManager(this);
+            PickingManager = new RectPickingManager(Bridge);
         }
 
         void IVisualElement.Setup() { }

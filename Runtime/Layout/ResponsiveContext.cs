@@ -24,7 +24,7 @@ namespace Roots
         public ResponsiveContext()
         {
             Bridge = new Bridge(this);
-            PickingManager = new RectPickingManager(this);
+            PickingManager = new RectPickingManager(Bridge);
             
             RegisterCallback<GeometryChangedEvent>(GeometryChanged);
         }

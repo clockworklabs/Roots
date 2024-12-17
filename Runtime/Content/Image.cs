@@ -123,6 +123,7 @@ namespace Roots
             Height = props.height.Value;
 
             tintColor = props.tintColor.Value;
+            style.unityBackgroundImageTintColor = tintColor;
 
             // this.uv = Rect.MinMaxRect(0, 0, 1, 1);
             scaleMode = props.scaleMode.Value;
@@ -277,7 +278,6 @@ namespace Roots
                 style.unitySliceScale = 100 / value.pixelsPerUnit;
 
                 style.backgroundImage = Background.FromSprite(value);
-                style.unityBackgroundImageTintColor = tintColor;
 
                 sprite = null;
 

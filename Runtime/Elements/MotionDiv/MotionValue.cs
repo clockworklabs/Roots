@@ -33,9 +33,9 @@ namespace Roots
 
         public void Reset()
         {
+            Animation.Stop();
             Element = null;
             Value = null;
-            Animation.Stop();
         }
 
         private T GetValue() => Value ?? default;

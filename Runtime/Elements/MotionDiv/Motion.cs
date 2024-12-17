@@ -203,6 +203,7 @@ namespace Roots
         public void SetInitial(VisualElement element, Motion parent)
         {
             Element = element;
+            Parent = parent;
             
             BackgroundColor.Init(element);
             BorderBottomColor.Init(element);
@@ -255,8 +256,6 @@ namespace Roots
             UnityTextOutlineWidth.Init(element);
             Width.Init(element);
             WordSpacing.Init(element);
-
-            Parent = parent;
         }
 
         public void To(Target target)

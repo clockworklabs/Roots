@@ -42,7 +42,7 @@ namespace Roots
             get => _textureAddress;
             set
             {
-                if (Comparers.Compare(_textureAddress, value)) return;
+                if (RishUtils.Compare(_textureAddress, value)) return;
 
                 _textureAddress = value;
 
@@ -57,7 +57,7 @@ namespace Roots
             get => _spriteAddress;
             set
             {
-                if (Comparers.Compare(_spriteAddress, value)) return;
+                if (RishUtils.Compare(_spriteAddress, value)) return;
 
                 _spriteAddress = value;
 
@@ -73,7 +73,7 @@ namespace Roots
             get => _vectorAddress;
             set
             {
-                if (Comparers.Compare(_vectorAddress, value)) return;
+                if (RishUtils.Compare(_vectorAddress, value)) return;
 
                 _vectorAddress = value;
 
@@ -88,7 +88,7 @@ namespace Roots
             get => _renderTextureAddress;
             set
             {
-                if (Comparers.Compare(_renderTextureAddress, value)) return;
+                if (RishUtils.Compare(_renderTextureAddress, value)) return;
 
                 _renderTextureAddress = value;
 

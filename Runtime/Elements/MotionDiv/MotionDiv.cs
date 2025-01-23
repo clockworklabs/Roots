@@ -657,7 +657,7 @@ namespace Roots
     {
         public Initial initial;
         public Target animate;
-        public Target exit;
+        public Target exit; // TODO: Add wait for children animations
         
         [IgnoreComparison]
         public Action onAnimateComplete;

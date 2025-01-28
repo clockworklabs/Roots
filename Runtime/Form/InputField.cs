@@ -458,6 +458,7 @@ namespace Roots
                 }
             }
         }
+        [RishValueType]
         public struct RishTextFieldProps
         {
             public string value;

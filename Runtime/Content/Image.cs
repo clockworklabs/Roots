@@ -493,6 +493,7 @@ namespace Roots
         }
     }
     
+    [RishValueType]
     public struct ImageProps
     {
         public Texture2D texture;

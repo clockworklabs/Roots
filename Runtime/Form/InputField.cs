@@ -230,20 +230,8 @@ namespace Roots
             {
                 return;
             }
-
-            switch (evt.keyCode)
-            {
-                case KeyCode.Escape:
-                    Blur();
-                    break;
-                case KeyCode.Return:
-                    if (!Props.multiline)
-                    {
-                        Form?.Submit();
-                    }
-                    Blur();
-                    break;
-            }
+            
+            Form?.Submit();
         }
 
         [IgnoreWarnings]
@@ -275,12 +263,15 @@ namespace Roots
             private static TextElementGetter TextElementGetMethod { get; set; }
             private TextElement TextElement { get; }
             
+            private long FocusTimestamp { get; set; }
+            
             public RishTextField()
             {
                 Bridge = new Bridge<RishTextFieldProps>(this, true);
                 
-                RegisterCallback<KeyDownEvent>(OnKeyDown);
+                RegisterCallback<FocusEvent>(OnFocus);
                 RegisterCallback<BlurEvent>(OnBlur);
+                RegisterCallback<KeyDownEvent>(OnKeyDown);
                 this.RegisterValueChangedCallback(OnNewValue);
                 
                 PickingManager = new RectPickingManager(Bridge);
@@ -419,8 +410,23 @@ namespace Roots
             
             public override bool ContainsPoint(Vector2 localPoint) => PickingManager.ContainsPoint(localPoint);
             
+            private void OnFocus(FocusEvent evt)
+            {
+                FocusTimestamp = evt.timestamp;
+            }
+            private void OnBlur(BlurEvent evt)
+            {
+                if (_props.updateOnEveryKeystroke || evt.target != this)
+                {
+                    return;
+                }
+                
+                _props.onChange?.Invoke(value);
+            }
             private void OnKeyDown(KeyDownEvent evt)
             {
+                if (evt.timestamp <= FocusTimestamp + 1000) return;
+                
                 switch (evt.keyCode)
                 {
                     case KeyCode.Escape:
@@ -434,16 +440,6 @@ namespace Roots
                         }
                         break;
                 }
-            }
-
-            private void OnBlur(BlurEvent evt)
-            {
-                if (_props.updateOnEveryKeystroke || evt.target != this)
-                {
-                    return;
-                }
-                
-                _props.onChange?.Invoke(value);
             }
 
             private void OnNewValue(ChangeEvent<string> value)

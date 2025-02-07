@@ -1,3 +1,4 @@
+using System;
 using RishUI;
 using RishUI.Events;
 using UnityEngine.UIElements;
@@ -68,19 +69,9 @@ namespace Roots
             return element;
         }
 
-        private void OnHoverStart(HoverStartEvent evt)
-        {
-            var state = State;
-            state.hovered = true;
-            State = state;
-        }
+        private void OnHoverStart(HoverStartEvent evt) => SetHovered(true);
 
-        private void OnHoverEnd(HoverEndEvent evt)
-        {
-            var state = State;
-            state.hovered = false;
-            State = state;
-        }
+        private void OnHoverEnd(HoverEndEvent evt) => SetHovered(false);
 
         private void OnPointerDown(PointerDownEvent evt)
         {
@@ -100,9 +91,7 @@ namespace Roots
 
             CapturePointer(PointerId);
 
-            var state = State;
-            state.pressed = true;
-            State = state;
+            SetPressed(true);
 
             evt.StopPropagation();
 
@@ -125,9 +114,7 @@ namespace Roots
                 OnAction();
             }
 
-            var state = State;
-            state.pressed = false;
-            State = state;
+            SetPressed(false);
 
             evt.StopPropagation();
         }
@@ -144,25 +131,21 @@ namespace Roots
             Listening = false;
             PointerId = 0;
 
-            var state = State;
-            state.pressed = false;
-            State = state;
+            SetPressed(false);
 
             evt.StopPropagation();
         }
 
         internal void OnOpen()
         {
-            var state = State;
-            state.open = true;
-            State = state;
+            SetOpen(true);
+            Props.onOpen?.Invoke(true);
         }
 
         internal void OnClose()
         {
-            var state = State;
-            state.open = false;
-            State = state;
+            SetOpen(false);
+            Props.onOpen?.Invoke(false);
         }
 
         private void OnAction()
@@ -190,6 +173,9 @@ namespace Roots
         public Element open;
 
         public Element menu;
+        
+        [IgnoreComparison]
+        public Action<bool> onOpen;
 
         [Default]
         private static DropdownButtonProps Default => new()

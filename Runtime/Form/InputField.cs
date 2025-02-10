@@ -8,24 +8,29 @@ using UnityEngine.UIElements;
 
 namespace Roots
 {
-    public partial class InputField : RishElement<InputFieldProps>, IMountingListener
+    public partial class InputField : RishElement<InputFieldProps>, IMountingListener, IPropsListener
     {
+        private const int IgnoreKeyMillis = 500;
+        
         public enum Type { Text, Integer, Long, Float }
         
         private Form Form { get; set; }
         private bool JustMounted { get; set; }
 
+        private uint FormIndex { get; set; }
+        private long FocusTimestamp { get; set; }
+
         public InputField()
         {
             RegisterCallback<VisualChangeEvent>(OnVisualChange);
+            RegisterCallback<FocusEvent>(OnFocus);
             RegisterCallback<KeyDownEvent>(OnKeyDown);
         }
         
         void IMountingListener.ComponentDidMount()
         {
             Form = GetFirstAncestorOfType<Form>();
-            var index = Form?.RegisterElement(this) ?? 0;
-            Focusable(index);
+            FormIndex = Form?.RegisterElement(this) ?? 0;
             
             JustMounted = true;
         }
@@ -34,6 +39,19 @@ namespace Roots
             Form?.UnregisterElement(this);
             NotFocusable();
         }
+
+        void IPropsListener.PropsDidChange()
+        {
+            if (Props.readOnly)
+            {
+                NotFocusable();
+            }
+            else
+            {
+                Focusable(FormIndex);
+            }
+        }
+        void IPropsListener.PropsWillChange() { }
 
         protected override Element Render()
         {
@@ -223,15 +241,26 @@ namespace Roots
                 Focus();
             }
         }
+        
+        private void OnFocus(FocusEvent evt) => FocusTimestamp = evt.timestamp;
 
         private void OnKeyDown(KeyDownEvent evt)
         {
-            if (!HasFocus || Props.multiline || evt.keyCode != KeyCode.Return)
+            if (evt.timestamp <= FocusTimestamp + IgnoreKeyMillis) return;
+                
+            switch (evt.keyCode)
             {
-                return;
+                case KeyCode.Escape:
+                    Blur();
+                    break;
+                case KeyCode.Return:
+                    if (!Props.multiline)
+                    {
+                        Form?.Submit();
+                        Blur();
+                    }
+                    break;
             }
-            
-            Form?.Submit();
         }
 
         [IgnoreWarnings]
@@ -263,7 +292,8 @@ namespace Roots
             private static TextElementGetter TextElementGetMethod { get; set; }
             private TextElement TextElement { get; }
             
-            private long FocusTimestamp { get; set; }
+            private long FocusTimestamp { get;set; }
+            private long BlurTimestamp { get;set; }
             
             public RishTextField()
             {
@@ -271,7 +301,6 @@ namespace Roots
                 
                 RegisterCallback<FocusEvent>(OnFocus);
                 RegisterCallback<BlurEvent>(OnBlur);
-                RegisterCallback<KeyDownEvent>(OnKeyDown);
                 this.RegisterValueChangedCallback(OnNewValue);
                 
                 PickingManager = new RectPickingManager(Bridge);
@@ -315,8 +344,7 @@ namespace Roots
                     isReadOnly = props.readOnly;
                 }
 
-                // focusable = !props.readOnly;
-                // textInputBase.focusable = !props.readOnly;
+                textInputBase.focusable = false;
 
                 var targetMaxLength = props.maxLength.Value;
                 if (maxLength != targetMaxLength)
@@ -409,37 +437,26 @@ namespace Roots
             }
             
             public override bool ContainsPoint(Vector2 localPoint) => PickingManager.ContainsPoint(localPoint);
-            
+
             private void OnFocus(FocusEvent evt)
             {
+                if (evt.timestamp < BlurTimestamp + IgnoreKeyMillis)
+                {
+                    Blur();
+                    return;
+                }
                 FocusTimestamp = evt.timestamp;
+                TextElement.Focus();
             }
             private void OnBlur(BlurEvent evt)
             {
-                if (_props.updateOnEveryKeystroke || evt.target != this)
-                {
-                    return;
-                }
+                if (evt.target != this || evt.timestamp < FocusTimestamp + IgnoreKeyMillis) return;
+                
+                BlurTimestamp = evt.timestamp;
+                
+                if (_props.updateOnEveryKeystroke) return;
                 
                 _props.onChange?.Invoke(value);
-            }
-            private void OnKeyDown(KeyDownEvent evt)
-            {
-                if (evt.timestamp <= FocusTimestamp + 1000) return;
-                
-                switch (evt.keyCode)
-                {
-                    case KeyCode.Escape:
-                        value = _props.value;
-                        Blur();
-                        break;
-                    case KeyCode.Return:
-                        if (!_props.multiline)
-                        {
-                            Blur();
-                        }
-                        break;
-                }
             }
 
             private void OnNewValue(ChangeEvent<string> value)

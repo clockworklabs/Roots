@@ -35,7 +35,7 @@ namespace Roots
         {
             var children = new Children
             {
-                Props.content
+                Props.children
             };
             
             if (Rendered && !Props.hideAllWindows)
@@ -74,7 +74,7 @@ namespace Roots
                 }
             }
 
-            return Div.Create(Props.descriptor, children: children);
+            return Div.Create(descriptor: Props.descriptor, children: children);
         }
 
         internal void RegisterWindow(Window window, ulong guid)
@@ -392,6 +392,6 @@ namespace Roots
         public bool forceFit;
         public int safeZoneSize;
         public bool hideAllWindows;
-        public Children content;
+        public Children children;
     }
 }

@@ -59,7 +59,7 @@ namespace Roots
         protected override Element Render()
         {
             Element menu;
-            DOMDescriptor descriptor;
+            var descriptor = Props.descriptor;
             if (DropdownButton != null)
             {
                 // TODO: Support transformed elements
@@ -70,22 +70,18 @@ namespace Roots
                     element: InternalDropdown.Create(
                         element: DropdownButton.Props.menu));
 
-                descriptor = Props.descriptor + new Style
-                {
-                    pointerDetection = PointerDetectionMode.Rect
-                };
+                descriptor.style.pointerDetection = PointerDetectionMode.Rect;
             }
             else
             {
                 menu = Element.Null;
-                descriptor = Props.descriptor;
             }
             
             return Div.Create(
                 descriptor: descriptor,
                 children: new Children
                 {
-                    Props.content,
+                    Props.children,
                     menu
                 });
         }
@@ -225,7 +221,7 @@ namespace Roots
         [DOMDescriptor]
         public DOMDescriptor descriptor;
         public bool forceFit;
-        public Element content;
+        public Children children;
 
         [IgnoreComparison]
         public Action<bool> onShow;

@@ -5,15 +5,13 @@ namespace Roots
 {
     public partial class P : RishElement<PProps>
     {
-        protected override Element Render()
-        {
-            var descriptor = Props.descriptor;
-            descriptor.className = new ClassName(descriptor.className) {
-                "p"
-            };
-            
-            return Label.Create(descriptor: descriptor, /*utilities: Props.utilities,*/ text: Props.text);
-        }
+        protected override Element Render() => Label.Create(
+            descriptor: Props.descriptor + "p",
+            text: Props.text,
+            widthRange: Props.widthRange,
+            heightRange: Props.heightRange,
+            enableRichText: Props.enableRichText,
+            parseEscapeSequences: Props.parseEscapeSequences);
     }
 
     [RishValueType]
@@ -21,8 +19,10 @@ namespace Roots
     {
         [DOMDescriptor]
         public DOMDescriptor descriptor;
-        // public Utilities utilities;
         public RishString text;
+        
+        public LengthRange? widthRange;
+        public LengthRange? heightRange;
 
         public bool enableRichText;
         public bool parseEscapeSequences;

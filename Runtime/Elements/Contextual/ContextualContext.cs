@@ -81,7 +81,7 @@ namespace Roots
                 descriptor: descriptor,
                 children: new Children
                 {
-                    Props.content,
+                    Props.children,
                     menu
                 });
         }
@@ -186,7 +186,7 @@ namespace Roots
     {
         [DOMDescriptor]
         public DOMDescriptor descriptor;
-        public Element content;
+        public Children children;
         
         [IgnoreComparison]
         public Action<bool> onShow;

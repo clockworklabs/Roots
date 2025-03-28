@@ -40,7 +40,13 @@ namespace Roots
                 draggedElement = Element.Null;
             }
 
-            return Div.Create(Props.descriptor, children: new Children { Props.content, draggedElement });
+            return Div.Create(
+                descriptor: Props.descriptor,
+                children: new Children
+                {
+                    Props.children,
+                    draggedElement
+                });
         }
 
         internal void UnmountDraggable<T>(Draggable<T> element) where T : struct
@@ -373,7 +379,7 @@ namespace Roots
     {
         [DOMDescriptor]
         public DOMDescriptor descriptor;
-        public Children content;
+        public Children children;
         [IgnoreComparison]
         public Action<bool> onDrag;
     }

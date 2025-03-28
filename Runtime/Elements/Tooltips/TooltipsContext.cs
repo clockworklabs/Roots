@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using RishUI;
+using UnityEngine;
 
 namespace Roots
 {
@@ -21,9 +22,7 @@ namespace Roots
         
         protected override Element Render()
         {
-            var content = Props.content;
-            
-            var tooltip = Children.Null;
+            var tooltip = Element.Null;
             if (!Props.hideTooltips && Stack.Count > 0)
             {
                 var owner = Stack.Peek();
@@ -40,7 +39,13 @@ namespace Roots
                     }));
             }
 
-            return Div.Create(descriptor: Props.descriptor, children: new Children { content, tooltip });
+            return Div.Create(
+                descriptor: Props.descriptor,
+                children: new Children
+                {
+                    Props.children,
+                    tooltip
+                });
         }
         
         internal void ShowTooltip(Tooltip owner)
@@ -107,9 +112,9 @@ namespace Roots
     {
         [DOMDescriptor]
         public DOMDescriptor descriptor;
-        public Children content;
         public bool forceFit;
         public bool hideTooltips;
+        public Children children;
 
         [IgnoreComparison]
         public Action<bool> onShow;

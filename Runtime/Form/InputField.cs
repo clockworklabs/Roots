@@ -8,7 +8,7 @@ using UnityEngine.UIElements;
 
 namespace Roots
 {
-    public partial class InputField : RishElement<InputFieldProps>, IMountingListener, IPropsListener
+    public partial class InputField : RishElement<InputFieldProps>, IMountingListener, IPropsListener<InputFieldProps>
     {
         private const int IgnoreKeyMillis = 500;
         
@@ -40,8 +40,10 @@ namespace Roots
             NotFocusable();
         }
 
-        void IPropsListener.PropsDidChange()
+        void IPropsListener<InputFieldProps>.PropsDidChange(InputFieldProps? prev)
         {
+            if (prev.HasValue && prev.Value.readOnly == Props.readOnly) return;
+            
             if (Props.readOnly)
             {
                 NotFocusable();
@@ -51,7 +53,7 @@ namespace Roots
                 Focusable(FormIndex);
             }
         }
-        void IPropsListener.PropsWillChange() { }
+        void IPropsListener<InputFieldProps>.PropsWillChange() { }
 
         protected override Element Render()
         {
@@ -67,7 +69,7 @@ namespace Roots
             return Rish.Create<RishTextField, RishTextFieldProps>(
                 key: 0,
                 descriptor: descriptor,
-                new RishTextFieldProps
+                props: new RishTextFieldProps
                 {
                     value = Props.value,
                     updateOnEveryKeystroke = Props.updateOnEveryKeystroke,
@@ -474,7 +476,7 @@ namespace Roots
         [RishValueType]
         public struct RishTextFieldProps
         {
-            public string value;
+            public RishString value;
             public bool updateOnEveryKeystroke;
             public bool multiline;
             public bool isPassword;

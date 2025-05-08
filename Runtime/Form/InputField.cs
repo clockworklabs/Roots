@@ -288,11 +288,21 @@ namespace Roots
             private static readonly CustomStyleProperty<Color> CursorColorProp = new("--props-cursor-color"); 
             private static readonly CustomStyleProperty<Color> SelectionColorProp = new("--props-selection-color");
 
-            private RishTextFieldProps _props;
+            private RishTextFieldProps? Props { get; set; }
+            
+            private delegate void SetSize(VisualElement textInputBase, Vector2 size);
+            private static SetSize SetSizeMethod { get; set; }
+            
+            private delegate void ManualLayoutSetter(VisualElement textInputBase, bool value);
+            private static ManualLayoutSetter ManualLayoutSetMethod { get; set; }
             
             private delegate TextElement TextElementGetter(TextInputBase textInputBase);
             private static TextElementGetter TextElementGetMethod { get; set; }
+            
             private TextElement TextElement { get; }
+
+            // private delegate void UpdateScrollOffset(TextInputBase textInputBase, bool isBackspace, bool widthChanged);
+            // private static UpdateScrollOffset UpdateScrollOffsetMethod { get; set; }
             
             private long FocusTimestamp { get;set; }
             private long BlurTimestamp { get;set; }
@@ -300,6 +310,7 @@ namespace Roots
             public RishTextField()
             {
                 Bridge = new Bridge<RishTextFieldProps>(this, true);
+                Bridge.OnUnmounted += ResetProps;
                 
                 RegisterCallback<FocusEvent>(OnFocus);
                 RegisterCallback<BlurEvent>(OnBlur);
@@ -310,6 +321,18 @@ namespace Roots
                 
                 textInputBase.name = null;
                 TextInputClasses = textInputBase.GetClasses().ToArray();
+                
+                if (SetSizeMethod == null)
+                {
+                    var methodInfo = typeof(VisualElement).GetMethod("SetSize", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                    SetSizeMethod = (SetSize) Delegate.CreateDelegate(typeof(SetSize), methodInfo);
+                }
+                
+                if (ManualLayoutSetMethod == null)
+                {
+                    var propertyInfo = typeof(VisualElement).GetProperty("isLayoutManual", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                    ManualLayoutSetMethod = (ManualLayoutSetter) Delegate.CreateDelegate(typeof(ManualLayoutSetter), propertyInfo.GetSetMethod(true));
+                }
 
                 if (TextElementGetMethod == null)
                 {
@@ -323,25 +346,42 @@ namespace Roots
                 TextElementClasses = TextElement.GetClasses().ToArray();
             }
 
+            private void ResetProps()
+            {
+                Props = null;
+                SetSizeMethod(TextElement, Vector2.zero);
+                TextElement.MarkDirtyRepaint();
+                cursorIndex = 0;
+                value = null;
+            }
+
             void IVisualElement<RishTextFieldProps>.Setup(RishTextFieldProps props) => PropsManager.Setup(props);
             void IStyledProps<RishTextField, RishTextFieldProps>.Setup(RishTextFieldProps props)
             {
-                var targetValue = props.value;
-                if (value != targetValue)
+                var firstSetup = !Props.HasValue;
+                
+                if (firstSetup)
                 {
-                    value = targetValue;
+                    SetSizeMethod(TextElement, textInputBase.contentRect.size);
+                    ManualLayoutSetMethod(TextElement, false);
+                    TextElement.MarkDirtyRepaint();
                 }
                 
-                if (multiline != props.multiline)
+                if (firstSetup || value != props.value)
+                {
+                    value = props.value;
+                }
+                
+                if (firstSetup || multiline != props.multiline)
                 {
                     multiline = props.multiline;
                 }
-                if (isPasswordField != props.isPassword)
+                if (firstSetup || isPasswordField != props.isPassword)
                 {
                     isPasswordField = props.isPassword;
                 }
 
-                if (isReadOnly != props.readOnly)
+                if (firstSetup || isReadOnly != props.readOnly)
                 {
                     isReadOnly = props.readOnly;
                 }
@@ -349,43 +389,43 @@ namespace Roots
                 textInputBase.focusable = false;
 
                 var targetMaxLength = props.maxLength.Value;
-                if (maxLength != targetMaxLength)
+                if (firstSetup || maxLength != targetMaxLength)
                 {
                     maxLength = targetMaxLength;
                 }
                 var targetMultiClickInteraction = props.multiClickInteraction.Value;
-                if (doubleClickSelectsWord != targetMultiClickInteraction)
+                if (firstSetup || doubleClickSelectsWord != targetMultiClickInteraction)
                 {
                     doubleClickSelectsWord = targetMultiClickInteraction;
                 }
-                if (tripleClickSelectsLine != targetMultiClickInteraction)
+                if (firstSetup || tripleClickSelectsLine != targetMultiClickInteraction)
                 {
                     tripleClickSelectsLine = targetMultiClickInteraction;
                 }
 
                 var selectOnFocus = props.selectOnFocus.Value;
-                if (selectAllOnFocus != selectOnFocus)
+                if (firstSetup || selectAllOnFocus != selectOnFocus)
                 {
                     selectAllOnFocus = selectOnFocus;
                 }
 
                 var targetCursorColor = props.cursorColor.Value;
-                if (textInputBase.cursorColor != targetCursorColor)
+                if (firstSetup || textInputBase.cursorColor != targetCursorColor)
                 {
                     textInputBase.cursorColor = targetCursorColor;
                 }
                 var targetSelectionColor = props.selectionColor.Value;
-                if (textInputBase.selectionColor != targetSelectionColor)
+                if (firstSetup || textInputBase.selectionColor != targetSelectionColor)
                 {
                     textInputBase.selectionColor = targetSelectionColor;
                 }
 
                 var textInputDescriptor = props.textInputDescriptor;
-                if (textInputBase.name != textInputDescriptor.name)
+                if (firstSetup || textInputBase.name != textInputDescriptor.name)
                 {
                     textInputBase.name = textInputDescriptor.name;
                 }
-                if (!RishUtils.SmartCompare(_props.textInputDescriptor.className, textInputDescriptor.className))
+                if (firstSetup || !RishUtils.SmartCompare(Props.Value.textInputDescriptor.className, textInputDescriptor.className))
                 {
                     textInputBase.SetClassName(textInputDescriptor.className);
                     foreach (var className in TextInputClasses)
@@ -393,17 +433,17 @@ namespace Roots
                         textInputBase.AddToClassList(className);
                     }
                 }
-                if (!RishUtils.SmartCompare(_props.textInputDescriptor.style, textInputDescriptor.style))
+                if (firstSetup || !RishUtils.SmartCompare(Props.Value.textInputDescriptor.style, textInputDescriptor.style))
                 {
                     textInputBase.SetStyle(textInputDescriptor.style);
                 }
 
                 var textElementDescriptor = props.textElementDescriptor;
-                if (TextElement.name != textElementDescriptor.name)
+                if (firstSetup || TextElement.name != textElementDescriptor.name)
                 {
                     TextElement.name = textElementDescriptor.name;
                 }
-                if (!RishUtils.SmartCompare(_props.textElementDescriptor.className, textElementDescriptor.className))
+                if (firstSetup || !RishUtils.SmartCompare(Props.Value.textElementDescriptor.className, textElementDescriptor.className))
                 {
                     TextElement.SetClassName(textElementDescriptor.className);
                     foreach (var className in TextElementClasses)
@@ -411,22 +451,22 @@ namespace Roots
                         TextElement.AddToClassList(className);
                     }
                 }
-                if (!RishUtils.SmartCompare(_props.textElementDescriptor.style, textElementDescriptor.style))
+                if (firstSetup || !RishUtils.SmartCompare(Props.Value.textElementDescriptor.style, textElementDescriptor.style))
                 {
                     TextElement.SetStyle(textElementDescriptor.style);
                 }
 
-                if (TextElement.enableRichText != props.richTextEnabled)
+                if (firstSetup || TextElement.enableRichText != props.richTextEnabled)
                 {
                     TextElement.enableRichText = props.richTextEnabled;
                 }
 
-                if (TextElement.parseEscapeSequences != props.parseEscapeSequences)
+                if (firstSetup || TextElement.parseEscapeSequences != props.parseEscapeSequences)
                 {
                     TextElement.parseEscapeSequences = props.parseEscapeSequences;
                 }
                 
-                _props = props;
+                Props = props;
             }
 
             void IStyledProps<RishTextField, RishTextFieldProps>.OnCustomStyle(ref RishTextFieldProps props)
@@ -452,21 +492,25 @@ namespace Roots
             }
             private void OnBlur(BlurEvent evt)
             {
-                if (evt.target != this || evt.timestamp < FocusTimestamp + IgnoreKeyMillis) return;
+                if (!Props.HasValue || evt.target != this || evt.timestamp < FocusTimestamp + IgnoreKeyMillis) return;
                 
                 BlurTimestamp = evt.timestamp;
                 
-                if (_props.updateOnEveryKeystroke) return;
-                
-                _props.onChange?.Invoke(value);
+                var props = Props.Value;
+                if (!props.updateOnEveryKeystroke)
+                {
+                    props.onChange?.Invoke(value);
+                }
             }
 
             private void OnNewValue(ChangeEvent<string> value)
             {
-                var result = _props.onValidation?.Invoke(value.newValue);
-                if (_props.updateOnEveryKeystroke)
+                if (!Props.HasValue) return;
+                var props = Props.Value;
+                var result = props.onValidation?.Invoke(value.newValue);
+                if (props.updateOnEveryKeystroke)
                 {
-                    _props.onChange?.Invoke(result);
+                    props.onChange?.Invoke(result);
                 } else if (value.newValue != result)
                 {
                     this.value = result;

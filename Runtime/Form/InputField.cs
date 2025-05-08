@@ -384,8 +384,9 @@ namespace Roots
                 if (firstSetup || isReadOnly != props.readOnly)
                 {
                     isReadOnly = props.readOnly;
+                    focusable = !props.readOnly;
                 }
-
+                
                 textInputBase.focusable = false;
 
                 var targetMaxLength = props.maxLength.Value;

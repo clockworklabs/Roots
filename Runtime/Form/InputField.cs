@@ -224,6 +224,8 @@ namespace Roots
 
         private void OnChange(string value)
         {
+            if (value == Props.value) return;
+            
             var result = OnValidation(value);
             
             Props.onChange?.Invoke(result);

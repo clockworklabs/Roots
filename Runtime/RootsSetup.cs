@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Motion;
 using RishUI;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -12,6 +13,19 @@ namespace Roots
     public class RootsSetup : MonoBehaviour
     {
         [SerializeField]
+        private bool _stepMotionOnRishRootStep = true;
+        public bool StepMotionOnRishRootStep
+        {
+            get => _stepMotionOnRishRootStep;
+            set
+            {
+                if (_stepMotionOnRishRootStep == value) return;
+                _stepMotionOnRishRootStep = value;
+                enabled = !value;
+            }
+        }
+        
+        [SerializeField]
         private RootsStyleSheet[] _styleSheets;
         private RootsStyleSheet[] StyleSheets => _styleSheets;
         
@@ -21,6 +35,8 @@ namespace Roots
         private IReadOnlyList<MediaQueryStyleSheet> SortedStyleSheets => _sortedStyleSheets;
 
         private List<StyleSheet> BaseStyleSheets { get; } = new();
+
+        private RishRoot RishRoot { get; set; }
         
         private void Awake()
         {
@@ -29,23 +45,28 @@ namespace Roots
             var styleSheets = StyleSheets.SelectMany(ss => ss.GetResponsive().StyleSheets).ToList();
             styleSheets.Sort((a, b) => a.MinWidth.CompareTo(b.MinWidth));
             _sortedStyleSheets = styleSheets.AsReadOnly();
+            
+            RishRoot = gameObject.GetComponent<RishRoot>();
+            if (RishRoot != null)
+            {
+                RishRoot.OnStart += SetupRishRoot;
+                RishRoot.OnStep += OnRishRootStep;
+            }
 
-            RishRoot.OnStart += SetupRishRoot;
             ResponsiveContext.OnResize += OnResponsiveResize;
         }
         private void OnDestroy()
         {
-            RishRoot.OnStart -= SetupRishRoot;
+            if (RishRoot != null)
+            {
+                RishRoot.OnStart -= SetupRishRoot;
+                RishRoot.OnStep -= OnRishRootStep;
+            }
             ResponsiveContext.OnResize -= OnResponsiveResize;
         }
 
-        private void SetupRishRoot(RishRoot rishRoot)
+        private void SetupRishRoot()
         {
-            if (rishRoot.gameObject != gameObject)
-            {
-                return;
-            }
-
             var root = UIDocument.rootVisualElement;
             
             BaseStyleSheets.Clear();
@@ -74,13 +95,17 @@ namespace Roots
                 root.styleSheets.Add(styleSheet);
             }
         }
+
+        private void OnRishRootStep()
+        {
+            if (!StepMotionOnRishRootStep) return;
+            
+            DoMotion.Step(Time.deltaTime);
+        }
         
         private void OnResponsiveResize(ResponsiveContext responsive, float oldWidth, float newWidth)
         {
-            if (!TreeContains(responsive))
-            {
-                return;
-            }
+            if (!TreeContains(responsive)) return;
             
             if (newWidth > oldWidth)
             {

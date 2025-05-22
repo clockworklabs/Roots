@@ -10,7 +10,7 @@ namespace Roots
 {
     public partial class InputField : RishElement<InputFieldProps>, IMountingListener, IPropsListener<InputFieldProps>
     {
-        private const int IgnoreKeyMillis = 500;
+        private const int IgnoreKeyMillis = 150;
         
         public enum Type { Text, Integer, Long, Float }
         

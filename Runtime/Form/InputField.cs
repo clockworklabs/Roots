@@ -10,7 +10,7 @@ namespace Roots
 {
     public partial class InputField : RishElement<InputFieldProps>, IMountingListener, IPropsListener<InputFieldProps>
     {
-        private const int IgnoreKeyMillis = 500;
+        private const int IgnoreKeyMillis = 150;
         
         public enum Type { Text, Integer, Long, Float }
         
@@ -224,6 +224,8 @@ namespace Roots
 
         private void OnChange(string value)
         {
+            if (value == Props.value) return;
+            
             var result = OnValidation(value);
             
             Props.onChange?.Invoke(result);

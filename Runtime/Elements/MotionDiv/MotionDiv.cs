@@ -60,7 +60,7 @@ namespace Roots
             }
         }
         void IPropsListener<MotionDivProps>.PropsWillChange() { }
-        
+
         protected override Element Render() => Div.Create(descriptor: State.descriptor, children: Props.children);
 
         private void OnVisualChange(VisualChangeEvent evt) => Animation.OnVisualChange(evt.target as VisualElement);
@@ -68,6 +68,7 @@ namespace Roots
         IAnimatedElement IAnimatedElement.Parent => Parent;
         StyleAnimation IAnimatedElement.StyleAnimation => Animation;
         void IAnimatedElement.Unmount() => CanUnmount();
+
         void IAnimatedElement.SetStyle(Style style) => SetDescriptor(new DOMDescriptor
         {
             name = State.descriptor.name,

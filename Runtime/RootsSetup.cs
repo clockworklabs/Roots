@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using Motion;
 using RishUI;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -12,19 +11,6 @@ namespace Roots
     [DisallowMultipleComponent]
     public class RootsSetup : MonoBehaviour
     {
-        [SerializeField]
-        private bool _stepMotionOnRishRootStep = true;
-        public bool StepMotionOnRishRootStep
-        {
-            get => _stepMotionOnRishRootStep;
-            set
-            {
-                if (_stepMotionOnRishRootStep == value) return;
-                _stepMotionOnRishRootStep = value;
-                enabled = !value;
-            }
-        }
-        
         [SerializeField]
         private RootsStyleSheet[] _styleSheets;
         private RootsStyleSheet[] StyleSheets => _styleSheets;
@@ -50,7 +36,6 @@ namespace Roots
             if (RishRoot != null)
             {
                 RishRoot.OnStart += SetupRishRoot;
-                RishRoot.OnStep += OnRishRootStep;
             }
 
             ResponsiveContext.OnResize += OnResponsiveResize;
@@ -60,7 +45,6 @@ namespace Roots
             if (RishRoot != null)
             {
                 RishRoot.OnStart -= SetupRishRoot;
-                RishRoot.OnStep -= OnRishRootStep;
             }
             ResponsiveContext.OnResize -= OnResponsiveResize;
         }
@@ -94,13 +78,6 @@ namespace Roots
                 var styleSheet = BaseStyleSheets[i];
                 root.styleSheets.Add(styleSheet);
             }
-        }
-
-        private void OnRishRootStep()
-        {
-            if (!StepMotionOnRishRootStep) return;
-            
-            DoMotion.Step(Time.deltaTime);
         }
         
         private void OnResponsiveResize(ResponsiveContext responsive, float oldWidth, float newWidth)

@@ -5,8 +5,6 @@ using UnityEngine.UIElements;
 namespace Roots
 {
     public partial class AbstractButton {
-        
-        
         private partial class InternalElement : RishElement<AbstractButtonProps, InternalElementState>, IManualState
         {
             private bool Listening { get; set; }
@@ -54,19 +52,9 @@ namespace Roots
                 return element;
             }
 
-            private void OnHoverStart(HoverStartEvent evt)
-            {
-                var state = State;
-                state.hovered = true;
-                State = state;
-            }
+            private void OnHoverStart(HoverStartEvent evt) => SetHovered(true);
 
-            private void OnHoverEnd(HoverEndEvent evt)
-            {
-                var state = State;
-                state.hovered = false;
-                State = state;
-            }
+            private void OnHoverEnd(HoverEndEvent evt) => SetHovered(false);
 
             private void OnPointerDown(PointerDownEvent evt)
             {
@@ -80,9 +68,7 @@ namespace Roots
                 
                 CapturePointer(PointerId);
 
-                var state = State;
-                state.pressed = true;
-                State = state;
+                SetPressed(true);
                 
                 // evt.StopPropagation();
             }
@@ -111,9 +97,7 @@ namespace Roots
                     }
                 }
 
-                var state = State;
-                state.pressed = false;
-                State = state;
+                SetPressed(false);
                 
                 evt.StopPropagation();
             }
@@ -170,9 +154,7 @@ namespace Roots
                 //     }
                 // }
 
-                var state = State;
-                state.pressed = false;
-                State = state;
+                SetPressed(false);
                 
                 evt.StopPropagation();
             }

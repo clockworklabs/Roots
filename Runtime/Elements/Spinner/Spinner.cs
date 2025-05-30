@@ -83,20 +83,15 @@ namespace Roots
 
         private void OnGeometryChanged(GeometryChangedEvent evt)
         {
-            SetParentColor();
+            SetupParentColor();
         }
 
         private void OnParentDirty(MeshGenerationContext obj)
         {
-            SetParentColor();
+            SetupParentColor();
         }
 
-        private void SetParentColor()
-        {
-            var state = State;
-            state.parentColor = Parent.resolvedStyle.color;
-            State = state;
-        }
+        private void SetupParentColor() => SetParentColor(Parent.resolvedStyle.color);
     }
 
     [RishValueType]

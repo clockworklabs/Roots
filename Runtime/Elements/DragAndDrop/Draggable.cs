@@ -166,17 +166,13 @@ namespace Roots
 
         private void StartDragging(bool primary)
         {
-            var state = State;
-            state.dragging = true;
-            state.primary = primary;
-            State = state;
+            SetDragging(true);
+            SetPrimary(primary);
         }
 
         private void EndDragging()
         {
-            var state = State;
-            state.dragging = false;
-            State = state;
+            SetDragging(false);
         }
     }
 

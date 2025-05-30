@@ -57,7 +57,7 @@ namespace Roots
             }
 
             Draggable = null;
-            SetDraggedElement<T>(null, false, false);
+            SetupDraggedElement<T>(null, false, false);
             ClearDropAreas<T>();
             
             Props.onDrag?.Invoke(false);
@@ -105,7 +105,7 @@ namespace Roots
                 dropArea.OnInfo(element.GetInfo(primary));
             }
 
-            SetDraggedElement(element, false, false);
+            SetupDraggedElement(element, false, false);
             
             Props.onDrag?.Invoke(true);
             
@@ -160,7 +160,7 @@ namespace Roots
             
             Props.onDrag?.Invoke(false);
             
-            SetDraggedElement<T>(null, false, false);
+            SetupDraggedElement<T>(null, false, false);
             
             Dirty();
         }
@@ -182,7 +182,7 @@ namespace Roots
             currentArea?.SetHovering(false);
             element.SetHovering(true);
             
-            SetDraggedElement(draggable, true, element.CanAccept());
+            SetupDraggedElement(draggable, true, element.CanAccept());
             
             DropAreas.Enqueue(element);
         }
@@ -235,7 +235,7 @@ namespace Roots
                 acceptable = false;
             }
         
-            SetDraggedElement(draggable, hovering, acceptable);
+            SetupDraggedElement(draggable, hovering, acceptable);
         }
 
         private void ClearDropAreas<T>() where T : struct
@@ -274,7 +274,7 @@ namespace Roots
                 }
             }
 
-            SetDraggedElement(element, hovering, acceptable);
+            SetupDraggedElement(element, hovering, acceptable);
         }
 
         internal void OnDropAreaUpdate<T>(DropArea<T> element) where T : struct
@@ -291,17 +291,10 @@ namespace Roots
                 return;
             }
 
-            SetDraggedElement(draggable, true, element.CanAccept());
+            SetupDraggedElement(draggable, true, element.CanAccept());
         }
 
-        private void SetDragDelta(Vector2 delta)
-        {
-            var state = State;
-            state.dragDelta = delta;
-            State = state;
-        }
-
-        private void SetDraggedElement<T>(Draggable<T> draggable, bool hovering, bool acceptable) where T : struct
+        private void SetupDraggedElement<T>(Draggable<T> draggable, bool hovering, bool acceptable) where T : struct
         {
             var draggedElement = Element.Null;
             LayoutStyle layout = default;
@@ -356,10 +349,8 @@ namespace Roots
                 }
             }
 
-            var state = State;
-            state.layout = layout;
-            state.draggedElement = draggedElement;
-            State = state;
+            SetLayout(layout);
+            SetDraggedElement(draggedElement);
         }
 
         // private static Rect TransformRect(Matrix4x4 transform, Rect rect)

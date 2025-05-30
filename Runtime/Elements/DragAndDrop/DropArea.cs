@@ -90,20 +90,17 @@ namespace Roots
         internal void OnInfo(T? info)
         {
             Info = info;
-            var state = State;
             if (info.HasValue)
             {
-                state.dragging = true;
-                state.acceptable = CanDrop(info.Value);
+                SetDragging(true);
+                SetAcceptable(CanDrop(info.Value));
             }
             else
             {
-                state.dragging = false;
-                state.acceptable = false;
-                state.hovering = false;
+                SetDragging(false);
+                SetAcceptable(false);
+                SetHovering(false);
             }
-
-            State = state;
         }
 
         internal bool CanAccept() => State.acceptable;

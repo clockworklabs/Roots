@@ -36,14 +36,11 @@ namespace Roots
 
         public void OnLayout(Rect tooltipWorldLayout)
         {
-            var state = State;
+            SetVisible(true);
             
-            state.visible = true;
-            
+            var offset = Vector2.zero;
             if (Context.Props.forceFit && !Props.ignoreFit)
             {
-                var offset = Vector2.zero;
-    
                 var contextSize = Context.ContentRect.size;
                 var localContentRect = Context.WorldToLocal(tooltipWorldLayout);
                 
@@ -61,11 +58,8 @@ namespace Roots
                 {
                     offset.y = contextSize.y - localContentRect.yMax;
                 }
-                
-                state.offset = offset;
             }
-
-            State = state;
+            SetOffset(offset);
         }
     }
 

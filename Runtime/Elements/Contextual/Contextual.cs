@@ -54,20 +54,10 @@ namespace Roots
 
             return element;
         }
-        
-        private void OnHoverStart(HoverStartEvent evt)
-        {
-            var state = State;
-            state.hovered = true;
-            State = state;
-        }
 
-        private void OnHoverEnd(HoverEndEvent evt)
-        {
-            var state = State;
-            state.hovered = false;
-            State = state;
-        }
+        private void OnHoverStart(HoverStartEvent evt) => SetHovered(true);
+
+        private void OnHoverEnd(HoverEndEvent evt) => SetHovered(false);
 
         private void OnPointerDown(PointerDownEvent evt)
         {
@@ -86,9 +76,7 @@ namespace Roots
             // CapturePointer(PointerId);
             OnAction(evt.position);
             
-            var state = State;
-            state.pressed = true;
-            State = state;
+            SetPressed(true);
             
             evt.StopPropagation();
         }

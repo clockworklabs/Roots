@@ -1,3 +1,4 @@
+using Codice.Client.BaseCommands;
 using RishUI;
 using RishUI.Events;
 using UnityEngine;
@@ -26,19 +27,15 @@ namespace Roots
 
         void IPropsListener.PropsDidChange()
         {
-            var state = State;
-            
             var local = Context.WorldToLocal(Props.position);
-            state.style = new Style
+            SetStyle(new Style
             {
                 position = Position.Absolute,
                 left = local.x,
                 top = local.y,
                 // visibility = Visibility.Hidden, // Changing visibility blurs the element
                 opacity = 0
-            };
-            
-            State = state;
+            });
             
         }
         void IPropsListener.PropsWillChange() { }
@@ -48,16 +45,16 @@ namespace Roots
         private void OnVisualChange(VisualChangeEvent evt)
         {
             var parentSize = Context.ContentRect.size;
-
-            var state = State;
-            state.style.translate = new Translate(
+            
+            var style = State.style;
+            style.translate = new Translate(
                 new Length(Layout.xMax < parentSize.x ? 0 : -100, LengthUnit.Percent),
                 new Length(Layout.yMax < parentSize.y ? 0 : -100, LengthUnit.Percent),
                 0
             );
-            // state.style.visibility = Visibility.Visible;
-            state.style.opacity = 1;
-            State = state;
+            style.opacity = 1;
+            
+            SetStyle(style);
         }
     }
 

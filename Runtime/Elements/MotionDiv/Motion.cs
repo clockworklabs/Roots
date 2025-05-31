@@ -9,8 +9,10 @@ namespace Roots
 {
     public class Motion
     {
-        public event Action<Style> OnStyle;
-        public event Action Completed;
+        private FlexibleEventHandler<Style> OnStyleHandler { get; } = new();
+        public FlexibleEventHandler<Style>.Event OnStyle { get => OnStyleHandler.Exposed; set => OnStyleHandler.Exposed = value; }
+        private FlexibleEventHandler CompletedHandler { get; } = new();
+        public FlexibleEventHandler.Event Completed { get => CompletedHandler.Exposed; set => CompletedHandler.Exposed = value; }
         
         private MotionColor BackgroundColor { get; }
         private MotionColor BorderBottomColor { get; }
@@ -631,14 +633,14 @@ namespace Roots
                 style.wordSpacing = WordSpacing.Value.Value;
             }
             
-            OnStyle?.Invoke(style);
+            OnStyleHandler.Invoke(style);
         }
 
         private void OnComplete()
         {
             Animation.OnStep(null);
             Animation.OnComplete(null);
-            Completed?.Invoke();
+            CompletedHandler.Invoke();
         }
 
         private HashSet<Motion> AnimatingChildren { get; } = new();

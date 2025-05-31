@@ -18,11 +18,16 @@ namespace Roots
     
     public class StyleAnimation
     {
-        private event Action<VisualElement> OnChange;
-        private event Action<Target> OnTarget;
-        private event Action OnMounted;
-        private event Action OnUnmountRequested;
-        private event Action OnUnmounted;
+        private FlexibleEventHandler<VisualElement> OnChangeHandler { get; } = new();
+        private FlexibleEventHandler<VisualElement>.Event OnChange { get => OnChangeHandler.Exposed; set => OnChangeHandler.Exposed = value; }
+        private FlexibleEventHandler<Target> OnTargetHandler { get; } = new();
+        private FlexibleEventHandler<Target>.Event OnTarget { get => OnTargetHandler.Exposed; set => OnTargetHandler.Exposed = value; }
+        private FlexibleEventHandler OnMountedHandler { get; } = new();
+        private FlexibleEventHandler.Event OnMounted { get => OnMountedHandler.Exposed; set => OnMountedHandler.Exposed = value; }
+        private FlexibleEventHandler OnUnmountRequestedHandler { get; } = new();
+        private FlexibleEventHandler.Event OnUnmountRequested { get => OnUnmountRequestedHandler.Exposed; set => OnUnmountRequestedHandler.Exposed = value; }
+        private FlexibleEventHandler OnUnmountedHandler { get; } = new();
+        private FlexibleEventHandler.Event OnUnmounted { get => OnUnmountedHandler.Exposed; set => OnUnmountedHandler.Exposed = value; }
 
         private IAnimatedElement Element { get; }
         private Motion Motion { get; }
@@ -60,21 +65,21 @@ namespace Roots
             Exit = default;
         }
 
-        public void OnVisualChange(VisualElement target) => OnChange?.Invoke(target);
+        public void OnVisualChange(VisualElement target) => OnChangeHandler.Invoke(target);
 
         public void SetAnimate(Target animate)
         {
             Animate = animate;
-            OnTarget?.Invoke(animate);
+            OnTargetHandler.Invoke(animate);
         }
         public void SetExit(Target exit)
         {
             Exit = exit;
         }
 
-        public void Mounted() => OnMounted?.Invoke();
-        public void UnmountRequested() => OnUnmountRequested?.Invoke();
-        public void Unmounted() => OnUnmounted?.Invoke();
+        public void Mounted() => OnMountedHandler.Invoke();
+        public void UnmountRequested() => OnUnmountRequestedHandler.Invoke();
+        public void Unmounted() => OnUnmountedHandler.Invoke();
         
         private StyleAnimation GetParent() => Element.Parent?.StyleAnimation;
 
@@ -84,7 +89,8 @@ namespace Roots
 
         private class StateMachine
         {
-            public event Action<State> OnChange;
+            private FlexibleEventHandler<State> OnChangeHandler { get; } = new();
+            public FlexibleEventHandler<State>.Event OnChange { get => OnChangeHandler.Exposed; set => OnChangeHandler.Exposed = value; }
             
             private UnmountedState UnmountedState { get; }
             private SettingUpState SettingUpState { get; }
@@ -115,7 +121,7 @@ namespace Roots
                 Current = next;
                 next.Enter();
                 
-                OnChange?.Invoke(next);
+                OnChangeHandler.Invoke(next);
             }
 
             private State Get<TS>() where TS : State

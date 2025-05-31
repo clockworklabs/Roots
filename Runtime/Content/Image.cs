@@ -108,7 +108,7 @@ namespace Roots
             
             RegisterCallback<AttachToPanelEvent>(OnMounted);
             RegisterCallback<DetachFromPanelEvent>(OnUnmounted);
-            RegisterCallback<GeometryChangedEvent>(OnGeometryChanged);
+            RegisterCallback<VisualChangeEvent>(OnVisualChange);
 
             Bridge.OnStyle += OnInlineStyle;
         }
@@ -327,12 +327,12 @@ namespace Roots
             Loader = AssetsLoader.GetLoader(this);
             
             Parent = parent;
-            Parent?.RegisterCallback<GeometryChangedEvent>(OnGeometryChanged);
+            Parent?.RegisterCallback<VisualChangeEvent>(OnVisualChange);
         }
         
         private void OnUnmounted(DetachFromPanelEvent evt)
         {
-            Parent?.UnregisterCallback<GeometryChangedEvent>(OnGeometryChanged);
+            Parent?.UnregisterCallback<VisualChangeEvent>(OnVisualChange);
             Parent = null;
 
             image = null;
@@ -360,7 +360,7 @@ namespace Roots
             InlineHeight = style.height;
         }
         
-        private void OnGeometryChanged(GeometryChangedEvent evt) => SetSize();
+        private void OnVisualChange(VisualChangeEvent evt) => SetSize();
         
         private void SetSize()
         {

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using RishUI;
+using RishUI.Events;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -19,7 +20,7 @@ namespace Roots
 
         public WindowsContext()
         {
-            RegisterCallback<GeometryChangedEvent>(OnGeometry);
+            RegisterCallback<VisualChangeEvent>(OnVisualChange);
         }
 
         void IManualState.Restart()
@@ -354,12 +355,9 @@ namespace Roots
             return result;
         }
 
-        private void OnGeometry(GeometryChangedEvent evt)
+        private void OnVisualChange(VisualChangeEvent evt)
         {
-            if (Rendered)
-            {
-                return;
-            }
+            if (Rendered) return;
 
             Rendered = true;
             Dirty();
@@ -367,10 +365,7 @@ namespace Roots
 
         private void BroadcastFocusEvent()
         {
-            if (WindowsOrder.Count <= 0)
-            {
-                return;
-            }
+            if (WindowsOrder.Count <= 0) return;
 
             var focusedWindow = WindowsOrder[^1];
             

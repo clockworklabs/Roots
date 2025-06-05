@@ -65,25 +65,26 @@ namespace Roots
         
         protected override Element Render()
         {
-            var menu = Element.Null;
-            var descriptor = Props.descriptor;
+            Children children;
             if (Contextual != null)
             {
-                menu = Menu.Create(new MenuProps
-                {
-                    position = Position,
-                    element = Contextual.Menu
-                });
-                descriptor.style.pointerDetection = PointerDetectionMode.Rect;
-            }
-            
-            return Div.Create(
-                descriptor: descriptor,
-                children: new Children
+                children = new Children
                 {
                     Props.children,
-                    menu
-                });
+                    PointerCapturer.Create(),
+                    Menu.Create(new MenuProps
+                    {
+                        position = Position,
+                        element = Contextual.Menu
+                    })
+                };
+            }
+            else
+            {
+                children = Props.children;
+            }
+            
+            return Div.Create(descriptor: Props.descriptor, children: children);
         }
 
         public void ShowContextMenu(IContextual owner, Vector3 position)
@@ -179,6 +180,20 @@ namespace Roots
 
         private void OnPointerCapture(PointerCaptureEvent evt) => FocussedElement = evt.target as VisualElement;
         private void OnPointerRelease(PointerCaptureOutEvent evt) => FocussedElement = null;
+
+        private partial class PointerCapturer : RishElement
+        {
+            protected override Element Render() => Div.Create(
+                style: new Style
+                {
+                    position = UnityEngine.UIElements.Position.Absolute,
+                    pointerDetection = PointerDetectionMode.Rect,
+                    top = 0,
+                    right = 0,
+                    bottom = 0,
+                    left = 0
+                });
+        }
     }
 
     [RishValueType]

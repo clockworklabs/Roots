@@ -58,32 +58,26 @@ namespace Roots
 
         protected override Element Render()
         {
-            Element menu;
-            var descriptor = Props.descriptor;
+            Children children;
+            
             if (DropdownButton != null)
             {
                 // TODO: Support transformed elements
                 var localRect = WorldToLocal(DropdownButton.WorldBoundingBox);
 
-                menu = DropdownHolder.Create(
-                    rect: localRect,
-                    element: InternalDropdown.Create(
-                        element: DropdownButton.Props.menu));
-
-                descriptor.style.pointerDetection = PointerDetectionMode.Rect;
+                children = new Children
+                {
+                    Props.children,
+                    PointerCapturer.Create(),
+                    DropdownHolder.Create(rect: localRect, element: InternalDropdown.Create(element: DropdownButton.Props.menu))
+                };
             }
             else
             {
-                menu = Element.Null;
+                children = Props.children;
             }
             
-            return Div.Create(
-                descriptor: descriptor,
-                children: new Children
-                {
-                    Props.children,
-                    menu
-                });
+            return Div.Create(descriptor: Props.descriptor, children: children);
         }
 
         internal void ShowDropdownMenu(DropdownButton owner)
@@ -213,6 +207,20 @@ namespace Roots
 
         private void OnPointerCapture(PointerCaptureEvent evt) => FocusedElement = evt.target as VisualElement;
         private void OnPointerRelease(PointerCaptureOutEvent evt) => FocusedElement = null;
+
+        private partial class PointerCapturer : RishElement
+        {
+            protected override Element Render() => Div.Create(
+                style: new Style
+                {
+                    position = UnityEngine.UIElements.Position.Absolute,
+                    pointerDetection = PointerDetectionMode.Rect,
+                    top = 0,
+                    right = 0,
+                    bottom = 0,
+                    left = 0
+                });
+        }
     }
 
     [RishValueType]

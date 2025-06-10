@@ -3,6 +3,7 @@ using System.Linq;
 using System.Reflection;
 using RishUI;
 using RishUI.Events;
+using Sappy;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -268,7 +269,7 @@ namespace Roots
         }
 
         [IgnoreWarnings]
-        private class RishTextField : TextField, IVisualElement<RishTextFieldProps>, IStyledProps<RishTextField, RishTextFieldProps>
+        private partial class RishTextField : TextField, IVisualElement<RishTextFieldProps>, IStyledProps<RishTextField, RishTextFieldProps>
         {
             private Bridge<RishTextFieldProps> Bridge { get; }
             Bridge<RishTextFieldProps> IVisualElement<RishTextFieldProps>.Bridge => Bridge;
@@ -312,7 +313,7 @@ namespace Roots
             public RishTextField()
             {
                 Bridge = new Bridge<RishTextFieldProps>(this, true);
-                Bridge.OnUnmounted += ResetProps;
+                Bridge.OnUnmounted += SappyResetProps;
                 
                 RegisterCallback<FocusEvent>(OnFocus);
                 RegisterCallback<BlurEvent>(OnBlur);
@@ -348,6 +349,7 @@ namespace Roots
                 TextElementClasses = TextElement.GetClasses().ToArray();
             }
 
+            [SapTarget]
             private void ResetProps()
             {
                 Props = null;

@@ -1,5 +1,6 @@
 using RishUI;
 using RishUI.Events;
+using Sappy;
 using UnityEngine;
 using UnityEngine.UIElements;
 using StyleLength = RishUI.StyleLength;
@@ -110,7 +111,7 @@ namespace Roots
             RegisterCallback<DetachFromPanelEvent>(OnUnmounted);
             RegisterCallback<VisualChangeEvent>(OnVisualChange);
 
-            Bridge.OnStyle += OnInlineStyle;
+            Bridge.OnStyle += SappyOnInlineStyle;
         }
         
         void IVisualElement<ImageProps>.Setup(ImageProps props) => PropsManager.Setup(props);
@@ -354,6 +355,7 @@ namespace Roots
             InlineHeight = default;
         }
 
+        [SapTarget]
         private void OnInlineStyle(Style style)
         {
             InlineWidth = style.width;

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Motion;
 using RishUI;
+using Sappy;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -9,10 +10,12 @@ namespace Roots
 {
     public class Motion
     {
-        private FlexibleEventHandler<Style> OnStyleHandler { get; } = new();
-        public FlexibleEventHandler<Style>.Event OnStyle { get => OnStyleHandler.Exposed; set => OnStyleHandler.Exposed = value; }
-        private FlexibleEventHandler CompletedHandler { get; } = new();
-        public FlexibleEventHandler.Event Completed { get => CompletedHandler.Exposed; set => CompletedHandler.Exposed = value; }
+        private Phloem<Style> OnStyleHandler { get; } = new();
+        [SapEvent]
+        public event Action<Style> OnStyle { add => OnStyleHandler.AddTarget(value); remove => OnStyleHandler.RemoveTarget(value); }
+        private Phloem CompletedHandler { get; } = new();
+        [SapEvent]
+        public event Action Completed { add => CompletedHandler.AddTarget(value); remove => CompletedHandler.RemoveTarget(value); }
         
         private MotionColor BackgroundColor { get; }
         private MotionColor BorderBottomColor { get; }
@@ -633,14 +636,14 @@ namespace Roots
                 style.wordSpacing = WordSpacing.Value.Value;
             }
             
-            OnStyleHandler.Invoke(style);
+            OnStyleHandler.Send(style);
         }
 
         private void OnComplete()
         {
             Animation.OnStep(null);
             Animation.OnComplete(null);
-            CompletedHandler.Invoke();
+            CompletedHandler.Send();
         }
 
         private HashSet<Motion> AnimatingChildren { get; } = new();

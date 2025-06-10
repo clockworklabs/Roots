@@ -1,5 +1,6 @@
 using System;
 using RishUI;
+using Sappy;
 using UnityEngine.UIElements;
 
 namespace Roots
@@ -16,18 +17,23 @@ namespace Roots
         void SetStyle(Style style);
     }
     
-    public class StyleAnimation
+    public partial class StyleAnimation
     {
-        private FlexibleEventHandler<VisualElement> OnChangeHandler { get; } = new();
-        private FlexibleEventHandler<VisualElement>.Event OnChange { get => OnChangeHandler.Exposed; set => OnChangeHandler.Exposed = value; }
-        private FlexibleEventHandler<Target> OnTargetHandler { get; } = new();
-        private FlexibleEventHandler<Target>.Event OnTarget { get => OnTargetHandler.Exposed; set => OnTargetHandler.Exposed = value; }
-        private FlexibleEventHandler OnMountedHandler { get; } = new();
-        private FlexibleEventHandler.Event OnMounted { get => OnMountedHandler.Exposed; set => OnMountedHandler.Exposed = value; }
-        private FlexibleEventHandler OnUnmountRequestedHandler { get; } = new();
-        private FlexibleEventHandler.Event OnUnmountRequested { get => OnUnmountRequestedHandler.Exposed; set => OnUnmountRequestedHandler.Exposed = value; }
-        private FlexibleEventHandler OnUnmountedHandler { get; } = new();
-        private FlexibleEventHandler.Event OnUnmounted { get => OnUnmountedHandler.Exposed; set => OnUnmountedHandler.Exposed = value; }
+        private Phloem<VisualElement> OnChangeHandler { get; } = new();
+        [SapEvent]
+        private event Action<VisualElement> OnChange { add => OnChangeHandler.AddTarget(value); remove => OnChangeHandler.RemoveTarget(value); }
+        private Phloem<Target> OnTargetHandler { get; } = new();
+        [SapEvent]
+        private event Action<Target> OnTarget { add => OnTargetHandler.AddTarget(value); remove => OnTargetHandler.RemoveTarget(value); }
+        private Phloem OnMountedHandler { get; } = new();
+        [SapEvent]
+        private event Action OnMounted { add => OnMountedHandler.AddTarget(value); remove => OnMountedHandler.RemoveTarget(value); }
+        private Phloem OnUnmountRequestedHandler { get; } = new();
+        [SapEvent]
+        private event Action OnUnmountRequested { add => OnUnmountRequestedHandler.AddTarget(value); remove => OnUnmountRequestedHandler.RemoveTarget(value); }
+        private Phloem OnUnmountedHandler { get; } = new();
+        [SapEvent]
+        private event Action OnUnmounted { add => OnUnmountedHandler.AddTarget(value); remove => OnUnmountedHandler.RemoveTarget(value); }
 
         private IAnimatedElement Element { get; }
         private Motion Motion { get; }
@@ -41,10 +47,11 @@ namespace Roots
             Element = element;
             Motion = new Motion();
             Machine = new StateMachine(this);
-            Motion.OnStyle += OnStyle;
-            Motion.Completed += OnMotionComplete;
+            Motion.OnStyle += SappyOnStyle;
+            Motion.Completed += SappyOnMotionComplete;
         }
 
+        [SapTarget]
         private void OnMotionComplete()
         {
             if (Machine.IsIn<ActiveState>())
@@ -65,32 +72,33 @@ namespace Roots
             Exit = default;
         }
 
-        public void OnVisualChange(VisualElement target) => OnChangeHandler.Invoke(target);
+        public void OnVisualChange(VisualElement target) => OnChangeHandler.Send(target);
 
         public void SetAnimate(Target animate)
         {
             Animate = animate;
-            OnTargetHandler.Invoke(animate);
+            OnTargetHandler.Send(animate);
         }
         public void SetExit(Target exit)
         {
             Exit = exit;
         }
 
-        public void Mounted() => OnMountedHandler.Invoke();
-        public void UnmountRequested() => OnUnmountRequestedHandler.Invoke();
-        public void Unmounted() => OnUnmountedHandler.Invoke();
+        public void Mounted() => OnMountedHandler.Send();
+        public void UnmountRequested() => OnUnmountRequestedHandler.Send();
+        public void Unmounted() => OnUnmountedHandler.Send();
         
         private StyleAnimation GetParent() => Element.Parent?.StyleAnimation;
 
         private void Unmount() => Element.Unmount();
 
+        [SapTarget]
         private void OnStyle(Style style) => Element.SetStyle(style);
 
-        private class StateMachine
+        private partial class StateMachine
         {
-            private FlexibleEventHandler<State> OnChangeHandler { get; } = new();
-            public FlexibleEventHandler<State>.Event OnChange { get => OnChangeHandler.Exposed; set => OnChangeHandler.Exposed = value; }
+            private Phloem<State> OnChangeHandler { get; } = new();
+            public event Action<State> OnChange { add => OnChangeHandler.AddTarget(value); remove => OnChangeHandler.RemoveTarget(value); }
             
             private UnmountedState UnmountedState { get; }
             private SettingUpState SettingUpState { get; }
@@ -121,7 +129,7 @@ namespace Roots
                 Current = next;
                 next.Enter();
                 
-                OnChangeHandler.Invoke(next);
+                OnChangeHandler.Send(next);
             }
 
             private State Get<TS>() where TS : State
@@ -168,24 +176,25 @@ namespace Roots
             protected void GoTo<TS>() where TS : State => Machine.GoTo<TS>();
         }
 
-        private class UnmountedState : State
+        private partial class UnmountedState : State
         {
             public UnmountedState(StateMachine machine, StyleAnimation element) : base(machine, element) { }
 
             public override void Enter()
             {
                 Element.Reset();
-                Element.OnMounted += StartSetUp;
+                Element.OnMounted += SappyStartSetUp;
             }
 
             public override void Exit() {
-                Element.OnMounted -= StartSetUp;
+                Element.OnMounted -= SappyStartSetUp;
             }
 
+            [SapTarget]
             private void StartSetUp() => GoTo<SettingUpState>();
         }
 
-        private class SettingUpState : State
+        private partial class SettingUpState : State
         {
             private bool _ready;
             private bool Ready
@@ -226,16 +235,16 @@ namespace Roots
                 ParentReady = false;
                 ParentMachine = null;
                 
-                Element.OnChange += OnChange;
-                Element.OnUnmountRequested += Unmount;
-                Element.OnUnmounted += OnUnmounted;
+                Element.OnChange += SappyOnChange;
+                Element.OnUnmountRequested += SappyUnmount;
+                Element.OnUnmounted += SappyOnUnmounted;
             }
 
             public override void Exit()
             {
-                Element.OnChange -= OnChange;
-                Element.OnUnmountRequested -= Unmount;
-                Element.OnUnmounted -= OnUnmounted;
+                Element.OnChange -= SappyOnChange;
+                Element.OnUnmountRequested -= SappyUnmount;
+                Element.OnUnmounted -= SappyOnUnmounted;
 
                 if (ParentMachine != null)
                 {
@@ -243,9 +252,10 @@ namespace Roots
                 }
             }
 
+            [SapTarget]
             private void OnChange(VisualElement element)
             {
-                Element.OnChange -= OnChange;
+                Element.OnChange -= SappyOnChange;
                 
                 var parent = Element.GetParent();
 
@@ -279,42 +289,46 @@ namespace Roots
                 GoTo<ActiveState>();
             }
 
+            [SapTarget]
             private void Unmount() => Element.Unmount();
+            [SapTarget]
             private void OnUnmounted() => GoTo<UnmountedState>();
         }
 
-        private class ActiveState : State
+        private partial class ActiveState : State
         {
             public ActiveState(StateMachine machine, StyleAnimation element) : base(machine, element) { }
 
             public override void Enter()
             {
-                Element.OnTarget += OnTarget;
-                Element.OnUnmountRequested += StartUnmounting;
-                Element.OnUnmounted += OnUnmounted;
+                Element.OnTarget += SappyOnTarget;
+                Element.OnUnmountRequested += SappyStartUnmounting;
+                Element.OnUnmounted += SappyOnUnmounted;
             }
 
             public override void Exit()
             {
-                Element.OnTarget -= OnTarget;
-                Element.OnUnmountRequested -= StartUnmounting;
-                Element.OnUnmounted -= OnUnmounted;
+                Element.OnTarget -= SappyOnTarget;
+                Element.OnUnmountRequested -= SappyStartUnmounting;
+                Element.OnUnmounted -= SappyOnUnmounted;
             }
 
+            [SapTarget]
             private void OnTarget(Target animate) => Motion.To(animate);
-
+            [SapTarget]
             private void StartUnmounting() => GoTo<UnmountingState>();
+            [SapTarget]
             private void OnUnmounted() => GoTo<UnmountedState>();
         }
 
-        private class UnmountingState : State
+        private partial class UnmountingState : State
         {
             public UnmountingState(StateMachine machine, StyleAnimation element) : base(machine, element) { }
 
             public override void Enter()
             {
-                Motion.Completed += Unmount;
-                Element.OnUnmounted += OnUnmounted;
+                Motion.Completed += SappyUnmount;
+                Element.OnUnmounted += SappyOnUnmounted;
 
                 if (Element.Exit.IsValid())
                 {
@@ -329,12 +343,13 @@ namespace Roots
 
             public override void Exit()
             {
-                Motion.Completed -= Unmount;
-                Element.OnUnmounted -= OnUnmounted;
+                Motion.Completed -= SappyUnmount;
+                Element.OnUnmounted -= SappyOnUnmounted;
             }
 
+            [SapTarget]
             private void Unmount() => Element.Unmount();
-
+            [SapTarget]
             private void OnUnmounted() => GoTo<UnmountedState>();
         }
     }

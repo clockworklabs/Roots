@@ -10,10 +10,10 @@ namespace Roots
 {
     public class Motion
     {
-        private Phloem<Style> OnStyleHandler { get; } = new();
+        private SapStem<Style> OnStyleHandler { get; } = new();
         [SapEvent]
         public event Action<Style> OnStyle { add => OnStyleHandler.AddTarget(value); remove => OnStyleHandler.RemoveTarget(value); }
-        private Phloem CompletedHandler { get; } = new();
+        private SapStem CompletedHandler { get; } = new();
         [SapEvent]
         public event Action Completed { add => CompletedHandler.AddTarget(value); remove => CompletedHandler.RemoveTarget(value); }
         

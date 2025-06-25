@@ -19,19 +19,19 @@ namespace Roots
     
     public partial class StyleAnimation
     {
-        private Phloem<VisualElement> OnChangeHandler { get; } = new();
+        private SapStem<VisualElement> OnChangeHandler { get; } = new();
         [SapEvent]
         private event Action<VisualElement> OnChange { add => OnChangeHandler.AddTarget(value); remove => OnChangeHandler.RemoveTarget(value); }
-        private Phloem<Target> OnTargetHandler { get; } = new();
+        private SapStem<Target> OnTargetHandler { get; } = new();
         [SapEvent]
         private event Action<Target> OnTarget { add => OnTargetHandler.AddTarget(value); remove => OnTargetHandler.RemoveTarget(value); }
-        private Phloem OnMountedHandler { get; } = new();
+        private SapStem OnMountedHandler { get; } = new();
         [SapEvent]
         private event Action OnMounted { add => OnMountedHandler.AddTarget(value); remove => OnMountedHandler.RemoveTarget(value); }
-        private Phloem OnUnmountRequestedHandler { get; } = new();
+        private SapStem OnUnmountRequestedHandler { get; } = new();
         [SapEvent]
         private event Action OnUnmountRequested { add => OnUnmountRequestedHandler.AddTarget(value); remove => OnUnmountRequestedHandler.RemoveTarget(value); }
-        private Phloem OnUnmountedHandler { get; } = new();
+        private SapStem OnUnmountedHandler { get; } = new();
         [SapEvent]
         private event Action OnUnmounted { add => OnUnmountedHandler.AddTarget(value); remove => OnUnmountedHandler.RemoveTarget(value); }
 
@@ -97,7 +97,7 @@ namespace Roots
 
         private partial class StateMachine
         {
-            private Phloem<State> OnChangeHandler { get; } = new();
+            private SapStem<State> OnChangeHandler { get; } = new();
             public event Action<State> OnChange { add => OnChangeHandler.AddTarget(value); remove => OnChangeHandler.RemoveTarget(value); }
             
             private UnmountedState UnmountedState { get; }

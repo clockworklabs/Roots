@@ -84,7 +84,7 @@ namespace Roots
 
             var state = State;
             state.hovering = hovering;
-            State = state;
+            SetState(state); // TODO
         }
 
         internal void OnInfo(T? info)

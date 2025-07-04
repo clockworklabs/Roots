@@ -53,8 +53,12 @@ namespace Roots
         }
 
         private void OnAction() => Props.action?.Invoke();
+
+        private partial class Content : RishElement<ContentProps>
+        {
+            protected override Element Render() => Div.Create(className: Props.className, /*utilities: props.utilities,*/ children: Props.children);
+        }
         
-        private static Element ContentElement(ContentProps props) => Div.Create(className: props.className, /*utilities: props.utilities,*/ children: props.children);
         [RishValueType]
         public struct ContentProps
         {

@@ -3,7 +3,7 @@ using RishUI;
 
 namespace Roots
 {
-    public partial class SimpleWindow : RishElement<SimpleWindowProps, SimpleWindowState>
+    public partial class SimpleWindow : RishElement<SimpleWindowProps>
     {
         protected override Element Render()
         {
@@ -42,7 +42,4 @@ namespace Roots
         [IgnoreComparison]
         public Action closeAction;
     }
-
-    [RishValueType]
-    public struct SimpleWindowState { }
 }

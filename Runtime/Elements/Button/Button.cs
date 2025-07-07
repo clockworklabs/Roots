@@ -1,5 +1,6 @@
 using System;
 using RishUI;
+using Sappy;
 
 namespace Roots
 {
@@ -49,9 +50,10 @@ namespace Roots
             var pressed = Content.Create(className: pressedClassName, /*utilities: Props.utilities,*/ children: Props.children);
             var disabled = Content.Create(className: disabledClassName, /*utilities: Props.utilities,*/ children: Props.children);
 
-            return AbstractButton.Create(interactable: !Props.disabled, normal: normal, pressed: pressed, disabled: disabled, action: (Action) OnAction);
+            return AbstractButton.Create(interactable: !Props.disabled, normal: normal, pressed: pressed, disabled: disabled, action: SappyOnAction);
         }
 
+        [SapTarget]
         private void OnAction() => Props.action?.Invoke();
 
         private partial class Content : RishElement<ContentProps>

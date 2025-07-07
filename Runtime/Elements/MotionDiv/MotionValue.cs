@@ -38,7 +38,11 @@ namespace Roots
             Value = null;
         }
 
+        private Func<T> _getValue;
+        private Func<T> CachedGetValue => _getValue ??= GetValue;
         private T GetValue() => Value ?? default;
+        private Action<T> _setValue;
+        private Action<T> CachedSetValue => _setValue ??= SetValue;
         private void SetValue(T value) => Value = value;
         
         public void Init(VisualElement element)
@@ -103,7 +107,7 @@ namespace Roots
                     }
                     velocity = Adjust(velocity, value);
                     
-                    var springAnimation = DoMotion.Spring<T, TS>(GetValue, SetValue, value, transitionDetails.spring);
+                    var springAnimation = DoMotion.Spring<T, TS>(CachedGetValue, CachedSetValue, value, transitionDetails.spring);
                     if (velocity.HasValue)
                     {
                         springAnimation.SetInitialVelocity(velocity.Value);
@@ -112,7 +116,7 @@ namespace Roots
                     animation = springAnimation;
                     break;
                 case TransitionType.Tween:
-                    animation = DoMotion.Tween<T, TT>(GetValue, SetValue, value, transitionDetails.tween);
+                    animation = DoMotion.Tween<T, TT>(CachedGetValue, CachedSetValue, value, transitionDetails.tween);
                     break;
                 case TransitionType.None:
                     Value = value;

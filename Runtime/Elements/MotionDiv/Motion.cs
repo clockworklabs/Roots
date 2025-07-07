@@ -8,7 +8,7 @@ using UnityEngine.UIElements;
 
 namespace Roots
 {
-    public class Motion
+    public partial class Motion
     {
         private SapStem<Style> OnStyleHandler { get; } = new();
         [SapEvent]
@@ -440,7 +440,7 @@ namespace Roots
 
             // TODO: If parent animates before children, delay animation start
             // TODO: If parent animates after children, start animation
-            Animation = DoMotion.Group(GroupAnimations).OnStep(OnStep).OnComplete(OnComplete);
+            Animation = DoMotion.Group(GroupAnimations).OnStep(SappyOnStep).OnComplete(SappyOnComplete);
 
             // if (Parent != null)
             // {
@@ -479,6 +479,7 @@ namespace Roots
             OnStep();
         }
 
+        [SapTarget]
         private void OnStep()
         {
             var style = new Style();
@@ -639,6 +640,7 @@ namespace Roots
             OnStyleHandler.Send(style);
         }
 
+        [SapTarget]
         private void OnComplete()
         {
             Animation.OnStep(null);

@@ -2,6 +2,7 @@ using System;
 using RishUI;
 using RishUI.Elements;
 using RishUI.Events;
+using Sappy;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -48,7 +49,7 @@ namespace Roots
 
         protected override Element Render() => InternalElement.Create(new AbstractButtonProps(Props)
         {
-            action = OnAction
+            action = SappyOnAction
         });
 
         private void OnVisualChange(VisualChangeEvent evt)
@@ -84,6 +85,7 @@ namespace Roots
             evt.StopPropagation();
         }
 
+        [SapTarget]
         private void OnAction() => Props.action?.Invoke();
 
         bool IFormSubmit.OnFormSubmit()

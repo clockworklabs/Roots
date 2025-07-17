@@ -47,12 +47,10 @@ namespace Roots
 
                     var props = window.Props;
 
-                    var element = InternalWindow.Create(new InternalWindowProps
-                    {
-                        guid = guid,
-                        content = props.content,
-                        draggable = props.draggable
-                    });
+                    var element = InternalWindow.Create(
+                        guid: guid,
+                        content: props.content,
+                        draggable: props.draggable);
 
                     var local = WorldToLocal(window.ParentWorldContentRect);
                     if (Offsets.TryGetValue(guid, out var offset))
@@ -61,15 +59,18 @@ namespace Roots
                         local.y += offset.y;
                     }
 
-                    var holder = Div.Create((uint)guid, new Style
-                    {
-                        position = Position.Absolute,
-                        left = local.x,
-                        width = local.width,
-                        top = local.y,
-                        height = local.height,
-                        pointerDetection = PointerDetectionMode.Ignore
-                    }, children: element);
+                    var holder = Div.Create(
+                        key: (uint)guid,
+                        style: new Style
+                        {
+                            position = Position.Absolute,
+                            left = local.x,
+                            width = local.width,
+                            top = local.y,
+                            height = local.height,
+                            pointerDetection = PointerDetectionMode.Ignore
+                        },
+                        children: element);
 
                     children.Add(holder);
                 }
@@ -80,10 +81,7 @@ namespace Roots
 
         internal void RegisterWindow(Window window, ulong guid)
         {
-            if (window == null)
-            {
-                return;
-            }
+            if (window == null) return;
 
             if (!RegisteredWindows.TryAdd(guid, window))
             {
@@ -93,12 +91,7 @@ namespace Roots
 
         internal void UnregisterWindow(ulong guid)
         {
-            if (!RegisteredWindows.ContainsKey(guid))
-            {
-                return;
-            }
-
-            RegisteredWindows.Remove(guid);
+            if (!RegisteredWindows.Remove(guid)) return;
 
             var position = WindowsOrder.IndexOf(guid);
             if (position >= 0)
@@ -115,10 +108,7 @@ namespace Roots
 
         internal void OpenWindow(ulong guid)
         {
-            if (!RegisteredWindows.ContainsKey(guid))
-            {
-                return;
-            }
+            if (!RegisteredWindows.ContainsKey(guid)) return;
             
             if (WindowsOrder.Contains(guid))
             {
@@ -131,16 +121,10 @@ namespace Roots
 
         internal void CloseWindow(ulong guid)
         {
-            if (!RegisteredWindows.ContainsKey(guid))
-            {
-                return;
-            }
+            if (!RegisteredWindows.ContainsKey(guid)) return;
             
             var position = WindowsOrder.IndexOf(guid);
-            if (position < 0)
-            {
-                return;
-            }
+            if (position < 0) return;
             
             WindowsOrder.RemoveAt(position);
             
@@ -154,10 +138,7 @@ namespace Roots
 
         internal void Drag(ulong guid, Vector2 delta)
         {
-            if (!RegisteredWindows.ContainsKey(guid))
-            {
-                return;
-            }
+            if (!RegisteredWindows.ContainsKey(guid)) return;
             
             if (!Offsets.TryGetValue(guid, out var offset))
             {

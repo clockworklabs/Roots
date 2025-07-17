@@ -1,18 +1,46 @@
 using System.Text;
 using RishUI;
+using Sappy;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Roots
 {
     internal delegate void OnResponsiveContextResize(ResponsiveContext body, float oldWidth, float newWidth);
+
+    internal class ResponsiveContextResizeStem
+    {
+        private SapTargets<OnResponsiveContextResize> Targets { get; }
+
+        public ResponsiveContextResizeStem()
+        {
+            Targets = new SapTargets<OnResponsiveContextResize>();
+        }
+        public ResponsiveContextResizeStem(int initialSize)
+        {
+            Targets = new SapTargets<OnResponsiveContextResize>(initialSize);
+        }
+
+        public void Send(ResponsiveContext body, float oldWidth, float newWidth)
+        {
+            for (var i = Targets.Count - 1; i >= 0; i--)
+            {
+                Targets[i]?.Invoke(body, oldWidth, newWidth);
+            }
+        }
+
+        public void AddTarget(OnResponsiveContextResize target) => Targets.Add(target);
+        public void RemoveTarget(OnResponsiveContextResize target) => Targets.Remove(target);
+    }
     
     public partial class ResponsiveContext : VisualElement, IVisualElement/*<ResponsiveContextProps>*/
     {
         private Bridge Bridge { get; }
         Bridge IVisualElement.Bridge => Bridge;
-        
-        internal static event OnResponsiveContextResize OnResize;
+
+        private static ResponsiveContextResizeStem OnResizeStem { get; } = new();
+        [SapEvent]
+        internal static event OnResponsiveContextResize OnResize { add => OnResizeStem.AddTarget(value); remove => OnResizeStem.RemoveTarget(value); }
         
         VisualElement IElement.GetDOMChild() => this;
         
@@ -46,7 +74,7 @@ namespace Roots
                 return;
             }
             
-            OnResize?.Invoke(this, oldWidth, newWidth);
+            OnResizeStem.Send(this, oldWidth, newWidth);
         }
     }
 

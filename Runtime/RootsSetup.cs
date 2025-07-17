@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using RishUI;
+using Sappy;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -9,7 +10,7 @@ namespace Roots
     [RequireComponent(typeof(UIDocument))]
     [RequireComponent(typeof(RishRoot))]
     [DisallowMultipleComponent]
-    public class RootsSetup : MonoBehaviour
+    public partial class RootsSetup : MonoBehaviour
     {
         [SerializeField]
         private RootsStyleSheet[] _styleSheets;
@@ -35,20 +36,21 @@ namespace Roots
             RishRoot = gameObject.GetComponent<RishRoot>();
             if (RishRoot != null)
             {
-                RishRoot.OnStart += SetupRishRoot;
+                RishRoot.OnStart += SappySetupRishRoot;
             }
 
-            ResponsiveContext.OnResize += OnResponsiveResize;
+            ResponsiveContext.OnResize += SappyOnResponsiveResize;
         }
         private void OnDestroy()
         {
             if (RishRoot != null)
             {
-                RishRoot.OnStart -= SetupRishRoot;
+                RishRoot.OnStart -= SappySetupRishRoot;
             }
-            ResponsiveContext.OnResize -= OnResponsiveResize;
+            ResponsiveContext.OnResize -= SappyOnResponsiveResize;
         }
 
+        [SapTarget]
         private void SetupRishRoot()
         {
             var root = UIDocument.rootVisualElement;
@@ -80,6 +82,7 @@ namespace Roots
             }
         }
         
+        [SapTarget(typeof(OnResponsiveContextResize))]
         private void OnResponsiveResize(ResponsiveContext responsive, float oldWidth, float newWidth)
         {
             if (!TreeContains(responsive)) return;

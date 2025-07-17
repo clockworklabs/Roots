@@ -19,21 +19,21 @@ namespace Roots
     
     public partial class StyleAnimation
     {
-        private SapStem<VisualElement> OnChangeHandler { get; } = new();
+        private SapStem<VisualElement> OnChangeStem { get; } = new();
         [SapEvent]
-        private event Action<VisualElement> OnChange { add => OnChangeHandler.AddTarget(value); remove => OnChangeHandler.RemoveTarget(value); }
-        private SapStem<Target> OnTargetHandler { get; } = new();
+        private event Action<VisualElement> OnChange { add => OnChangeStem.AddTarget(value); remove => OnChangeStem.RemoveTarget(value); }
+        private SapStem<Target> OnTargetStem { get; } = new();
         [SapEvent]
-        private event Action<Target> OnTarget { add => OnTargetHandler.AddTarget(value); remove => OnTargetHandler.RemoveTarget(value); }
-        private SapStem OnMountedHandler { get; } = new();
+        private event Action<Target> OnTarget { add => OnTargetStem.AddTarget(value); remove => OnTargetStem.RemoveTarget(value); }
+        private SapStem OnMountedStem { get; } = new();
         [SapEvent]
-        private event Action OnMounted { add => OnMountedHandler.AddTarget(value); remove => OnMountedHandler.RemoveTarget(value); }
-        private SapStem OnUnmountRequestedHandler { get; } = new();
+        private event Action OnMounted { add => OnMountedStem.AddTarget(value); remove => OnMountedStem.RemoveTarget(value); }
+        private SapStem OnUnmountRequestedStem { get; } = new();
         [SapEvent]
-        private event Action OnUnmountRequested { add => OnUnmountRequestedHandler.AddTarget(value); remove => OnUnmountRequestedHandler.RemoveTarget(value); }
-        private SapStem OnUnmountedHandler { get; } = new();
+        private event Action OnUnmountRequested { add => OnUnmountRequestedStem.AddTarget(value); remove => OnUnmountRequestedStem.RemoveTarget(value); }
+        private SapStem OnUnmountedStem { get; } = new();
         [SapEvent]
-        private event Action OnUnmounted { add => OnUnmountedHandler.AddTarget(value); remove => OnUnmountedHandler.RemoveTarget(value); }
+        private event Action OnUnmounted { add => OnUnmountedStem.AddTarget(value); remove => OnUnmountedStem.RemoveTarget(value); }
 
         private IAnimatedElement Element { get; }
         private Motion Motion { get; }
@@ -72,21 +72,21 @@ namespace Roots
             Exit = default;
         }
 
-        public void OnVisualChange(VisualElement target) => OnChangeHandler.Send(target);
+        public void OnVisualChange(VisualElement target) => OnChangeStem.Send(target);
 
         public void SetAnimate(Target animate)
         {
             Animate = animate;
-            OnTargetHandler.Send(animate);
+            OnTargetStem.Send(animate);
         }
         public void SetExit(Target exit)
         {
             Exit = exit;
         }
 
-        public void Mounted() => OnMountedHandler.Send();
-        public void UnmountRequested() => OnUnmountRequestedHandler.Send();
-        public void Unmounted() => OnUnmountedHandler.Send();
+        public void Mounted() => OnMountedStem.Send();
+        public void UnmountRequested() => OnUnmountRequestedStem.Send();
+        public void Unmounted() => OnUnmountedStem.Send();
         
         private StyleAnimation GetParent() => Element.Parent?.StyleAnimation;
 
@@ -97,8 +97,8 @@ namespace Roots
 
         private partial class StateMachine
         {
-            private SapStem<State> OnChangeHandler { get; } = new();
-            public event Action<State> OnChange { add => OnChangeHandler.AddTarget(value); remove => OnChangeHandler.RemoveTarget(value); }
+            private SapStem<State> OnChangeStem { get; } = new();
+            public event Action<State> OnChange { add => OnChangeStem.AddTarget(value); remove => OnChangeStem.RemoveTarget(value); }
             
             private UnmountedState UnmountedState { get; }
             private SettingUpState SettingUpState { get; }
@@ -129,7 +129,7 @@ namespace Roots
                 Current = next;
                 next.Enter();
                 
-                OnChangeHandler.Send(next);
+                OnChangeStem.Send(next);
             }
 
             private State Get<TS>() where TS : State

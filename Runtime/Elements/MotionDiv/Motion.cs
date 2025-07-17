@@ -10,12 +10,12 @@ namespace Roots
 {
     public partial class Motion
     {
-        private SapStem<Style> OnStyleHandler { get; } = new();
+        private SapStem<Style> OnStyleStem { get; } = new();
         [SapEvent]
-        public event Action<Style> OnStyle { add => OnStyleHandler.AddTarget(value); remove => OnStyleHandler.RemoveTarget(value); }
-        private SapStem CompletedHandler { get; } = new();
+        public event Action<Style> OnStyle { add => OnStyleStem.AddTarget(value); remove => OnStyleStem.RemoveTarget(value); }
+        private SapStem CompletedStem { get; } = new();
         [SapEvent]
-        public event Action Completed { add => CompletedHandler.AddTarget(value); remove => CompletedHandler.RemoveTarget(value); }
+        public event Action Completed { add => CompletedStem.AddTarget(value); remove => CompletedStem.RemoveTarget(value); }
         
         private MotionColor BackgroundColor { get; }
         private MotionColor BorderBottomColor { get; }
@@ -637,7 +637,7 @@ namespace Roots
                 style.wordSpacing = WordSpacing.Value.Value;
             }
             
-            OnStyleHandler.Send(style);
+            OnStyleStem.Send(style);
         }
 
         [SapTarget]
@@ -645,7 +645,7 @@ namespace Roots
         {
             Animation.OnStep(null);
             Animation.OnComplete(null);
-            CompletedHandler.Send();
+            CompletedStem.Send();
         }
 
         private HashSet<Motion> AnimatingChildren { get; } = new();

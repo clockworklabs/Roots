@@ -5,13 +5,12 @@ using UnityEngine.UIElements;
 
 namespace Roots
 {
-    public partial class Window : RishElement<WindowProps>, IMountingListener, IPropsListener
+    public partial class Window : RishElement<WindowProps>, IMountingListener, IPropsListener<WindowProps>
     {
         private WindowsContext Context { get; set; }
         private VisualElement VisualElementParent { get; set; }
         private ulong NodeHashCode { get; set; }
         private ulong GUID => Props.guid ?? NodeHashCode;
-        private ulong? PrevGUID { get; set; }
         
         public Window()
         {
@@ -21,7 +20,6 @@ namespace Roots
         void IMountingListener.ComponentDidMount()
         {
             NodeHashCode = GetNodeHashCode();
-            PrevGUID = null;
             
             Context = GetFirstAncestorOfType<WindowsContext>();
 
@@ -35,29 +33,48 @@ namespace Roots
             VisualElementParent.UnregisterCallback<GeometryChangedEvent>(ParentGeometryChanged);
         }
 
-        void IPropsListener.PropsDidChange()
+        void IPropsListener<WindowProps>.PropsDidChange(WindowProps? prev)
         {
-            if (!PrevGUID.HasValue || PrevGUID.Value != GUID)
+            bool mustRegister;
+            bool dirtyOpen;
+            if (prev.HasValue)
             {
-                if (PrevGUID.HasValue)
+                var prevValue = prev.Value;
+                
+                mustRegister = Props.guid != prevValue.guid;
+                if (mustRegister)
                 {
-                    Context?.UnregisterWindow(PrevGUID.Value);
+                    var prevGuid = prevValue.guid ?? NodeHashCode;
+                    Context?.UnregisterWindow(prevGuid);
                 }
-                Context?.RegisterWindow(this, GUID);
-                PrevGUID = GUID;
-            }
-            
-            if (Props.open)
-            {
-                Open();
+                
+                dirtyOpen = Props.open != prevValue.open;
             }
             else
             {
-                Close();
+                mustRegister = true;
+                dirtyOpen = true;
+            }
+
+            if (mustRegister)
+            {
+                Context?.RegisterWindow(this, GUID);
+            }
+            
+            if(dirtyOpen)
+            {
+                if (Props.open)
+                {
+                    Open();
+                }
+                else
+                {
+                    Close();
+                }
             }
         }
 
-        void IPropsListener.PropsWillChange() { }
+        void IPropsListener<WindowProps>.PropsWillChange() { }
 
         protected override Element Render() => Element.Null;
 

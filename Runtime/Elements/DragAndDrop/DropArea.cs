@@ -82,9 +82,7 @@ namespace Roots
                 HoverEnded();
             }
 
-            var state = State;
-            state.hovering = hovering;
-            SetState(state); // TODO
+            RishSetHovering(hovering);
         }
 
         internal void OnInfo(T? info)

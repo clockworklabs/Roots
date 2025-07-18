@@ -44,7 +44,7 @@ namespace Roots
             }
             else
             {
-                SetDescriptor(GetInitialDescriptor(Props.descriptor, Props.initial, Props.animate));
+                SetStyle(GetInitial(Props.descriptor.style, Props.initial, Props.animate));
 
                 animateDirty = true;
                 exitDirty = true;
@@ -61,7 +61,7 @@ namespace Roots
         }
         void IPropsListener<MotionDivProps>.PropsWillChange() { }
 
-        protected override Element Render() => Div.Create(descriptor: State.descriptor, children: Props.children);
+        protected override Element Render() => Div.Create(name: Props.descriptor.name, className: Props.descriptor.className, style: State.style, children: Props.children);
 
         private void OnVisualChange(VisualChangeEvent evt) => Animation.OnVisualChange(evt.target as VisualElement);
         
@@ -69,19 +69,12 @@ namespace Roots
         StyleAnimation IAnimatedElement.StyleAnimation => Animation;
         void IAnimatedElement.Unmount() => CanUnmount();
 
-        void IAnimatedElement.SetStyle(Style style) => SetDescriptor(new DOMDescriptor
-        {
-            name = State.descriptor.name,
-            className = State.descriptor.className,
-            style = style
-        });
+        void IAnimatedElement.SetStyle(Style style) => SetStyle(style);
         void IAnimatedElement.OnAnimateComplete() => Props.onAnimateComplete?.Invoke();
         void IAnimatedElement.OnExitComplete() => Props.onExitComplete?.Invoke();
         
-        private static DOMDescriptor GetInitialDescriptor(DOMDescriptor descriptor, Initial initial, Target animate)
+        private static Style GetInitial(Style style, Initial initial, Target animate)
         {
-            var style = descriptor.style;
-
             if (initial.backgroundColor is IInitialValue<Color> backgroundColor)
             {
                 if (backgroundColor.skip && animate.backgroundColor.HasValue)
@@ -644,12 +637,7 @@ namespace Roots
                 }
             }
 
-            return new DOMDescriptor
-            {
-                name = descriptor.name,
-                className = descriptor.className,
-                style = style
-            };
+            return style;
         }
     }
 
@@ -680,6 +668,6 @@ namespace Roots
     [RishValueType]
     public struct MotionDivState
     {
-        public DOMDescriptor descriptor;
+        public Style style;
     }
 }

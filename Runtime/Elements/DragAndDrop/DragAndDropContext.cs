@@ -60,7 +60,7 @@ namespace Roots
             SetupDraggedElement<T>(null, false, false);
             ClearDropAreas<T>();
             
-            Props.onDrag?.Invoke(false);
+            OnDrag(false);
             
             Dirty();
         }
@@ -107,7 +107,7 @@ namespace Roots
 
             SetupDraggedElement(element, false, false);
             
-            Props.onDrag?.Invoke(true);
+            OnDrag(true);
             
             Dirty();
 
@@ -158,7 +158,7 @@ namespace Roots
             
             ClearDropAreas<T>();
             
-            Props.onDrag?.Invoke(false);
+            OnDrag(false);
             
             SetupDraggedElement<T>(null, false, false);
             
@@ -371,7 +371,7 @@ namespace Roots
         [DOMDescriptor]
         public DOMDescriptor descriptor;
         public Children children;
-        [IgnoreComparison]
+        
         public Action<bool> onDrag;
     }
 

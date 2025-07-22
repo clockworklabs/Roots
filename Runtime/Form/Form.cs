@@ -69,7 +69,7 @@ namespace Roots
                 }
             }
             
-            Props.submitAction?.Invoke();
+            SubmitAction();
         }
 
         public uint RegisterElement(IElement element)
@@ -119,7 +119,7 @@ namespace Roots
     public struct FormProps
     {
         public Element content;
-        [IgnoreComparison]
+        
         public Action submitAction;
     }
 }

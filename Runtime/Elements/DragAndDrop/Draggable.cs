@@ -123,7 +123,7 @@ namespace Roots
 
                 StartDragging(primary);
             
-                Props.onDragAction?.Invoke();
+                OnDragAction();
             
                 CaptureMouse();
 
@@ -153,7 +153,7 @@ namespace Roots
             
             EndDragging();
             
-            Props.onDropAction?.Invoke();
+            OnDropAction();
             
             Context.DraggableDragEnd(this, evt);
             
@@ -162,7 +162,7 @@ namespace Roots
 
         internal T GetInfo(bool primary) => primary ? Props.info : Props.secondaryInfo.Value;
 
-        internal void DropNowhere() => Props.dropNowhereAction?.Invoke();
+        internal void DropNowhere() => DropNowhereAction();
 
         private void StartDragging(bool primary)
         {
@@ -194,11 +194,8 @@ namespace Roots
         public T info;
         public T? secondaryInfo;
 
-        [IgnoreComparison]
         public Action onDragAction;
-        [IgnoreComparison]
         public Action onDropAction;
-        [IgnoreComparison]
         public Action dropNowhereAction;
     }
 

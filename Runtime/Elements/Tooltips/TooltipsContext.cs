@@ -69,7 +69,7 @@ namespace Roots
 
             if (Stack.Count == 1)
             {
-                Props.onShow?.Invoke(true);
+                OnShow(true);
             }
 
             if (forceRender)
@@ -97,7 +97,7 @@ namespace Roots
 
             if (Stack.Count == 0)
             {
-                Props.onShow?.Invoke(false);
+                OnShow(false);
             }
 
             if (forceRender)
@@ -116,7 +116,6 @@ namespace Roots
         public bool hideTooltips;
         public Children children;
 
-        [IgnoreComparison]
         public Action<bool> onShow;
     }
 }

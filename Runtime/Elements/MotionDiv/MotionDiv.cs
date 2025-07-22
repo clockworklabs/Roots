@@ -70,8 +70,8 @@ namespace Roots
         void IAnimatedElement.Unmount() => CanUnmount();
 
         void IAnimatedElement.SetStyle(Style style) => SetStyle(style);
-        void IAnimatedElement.OnAnimateComplete() => Props.onAnimateComplete?.Invoke();
-        void IAnimatedElement.OnExitComplete() => Props.onExitComplete?.Invoke();
+        void IAnimatedElement.OnAnimateComplete() => OnAnimateComplete();
+        void IAnimatedElement.OnExitComplete() => OnExitComplete();
         
         private static Style GetInitial(Style style, Initial initial, Target animate)
         {
@@ -648,9 +648,7 @@ namespace Roots
         public Target animate;
         public Target exit; // TODO: Add wait for children animations
         
-        [IgnoreComparison]
         public Action onAnimateComplete;
-        [IgnoreComparison]
         public Action onExitComplete;
 
         // TODO

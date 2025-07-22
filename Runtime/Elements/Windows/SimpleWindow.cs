@@ -1,4 +1,3 @@
-using System;
 using RishUI;
 
 namespace Roots
@@ -39,7 +38,6 @@ namespace Roots
         public RishString title;
         public Element content;
 
-        [IgnoreComparison]
-        public Action closeAction;
+        // public Action closeAction;
     }
 }

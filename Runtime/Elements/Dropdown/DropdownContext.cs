@@ -106,7 +106,7 @@ namespace Roots
             DropdownButton.OnOpen();
             Dirty();
             
-            Props.onShow?.Invoke(true);
+            OnShow(true);
         }
 
         internal void HideDropdownMenu(DropdownButton owner)
@@ -122,7 +122,7 @@ namespace Roots
             DropdownButton = null;
             Dirty();
             
-            Props.onShow?.Invoke(false);
+            OnShow(false);
         }
 
         internal void RegisterDropdown(InternalDropdown menu)
@@ -213,7 +213,7 @@ namespace Roots
             protected override Element Render() => Div.Create(
                 style: new Style
                 {
-                    position = UnityEngine.UIElements.Position.Absolute,
+                    position = Position.Absolute,
                     pointerDetection = PointerDetectionMode.Rect,
                     top = 0,
                     right = 0,
@@ -231,7 +231,6 @@ namespace Roots
         public bool forceFit;
         public Children children;
 
-        [IgnoreComparison]
         public Action<bool> onShow;
     }
 }

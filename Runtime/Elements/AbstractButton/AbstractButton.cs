@@ -1,8 +1,6 @@
 using System;
 using RishUI;
-using RishUI.Elements;
 using RishUI.Events;
-using Sappy;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -47,9 +45,9 @@ namespace Roots
         }
         void IPropsListener.PropsWillChange() { }
 
-        protected override Element Render() => InternalElement.Create(new AbstractButtonProps(Props)
+        protected override Element Render() => InternalElement.Create(props: new AbstractButtonProps(Props)
         {
-            action = SappyOnAction
+            action = SappyProps.Action
         });
 
         private void OnVisualChange(VisualChangeEvent evt)
@@ -80,13 +78,10 @@ namespace Roots
                 return;
             }
             
-            Props.action?.Invoke();
+            Action();
 
             evt.StopPropagation();
         }
-
-        [SapTarget]
-        private void OnAction() => Props.action?.Invoke();
 
         bool IFormSubmit.OnFormSubmit()
         {
@@ -95,7 +90,7 @@ namespace Roots
                 return false;
             }
             
-            OnAction();
+            Action();
 
             return true;
         }
@@ -106,9 +101,7 @@ namespace Roots
     {
         public bool interactable;
         
-        [IgnoreComparison]
         public Action action;
-        [IgnoreComparison]
         public Action secondaryAction;
         
         public Element normal;

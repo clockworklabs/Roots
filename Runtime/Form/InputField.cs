@@ -58,39 +58,37 @@ namespace Roots
 
         protected override Element Render()
         {
-            var descriptor = new DOMDescriptor(Props.descriptor);
-            if (!Props.multiline)
-            {
-                descriptor.style = new Style(Props.descriptor.style)
+            var descriptor = Props.multiline
+                ? Props.descriptor
+                : Props.descriptor + new Style
                 {
                     whiteSpace = WhiteSpace.NoWrap
                 };
-            }
 
-            return Rish.Create<RishTextField, RishTextFieldProps>(
+            return RishTextField.Create(
                 key: 0,
-                descriptor: descriptor,
-                props: new RishTextFieldProps
-                {
-                    value = Props.value,
-                    updateOnEveryKeystroke = Props.updateOnEveryKeystroke,
-                    multiline = Props.multiline,
-                    isPassword = Props.isPassword,
-                    richTextEnabled = Props.richTextEnabled,
-                    parseEscapeSequences = Props.parseEscapeSequences,
-                    readOnly = Props.readOnly,
-                    maxLength = Props.maxLength,
-                    multiClickInteraction = Props.multiClickInteraction,
-                    selectOnFocus = Props.selectOnFocus,
-                    textInputDescriptor = Props.textInputDescriptor,
-                    textElementDescriptor = Props.textElementDescriptor,
-                    cursorColor = Props.cursorColor,
-                    selectionColor = Props.selectionColor,
-                    onValidation = OnValidation,
-                    onChange = OnChange
-                });
+                name: descriptor.name,
+                className: descriptor.className,
+                style: descriptor.style,
+                value: Props.value,
+                updateOnEveryKeystroke: Props.updateOnEveryKeystroke,
+                multiline: Props.multiline,
+                isPassword: Props.isPassword,
+                richTextEnabled: Props.richTextEnabled,
+                parseEscapeSequences: Props.parseEscapeSequences,
+                readOnly: Props.readOnly,
+                maxLength: Props.maxLength,
+                multiClickInteraction: Props.multiClickInteraction,
+                selectOnFocus: Props.selectOnFocus,
+                textInputDescriptor: Props.textInputDescriptor,
+                textElementDescriptor: Props.textElementDescriptor,
+                cursorColor: Props.cursorColor,
+                selectionColor: Props.selectionColor,
+                onValidation: SappyOnValidation,
+                onChange: SappyOnChange);
         }
 
+        [SapTarget(typeof(Func<string, string>))]
         private string OnValidation(string value)
         {
             string result;
@@ -223,13 +221,14 @@ namespace Roots
             return result;
         }
 
+        [SapTarget]
         private void OnChange(string value)
         {
             if (value == Props.value) return;
             
             var result = OnValidation(value);
             
-            Props.onChange?.Invoke(result);
+            RishOnChange(result);
         }
 
         private void OnVisualChange(VisualChangeEvent evt)
@@ -268,7 +267,6 @@ namespace Roots
             }
         }
 
-        [IgnoreWarnings]
         private partial class RishTextField : TextField, IVisualElement<RishTextFieldProps>, IStyledProps<RishTextField, RishTextFieldProps>
         {
             private Bridge<RishTextFieldProps> Bridge { get; }
@@ -561,9 +559,7 @@ namespace Roots
             /// </summary>
             public Color? selectionColor;
 
-            [IgnoreComparison]
             public Func<string, string> onValidation;
-            [IgnoreComparison]
             public Action<string> onChange;
         }
     }
@@ -592,7 +588,7 @@ namespace Roots
         public bool parseEscapeSequences;
         public Color? cursorColor;
         public Color? selectionColor;
-        [IgnoreComparison]
+        
         public Action<string> onChange;
     }
 }

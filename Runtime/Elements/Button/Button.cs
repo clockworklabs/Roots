@@ -50,11 +50,13 @@ namespace Roots
             var pressed = Content.Create(className: pressedClassName, /*utilities: Props.utilities,*/ children: Props.children);
             var disabled = Content.Create(className: disabledClassName, /*utilities: Props.utilities,*/ children: Props.children);
 
-            return AbstractButton.Create(interactable: !Props.disabled, normal: normal, pressed: pressed, disabled: disabled, action: SappyOnAction);
+            return AbstractButton.Create(
+                interactable: !Props.disabled,
+                normal: normal,
+                pressed: pressed,
+                disabled: disabled,
+                action: SappyProps.Action);
         }
-
-        [SapTarget]
-        private void OnAction() => Props.action?.Invoke();
 
         private partial class Content : RishElement<ContentProps>
         {
@@ -83,7 +85,6 @@ namespace Roots
 
         public Children children;
 
-        [IgnoreComparison]
         public Action action;
     }
 

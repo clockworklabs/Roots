@@ -103,7 +103,7 @@ namespace Roots
             }
             Root?.RegisterCallback<KeyDownEvent>(OnKeyDown);
             
-            Props.onShow?.Invoke(true);
+            OnShow(true);
         }
 
         public void HideContextMenu(IContextual owner)
@@ -118,7 +118,7 @@ namespace Roots
             
             Root?.UnregisterCallback<KeyDownEvent>(OnKeyDown);
             
-            Props.onShow?.Invoke(false);
+            OnShow(false);
         }
         
         internal void RegisterMenu(Menu menu) {
@@ -203,7 +203,6 @@ namespace Roots
         public DOMDescriptor descriptor;
         public Children children;
         
-        [IgnoreComparison]
         public Action<bool> onShow;
     }
 }

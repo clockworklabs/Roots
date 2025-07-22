@@ -139,13 +139,13 @@ namespace Roots
         internal void OnOpen()
         {
             SetOpen(true);
-            Props.onOpen?.Invoke(true);
+            OnOpen(true);
         }
 
         internal void OnClose()
         {
             SetOpen(false);
-            Props.onOpen?.Invoke(false);
+            OnOpen(false);
         }
 
         private void OnAction()
@@ -174,7 +174,6 @@ namespace Roots
 
         public Element menu;
         
-        [IgnoreComparison]
         public Action<bool> onOpen;
 
         [Default]

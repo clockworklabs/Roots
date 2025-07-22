@@ -103,9 +103,6 @@ namespace Roots
 
         internal bool CanAccept() => State.acceptable;
 
-        private void HoverStarted(T info) => Props.hoverStarted?.Invoke(info);
-        private void HoverEnded() => Props.hoverEnded?.Invoke();
-
         private bool CanDrop(T info)
         {
             if (!Set)
@@ -122,7 +119,7 @@ namespace Roots
                 return;
             }
 
-            Props.dropAction?.Invoke(info);
+            DropAction(info);
         }
     }
 
@@ -134,13 +131,9 @@ namespace Roots
         public Element hoveredAcceptedContent;
         public Element hoveredRejectedContent;
 
-        [IgnoreComparison]
         public Predicate<T> canDropAction;
-        [IgnoreComparison]
         public Action<T> dropAction;
-        [IgnoreComparison]
         public Action<T> hoverStarted;
-        [IgnoreComparison]
         public Action hoverEnded;
     }
 

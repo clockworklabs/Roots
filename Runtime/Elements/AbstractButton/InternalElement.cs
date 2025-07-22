@@ -89,11 +89,11 @@ namespace Roots
                 {
                     if (evt.button == 1)
                     {
-                        Props.secondaryAction?.Invoke();
+                        SecondaryAction();
                     }
                     else
                     {
-                        Props.action?.Invoke();
+                        Action();
                     }
                 }
 

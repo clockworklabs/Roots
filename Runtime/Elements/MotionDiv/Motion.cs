@@ -473,7 +473,7 @@ namespace Roots
 
             if (Parent != null)
             {
-                Animation.OnAboutToStart(SetDelay);
+                Animation.OnAboutToStart(SappySetDelay);
             }
             
             OnStep();
@@ -702,6 +702,7 @@ namespace Roots
             return delay;
         }
 
+        [SapTarget]
         private void SetDelay() => Animation.SetDelay(Parent?.GetChildDelay(this) ?? 0);
     }
 }

@@ -311,7 +311,7 @@ namespace Roots
             public RishTextField()
             {
                 Bridge = new Bridge<RishTextFieldProps>(this, true);
-                Bridge.OnUnmounted += SappyResetProps;
+                Bridge.OnUnmounted.Add(SappyResetProps);
                 
                 RegisterCallback<FocusEvent>(OnFocus);
                 RegisterCallback<BlurEvent>(OnBlur);

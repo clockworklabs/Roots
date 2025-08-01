@@ -36,18 +36,18 @@ namespace Roots
             RishRoot = gameObject.GetComponent<RishRoot>();
             if (RishRoot != null)
             {
-                RishRoot.OnStart += SappySetupRishRoot;
+                RishRoot.OnStart.Add(SappySetupRishRoot);
             }
 
-            ResponsiveContext.OnResize += SappyOnResponsiveResize;
+            ResponsiveContext.OnResize.Add(SappyOnResponsiveResize);
         }
         private void OnDestroy()
         {
             if (RishRoot != null)
             {
-                RishRoot.OnStart -= SappySetupRishRoot;
+                RishRoot.OnStart.Remove(SappySetupRishRoot);
             }
-            ResponsiveContext.OnResize -= SappyOnResponsiveResize;
+            ResponsiveContext.OnResize.Remove(SappyOnResponsiveResize);
         }
 
         [SapTarget]

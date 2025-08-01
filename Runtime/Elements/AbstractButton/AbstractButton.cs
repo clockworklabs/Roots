@@ -99,7 +99,7 @@ namespace Roots
     [RishValueType]
     public struct AbstractButtonProps
     {
-        public bool interactable;
+        public bool? interactable;
         
         public Action action;
         public Action secondaryAction;
@@ -117,12 +117,6 @@ namespace Roots
 
         public bool submitsForm;
 
-        [Default]
-        public static AbstractButtonProps Default => new AbstractButtonProps
-        {
-            interactable = true
-        };
-
         public AbstractButtonProps(AbstractButtonProps other)
         {
             interactable = other.interactable;
@@ -137,5 +131,7 @@ namespace Roots
             focusable = other.focusable;
             autoFocus = other.autoFocus;
         }
+
+        internal bool isInteractable => !interactable.HasValue || interactable.Value;
     }
 }

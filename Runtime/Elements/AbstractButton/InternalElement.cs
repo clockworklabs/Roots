@@ -32,7 +32,7 @@ namespace Roots
             protected override Element Render()
             {
                 Element element;
-                if (!Props.interactable)
+                if (!Props.isInteractable)
                 {
                     element = Props.disabled.Valid 
                         ? Props.disabled 
@@ -58,7 +58,7 @@ namespace Roots
 
             private void OnPointerDown(PointerDownEvent evt)
             {
-                if (Listening || !Props.interactable)
+                if (Listening || !Props.isInteractable)
                 {
                     return;
                 }
@@ -85,7 +85,7 @@ namespace Roots
                 Listening = false;
                 PointerId = 0;
                 
-                if (Props.interactable && State.hovered)
+                if (Props.isInteractable && State.hovered)
                 {
                     if (evt.button == 1)
                     {

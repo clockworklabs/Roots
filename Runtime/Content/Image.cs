@@ -111,7 +111,7 @@ namespace Roots
             RegisterCallback<DetachFromPanelEvent>(OnUnmounted);
             RegisterCallback<VisualChangeEvent>(OnVisualChange);
 
-            Bridge.OnStyle += SappyOnInlineStyle;
+            Bridge.OnStyle.Add(SappyOnInlineStyle);
         }
         
         void IVisualElement<ImageProps>.Setup(ImageProps props) => PropsManager.Setup(props);

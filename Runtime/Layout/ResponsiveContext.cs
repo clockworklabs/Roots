@@ -10,7 +10,7 @@ namespace Roots
 
     internal class ResponsiveContextResizeStem
     {
-        private SapTargets<OnResponsiveContextResize> Targets { get; }
+        public SapTargets<OnResponsiveContextResize> Targets { get; }
 
         public ResponsiveContextResizeStem()
         {
@@ -28,9 +28,6 @@ namespace Roots
                 Targets[i]?.Invoke(body, oldWidth, newWidth);
             }
         }
-
-        public void AddTarget(OnResponsiveContextResize target) => Targets.Add(target);
-        public void RemoveTarget(OnResponsiveContextResize target) => Targets.Remove(target);
     }
     
     public partial class ResponsiveContext : VisualElement, IVisualElement/*<ResponsiveContextProps>*/
@@ -39,8 +36,7 @@ namespace Roots
         Bridge IVisualElement.Bridge => Bridge;
 
         private static ResponsiveContextResizeStem OnResizeStem { get; } = new();
-        [SapEvent]
-        internal static event OnResponsiveContextResize OnResize { add => OnResizeStem.AddTarget(value); remove => OnResizeStem.RemoveTarget(value); }
+        internal static SapTargets<OnResponsiveContextResize> OnResize => OnResizeStem.Targets;
         
         VisualElement IElement.GetDOMChild() => this;
         

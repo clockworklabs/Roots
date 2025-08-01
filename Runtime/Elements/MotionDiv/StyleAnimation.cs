@@ -20,20 +20,15 @@ namespace Roots
     public partial class StyleAnimation
     {
         private SapStem<VisualElement> OnChangeStem { get; } = new();
-        [SapEvent]
-        private event Action<VisualElement> OnChange { add => OnChangeStem.AddTarget(value); remove => OnChangeStem.RemoveTarget(value); }
+        private SapTargets<Action<VisualElement>> OnChange => OnChangeStem.Targets;
         private SapStem<Target> OnTargetStem { get; } = new();
-        [SapEvent]
-        private event Action<Target> OnTarget { add => OnTargetStem.AddTarget(value); remove => OnTargetStem.RemoveTarget(value); }
+        private SapTargets<Action<Target>> OnTarget => OnTargetStem.Targets;
         private SapStem OnMountedStem { get; } = new();
-        [SapEvent]
-        private event Action OnMounted { add => OnMountedStem.AddTarget(value); remove => OnMountedStem.RemoveTarget(value); }
+        private SapTargets<Action> OnMounted => OnMountedStem.Targets;
         private SapStem OnUnmountRequestedStem { get; } = new();
-        [SapEvent]
-        private event Action OnUnmountRequested { add => OnUnmountRequestedStem.AddTarget(value); remove => OnUnmountRequestedStem.RemoveTarget(value); }
+        private SapTargets<Action> OnUnmountRequested => OnUnmountRequestedStem.Targets;
         private SapStem OnUnmountedStem { get; } = new();
-        [SapEvent]
-        private event Action OnUnmounted { add => OnUnmountedStem.AddTarget(value); remove => OnUnmountedStem.RemoveTarget(value); }
+        private SapTargets<Action> OnUnmounted => OnUnmountedStem.Targets;
 
         private IAnimatedElement Element { get; }
         private Motion Motion { get; }
@@ -47,8 +42,8 @@ namespace Roots
             Element = element;
             Motion = new Motion();
             Machine = new StateMachine(this);
-            Motion.OnStyle += SappyOnStyle;
-            Motion.Completed += SappyOnMotionComplete;
+            Motion.OnStyle.Add(SappyOnStyle);
+            Motion.Completed.Add(SappyOnMotionComplete);
         }
 
         [SapTarget]
@@ -98,7 +93,7 @@ namespace Roots
         private partial class StateMachine
         {
             private SapStem<State> OnChangeStem { get; } = new();
-            public event Action<State> OnChange { add => OnChangeStem.AddTarget(value); remove => OnChangeStem.RemoveTarget(value); }
+            public SapTargets<Action<State>> OnChange => OnChangeStem.Targets;
             
             private UnmountedState UnmountedState { get; }
             private SettingUpState SettingUpState { get; }
@@ -183,11 +178,11 @@ namespace Roots
             public override void Enter()
             {
                 Element.Reset();
-                Element.OnMounted += SappyStartSetUp;
+                Element.OnMounted.Add(SappyStartSetUp);
             }
 
             public override void Exit() {
-                Element.OnMounted -= SappyStartSetUp;
+                Element.OnMounted.Remove(SappyStartSetUp);
             }
 
             [SapTarget]
@@ -235,27 +230,27 @@ namespace Roots
                 ParentReady = false;
                 ParentMachine = null;
                 
-                Element.OnChange += SappyOnChange;
-                Element.OnUnmountRequested += SappyUnmount;
-                Element.OnUnmounted += SappyOnUnmounted;
+                Element.OnChange.Add(SappyOnChange);
+                Element.OnUnmountRequested.Add(SappyUnmount);
+                Element.OnUnmounted.Add(SappyOnUnmounted);
             }
 
             public override void Exit()
             {
-                Element.OnChange -= SappyOnChange;
-                Element.OnUnmountRequested -= SappyUnmount;
-                Element.OnUnmounted -= SappyOnUnmounted;
+                Element.OnChange.Remove(SappyOnChange);
+                Element.OnUnmountRequested.Remove(SappyUnmount);
+                Element.OnUnmounted.Remove(SappyOnUnmounted);
 
                 if (ParentMachine != null)
                 {
-                    ParentMachine.OnChange -= OnParentStateChange;
+                    ParentMachine.OnChange.Remove(SappyOnParentStateChange);
                 }
             }
 
             [SapTarget]
             private void OnChange(VisualElement element)
             {
-                Element.OnChange -= SappyOnChange;
+                Element.OnChange.Remove(SappyOnChange);
                 
                 var parent = Element.GetParent();
 
@@ -266,7 +261,7 @@ namespace Roots
                 else
                 {
                     ParentMachine = parent.Machine;
-                    ParentMachine.OnChange += OnParentStateChange;
+                    ParentMachine.OnChange.Add(SappyOnParentStateChange);
                 }
                 
                 Motion.SetInitial(element, parent?.Motion);
@@ -274,11 +269,12 @@ namespace Roots
                 Ready = true;
             }
 
+            [SapTarget]
             private void OnParentStateChange(State state)
             {
                 if (state is ActiveState)
                 {
-                    ParentMachine.OnChange -= OnParentStateChange;
+                    ParentMachine.OnChange.Remove(SappyOnParentStateChange);
                     ParentReady = true;
                 }
             }
@@ -301,16 +297,16 @@ namespace Roots
 
             public override void Enter()
             {
-                Element.OnTarget += SappyOnTarget;
-                Element.OnUnmountRequested += SappyStartUnmounting;
-                Element.OnUnmounted += SappyOnUnmounted;
+                Element.OnTarget.Add(SappyOnTarget);
+                Element.OnUnmountRequested.Add(SappyStartUnmounting);
+                Element.OnUnmounted.Add(SappyOnUnmounted);
             }
 
             public override void Exit()
             {
-                Element.OnTarget -= SappyOnTarget;
-                Element.OnUnmountRequested -= SappyStartUnmounting;
-                Element.OnUnmounted -= SappyOnUnmounted;
+                Element.OnTarget.Remove(SappyOnTarget);
+                Element.OnUnmountRequested.Remove(SappyStartUnmounting);
+                Element.OnUnmounted.Remove(SappyOnUnmounted);
             }
 
             [SapTarget]
@@ -327,8 +323,8 @@ namespace Roots
 
             public override void Enter()
             {
-                Motion.Completed += SappyUnmount;
-                Element.OnUnmounted += SappyOnUnmounted;
+                Motion.Completed.Add(SappyUnmount);
+                Element.OnUnmounted.Add(SappyOnUnmounted);
 
                 if (Element.Exit.IsValid())
                 {
@@ -343,8 +339,8 @@ namespace Roots
 
             public override void Exit()
             {
-                Motion.Completed -= SappyUnmount;
-                Element.OnUnmounted -= SappyOnUnmounted;
+                Motion.Completed.Remove(SappyUnmount);
+                Element.OnUnmounted.Remove(SappyOnUnmounted);
             }
 
             [SapTarget]

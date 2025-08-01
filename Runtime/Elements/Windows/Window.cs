@@ -1,5 +1,4 @@
 ﻿using RishUI;
-using RishUI.Events;
 using Sappy;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -20,13 +19,13 @@ namespace Roots
             Context = GetFirstAncestorOfType<WindowsContext>();
 
             VisualElementParent = GetFirstAncestorOfType<VisualElement>();
-            VisualElementParent.RegisterCallback<GeometryChangedEvent>(ParentGeometryChanged);
+            VisualElementParent.RegisterCallback<GeometryChangedEvent>(SappyParentGeometryChanged.Callback);
         }
 
         void IMountingListener.ComponentWillUnmount()
         {
             Context?.UnregisterWindow(GUID);
-            VisualElementParent.UnregisterCallback<GeometryChangedEvent>(ParentGeometryChanged);
+            VisualElementParent.UnregisterCallback<GeometryChangedEvent>(SappyParentGeometryChanged.Callback);
         }
 
         void IPropsListener<WindowProps>.PropsDidChange(WindowProps? prev)
@@ -78,6 +77,7 @@ namespace Roots
 
         private void Close() => Context?.CloseWindow(GUID);
 
+        [SapTarget(typeof(EventCallback<GeometryChangedEvent>))]
         private void ParentGeometryChanged(GeometryChangedEvent evt)
         {
             if (evt.oldRect == evt.newRect)

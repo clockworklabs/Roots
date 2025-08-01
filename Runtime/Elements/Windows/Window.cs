@@ -1,5 +1,6 @@
 ﻿using RishUI;
 using RishUI.Events;
+using Sappy;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -12,11 +13,6 @@ namespace Roots
         private ulong NodeHashCode { get; set; }
         private ulong GUID => Props.guid ?? NodeHashCode;
         
-        public Window()
-        {
-            RegisterRishCallback<WindowFocusEvent>(OnWindowsFocus, EventPhase.AtTargetOnly);
-        }
-
         void IMountingListener.ComponentDidMount()
         {
             NodeHashCode = GetNodeHashCode();
@@ -81,19 +77,6 @@ namespace Roots
         private void Open() => Context?.OpenWindow(GUID);
 
         private void Close() => Context?.CloseWindow(GUID);
-
-        private void OnWindowsFocus(WindowFocusEvent evt)
-        {
-            if (Context != evt.Context)
-            {
-                return;
-            }
-            
-            if (evt.WindowGUID != GUID)
-            {
-                evt.StopPropagation();
-            }
-        }
 
         private void ParentGeometryChanged(GeometryChangedEvent evt)
         {

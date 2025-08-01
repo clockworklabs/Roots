@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using RishUI;
 using RishUI.Events;
+using Sappy;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -8,6 +10,9 @@ namespace Roots
 {
     public partial class WindowsContext : RishElement<WindowsContextProps>, IManualState
     {
+        private SapStem<ulong> OnFocusStem { get; } = new();
+        public SapTargets<Action<ulong>> OnFocus => OnFocusStem.Targets;
+        
         private const int _SafeZone = 10;
         internal int SafeZone => Props.safeZoneSize > 0 ? Props.safeZoneSize : _SafeZone;
 
@@ -350,13 +355,7 @@ namespace Roots
 
             var focusedWindow = WindowsOrder[^1];
             
-            for (int i = 0, n = WindowsOrder.Count; i < n; i++)
-            {
-                var guid = WindowsOrder[i];
-                var window = RegisteredWindows[guid];
-                using var pooledEvent = WindowFocusEvent.GetPooled(focusedWindow, this, window);
-                window.SendEvent(pooledEvent);
-            }
+            OnFocusStem.Send(focusedWindow);
         }
     }
 

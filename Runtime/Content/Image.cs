@@ -342,42 +342,43 @@ namespace Roots
             Parent?.UnregisterCallback<VisualChangeEvent>(SappyOnVisualChange.Callback);
             Parent = null;
             
-            if(!RishUtils.MemCmp(style.unitySliceTop, RishUI.VisualElementExtensions.NullInt))
-            {
-                style.unitySliceTop = RishUI.VisualElementExtensions.NullInt;
-            }
-            if(!RishUtils.MemCmp(style.unitySliceRight, RishUI.VisualElementExtensions.NullInt))
-            {
-                style.unitySliceRight = RishUI.VisualElementExtensions.NullInt;
-            }
-            if(!RishUtils.MemCmp(style.unitySliceBottom, RishUI.VisualElementExtensions.NullInt))
-            {
-                style.unitySliceBottom = RishUI.VisualElementExtensions.NullInt;
-            }
-            if(!RishUtils.MemCmp(style.unitySliceLeft, RishUI.VisualElementExtensions.NullInt))
-            {
-                style.unitySliceLeft = RishUI.VisualElementExtensions.NullInt;
-            }
-            if(!RishUtils.MemCmp(style.unitySliceScale, RishUI.VisualElementExtensions.NullFloat))
-            {
-                style.unitySliceScale = RishUI.VisualElementExtensions.NullFloat;
-            }
-            if(!RishUtils.MemCmp(style.backgroundImage, RishUI.VisualElementExtensions.NullBackground))
-            {
-                style.backgroundImage = RishUI.VisualElementExtensions.NullBackground;
-            }
-            if(!RishUtils.MemCmp(style.width, RishUI.VisualElementExtensions.NullLength))
-            {
-                style.width = RishUI.VisualElementExtensions.NullLength;
-            }
-            if(!RishUtils.MemCmp(style.height, RishUI.VisualElementExtensions.NullLength))
-            {
-                style.height = RishUI.VisualElementExtensions.NullLength;
-            }
-            if(!RishUtils.MemCmp(style.unityBackgroundImageTintColor, RishUI.VisualElementExtensions.NullColor))
-            {
-                style.unityBackgroundImageTintColor = RishUI.VisualElementExtensions.NullColor;
-            }
+            // TODO: We can enable this after removing ResetInlineStyles in Bridge
+            // if(!RishUtils.MemCmp(style.unitySliceTop, RishUI.VisualElementExtensions.NullInt))
+            // {
+            //     style.unitySliceTop = RishUI.VisualElementExtensions.NullInt;
+            // }
+            // if(!RishUtils.MemCmp(style.unitySliceRight, RishUI.VisualElementExtensions.NullInt))
+            // {
+            //     style.unitySliceRight = RishUI.VisualElementExtensions.NullInt;
+            // }
+            // if(!RishUtils.MemCmp(style.unitySliceBottom, RishUI.VisualElementExtensions.NullInt))
+            // {
+            //     style.unitySliceBottom = RishUI.VisualElementExtensions.NullInt;
+            // }
+            // if(!RishUtils.MemCmp(style.unitySliceLeft, RishUI.VisualElementExtensions.NullInt))
+            // {
+            //     style.unitySliceLeft = RishUI.VisualElementExtensions.NullInt;
+            // }
+            // if(!RishUtils.MemCmp(style.unitySliceScale, RishUI.VisualElementExtensions.NullFloat))
+            // {
+            //     style.unitySliceScale = RishUI.VisualElementExtensions.NullFloat;
+            // }
+            // if(!RishUtils.MemCmp(style.backgroundImage, RishUI.VisualElementExtensions.NullBackground))
+            // {
+            //     style.backgroundImage = RishUI.VisualElementExtensions.NullBackground;
+            // }
+            // if(!RishUtils.MemCmp(style.width, RishUI.VisualElementExtensions.NullLength))
+            // {
+            //     style.width = RishUI.VisualElementExtensions.NullLength;
+            // }
+            // if(!RishUtils.MemCmp(style.height, RishUI.VisualElementExtensions.NullLength))
+            // {
+            //     style.height = RishUI.VisualElementExtensions.NullLength;
+            // }
+            // if(!RishUtils.MemCmp(style.unityBackgroundImageTintColor, RishUI.VisualElementExtensions.NullColor))
+            // {
+            //     style.unityBackgroundImageTintColor = RishUI.VisualElementExtensions.NullColor;
+            // }
 
             image = null;
             sprite = null;

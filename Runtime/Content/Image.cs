@@ -49,7 +49,7 @@ namespace Roots
 
                 if (value.IsEmpty) return;
                 
-                Loader?.Load<Texture2D>(value, OnTextureLoaded);
+                Loader?.Load<Texture2D>(value, SappyOnTextureLoaded.Callback);
             }
         }
         private RishString _spriteAddress;
@@ -64,7 +64,7 @@ namespace Roots
 
                 if (value.IsEmpty) return;
                 
-                Loader?.Load<Sprite>(value, OnSpriteLoaded);
+                Loader?.Load<Sprite>(value, SappyOnSpriteLoaded.Callback);
             }
         }
         private bool StyleBackgroundSet { get; set; }
@@ -80,7 +80,7 @@ namespace Roots
 
                 if (value.IsEmpty) return;
                 
-                Loader?.Load<VectorImage>(value, OnVectorLoaded);
+                Loader?.Load<VectorImage>(value, SappyOnVectorLoaded.Callback);
             }
         }
         private RishString _renderTextureAddress;
@@ -95,7 +95,7 @@ namespace Roots
 
                 if (value.IsEmpty) return;
                 
-                Loader?.Load<RenderTexture>(value, OnRenderTextureLoaded);
+                Loader?.Load<RenderTexture>(value, SappyOnRenderTextureLoaded.Callback);
             }
         }
         private StyleLength InlineWidth { get; set; }
@@ -107,9 +107,9 @@ namespace Roots
             PickingManager = new RectPickingManager(Bridge);
             PropsManager = new StyledPropsManager<Image, ImageProps>(this);
             
-            RegisterCallback<AttachToPanelEvent>(OnMounted);
-            RegisterCallback<DetachFromPanelEvent>(OnUnmounted);
-            RegisterCallback<VisualChangeEvent>(OnVisualChange);
+            RegisterCallback<AttachToPanelEvent>(SappyOnMounted.Callback);
+            RegisterCallback<DetachFromPanelEvent>(SappyOnUnmounted.Callback);
+            RegisterCallback<VisualChangeEvent>(SappyOnVisualChange.Callback);
 
             Bridge.OnStyle.Add(SappyOnInlineStyle);
         }
@@ -215,6 +215,7 @@ namespace Roots
             props.height ??= PropsManager.TryGetValue(ImageHeightProp, out var customImageHeight) ? ImageSize.Parse(customImageHeight) : default;
         }
 
+        [SapTarget(typeof(AssetLoaded<Texture2D>))]
         private void OnTextureLoaded(Asset<Texture2D> asset)
         {
             if (asset.address != TextureAddress)
@@ -237,6 +238,7 @@ namespace Roots
             sprite = null;
             vectorImage = null;
         }
+        [SapTarget(typeof(AssetLoaded<Sprite>))]
         private void OnSpriteLoaded(Asset<Sprite> asset)
         {
             if (asset.address != SpriteAddress)
@@ -278,6 +280,7 @@ namespace Roots
                 StyleBackgroundSet = true;
             }
         }
+        [SapTarget(typeof(AssetLoaded<VectorImage>))]
         private void OnVectorLoaded(Asset<VectorImage> asset)
         {
             if (asset.address != VectorAddress)
@@ -300,6 +303,7 @@ namespace Roots
             image = null;
             sprite = null;
         }
+        [SapTarget(typeof(AssetLoaded<RenderTexture>))]
         private void OnRenderTextureLoaded(Asset<RenderTexture> asset)
         {
             if (asset.address != RenderTextureAddress)
@@ -323,6 +327,7 @@ namespace Roots
             vectorImage = null;
         }
 
+        [SapTarget(typeof(EventCallback<AttachToPanelEvent>))]
         private void OnMounted(AttachToPanelEvent evt)
         {
             Loader = AssetsLoader.GetLoader(this);
@@ -331,6 +336,7 @@ namespace Roots
             Parent?.RegisterCallback<VisualChangeEvent>(OnVisualChange);
         }
         
+        [SapTarget(typeof(EventCallback<DetachFromPanelEvent>))]
         private void OnUnmounted(DetachFromPanelEvent evt)
         {
             Parent?.UnregisterCallback<VisualChangeEvent>(OnVisualChange);
@@ -353,6 +359,39 @@ namespace Roots
             StyleBackgroundSet = false;
             InlineWidth = default;
             InlineHeight = default;
+            
+            if(!RishUtils.MemCmp(style.unitySliceTop, RishUI.VisualElementExtensions.NullInt))
+            {
+                style.unitySliceTop = RishUI.VisualElementExtensions.NullInt;
+            }
+            if(!RishUtils.MemCmp(style.unitySliceRight, RishUI.VisualElementExtensions.NullInt))
+            {
+                style.unitySliceRight = RishUI.VisualElementExtensions.NullInt;
+            }
+            if(!RishUtils.MemCmp(style.unitySliceBottom, RishUI.VisualElementExtensions.NullInt))
+            {
+                style.unitySliceBottom = RishUI.VisualElementExtensions.NullInt;
+            }
+            if(!RishUtils.MemCmp(style.unitySliceLeft, RishUI.VisualElementExtensions.NullInt))
+            {
+                style.unitySliceLeft = RishUI.VisualElementExtensions.NullInt;
+            }
+            if(!RishUtils.MemCmp(style.unitySliceScale, RishUI.VisualElementExtensions.NullFloat))
+            {
+                style.unitySliceScale = RishUI.VisualElementExtensions.NullFloat;
+            }
+            if(!RishUtils.MemCmp(style.backgroundImage, RishUI.VisualElementExtensions.NullBackground))
+            {
+                style.backgroundImage = RishUI.VisualElementExtensions.NullBackground;
+            }
+            if(!RishUtils.MemCmp(style.width, RishUI.VisualElementExtensions.NullLength))
+            {
+                style.width = RishUI.VisualElementExtensions.NullLength;
+            }
+            if(!RishUtils.MemCmp(style.height, RishUI.VisualElementExtensions.NullLength))
+            {
+                style.height = RishUI.VisualElementExtensions.NullLength;
+            }
         }
 
         [SapTarget]
@@ -362,6 +401,7 @@ namespace Roots
             InlineHeight = style.height;
         }
         
+        [SapTarget(typeof(EventCallback<VisualChangeEvent>))]
         private void OnVisualChange(VisualChangeEvent evt) => SetSize();
         
         private void SetSize()

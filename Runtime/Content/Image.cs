@@ -374,6 +374,10 @@ namespace Roots
             {
                 style.height = RishUI.VisualElementExtensions.NullLength;
             }
+            if(!RishUtils.MemCmp(style.unityBackgroundImageTintColor, RishUI.VisualElementExtensions.NullColor))
+            {
+                style.unityBackgroundImageTintColor = RishUI.VisualElementExtensions.NullColor;
+            }
 
             image = null;
             sprite = null;

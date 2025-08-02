@@ -428,7 +428,7 @@ namespace Roots
                 {
                     textInputBase.name = textInputDescriptor.name;
                 }
-                if (firstSetup || !RishUtils.SmartCompare(Props.Value.textInputDescriptor.className, textInputDescriptor.className))
+                if (firstSetup || !RishUtils.Compare(Props.Value.textInputDescriptor.className, textInputDescriptor.className))
                 {
                     textInputBase.SetClassName(textInputDescriptor.className);
                     foreach (var className in TextInputClasses)
@@ -436,7 +436,7 @@ namespace Roots
                         textInputBase.AddToClassList(className);
                     }
                 }
-                if (firstSetup || !RishUtils.SmartCompare(Props.Value.textInputDescriptor.style, textInputDescriptor.style))
+                if (firstSetup || !RishUtils.MemCmp(Props.Value.textInputDescriptor.style, textInputDescriptor.style))
                 {
                     textInputBase.SetStyle(textInputDescriptor.style);
                 }
@@ -446,7 +446,7 @@ namespace Roots
                 {
                     TextElement.name = textElementDescriptor.name;
                 }
-                if (firstSetup || !RishUtils.SmartCompare(Props.Value.textElementDescriptor.className, textElementDescriptor.className))
+                if (firstSetup || !RishUtils.Compare(Props.Value.textElementDescriptor.className, textElementDescriptor.className))
                 {
                     TextElement.SetClassName(textElementDescriptor.className);
                     foreach (var className in TextElementClasses)
@@ -454,7 +454,7 @@ namespace Roots
                         TextElement.AddToClassList(className);
                     }
                 }
-                if (firstSetup || !RishUtils.SmartCompare(Props.Value.textElementDescriptor.style, textElementDescriptor.style))
+                if (firstSetup || !RishUtils.MemCmp(Props.Value.textElementDescriptor.style, textElementDescriptor.style))
                 {
                     TextElement.SetStyle(textElementDescriptor.style);
                 }

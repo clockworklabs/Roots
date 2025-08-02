@@ -1,6 +1,7 @@
 using System;
 using RishUI;
 using RishUI.Events;
+using Sappy;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -18,14 +19,14 @@ namespace Roots
 
         void IMountingListener.ComponentDidMount()
         {
-            RegisterCallback<VisualChangeEvent>(OnVisualChange);
+            RegisterCallback<VisualChangeEvent>(SappyOnVisualChange.Callback);
             Parent = GetFirstAncestorOfType<IAnimatedElement>();
             
             Animation.Mounted();
         }
 
         void IMountingListener.ComponentWillUnmount() {
-            UnregisterCallback<VisualChangeEvent>(OnVisualChange);
+            UnregisterCallback<VisualChangeEvent>(SappyOnVisualChange.Callback);
         }
 
         void ICustomUnmountListener.UnmountRequested() => Animation.UnmountRequested();
@@ -61,8 +62,9 @@ namespace Roots
         }
         void IPropsListener<MotionDivProps>.PropsWillChange() { }
 
-        protected override Element Render() => Div.Create(name: Props.descriptor.name, className: Props.descriptor.className, style: State.style, children: Props.children);
+        protected override Element Render() => Div.Create(descriptor: Props.descriptor, children: Props.children);
 
+        [SapTarget(typeof(EventCallback<VisualChangeEvent>))]
         private void OnVisualChange(VisualChangeEvent evt) => Animation.OnVisualChange(evt.target as VisualElement);
         
         IAnimatedElement IAnimatedElement.Parent => Parent;
@@ -666,6 +668,7 @@ namespace Roots
     [RishValueType]
     public struct MotionDivState
     {
+        [IgnoreComparison]
         public Style style;
     }
 }

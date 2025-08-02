@@ -33,9 +33,11 @@ namespace Roots
         private IAnimatedElement Element { get; }
         private Motion Motion { get; }
         private StateMachine Machine { get; }
-
+        
         private Target Animate { get; set; }
         private Target Exit { get; set; }
+        
+        private VisualElement VisualElement { get; set; }
 
         public StyleAnimation(IAnimatedElement element)
         {
@@ -67,7 +69,11 @@ namespace Roots
             Exit = default;
         }
 
-        public void OnVisualChange(VisualElement target) => OnChangeStem.Send(target);
+        public void OnVisualChange(VisualElement target)
+        {
+            VisualElement = target;
+            OnChangeStem.Send(target);
+        }
 
         public void SetAnimate(Target animate)
         {
@@ -88,9 +94,13 @@ namespace Roots
         private void Unmount() => Element.Unmount();
 
         [SapTarget]
-        private void OnStyle(Style style) => Element.SetStyle(style);
+        private void OnStyle(Style style)
+        {
+            VisualElement.SetStyle(style);
+            Element.SetStyle(style);
+        }
 
-        private partial class StateMachine
+        private class StateMachine
         {
             private SapStem<State> OnChangeStem { get; } = new();
             public SapTargets<Action<State>> OnChange => OnChangeStem.Targets;

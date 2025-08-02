@@ -107,10 +107,10 @@ namespace Roots
             PickingManager = new RectPickingManager(Bridge);
             PropsManager = new StyledPropsManager<Image, ImageProps>(this);
             
-            RegisterCallback<AttachToPanelEvent>(SappyOnMounted.Callback);
-            RegisterCallback<DetachFromPanelEvent>(SappyOnUnmounted.Callback);
             RegisterCallback<VisualChangeEvent>(SappyOnVisualChange.Callback);
 
+            Bridge.OnMounted.Add(SappyOnMounted);
+            Bridge.OnUnmounted.Add(SappyOnUnmounted);
             Bridge.OnStyle.Add(SappyOnInlineStyle);
         }
         
@@ -327,38 +327,20 @@ namespace Roots
             vectorImage = null;
         }
 
-        [SapTarget(typeof(EventCallback<AttachToPanelEvent>))]
-        private void OnMounted(AttachToPanelEvent evt)
+        [SapTarget]
+        private void OnMounted()
         {
             Loader = AssetsLoader.GetLoader(this);
             
             Parent = parent;
-            Parent?.RegisterCallback<VisualChangeEvent>(OnVisualChange);
+            Parent?.RegisterCallback<VisualChangeEvent>(SappyOnVisualChange.Callback);
         }
         
-        [SapTarget(typeof(EventCallback<DetachFromPanelEvent>))]
-        private void OnUnmounted(DetachFromPanelEvent evt)
+        [SapTarget]
+        private void OnUnmounted()
         {
-            Parent?.UnregisterCallback<VisualChangeEvent>(OnVisualChange);
+            Parent?.UnregisterCallback<VisualChangeEvent>(SappyOnVisualChange.Callback);
             Parent = null;
-
-            image = null;
-            sprite = null;
-            vectorImage = null;
-            tintColor = Color.white;
-            scaleMode = ScaleMode.StretchToFill;
-
-            Loader = null;
-            
-            Width = default;
-            Height = default;
-            TextureAddress = default;
-            SpriteAddress = default;
-            VectorAddress = default;
-            RenderTextureAddress = default;
-            StyleBackgroundSet = false;
-            InlineWidth = default;
-            InlineHeight = default;
             
             if(!RishUtils.MemCmp(style.unitySliceTop, RishUI.VisualElementExtensions.NullInt))
             {
@@ -392,6 +374,24 @@ namespace Roots
             {
                 style.height = RishUI.VisualElementExtensions.NullLength;
             }
+
+            image = null;
+            sprite = null;
+            vectorImage = null;
+            tintColor = Color.white;
+            scaleMode = ScaleMode.StretchToFill;
+
+            Loader = null;
+            
+            Width = default;
+            Height = default;
+            TextureAddress = default;
+            SpriteAddress = default;
+            VectorAddress = default;
+            RenderTextureAddress = default;
+            StyleBackgroundSet = false;
+            InlineWidth = default;
+            InlineHeight = default;
         }
 
         [SapTarget]

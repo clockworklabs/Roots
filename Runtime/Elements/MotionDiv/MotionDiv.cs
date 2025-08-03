@@ -62,7 +62,7 @@ namespace Roots
         }
         void IPropsListener<MotionDivProps>.PropsWillChange() { }
 
-        protected override Element Render() => Div.Create(descriptor: Props.descriptor, children: Props.children);
+        protected override Element Render() => Div.Create(name: Props.descriptor.name, className: Props.descriptor.className, style: State.style.Value, children: Props.children);
 
         [SapTarget(typeof(EventCallback<VisualChangeEvent>))]
         private void OnVisualChange(VisualChangeEvent evt) => Animation.OnVisualChange(evt.target as VisualElement);
@@ -71,7 +71,12 @@ namespace Roots
         StyleAnimation IAnimatedElement.StyleAnimation => Animation;
         void IAnimatedElement.Unmount() => CanUnmount();
 
-        void IAnimatedElement.SetStyle(Style style) => SetStyle(style);
+        void IAnimatedElement.SetStyle(Style style)
+        {
+            if (State.style.HasValue) return;
+            
+            SetStyle(style);
+        }
         void IAnimatedElement.OnAnimateComplete() => OnAnimateComplete();
         void IAnimatedElement.OnExitComplete() => OnExitComplete();
         
@@ -669,6 +674,6 @@ namespace Roots
     public struct MotionDivState
     {
         [IgnoreComparison]
-        public Style style;
+        public Style? style;
     }
 }

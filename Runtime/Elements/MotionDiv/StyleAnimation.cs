@@ -37,7 +37,22 @@ namespace Roots
         private Target Animate { get; set; }
         private Target Exit { get; set; }
         
-        private VisualElement VisualElement { get; set; }
+        private VisualElement _visualElement;
+        private VisualElement VisualElement
+        {
+            get => _visualElement;
+            set
+            {
+#if UNITY_EDITOR
+                if (value != null && _visualElement != null && value != _visualElement)
+                {
+                    UnityEngine.Debug.LogError("MotionDiv VisualElement changed.");
+                }
+#endif
+                _visualElement?.ResetInlineStyles();
+                _visualElement = value;
+            }
+        }
 
         public StyleAnimation(IAnimatedElement element)
         {
@@ -63,17 +78,14 @@ namespace Roots
 
         private void Reset()
         {
+            VisualElement = null;
             Motion.Reset();
 
             Animate = default;
             Exit = default;
         }
 
-        public void OnVisualChange(VisualElement target)
-        {
-            VisualElement = target;
-            OnChangeStem.Send(target);
-        }
+        public void OnVisualChange(VisualElement target) => OnChangeStem.Send(target);
 
         public void SetAnimate(Target animate)
         {
@@ -269,7 +281,8 @@ namespace Roots
                     ParentMachine = parent.Machine;
                     ParentMachine.OnChange.Add(SappyOnParentStateChange);
                 }
-                
+
+                Element.VisualElement = element;
                 Motion.SetInitial(element, parent?.Motion);
                 
                 Ready = true;

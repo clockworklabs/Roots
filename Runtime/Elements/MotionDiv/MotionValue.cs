@@ -49,7 +49,6 @@ namespace Roots
         public void Reset()
         {
             Animation.Stop();
-            Element.ResetInlineStyles();
             Element = null;
             Value = null;
         }

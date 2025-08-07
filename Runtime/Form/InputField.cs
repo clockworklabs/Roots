@@ -438,7 +438,7 @@ namespace Roots
                 }
                 if (firstSetup || !RishUtils.MemCmp(Props.Value.textInputDescriptor.style, textInputDescriptor.style))
                 {
-                    textInputBase.SetStyle(textInputDescriptor.style);
+                    textInputBase.ForceStyle(textInputDescriptor.style);
                 }
 
                 var textElementDescriptor = props.textElementDescriptor;
@@ -456,7 +456,7 @@ namespace Roots
                 }
                 if (firstSetup || !RishUtils.MemCmp(Props.Value.textElementDescriptor.style, textElementDescriptor.style))
                 {
-                    TextElement.SetStyle(textElementDescriptor.style);
+                    TextElement.ForceStyle(textElementDescriptor.style);
                 }
 
                 if (firstSetup || TextElement.enableRichText != props.richTextEnabled)

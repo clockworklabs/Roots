@@ -78,57 +78,57 @@ namespace Roots
 
         public Motion()
         {
-            BackgroundColor = new MotionColor(s => s.backgroundColor, s => s.backgroundColor);
-            BorderBottomColor = new MotionColor(s => s.borderBottomColor, s => s.borderBottomColor);
-            BorderBottomLeftRadius = new MotionLength(s => s.borderBottomLeftRadius, s => s.borderBottomLeftRadius, e => Mathf.Max(e.layout.width, e.layout.height));
-            BorderBottomRightRadius = new MotionLength(s => s.borderBottomRightRadius, s => s.borderBottomRightRadius, e => Mathf.Max(e.layout.width, e.layout.height));
-            BorderBottomWidth = new MotionFloat(PropertyType.Physical, s => s.borderBottomWidth, s => s.borderBottomWidth);
-            BorderLeftColor = new MotionColor(s => s.borderLeftColor, s => s.borderLeftColor);
-            BorderLeftWidth = new MotionFloat(PropertyType.Physical, s => s.borderLeftWidth, s => s.borderLeftWidth);
-            BorderRightColor = new MotionColor(s => s.borderRightColor, s => s.borderRightColor);
-            BorderRightWidth = new MotionFloat(PropertyType.Physical, s => s.borderRightWidth, s => s.borderRightWidth);
-            BorderTopColor = new MotionColor(s => s.borderTopColor, s => s.borderTopColor);
-            BorderTopLeftRadius = new MotionLength(s => s.borderTopLeftRadius, s => s.borderTopLeftRadius, e => Mathf.Max(e.layout.width, e.layout.height));
-            BorderTopRightRadius = new MotionLength(s => s.borderTopRightRadius, s => s.borderTopRightRadius, e => Mathf.Max(e.layout.width, e.layout.height));
-            BorderTopWidth = new MotionFloat(PropertyType.Physical, s => s.borderTopWidth, s => s.borderTopWidth);
-            Bottom = new MotionLength(s => s.bottom, s => s.bottom, e => e?.parent?.layout.height ?? default);
-            Color = new MotionColor(s => s.color, s => s.color);
-            FlexBasis = new MotionLength(s => s.flexBasis, s => s.flexBasis, e => e?.parent?.resolvedStyle.flexDirection is FlexDirection.Column or FlexDirection.ColumnReverse ? e.parent.layout.height : e.parent.layout.width);
-            FlexGrow = new MotionFloat(PropertyType.Physical, s => s.flexGrow, s => s.flexGrow);
-            FlexShrink = new MotionFloat(PropertyType.Physical, s => s.flexShrink, s => s.flexShrink);
-            FontSize = new MotionLength(s => s.fontSize, s => s.fontSize, e => e?.parent?.resolvedStyle.fontSize ?? default);
-            Height = new MotionLength(s => s.height, s => s.height, e => e?.parent?.layout.height ?? default);
-            Left = new MotionLength(s => s.left, s => s.left, e => e?.parent?.layout.width ?? default);
-            LetterSpacing = new MotionLength(s => s.letterSpacing, s => s.letterSpacing, e => e?.parent?.resolvedStyle.letterSpacing ?? default);
-            MarginBottom = new MotionLength(s => s.marginBottom, s => s.marginBottom, e => e?.parent?.layout.height ?? default);
-            MarginLeft = new MotionLength(s => s.marginLeft, s => s.marginLeft, e => e?.parent?.layout.width ?? default);
-            MarginRight = new MotionLength(s => s.marginRight, s => s.marginRight, e => e?.parent?.layout.width ?? default);
-            MarginTop = new MotionLength(s => s.marginTop, s => s.marginTop, e => e?.parent?.layout.height ?? default);
-            MaxHeight = new MotionLength(s => s.maxHeight, s => s.maxHeight, e => e?.parent?.layout.height ?? default);
-            MaxWidth = new MotionLength(s => s.maxWidth, s => s.maxWidth, e => e?.parent?.layout.width ?? default);
-            MinHeight = new MotionLength(s => s.minHeight, s => s.minHeight, e => e?.parent?.layout.height ?? default);
-            MinWidth = new MotionLength(s => s.minWidth, s => s.minWidth, e => e?.parent?.layout.width ?? default);
-            Opacity = new MotionFloat(PropertyType.NonPhysical, s => s.opacity, s => s.opacity);
-            PaddingBottom = new MotionLength(s => s.paddingBottom, s => s.paddingBottom, e => e?.parent?.layout.height ?? default);
-            PaddingLeft = new MotionLength(s => s.paddingLeft, s => s.paddingLeft, e => e?.parent?.layout.width ?? default);
-            PaddingRight = new MotionLength(s => s.paddingRight, s => s.paddingRight, e => e?.parent?.layout.width ?? default);
-            PaddingTop = new MotionLength(s => s.paddingTop, s => s.paddingTop, e => e?.parent?.layout.height ?? default);
-            Right = new MotionLength(s => s.right, s => s.right, e => e?.parent?.layout.width ?? default);
-            Rotate = new MotionRotate(s => s.rotate, s => s.rotate.angle); // TODO: Test
-            Scale = new MotionScale(s => s.scale, s => s.scale.value); // TODO: Test
-            Top = new MotionLength(s => s.top, s => s.top, e => e?.parent?.layout.height ?? default);
-            TransformOrigin = new MotionTransformOrigin(s => s.transformOrigin, s => new TransformOrigin(s.transformOrigin.x, s.transformOrigin.y, s.transformOrigin.z)); // TODO: Test
-            Translate = new MotionTranslate(s => s.translate, s => new Translate(s.translate.x, s.translate.y, s.translate.z)); // TODO: Test
-            UnityBackgroundImageTintColor = new MotionColor(s => s.unityBackgroundImageTintColor, s => s.unityBackgroundImageTintColor);
-            UnityParagraphSpacing = new MotionLength(s => s.unityParagraphSpacing, s => s.unityParagraphSpacing, e => e?.parent?.resolvedStyle.unityParagraphSpacing ?? default);
-            UnitySliceBottom = new MotionInt(s => s.unitySliceBottom, s => s.unitySliceBottom);
-            UnitySliceLeft = new MotionInt(s => s.unitySliceLeft, s => s.unitySliceLeft);
-            UnitySliceRight = new MotionInt(s => s.unitySliceRight, s => s.unitySliceRight);
-            UnitySliceTop = new MotionInt(s => s.unitySliceTop, s => s.unitySliceTop);
-            UnityTextOutlineColor = new MotionColor(s => s.unityTextOutlineColor, s => s.unityTextOutlineColor);
-            UnityTextOutlineWidth = new MotionFloat(PropertyType.Physical, s => s.unityTextOutlineWidth, s => s.unityTextOutlineWidth);
-            Width = new MotionLength(s => s.width, s => s.width, e => e?.parent?.layout.width ?? default);
-            WordSpacing = new MotionLength(s => s.wordSpacing, s => s.wordSpacing, e => e?.parent?.resolvedStyle.wordSpacing ?? default);
+            BackgroundColor = new MotionColor(s => s.backgroundColor, s => s.backgroundColor, (s, v) => s.backgroundColor = v);
+            BorderBottomColor = new MotionColor(s => s.borderBottomColor, s => s.borderBottomColor, (s, v) => s.borderBottomColor = v);
+            BorderBottomLeftRadius = new MotionLength(s => s.borderBottomLeftRadius, s => s.borderBottomLeftRadius, (s, v) => s.borderBottomLeftRadius = v, e => Mathf.Max(e.layout.width, e.layout.height));
+            BorderBottomRightRadius = new MotionLength(s => s.borderBottomRightRadius, s => s.borderBottomRightRadius, (s, v) => s.borderBottomRightRadius = v, e => Mathf.Max(e.layout.width, e.layout.height));
+            BorderBottomWidth = new MotionFloat(PropertyType.Physical, s => s.borderBottomWidth, s => s.borderBottomWidth, (s, v) => s.borderBottomWidth = v);
+            BorderLeftColor = new MotionColor(s => s.borderLeftColor, s => s.borderLeftColor, (s, v) => s.borderLeftColor = v);
+            BorderLeftWidth = new MotionFloat(PropertyType.Physical, s => s.borderLeftWidth, s => s.borderLeftWidth, (s, v) => s.borderLeftWidth = v);
+            BorderRightColor = new MotionColor(s => s.borderRightColor, s => s.borderRightColor, (s, v) => s.borderRightColor = v);
+            BorderRightWidth = new MotionFloat(PropertyType.Physical, s => s.borderRightWidth, s => s.borderRightWidth, (s, v) => s.borderRightWidth = v);
+            BorderTopColor = new MotionColor(s => s.borderTopColor, s => s.borderTopColor, (s, v) => s.borderTopColor = v);
+            BorderTopLeftRadius = new MotionLength(s => s.borderTopLeftRadius, s => s.borderTopLeftRadius, (s, v) => s.borderTopLeftRadius = v, e => Mathf.Max(e.layout.width, e.layout.height));
+            BorderTopRightRadius = new MotionLength(s => s.borderTopRightRadius, s => s.borderTopRightRadius, (s, v) => s.borderTopRightRadius = v, e => Mathf.Max(e.layout.width, e.layout.height));
+            BorderTopWidth = new MotionFloat(PropertyType.Physical, s => s.borderTopWidth, s => s.borderTopWidth, (e, v) => e.borderTopWidth = v);
+            Bottom = new MotionLength(s => s.bottom, s => s.bottom, (s, v) => s.bottom = v, e => e?.parent?.layout.height ?? 0);
+            Color = new MotionColor(s => s.color, s => s.color, (s, v) => s.color = v);
+            FlexBasis = new MotionLength(s => s.flexBasis, s => s.flexBasis, (s, v) => s.flexBasis = v, e => e?.parent?.resolvedStyle.flexDirection is FlexDirection.Column or FlexDirection.ColumnReverse ? e.parent.layout.height : e.parent.layout.width);
+            FlexGrow = new MotionFloat(PropertyType.Physical, s => s.flexGrow, s => s.flexGrow, (s, v) => s.flexGrow = v);
+            FlexShrink = new MotionFloat(PropertyType.Physical, s => s.flexShrink, s => s.flexShrink, (s, v) => s.flexShrink = v);
+            FontSize = new MotionLength(s => s.fontSize, s => s.fontSize, (s, v) => s.fontSize = v, e => e?.parent?.resolvedStyle.fontSize ?? 0);
+            Height = new MotionLength(s => s.height, s => s.height, (s, v) => s.height = v, e => e?.parent?.layout.height ?? 0);
+            Left = new MotionLength(s => s.left, s => s.left, (s, v) => s.left = v, e => e?.parent?.layout.width ?? 0);
+            LetterSpacing = new MotionLength(s => s.letterSpacing, s => s.letterSpacing, (s, v) => s.letterSpacing = v, e => e?.parent?.resolvedStyle.letterSpacing ?? 0);
+            MarginBottom = new MotionLength(s => s.marginBottom, s => s.marginBottom, (s, v) => s.marginBottom = v, e => e?.parent?.layout.height ?? 0);
+            MarginLeft = new MotionLength(s => s.marginLeft, s => s.marginLeft, (s, v) => s.marginLeft = v, e => e?.parent?.layout.width ?? 0);
+            MarginRight = new MotionLength(s => s.marginRight, s => s.marginRight, (s, v) => s.marginRight = v, e => e?.parent?.layout.width ?? 0);
+            MarginTop = new MotionLength(s => s.marginTop, s => s.marginTop, (s, v) => s.marginTop = v, e => e?.parent?.layout.height ?? 0);
+            MaxHeight = new MotionLength(s => s.maxHeight, s => s.maxHeight, (s, v) => s.maxHeight = v, e => e?.parent?.layout.height ?? 0);
+            MaxWidth = new MotionLength(s => s.maxWidth, s => s.maxWidth, (s, v) => s.maxWidth = v, e => e?.parent?.layout.width ?? 0);
+            MinHeight = new MotionLength(s => s.minHeight, s => s.minHeight, (s, v) => s.minHeight = v, e => e?.parent?.layout.height ?? 0);
+            MinWidth = new MotionLength(s => s.minWidth, s => s.minWidth, (s, v) => s.minWidth = v, e => e?.parent?.layout.width ?? 0);
+            Opacity = new MotionFloat(PropertyType.NonPhysical, s => s.opacity, s => s.opacity, (s, v) => s.opacity = v);
+            PaddingBottom = new MotionLength(s => s.paddingBottom, s => s.paddingBottom, (e, v) => e.paddingBottom = v, e => e?.parent?.layout.height ?? 0);
+            PaddingLeft = new MotionLength(s => s.paddingLeft, s => s.paddingLeft, (e, v) => e.paddingLeft = v, e => e?.parent?.layout.width ?? 0);
+            PaddingRight = new MotionLength(s => s.paddingRight, s => s.paddingRight, (e, v) => e.paddingRight = v, e => e?.parent?.layout.width ?? 0);
+            PaddingTop = new MotionLength(s => s.paddingTop, s => s.paddingTop, (e, v) => e.paddingTop = v, e => e?.parent?.layout.height ?? 0);
+            Right = new MotionLength(s => s.right, s => s.right, (e, v) => e.right = v, e => e?.parent?.layout.width ?? 0);
+            Rotate = new MotionRotate(s => s.rotate, s => s.rotate.angle, (e, v) => e.rotate = new Rotate(v)); // TODO: Test
+            Scale = new MotionScale(s => s.scale, s => s.scale.value, (e, v) => e.scale = new Scale(v)); // TODO: Test
+            Top = new MotionLength(s => s.top, s => s.top, (e, v) => e.top = v, e => e?.parent?.layout.height ?? 0);
+            TransformOrigin = new MotionTransformOrigin(s => s.transformOrigin, s => new TransformOrigin(s.transformOrigin.x, s.transformOrigin.y, s.transformOrigin.z), (e, v) => e.transformOrigin = v); // TODO: Test
+            Translate = new MotionTranslate(s => s.translate, s => new Translate(s.translate.x, s.translate.y, s.translate.z), (e, v) => e.translate = v); // TODO: Test
+            UnityBackgroundImageTintColor = new MotionColor(s => s.unityBackgroundImageTintColor, s => s.unityBackgroundImageTintColor, (e, v) => e.unityBackgroundImageTintColor = v);
+            UnityParagraphSpacing = new MotionLength(s => s.unityParagraphSpacing, s => s.unityParagraphSpacing, (e, v) => e.unityParagraphSpacing = v, e => e?.parent?.resolvedStyle.unityParagraphSpacing ?? 0);
+            UnitySliceBottom = new MotionInt(s => s.unitySliceBottom, s => s.unitySliceBottom, (e, v) => e.unitySliceBottom = v);
+            UnitySliceLeft = new MotionInt(s => s.unitySliceLeft, s => s.unitySliceLeft, (e, v) => e.unitySliceLeft = v);
+            UnitySliceRight = new MotionInt(s => s.unitySliceRight, s => s.unitySliceRight, (e, v) => e.unitySliceRight = v);
+            UnitySliceTop = new MotionInt(s => s.unitySliceTop, s => s.unitySliceTop, (e, v) => e.unitySliceTop = v);
+            UnityTextOutlineColor = new MotionColor(s => s.unityTextOutlineColor, s => s.unityTextOutlineColor, (e, v) => e.unityTextOutlineColor = v);
+            UnityTextOutlineWidth = new MotionFloat(PropertyType.Physical, s => s.unityTextOutlineWidth, s => s.unityTextOutlineWidth, (e, v) => e.unityTextOutlineWidth = v);
+            Width = new MotionLength(s => s.width, s => s.width, (e, v) => e.width = v, e => e?.parent?.layout.width ?? 0);
+            WordSpacing = new MotionLength(s => s.wordSpacing, s => s.wordSpacing, (e, v) => e.wordSpacing = v, e => e?.parent?.resolvedStyle.wordSpacing ?? 0);
         }
 
         public void Reset()

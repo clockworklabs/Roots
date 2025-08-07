@@ -12,28 +12,44 @@ namespace Roots
     {
         public delegate TI InlineGetter(IStyle inlineStyle);
         public delegate TI ResolvedGetter(IResolvedStyle resolvedStyle);
+        public delegate void InlineSetter(IStyle inlineStyle, T value);
         
         private PropertyType PropertyType { get; }
         private InlineGetter Inline { get; }
         private ResolvedGetter Resolved { get; }
+        private InlineSetter Setter { get; }
 
         protected VisualElement Element { get; private set; }
         private bool Initialized => Element != null;
 
-        public T? Value { get; private set; }
+        private T? _value;
+        public T? Value
+        {
+            get => _value;
+            private set
+            {
+                if(value != null)
+                {
+                    Setter(Element.style, value.Value);
+                }
+                _value = value;
+            }
+        }
         
         private AnimationId Animation { get; set; }
 
-        protected MotionValue(PropertyType propertyType, InlineGetter inline, ResolvedGetter resolved)
+        protected MotionValue(PropertyType propertyType, InlineGetter inlineGetter, ResolvedGetter resolvedGetter, InlineSetter inlineSetter)
         {
             PropertyType = propertyType;
-            Inline = inline;
-            Resolved = resolved;
+            Inline = inlineGetter;
+            Resolved = resolvedGetter;
+            Setter = inlineSetter;
         }
 
         public void Reset()
         {
             Animation.Stop();
+            Element.ResetInlineStyles();
             Element = null;
             Value = null;
         }
@@ -171,17 +187,17 @@ namespace Roots
 
     public class MotionColor : MotionValue<Color, RishUI.StyleColor, ColorSpring, ColorTween>
     {
-        public MotionColor(InlineGetter inline, ResolvedGetter resolved) : base(PropertyType.NonPhysical, inline, resolved) { }
+        public MotionColor(InlineGetter inline, ResolvedGetter resolved, InlineSetter setter) : base(PropertyType.NonPhysical, inline, resolved, setter) { }
     }
     
     public class MotionFloat : MotionValue<float, RishUI.StyleFloat, FloatSpring, FloatTween>
     {
-        public MotionFloat(PropertyType propertyType, InlineGetter inline, ResolvedGetter resolved) : base(propertyType, inline, resolved) { }
+        public MotionFloat(PropertyType propertyType, InlineGetter inline, ResolvedGetter resolved, InlineSetter setter) : base(propertyType, inline, resolved, setter) { }
     }
 
     public class MotionInt : MotionValue<int, RishUI.StyleInt, IntSpring, IntTween>
     {
-        public MotionInt(InlineGetter inline, ResolvedGetter resolved) : base(PropertyType.NonPhysical, inline, resolved) { }
+        public MotionInt(InlineGetter inline, ResolvedGetter resolved, InlineSetter setter) : base(PropertyType.NonPhysical, inline, resolved, setter) { }
     }
 
     public class MotionLength : MotionValue<Length, RishUI.StyleLength, LengthSpring, LengthTween>
@@ -190,7 +206,7 @@ namespace Roots
         
         private BasisGetter Basis { get; }
         
-        public MotionLength(InlineGetter inline, ResolvedGetter resolved, BasisGetter basis) : base(PropertyType.Physical, inline, resolved)
+        public MotionLength(InlineGetter inline, ResolvedGetter resolved, InlineSetter setter, BasisGetter basis) : base(PropertyType.Physical, inline, resolved, setter)
         {
             Basis = basis ?? throw new ArgumentException("Length properties need a basis for percentage values");
         }
@@ -217,17 +233,17 @@ namespace Roots
 
     public class MotionRotate : MotionValue<Angle, RishUI.StyleRotate, AngleSpring, AngleTween>
     {
-        public MotionRotate(InlineGetter inline, ResolvedGetter resolved) : base(PropertyType.Physical, inline, resolved) { }
+        public MotionRotate(InlineGetter inline, ResolvedGetter resolved, InlineSetter setter) : base(PropertyType.Physical, inline, resolved, setter) { }
     }
 
     public class MotionScale : MotionValue<Vector3, RishUI.StyleScale, Vector3Spring, Vector3Tween>
     {
-        public MotionScale(InlineGetter inline, ResolvedGetter resolved) : base(PropertyType.Physical, inline, resolved) { }
+        public MotionScale(InlineGetter inline, ResolvedGetter resolved, InlineSetter setter) : base(PropertyType.Physical, inline, resolved, setter) { }
     }
 
     public class MotionTransformOrigin : MotionValue<TransformOrigin, RishUI.StyleTransformOrigin, TransformOriginSpring, TransformOriginTween>
     {
-        public MotionTransformOrigin(InlineGetter inline, ResolvedGetter resolved) : base(PropertyType.Physical, inline, resolved) { }
+        public MotionTransformOrigin(InlineGetter inline, ResolvedGetter resolved, InlineSetter setter) : base(PropertyType.Physical, inline, resolved, setter) { }
 
         protected override TransformOrigin? Adjust(TransformOrigin? value, TransformOrigin target)
         {
@@ -266,7 +282,7 @@ namespace Roots
 
     public class MotionTranslate : MotionValue<Translate, RishUI.StyleTranslate, TranslateSpring, TranslateTween>
     {
-        public MotionTranslate(InlineGetter inline, ResolvedGetter resolved) : base(PropertyType.Physical, inline, resolved) { }
+        public MotionTranslate(InlineGetter inline, ResolvedGetter resolved, InlineSetter setter) : base(PropertyType.Physical, inline, resolved, setter) { }
 
         protected override Translate? Adjust(Translate? value, Translate target)
         {

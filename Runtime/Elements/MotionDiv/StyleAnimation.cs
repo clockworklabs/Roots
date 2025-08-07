@@ -94,11 +94,7 @@ namespace Roots
         private void Unmount() => Element.Unmount();
 
         [SapTarget]
-        private void OnStyle(Style style)
-        {
-            VisualElement.SetStyle(style);
-            Element.SetStyle(style);
-        }
+        private void OnStyle(Style style) =>  Element.SetStyle(style);
 
         private class StateMachine
         {

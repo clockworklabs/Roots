@@ -13,6 +13,8 @@ namespace Roots
     
     public partial class ContextualContext : RishElement<ContextualContextProps>, IMountingListener
     {
+        private static ulong Key { get; set; }
+        
         private IContextual Contextual { get; set; }
         private Menu Menu { get; set; }
         private Vector3 Position { get; set; }
@@ -72,11 +74,10 @@ namespace Roots
                 {
                     Props.children,
                     PointerCapturer.Create(),
-                    Menu.Create(new MenuProps
-                    {
-                        position = Position,
-                        element = Contextual.Menu
-                    })
+                    Menu.Create(
+                        key: Key,
+                        position: Position,
+                        element: Contextual.Menu)
                 };
             }
             else
@@ -89,6 +90,7 @@ namespace Roots
 
         public void ShowContextMenu(IContextual owner, Vector3 position)
         {
+            Key += 1;
             Contextual = owner;
             Position = position;
             Dirty();

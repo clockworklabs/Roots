@@ -39,7 +39,7 @@ namespace Roots
         }
         void IPropsListener.PropsWillChange() { }
 
-        protected override Element Render() => Div.Create(State.style, children: Props.element);
+        protected override Element Render() => Div.Create(style: State.style, children: Props.element);
         
         private void OnVisualChange(VisualChangeEvent evt)
         {

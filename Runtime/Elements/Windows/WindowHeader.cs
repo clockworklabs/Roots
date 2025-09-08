@@ -1,6 +1,8 @@
 using RishUI;
 using RishUI.Events;
+using Sappy;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace Roots
 {
@@ -23,13 +25,15 @@ namespace Roots
         
         void IMountingListener.ComponentDidMount()
         {
+            RegisterCallback<VisualChangeEvent>(SappyOnVisualChange.Callback);
             Context = GetFirstAncestorOfType<WindowsContext>();
             Window = GetFirstAncestorOfType<InternalWindow>();
 
             DraggingPointer = -1;
         }
-        
-        void IMountingListener.ComponentWillUnmount() { }
+        void IMountingListener.ComponentWillUnmount() {
+            UnregisterCallback<VisualChangeEvent>(SappyOnVisualChange.Callback);
+        }
         
         protected override Element Render() => Props.content;
 
@@ -71,6 +75,13 @@ namespace Roots
             DraggingPointer = -1;
         }
 
+        [SapTarget(typeof(EventCallback<VisualChangeEvent>))]
+        private void OnVisualChange(VisualChangeEvent evt)
+        {
+            UnregisterCallback<VisualChangeEvent>(SappyOnVisualChange.Callback);
+            Drag(Vector2.zero);
+        }
+
         private void Drag(Vector2 delta)
         {
             var contextSize = Context.ContentRect.size;
@@ -93,23 +104,42 @@ namespace Roots
                 var size = WorldLayout.size;
                 
                 var safeZone = Context.SafeZone;
-
-
+                
                 minX = -size.x + safeZone;
                 maxX = contextSize.x - safeZone;
                 minY = -size.y + safeZone;
                 maxY = contextSize.y - safeZone;
             }
-            
-            var minDeltaX = Mathf.Min(0, minX - position.x);
-            var maxDeltaX = Mathf.Max(0, maxX - position.x);
-            var minDeltaY = Mathf.Min(0, minY - position.y);
-            var maxDeltaY = Mathf.Max(0, maxY - position.y);
 
-            delta.x = Mathf.Clamp(delta.x, minDeltaX, maxDeltaX);
-            delta.y = Mathf.Clamp(delta.y, minDeltaY, maxDeltaY);
+            if (position.x < minX)
+            {
+                delta.x = minX - position.x;
+            } else if (position.x > maxX)
+            {
+                delta.x = maxX - position.x;
+            }
+            else
+            {
+                var minDeltaX = Mathf.Min(0, minX - position.x);
+                var maxDeltaX = Mathf.Max(0, maxX - position.x);
+                delta.x = Mathf.Clamp(delta.x, minDeltaX, maxDeltaX);
+            }
+
+            if (position.y < minY)
+            {
+                delta.y = minY - position.y;
+            } else if (position.y > maxY)
+            {
+                delta.y = maxY - position.y;
+            }
+            else
+            {
+                var minDeltaY = Mathf.Min(0, minY - position.y);
+                var maxDeltaY = Mathf.Max(0, maxY - position.y);
+                delta.y = Mathf.Clamp(delta.y, minDeltaY, maxDeltaY);
+            }
                     
-            Context?.Drag(Window.Props.guid, delta);
+            Window?.Drag(delta);
         }
     }
 

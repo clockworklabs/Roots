@@ -1,9 +1,11 @@
+using System;
 using RishUI;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Roots
 {
-    internal partial class InternalWindow : RishElement<InternalWindowProps>, IMountingListener
+    internal partial class InternalWindow : RishElement<InternalWindowProps, InternalWindowState>, IMountingListener
     {
         private WindowsContext Context { get; set; }
 
@@ -16,12 +18,29 @@ namespace Roots
         {
             Context = GetFirstAncestorOfType<WindowsContext>();
         }
-        
         void IMountingListener.ComponentWillUnmount() { }
         
         protected override Element Render()
         {
-            return Props.content;
+            var offset = Props.offset ?? State.dragOffset;
+            return Div.Create(
+                style: new Style
+                {
+                    position = Position.Absolute,
+                    left = Props.rect.x + offset.x,
+                    width = Props.rect.width,
+                    top = Props.rect.y + offset.y,
+                    height = Props.rect.height,
+                    pointerDetection = PointerDetectionMode.Ignore
+                },
+                children: Props.content);
+        }
+
+        internal void Drag(Vector2 delta)
+        {
+            SetDragOffset(State.dragOffset + delta);
+            
+            OnDrag(Props.guid, delta);
         }
 
         private void OnPointerDown(PointerDownEvent evt)
@@ -38,6 +57,16 @@ namespace Roots
         public ulong guid;
         public Element content;
         public bool draggable;
+        public Vector2? offset;
+        public Rect rect;
         // public bool resizable;
+
+        public Action<ulong, Vector2> onDrag;
+    }
+
+    [RishValueType]
+    internal struct InternalWindowState
+    {
+        public Vector2 dragOffset;
     }
 }

@@ -1,4 +1,5 @@
-﻿using RishUI;
+﻿using System;
+using RishUI;
 using Sappy;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -21,7 +22,6 @@ namespace Roots
             VisualElementParent = GetFirstAncestorOfType<VisualElement>();
             VisualElementParent.RegisterCallback<GeometryChangedEvent>(SappyParentGeometryChanged.Callback);
         }
-
         void IMountingListener.ComponentWillUnmount()
         {
             Context?.UnregisterWindow(GUID);
@@ -68,7 +68,6 @@ namespace Roots
                 }
             }
         }
-
         void IPropsListener<WindowProps>.PropsWillChange() { }
 
         protected override Element Render() => Element.Null;
@@ -96,13 +95,17 @@ namespace Roots
         
         public bool open;
         public bool draggable;
-        // public bool resizable;
-
-        public Vector2? minSize;
-        public Vector2? maxSize;
         
         public Element content;
 
         public bool alwaysOnTop;
+
+        public Vector2? offset;
+
+        public Action<Vector2> onDrag;
+
+        // public bool resizable;
+        // public Vector2? minSize;
+        // public Vector2? maxSize;
     }
 }

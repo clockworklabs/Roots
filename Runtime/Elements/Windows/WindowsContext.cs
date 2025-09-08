@@ -17,7 +17,6 @@ namespace Roots
         internal int SafeZone => Props.safeZoneSize > 0 ? Props.safeZoneSize : _SafeZone;
 
         private Dictionary<ulong, Window> RegisteredWindows { get; } = new();
-        private Dictionary<ulong, Vector2> Offsets { get; } = new();
         
         private List<ulong> WindowsOrder { get; } = new();
         
@@ -33,7 +32,6 @@ namespace Roots
             Rendered = false;
             
             RegisteredWindows.Clear();
-            Offsets.Clear();
             WindowsOrder.Clear();
         }
         
@@ -52,32 +50,13 @@ namespace Roots
 
                     var props = window.Props;
 
-                    var element = InternalWindow.Create(
+                    children.Add(InternalWindow.Create(
+                        key: (uint)guid,
                         guid: guid,
                         content: props.content,
-                        draggable: props.draggable);
-
-                    var local = WorldToLocal(window.ParentWorldContentRect);
-                    if (Offsets.TryGetValue(guid, out var offset))
-                    {
-                        local.x += offset.x;
-                        local.y += offset.y;
-                    }
-
-                    var holder = Div.Create(
-                        key: (uint)guid,
-                        style: new Style
-                        {
-                            position = Position.Absolute,
-                            left = local.x,
-                            width = local.width,
-                            top = local.y,
-                            height = local.height,
-                            pointerDetection = PointerDetectionMode.Ignore
-                        },
-                        children: element);
-
-                    children.Add(holder);
+                        draggable: props.draggable,
+                        rect: WorldToLocal(window.ParentWorldContentRect),
+                        onDrag: SappyDrag));
                 }
             }
 
@@ -141,21 +120,12 @@ namespace Roots
             Dirty(Rendered);
         }
 
+        [SapTarget]
         internal void Drag(ulong guid, Vector2 delta)
         {
-            if (!RegisteredWindows.ContainsKey(guid)) return;
+            if (!RegisteredWindows.TryGetValue(guid, out var window)) return;
             
-            if (!Offsets.TryGetValue(guid, out var offset))
-            {
-                offset = Vector2.zero;
-            }
-
-            offset.x += delta.x;
-            offset.y += delta.y;
-
-            Offsets[guid] = offset;
-            
-            Dirty(Rendered);
+            window.Props.onDrag?.Invoke(delta);
         }
 
         internal void ResizeTop(int index, float delta)
@@ -368,5 +338,7 @@ namespace Roots
         public int safeZoneSize;
         public bool hideAllWindows;
         public Children children;
+
+        public Action<ulong, Vector2> onOffset;
     }
 }

@@ -162,7 +162,7 @@ namespace Roots
 
         private void OnPointerUp(PointerUpEvent evt)
         {
-            if (Contextual == null || Menu == null || !Menu.WorldContentRect.Contains(evt.position))
+            if (Contextual == null || Menu == null)
             {
                 return;
             }

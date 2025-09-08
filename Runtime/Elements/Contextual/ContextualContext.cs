@@ -152,12 +152,7 @@ namespace Roots
         
         private void OnPointerDown(PointerDownEvent evt)
         {
-            if (Contextual == null || Menu == null || Position == evt.position)
-            {
-                return;
-            }
-
-            if (Menu.WorldContentRect.Contains(evt.position))
+            if (Contextual == null || Menu == null || Position == evt.position || Menu.WorldContentRect.Contains(evt.position))
             {
                 return;
             }
@@ -167,12 +162,7 @@ namespace Roots
 
         private void OnPointerUp(PointerUpEvent evt)
         {
-            if (Contextual == null || Menu == null || Position == evt.position)
-            {
-                return;
-            }
-
-            if (!Menu.WorldContentRect.Contains(evt.position))
+            if (Contextual == null || Menu == null || !Menu.WorldContentRect.Contains(evt.position))
             {
                 return;
             }

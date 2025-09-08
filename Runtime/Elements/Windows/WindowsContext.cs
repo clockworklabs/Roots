@@ -55,6 +55,7 @@ namespace Roots
                         guid: guid,
                         content: props.content,
                         draggable: props.draggable,
+                        offset: props.offset,
                         rect: WorldToLocal(window.ParentWorldContentRect),
                         onDrag: SappyDrag));
                 }

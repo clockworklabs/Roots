@@ -43,7 +43,7 @@ namespace Roots
                     Context?.UnregisterWindow(prevGuid);
                 }
                 
-                dirtyOpen = Props.open != prevValue.open || !RishUtils.Compare(Props.content, prevValue.content);
+                dirtyOpen = Props.open != prevValue.open || !RishUtils.MemCmp(Props.offset, prevValue.offset) || !RishUtils.Compare(Props.content, prevValue.content);
             }
             else
             {

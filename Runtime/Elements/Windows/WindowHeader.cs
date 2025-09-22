@@ -57,7 +57,7 @@ namespace Roots
                 return;
             }
             
-            Drag(evt.deltaPosition);
+            Drag(evt.deltaPosition, false);
             
             evt.StopPropagation();
         }
@@ -79,10 +79,10 @@ namespace Roots
         private void OnVisualChange(VisualChangeEvent evt)
         {
             UnregisterCallback<VisualChangeEvent>(SappyOnVisualChange.Callback);
-            Drag(Vector2.zero);
+            Drag(Vector2.zero, true);
         }
 
-        private void Drag(Vector2 delta)
+        private void Drag(Vector2 delta, bool isInitialization)
         {
             var contextSize = Context.ContentRect.size;
 
@@ -138,8 +138,8 @@ namespace Roots
                 var maxDeltaY = Mathf.Max(0, maxY - position.y);
                 delta.y = Mathf.Clamp(delta.y, minDeltaY, maxDeltaY);
             }
-                    
-            Window?.Drag(delta);
+            
+            Window?.Drag(delta, isInitialization);
         }
     }
 

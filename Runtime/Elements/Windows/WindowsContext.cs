@@ -122,11 +122,11 @@ namespace Roots
         }
 
         [SapTarget]
-        internal void Drag(ulong guid, Vector2 delta)
+        internal void Drag(ulong guid, WindowDragData data)
         {
             if (!RegisteredWindows.TryGetValue(guid, out var window)) return;
             
-            window.Props.onDrag?.Invoke(delta);
+            window.Props.onDrag?.Invoke(data);
         }
 
         internal void ResizeTop(int index, float delta)
@@ -339,7 +339,11 @@ namespace Roots
         public int safeZoneSize;
         public bool hideAllWindows;
         public Children children;
+    }
 
-        public Action<ulong, Vector2> onOffset;
+    public struct WindowDragData
+    {
+        public Vector2 delta;
+        public bool isInitialization;
     }
 }

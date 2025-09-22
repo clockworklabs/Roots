@@ -13,7 +13,6 @@ namespace Roots
         {
             RegisterCallback<PointerDownEvent>(OnPointerDown);
         }
-        
         void IMountingListener.ComponentDidMount()
         {
             Context = GetFirstAncestorOfType<WindowsContext>();
@@ -36,11 +35,11 @@ namespace Roots
                 children: Props.content);
         }
 
-        internal void Drag(Vector2 delta)
+        internal void Drag(Vector2 delta, bool isInitialization)
         {
             SetDragOffset(State.dragOffset + delta);
             
-            OnDrag(Props.guid, delta);
+            OnDrag(Props.guid, new WindowDragData { delta = delta, isInitialization = isInitialization });
         }
 
         private void OnPointerDown(PointerDownEvent evt)
@@ -61,7 +60,7 @@ namespace Roots
         public Rect rect;
         // public bool resizable;
 
-        public Action<ulong, Vector2> onDrag;
+        public Action<ulong, WindowDragData> onDrag;
     }
 
     [RishValueType]

@@ -102,7 +102,7 @@ namespace Roots
 
         public Vector2? offset;
 
-        public Action<Vector2> onDrag;
+        public Action<WindowDragData> onDrag;
 
         // public bool resizable;
         // public Vector2? minSize;

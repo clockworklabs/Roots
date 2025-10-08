@@ -1,3 +1,4 @@
+using System;
 using RishUI;
 using RishUI.Elements;
 
@@ -11,7 +12,8 @@ namespace Roots
             widthRange: Props.widthRange,
             heightRange: Props.heightRange,
             enableRichText: Props.enableRichText,
-            parseEscapeSequences: Props.parseEscapeSequences);
+            parseEscapeSequences: Props.parseEscapeSequences,
+            onElided: SappyProps.OnElided);
     }
 
     [RishValueType]
@@ -26,6 +28,8 @@ namespace Roots
 
         public bool enableRichText;
         public bool parseEscapeSequences;
+
+        public Action<bool> onElided;
 
         [Default]
         private static H4Props Default => new()

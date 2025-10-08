@@ -1,3 +1,4 @@
+using System;
 using RishUI;
 using RishUI.Elements;
 
@@ -5,15 +6,14 @@ namespace Roots
 {
     public partial class Small : RishElement<SmallProps>
     {
-        protected override Element Render()
-        {
-            var descriptor = Props.descriptor;
-            descriptor.className = new ClassName(descriptor.className) {
-                "small"
-            };
-            
-            return Label.Create(descriptor: descriptor, /*utilities: Props.utilities,*/ text: Props.text);
-        }
+        protected override Element Render() => Label.Create(
+            descriptor: Props.descriptor + "small",
+            text: Props.text,
+            widthRange: Props.widthRange,
+            heightRange: Props.heightRange,
+            enableRichText: Props.enableRichText,
+            parseEscapeSequences: Props.parseEscapeSequences,
+            onElided: SappyProps.OnElided);
     }
 
     [RishValueType]
@@ -21,7 +21,21 @@ namespace Roots
     {
         [DOMDescriptor]
         public DOMDescriptor descriptor;
-        // public Utilities utilities;
         public RishString text;
+        
+        public LengthRange? widthRange;
+        public LengthRange? heightRange;
+
+        public bool enableRichText;
+        public bool parseEscapeSequences;
+
+        public Action<bool> onElided;
+
+        [Default]
+        private static SmallProps Default => new()
+        {
+            enableRichText = true,
+            parseEscapeSequences = true
+        };
     }
 }

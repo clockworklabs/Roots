@@ -26,17 +26,18 @@ namespace Roots
             if (!Props.hideTooltips && Stack.Count > 0)
             {
                 var owner = Stack.Peek();
-                // TODO: Support transformed elements
-                var localRect = WorldToLocal(owner.WorldBoundingBox);
+                var tooltipContent = owner.Props.tooltip;
+                if (tooltipContent.Valid)
+                {
+                    // TODO: Support transformed elements
+                    var localRect = WorldToLocal(owner.WorldBoundingBox);
 
-                tooltip = TooltipHolder.Create(
-                    key: Count,
-                    rect: localRect,
-                    ignoreFit: owner.Props.ignoreFit,
-                    element: InternalTooltip.Create(new InternalTooltipProps
-                    {
-                        element = owner.Props.tooltip
-                    }));
+                    tooltip = TooltipHolder.Create(
+                        key: Count,
+                        rect: localRect,
+                        ignoreFit: owner.Props.ignoreFit,
+                        element: InternalTooltip.Create(element: tooltipContent));
+                }
             }
 
             return Div.Create(

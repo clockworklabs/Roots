@@ -54,7 +54,7 @@ namespace Roots
             HideTooltip();
         }
 
-        private void ShowTooltip() => Context?.ShowTooltip(this);
+        private void ShowTooltip() =>  Context?.ShowTooltip(this);
         private void HideTooltip() => Context?.HideTooltip(this);
     }
 

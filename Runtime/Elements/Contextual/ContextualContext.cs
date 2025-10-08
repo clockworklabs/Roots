@@ -47,7 +47,6 @@ namespace Roots
         public ContextualContext()
         {
             RegisterCallback<PointerDownEvent>(OnPointerDown, EventPhase.TrickleDown);
-            RegisterCallback<PointerUpEvent>(OnPointerUp, EventPhase.TrickleDown);
             
             RegisterCallback<PointerCaptureEvent>(OnPointerCapture);
             RegisterCallback<PointerCaptureOutEvent>(OnPointerRelease);

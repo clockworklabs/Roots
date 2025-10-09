@@ -101,6 +101,8 @@ namespace Roots
         private StyleLength InlineWidth { get; set; }
         private StyleLength InlineHeight { get; set; }
         
+        private bool UseBackground { get; set; }
+        
         public Image()
         {
             Bridge = new Bridge<ImageProps>(this);
@@ -117,6 +119,8 @@ namespace Roots
         void IVisualElement<ImageProps>.Setup(ImageProps props) => PropsManager.Setup(props);
         void IStyledProps<Image, ImageProps>.Setup(ImageProps props)
         {
+            UseBackground = props.useBackground;
+            
             Width = props.width.Value;
             Height = props.height.Value;
 
@@ -237,6 +241,15 @@ namespace Roots
             if (value == null) return;
             sprite = null;
             vectorImage = null;
+            
+            if (UseBackground)
+            {
+                style.backgroundImage = Background.FromTexture2D(value);
+
+                image = null;
+
+                StyleBackgroundSet = true;
+            }
         }
         [SapTarget(typeof(AssetLoaded<Sprite>))]
         private void OnSpriteLoaded(Asset<Sprite> asset)
@@ -263,7 +276,7 @@ namespace Roots
             vectorImage = null;
 
             var border = value.border;
-            if (border != Vector4.zero)
+            if (UseBackground || border != Vector4.zero)
             {
                 var style = this.style;
                 
@@ -302,6 +315,15 @@ namespace Roots
             if (value == null) return;
             image = null;
             sprite = null;
+            
+            if (UseBackground)
+            {
+                style.backgroundImage = Background.FromVectorImage(value);
+
+                vectorImage = null;
+
+                StyleBackgroundSet = true;
+            }
         }
         [SapTarget(typeof(AssetLoaded<RenderTexture>))]
         private void OnRenderTextureLoaded(Asset<RenderTexture> asset)
@@ -325,6 +347,15 @@ namespace Roots
             if (value == null) return;
             sprite = null;
             vectorImage = null;
+            
+            if (UseBackground)
+            {
+                style.backgroundImage = Background.FromRenderTexture(value);
+
+                image = null;
+
+                StyleBackgroundSet = true;
+            }
         }
 
         [SapTarget]
@@ -349,7 +380,8 @@ namespace Roots
             scaleMode = ScaleMode.StretchToFill;
 
             Loader = null;
-            
+
+            UseBackground = false;
             Width = default;
             Height = default;
             TextureAddress = default;
@@ -509,6 +541,8 @@ namespace Roots
         public Sprite sprite;
         public VectorImage vector;
         public RenderTexture renderTexture;
+
+        public bool useBackground;
         
         /// <summary>
         /// Styled Prop as --props-texture

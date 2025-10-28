@@ -9,7 +9,6 @@ namespace Roots
     public partial class AbstractButton {
         private partial class InternalElement : RishElement<InternalElementProps, InternalElementState>, IManualState
         {
-            private bool Listening { get; set; }
             private int PointerId { get; set; }
 
             public InternalElement()
@@ -19,6 +18,7 @@ namespace Roots
                 
                 RegisterCallback<PointerDownEvent>(OnPointerDown);
                 RegisterCallback<PointerUpEvent>(OnPointerUp);
+                RegisterCallback<PointerCaptureOutEvent>(OnPointerRelease);
                 // RegisterCallback<PointerStationaryEvent>(OnPointerStationary);
                 RegisterCallback<PointerCancelEvent>(OnPointerCancel);
                 
@@ -27,7 +27,6 @@ namespace Roots
 
             void IManualState.Restart()
             {
-                Listening = false;
                 PointerId = 0;
             }
             
@@ -60,7 +59,7 @@ namespace Roots
 
             private void OnPointerDown(PointerDownEvent evt)
             {
-                if (Listening || !Props.isInteractable || !Props.buttons.Contains(evt.button)) return;
+                if (PointerId > 0 || !Props.isInteractable || !Props.buttons.Contains(evt.button)) return;
 
                 // if (Props.actionOnPointerDown)
                 // {
@@ -68,7 +67,6 @@ namespace Roots
                 //     evt.StopPropagation();
                 // }
 
-                Listening = true;
                 PointerId = evt.pointerId;
                 
                 CapturePointer(PointerId);
@@ -78,11 +76,10 @@ namespace Roots
 
             private void OnPointerUp(PointerUpEvent evt)
             {
-                if (!Listening || PointerId != evt.pointerId) return;
+                if (PointerId != evt.pointerId) return;
                 
                 ReleasePointer(PointerId);
 
-                Listening = false;
                 PointerId = 0;
 
                 // if (!Props.actionOnPointerDown)
@@ -96,6 +93,18 @@ namespace Roots
 
 
                 SetPressed(false);
+            }
+
+            private void OnPointerRelease(PointerCaptureOutEvent evt)
+            {
+                if (PointerId != evt.pointerId) return;
+                
+                ReleasePointer(PointerId);
+
+                PointerId = 0;
+
+                SetPressed(false);
+                SetHovered(false);
             }
 
             // TODO: Does this work?
@@ -127,14 +136,13 @@ namespace Roots
             // TODO: Is this necessary?
             private void OnPointerCancel(PointerCancelEvent evt)
             {
-                if (!Listening || PointerId != evt.pointerId)
+                if (PointerId != evt.pointerId)
                 {
                     return;
                 }
 
                 ReleasePointer(PointerId);
 
-                Listening = false;
                 PointerId = 0;
                 
                 // TODO: Is it necessary?
@@ -151,6 +159,7 @@ namespace Roots
                 // }
 
                 SetPressed(false);
+                SetHovered(false);
                 
                 evt.StopPropagation();
             }

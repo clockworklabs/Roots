@@ -2,14 +2,34 @@
 using System.Linq;
 using RishUI;
 using RishUI.Events;
+using Sappy;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Roots
 {
     public partial class AbstractButton {
-        private partial class InternalElement : RishElement<InternalElementProps, InternalElementState>, IManualState
+        private partial class InternalElement : RishElement<InternalElementProps, InternalElementState>, IMountingListener
         {
-            private int PointerId { get; set; }
+            private int _pointerId = -1;
+            private int PointerId
+            {
+                get => _pointerId;
+                set
+                {
+                    if (_pointerId == value) return;
+
+                    if (_pointerId >= 0)
+                    {
+                        ReleasePointer(_pointerId);
+                    }
+                    _pointerId = value;
+                    if (value >= 0)
+                    {
+                        CapturePointer(value);
+                    }
+                }
+            }
 
             public InternalElement()
             {
@@ -18,16 +38,18 @@ namespace Roots
                 
                 RegisterCallback<PointerDownEvent>(OnPointerDown);
                 RegisterCallback<PointerUpEvent>(OnPointerUp);
-                RegisterCallback<PointerCaptureOutEvent>(OnPointerRelease);
+                // RegisterCallback<PointerCaptureEvent>(OnPointerCapture);
+                // RegisterCallback<PointerCaptureOutEvent>(OnPointerRelease);
                 // RegisterCallback<PointerStationaryEvent>(OnPointerStationary);
                 RegisterCallback<PointerCancelEvent>(OnPointerCancel);
                 
                 // TODO: Add longPress
             }
 
-            void IManualState.Restart()
+            void IMountingListener.ComponentDidMount() { }
+            void IMountingListener.ComponentWillUnmount()
             {
-                PointerId = 0;
+                PointerId = -1;
             }
             
             protected override Element Render()
@@ -53,13 +75,20 @@ namespace Roots
                 return element;
             }
 
-            private void OnHoverStart(HoverStartEvent evt) => SetHovered(true);
+            private void OnHoverStart(HoverStartEvent evt)
+            {
+                SetHovered(true);
+            }
 
-            private void OnHoverEnd(HoverEndEvent evt) => SetHovered(false);
+            private void OnHoverEnd(HoverEndEvent evt)
+            {
+                SetHovered(false);
+            }
 
+            [SapTarget(typeof(EventCallback<PointerDownEvent>))]
             private void OnPointerDown(PointerDownEvent evt)
             {
-                if (PointerId > 0 || !Props.isInteractable || !Props.buttons.Contains(evt.button)) return;
+                if (PointerId >= 0 || !Props.isInteractable || !Props.buttons.Contains(evt.button)) return;
 
                 // if (Props.actionOnPointerDown)
                 // {
@@ -68,19 +97,16 @@ namespace Roots
                 // }
 
                 PointerId = evt.pointerId;
-                
-                CapturePointer(PointerId);
 
                 SetPressed(true);
             }
 
+            [SapTarget(typeof(EventCallback<PointerUpEvent>))]
             private void OnPointerUp(PointerUpEvent evt)
             {
                 if (PointerId != evt.pointerId) return;
                 
-                ReleasePointer(PointerId);
-
-                PointerId = 0;
+                PointerId = -1;
 
                 // if (!Props.actionOnPointerDown)
                 // {
@@ -95,17 +121,26 @@ namespace Roots
                 SetPressed(false);
             }
 
-            private void OnPointerRelease(PointerCaptureOutEvent evt)
-            {
-                if (PointerId != evt.pointerId) return;
-                
-                ReleasePointer(PointerId);
-
-                PointerId = 0;
-
-                SetPressed(false);
-                SetHovered(false);
-            }
+            // private void OnPointerCapture(PointerCaptureEvent evt)
+            // {
+            //     if (PointerId != evt.pointerId) return;
+            //     
+            //     RegisterCallback<PointerCaptureOutEvent>();
+            //     
+            //     PointerId = 0;
+            //
+            //     SetPressed(false);
+            //     SetHovered(false);
+            // }
+            // private void OnPointerRelease(PointerCaptureOutEvent evt)
+            // {
+            //     if (PointerId != evt.pointerId || ContainsInTree(evt.target as VisualElement)) return;
+            //     
+            //     PointerId = 0;
+            //
+            //     SetPressed(false);
+            //     SetHovered(false);
+            // }
 
             // TODO: Does this work?
             // private void OnPointerStationary(PointerStationaryEvent evt)
@@ -136,14 +171,9 @@ namespace Roots
             // TODO: Is this necessary?
             private void OnPointerCancel(PointerCancelEvent evt)
             {
-                if (PointerId != evt.pointerId)
-                {
-                    return;
-                }
+                if (PointerId != evt.pointerId) return;
 
-                ReleasePointer(PointerId);
-
-                PointerId = 0;
+                PointerId = -1;
                 
                 // TODO: Is it necessary?
                 // if(ContainsPoint(WorldToLocal(evt.position)) && Props.interactable)

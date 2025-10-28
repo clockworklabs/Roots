@@ -141,6 +141,11 @@ namespace Roots
         public static implicit operator ButtonActionsGroup(RishList<ButtonAction> actions) => new() { actions = actions };
         
         [RequiresManagedContext]
+        public static implicit operator ButtonActionsGroup(ButtonAction action) => new() { 
+            actions = action
+        };
+        
+        [RequiresManagedContext]
         public static implicit operator ButtonActionsGroup(Action action) => new() { 
             actions = new ButtonAction
             {

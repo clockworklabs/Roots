@@ -49,10 +49,10 @@ namespace Roots
 
         protected override Element Render()
         {
-            var buttons = 0;
+            var buttons = new RishList<int>();
             foreach (var a in Props.action.actions)
             {
-                buttons |= a.button;
+                buttons.Add(a.button);
             }
             
             return InternalElement.Create(
@@ -166,7 +166,6 @@ namespace Roots
     public struct AbstractButtonProps
     {
         public bool? interactable;
-        public int? buttons;
         
         public ButtonActionsGroup action;
         
@@ -175,25 +174,13 @@ namespace Roots
         public Element pressed;
         public Element disabled;
         // TODO: Add focused
+
+        public bool actionOnPointerDown;
         
         public bool focusable;
         public bool autoFocus;
 
         public bool submitsForm;
-
-        public AbstractButtonProps(AbstractButtonProps other)
-        {
-            interactable = other.interactable;
-            buttons = other.buttons;
-            action = other.action;
-            normal = other.normal;
-            hovered = other.hovered;
-            pressed = other.pressed;
-            disabled = other.disabled;
-            submitsForm = other.submitsForm;
-            focusable = other.focusable;
-            autoFocus = other.autoFocus;
-        }
 
         internal bool isInteractable => !interactable.HasValue || interactable.Value;
     }

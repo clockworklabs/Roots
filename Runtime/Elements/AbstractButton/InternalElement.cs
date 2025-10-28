@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using RishUI;
 using RishUI.Events;
 using UnityEngine.UIElements;
@@ -59,7 +60,13 @@ namespace Roots
 
             private void OnPointerDown(PointerDownEvent evt)
             {
-                if (Listening || !Props.isInteractable || (evt.button & Props.buttons) == 0) return;
+                if (Listening || !Props.isInteractable || !Props.buttons.Contains(evt.button)) return;
+
+                if (Props.actionOnPointerDown)
+                {
+                    DoAction(evt.button);
+                    evt.StopPropagation();
+                }
 
                 Listening = true;
                 PointerId = evt.pointerId;
@@ -67,8 +74,6 @@ namespace Roots
                 CapturePointer(PointerId);
 
                 SetPressed(true);
-                
-                // evt.StopPropagation();
             }
 
             private void OnPointerUp(PointerUpEvent evt)
@@ -79,15 +84,18 @@ namespace Roots
 
                 Listening = false;
                 PointerId = 0;
-                
-                if (Props.isInteractable && State.hovered)
+
+                if (!Props.actionOnPointerDown)
                 {
-                    Action(evt.button);
+                    if (State.hovered)
+                    {
+                        DoAction(evt.button);
+                    }
+                    evt.StopPropagation();
                 }
 
+
                 SetPressed(false);
-                
-                evt.StopPropagation();
             }
 
             // TODO: Does this work?
@@ -146,13 +154,22 @@ namespace Roots
                 
                 evt.StopPropagation();
             }
+
+            private void DoAction(int button)
+            {
+                if (Props.isInteractable && Props.buttons.Contains(button))
+                {
+                    Action(button);
+                }
+            }
         }
 
         [RishValueType]
         internal struct InternalElementProps
         {
             public bool isInteractable;
-            public int buttons;
+            public bool actionOnPointerDown;
+            public RishList<int> buttons;
             public Element normal;
             public Element hovered;
             public Element pressed;

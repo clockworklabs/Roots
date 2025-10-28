@@ -57,7 +57,7 @@ namespace Roots
             
             return InternalElement.Create(
                 isInteractable: Props.isInteractable,
-                actionOnPointerDown: Props.actionOnPointerDown,
+                // actionOnPointerDown: Props.actionOnPointerDown,
                 buttons: buttons,
                 normal: Props.normal,
                 hovered: Props.hovered,
@@ -176,7 +176,7 @@ namespace Roots
         public Element disabled;
         // TODO: Add focused
 
-        public bool actionOnPointerDown;
+        // public bool actionOnPointerDown;
         
         public bool focusable;
         public bool autoFocus;

@@ -62,11 +62,11 @@ namespace Roots
             {
                 if (Listening || !Props.isInteractable || !Props.buttons.Contains(evt.button)) return;
 
-                if (Props.actionOnPointerDown)
-                {
-                    DoAction(evt.button);
-                    evt.StopPropagation();
-                }
+                // if (Props.actionOnPointerDown)
+                // {
+                //     DoAction(evt.button);
+                //     evt.StopPropagation();
+                // }
 
                 Listening = true;
                 PointerId = evt.pointerId;
@@ -85,14 +85,14 @@ namespace Roots
                 Listening = false;
                 PointerId = 0;
 
-                if (!Props.actionOnPointerDown)
-                {
+                // if (!Props.actionOnPointerDown)
+                // {
                     if (State.hovered)
                     {
                         DoAction(evt.button);
                     }
                     evt.StopPropagation();
-                }
+                // }
 
 
                 SetPressed(false);
@@ -168,7 +168,7 @@ namespace Roots
         internal struct InternalElementProps
         {
             public bool isInteractable;
-            public bool actionOnPointerDown;
+            // public bool actionOnPointerDown;
             public RishList<int> buttons;
             public Element normal;
             public Element hovered;

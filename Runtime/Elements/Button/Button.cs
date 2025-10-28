@@ -1,10 +1,9 @@
 using System;
 using RishUI;
-using Sappy;
 
 namespace Roots
 {
-    public partial class Button : RishElement<ButtonProps, ButtonState>
+    public partial class Button : RishElement<ButtonProps>
     {
         public enum Variant { None, Primary, PrimaryOutline, Secondary, SecondaryOutline, Success, SuccessOutline, Danger, DangerOutline, Warning, WarningOutline, Info, InfoOutline, Light, LightOutline, Dark, DarkOutline, Link }
         public enum Size { Regular, Small, Large }
@@ -87,7 +86,4 @@ namespace Roots
 
         public Action action;
     }
-
-    [RishValueType]
-    public struct ButtonState { }
 }

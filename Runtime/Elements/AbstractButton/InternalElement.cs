@@ -1,11 +1,12 @@
-﻿using RishUI;
+﻿using System;
+using RishUI;
 using RishUI.Events;
 using UnityEngine.UIElements;
 
 namespace Roots
 {
     public partial class AbstractButton {
-        private partial class InternalElement : RishElement<AbstractButtonProps, InternalElementState>, IManualState
+        private partial class InternalElement : RishElement<InternalElementProps, InternalElementState>, IManualState
         {
             private bool Listening { get; set; }
             private int PointerId { get; set; }
@@ -58,10 +59,7 @@ namespace Roots
 
             private void OnPointerDown(PointerDownEvent evt)
             {
-                if (Listening || !Props.isInteractable)
-                {
-                    return;
-                }
+                if (Listening || !Props.isInteractable || (evt.button & Props.buttons) == 0) return;
 
                 Listening = true;
                 PointerId = evt.pointerId;
@@ -75,10 +73,7 @@ namespace Roots
 
             private void OnPointerUp(PointerUpEvent evt)
             {
-                if ((!Listening || PointerId != evt.pointerId) && !Props.pointerUpIsSufficient)
-                {
-                    return;
-                }
+                if (!Listening || PointerId != evt.pointerId) return;
                 
                 ReleasePointer(PointerId);
 
@@ -87,14 +82,7 @@ namespace Roots
                 
                 if (Props.isInteractable && State.hovered)
                 {
-                    if (evt.button == 1)
-                    {
-                        SecondaryAction();
-                    }
-                    else
-                    {
-                        Action();
-                    }
+                    Action(evt.button);
                 }
 
                 SetPressed(false);
@@ -158,6 +146,19 @@ namespace Roots
                 
                 evt.StopPropagation();
             }
+        }
+
+        [RishValueType]
+        internal struct InternalElementProps
+        {
+            public bool isInteractable;
+            public int buttons;
+            public Element normal;
+            public Element hovered;
+            public Element pressed;
+            public Element disabled;
+            
+            public Action<int> action;
         }
 
         [RishValueType]

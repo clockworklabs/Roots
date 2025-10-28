@@ -1,6 +1,8 @@
 using System;
 using RishUI;
 using RishUI.Events;
+using RishUI.MemoryManagement;
+using Sappy;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -45,10 +47,35 @@ namespace Roots
         }
         void IPropsListener.PropsWillChange() { }
 
-        protected override Element Render() => InternalElement.Create(props: new AbstractButtonProps(Props)
+        protected override Element Render()
         {
-            action = SappyProps.Action
-        });
+            var buttons = 0;
+            foreach (var a in Props.action.actions)
+            {
+                buttons |= a.button;
+            }
+            
+            return InternalElement.Create(
+                isInteractable: Props.isInteractable,
+                buttons: buttons,
+                normal: Props.normal,
+                hovered: Props.hovered,
+                pressed: Props.pressed,
+                disabled: Props.disabled,
+                action: SappyDoAction);
+        }
+
+        [SapTarget]
+        private void DoAction(int button)
+        {
+            foreach (var buttonAction in Props.action.actions)
+            {
+                if (buttonAction.button == button)
+                {
+                    buttonAction.action?.Invoke();
+                }
+            }
+        }
 
         private void OnVisualChange(VisualChangeEvent evt)
         {
@@ -78,7 +105,7 @@ namespace Roots
                 return;
             }
             
-            Action();
+            DoAction(0);
 
             evt.StopPropagation();
         }
@@ -90,27 +117,59 @@ namespace Roots
                 return false;
             }
             
-            Action();
+            DoAction(0);
 
             return true;
         }
+    }
+    
+    [RishValueType]
+    public struct ButtonAction
+    {
+        public int button;
+        public Action action;
+        
+        public static implicit operator ButtonAction(Action action) => new() { action = action };
+        public static implicit operator ButtonAction(SapTarget<Action> action) => new() { action = action };
+    }
+    
+    [RishValueType]
+    public struct ButtonActionsGroup
+    {
+        public RishList<ButtonAction> actions;
+        
+        public static implicit operator ButtonActionsGroup(RishList<ButtonAction> actions) => new() { actions = actions };
+        
+        [RequiresManagedContext]
+        public static implicit operator ButtonActionsGroup(Action action) => new() { 
+            actions = new ButtonAction
+            {
+                action = action
+            }
+        };
+        
+        [RequiresManagedContext]
+        public static implicit operator ButtonActionsGroup(SapTarget<Action> action) => new() { 
+            actions = new ButtonAction
+            {
+                action = action
+            }
+        };
     }
 
     [RishValueType]
     public struct AbstractButtonProps
     {
         public bool? interactable;
+        public int? buttons;
         
-        public Action action;
-        public Action secondaryAction;
+        public ButtonActionsGroup action;
         
         public Element normal;
         public Element hovered;
         public Element pressed;
         public Element disabled;
         // TODO: Add focused
-
-        public bool pointerUpIsSufficient;
         
         public bool focusable;
         public bool autoFocus;
@@ -120,13 +179,12 @@ namespace Roots
         public AbstractButtonProps(AbstractButtonProps other)
         {
             interactable = other.interactable;
+            buttons = other.buttons;
             action = other.action;
-            secondaryAction = other.secondaryAction;
             normal = other.normal;
             hovered = other.hovered;
             pressed = other.pressed;
             disabled = other.disabled;
-            pointerUpIsSufficient = other.pointerUpIsSufficient;
             submitsForm = other.submitsForm;
             focusable = other.focusable;
             autoFocus = other.autoFocus;

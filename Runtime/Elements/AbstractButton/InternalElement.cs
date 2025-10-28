@@ -85,7 +85,6 @@ namespace Roots
                 SetHovered(false);
             }
 
-            [SapTarget(typeof(EventCallback<PointerDownEvent>))]
             private void OnPointerDown(PointerDownEvent evt)
             {
                 if (PointerId >= 0 || !Props.isInteractable || !Props.buttons.Contains(evt.button)) return;
@@ -101,7 +100,6 @@ namespace Roots
                 SetPressed(true);
             }
 
-            [SapTarget(typeof(EventCallback<PointerUpEvent>))]
             private void OnPointerUp(PointerUpEvent evt)
             {
                 if (PointerId != evt.pointerId) return;

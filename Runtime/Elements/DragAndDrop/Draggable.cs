@@ -54,22 +54,17 @@ namespace Roots
 
         void IPropsListener.PropsWillChange() { }
 
-        protected override Element Render()
-        {
-            var element = !State.dragging
-                ? Props.content
-                : State.primary
-                    ? Props.contentWhileDragging.Valid
+        protected override Element Render() => State.dragging
+            ? State.primary
+                ? Props.contentWhileDragging.Valid
+                    ? Props.contentWhileDragging
+                    : Props.content
+                : Props.secondaryContentWhileDragging.Valid
+                    ? Props.secondaryContentWhileDragging
+                    : Props.contentWhileDragging.Valid
                         ? Props.contentWhileDragging
                         : Props.content
-                    : Props.secondaryContentWhileDragging.Valid
-                        ? Props.secondaryContentWhileDragging
-                        : Props.contentWhileDragging.Valid
-                            ? Props.contentWhileDragging
-                            : Props.content;
-
-            return element;
-        }
+            : Props.content;
 
         private void OnDragStart(DragStartEvent evt)
         {
@@ -114,7 +109,7 @@ namespace Roots
                 }
                 var pressedButtons = evt.pressedButtons;
                 var primary = (pressedButtons & 1) > 0;
-                var start = Context.DraggableDragStart(this, primary);
+                var start = Context.DraggableDragStart(this, evt.localPosition, primary);
                 if (!start)
                 {
                     Valid = false;

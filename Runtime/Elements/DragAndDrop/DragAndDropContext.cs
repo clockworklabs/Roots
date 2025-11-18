@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using RishUI;
 using UnityEngine;
 using UnityEngine.UIElements;
-using Translate = UnityEngine.UIElements.Translate;
 
 namespace Roots
 {
@@ -27,13 +26,19 @@ namespace Roots
             Element draggedElement;
             if (State.draggedElement.Valid)
             {
+                var rect = State.rect;
                 var delta = State.dragDelta;
 
-                var style = (Style) State.layout;
-                style.translate = new Translate(delta.x, delta.y, 0);
-                style.pointerDetection = PointerDetectionMode.ForceIgnore;
-
-                draggedElement = Div.Create(style, children: State.draggedElement);
+                draggedElement = Div.Create(
+                    style: new Style
+                    {
+                        position = Position.Absolute,
+                        left = rect.x + delta.x,
+                        top = rect.y + delta.y,
+                        pointerDetection = PointerDetectionMode.ForceIgnore,
+                        translate = State.offset
+                    },
+                    children: State.draggedElement);
             }
             else
             {
@@ -82,7 +87,7 @@ namespace Roots
             MountedDropAreas.Remove(element);
         }
 
-        internal bool DraggableDragStart<T>(Draggable<T> element, bool primary) where T : struct
+        internal bool DraggableDragStart<T>(Draggable<T> element, Vector2 offset, bool primary) where T : struct
         {
             if (element == null || Draggable != null)
             {
@@ -94,6 +99,15 @@ namespace Roots
             Primary = primary;
             Draggable = element;
             SetDragDelta(Vector2.zero);
+            var localRect = WorldToLocal(element.WorldBoundingBox);
+            SetRect(new Rect
+            {
+                x = localRect.x + offset.x,
+                width = localRect.width,
+                y = localRect.y + offset.y,
+                height = localRect.height
+            });
+            SetOffset(new Translate(Length.Percent(-offset.x / localRect.width * 100), Length.Percent(-offset.y / localRect.height * 100), 0));
 
             foreach (var daElement in MountedDropAreas)
             {
@@ -297,7 +311,6 @@ namespace Roots
         private void SetupDraggedElement<T>(Draggable<T> draggable, bool hovering, bool acceptable) where T : struct
         {
             var draggedElement = Element.Null;
-            LayoutStyle layout = default;
             if (draggable != null)
             {
                 var props = draggable.Props;
@@ -334,22 +347,12 @@ namespace Roots
                     // var elementStyle = descriptor.style;
                     // elementStyle.position = Position.Absolute;
                     // TODO: Support transformed elements
-                    var localRect = WorldToLocal(draggable.WorldBoundingBox);
 
-                    layout = new LayoutStyle
-                    {
-                        position = Position.Absolute,
-                        left = localRect.x,
-                        width = localRect.width,
-                        top = localRect.y,
-                        height = localRect.height
-                    };
 
                     draggedElement = element;
                 }
             }
 
-            SetLayout(layout);
             SetDraggedElement(draggedElement);
         }
 
@@ -378,8 +381,9 @@ namespace Roots
     [RishValueType]
     public struct DragAndDropContextState
     {
+        public Rect rect;
+        public Translate offset;
         public Vector2 dragDelta;
-        public LayoutStyle layout;
         public Element draggedElement;
     }
 }

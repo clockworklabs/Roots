@@ -6,8 +6,7 @@ namespace Roots
     {
         protected override Element Render()
         {
-            var descriptor = Props.descriptor;
-            descriptor.className = new ClassName
+            var descriptor = Props.descriptor + new ClassName
             {
                 "row",
                 Props.xsClassName,
@@ -15,11 +14,10 @@ namespace Roots
                 Props.mdClassName,
                 Props.lgClassName,
                 Props.xlClassName,
-                Props.xxlClassName,
-                descriptor.className
+                Props.xxlClassName
             };
             
-            return Div.Create(descriptor: descriptor, /*utilities: Props.utilities,*/ children: Props.children);
+            return Div.Create(descriptor: descriptor, children: Props.children);
         }
     }
 

@@ -1,4 +1,4 @@
-using System.Text;
+using System;
 using RishUI;
 using Sappy;
 using UnityEngine;
@@ -6,9 +6,9 @@ using UnityEngine.UIElements;
 
 namespace Roots
 {
-    internal delegate void OnResponsiveContextResize(ResponsiveContext body, float oldWidth, float newWidth);
+    public delegate void OnResponsiveContextResize(ResponsiveContext body, float? oldWidth, float newWidth);
 
-    internal class ResponsiveContextResizeStem
+    public class ResponsiveContextResizeStem
     {
         public SapTargets<OnResponsiveContextResize> Targets { get; }
 
@@ -21,7 +21,7 @@ namespace Roots
             Targets = new SapTargets<OnResponsiveContextResize>(initialSize);
         }
 
-        public void Send(ResponsiveContext body, float oldWidth, float newWidth)
+        public void Send(ResponsiveContext body, float? oldWidth, float newWidth)
         {
             for (var i = Targets.Count - 1; i >= 0; i--)
             {
@@ -30,52 +30,56 @@ namespace Roots
         }
     }
     
-    public partial class ResponsiveContext : VisualElement, IVisualElement/*<ResponsiveContextProps>*/
+    public partial class ResponsiveContext : VisualElement, IVisualElement
     {
         private Bridge Bridge { get; }
         Bridge IVisualElement.Bridge => Bridge;
-
-        private static ResponsiveContextResizeStem OnResizeStem { get; } = new();
-        internal static SapTargets<OnResponsiveContextResize> OnResize => OnResizeStem.Targets;
         
         VisualElement IElement.GetDOMChild() => this;
         
         private PickingManager PickingManager { get; }
         PickingManager ICustomPicking.Manager => PickingManager;
+        
+        private static ResponsiveContextResizeStem OnStaticResizeStem { get; } = new();
+        internal static SapTargets<OnResponsiveContextResize> OnStaticResize => OnStaticResizeStem.Targets;
+        
+        private SapStem<float> OnResizeStem { get; } = new();
+        public SapTargets<Action<float>> OnResize => OnResizeStem.Targets;
 
-        private StringBuilder StringBuilder { get; } = new();
+        public float Width { get; private set; }
         
         public ResponsiveContext()
         {
             Bridge = new Bridge(this);
             PickingManager = new RectPickingManager(Bridge);
             
-            RegisterCallback<GeometryChangedEvent>(GeometryChanged);
+            RegisterCallback<AttachToPanelEvent>(OnAttachToPanel);
+            RegisterCallback<GeometryChangedEvent>(OnGeometryChanged);
         }
 
-        void IVisualElement/*<ResponsiveContextProps>*/.Setup(/*ResponsiveContextProps props*/)
-        {
-            // this.AddClassNames(props.utilities, StringBuilder);
-        }
+        void IVisualElement.Setup() { }
 
         public override bool ContainsPoint(Vector2 localPoint) => PickingManager.ContainsPoint(localPoint);
 
-        private void GeometryChanged(GeometryChangedEvent evt)
+        private void OnAttachToPanel(AttachToPanelEvent evt)
+        {
+            Width = contentRect.width;
+            
+            OnStaticResizeStem.Send(this, null, Width);
+            OnResizeStem.Send(Width);
+        }
+
+        private void OnGeometryChanged(GeometryChangedEvent evt)
         {
             var oldWidth = evt.oldRect.width;
             var newWidth = evt.newRect.width;
 
-            if (Mathf.Approximately(oldWidth, newWidth))
-            {
-                return;
-            }
+            if (Mathf.Approximately(oldWidth, newWidth)) return;
             
-            OnResizeStem.Send(this, oldWidth, newWidth);
+            Width = newWidth;
+            
+            OnStaticResizeStem.Send(this, oldWidth, newWidth);
+            OnResizeStem.Send(newWidth);
         }
     }
-
-    // public struct ResponsiveContextProps
-    // {
-    //     public Utilities utilities;
-    // }
 }

@@ -39,7 +39,7 @@ namespace Roots
                 RishRoot.OnStart.Add(SappySetupRishRoot);
             }
 
-            ResponsiveContext.OnResize.Add(SappyOnResponsiveResize);
+            ResponsiveContext.OnStaticResize.Add(SappyOnResponsiveResize);
         }
         private void OnDestroy()
         {
@@ -47,7 +47,7 @@ namespace Roots
             {
                 RishRoot.OnStart.Remove(SappySetupRishRoot);
             }
-            ResponsiveContext.OnResize.Remove(SappyOnResponsiveResize);
+            ResponsiveContext.OnStaticResize.Remove(SappyOnResponsiveResize);
         }
 
         [SapTarget]
@@ -83,28 +83,11 @@ namespace Roots
         }
         
         [SapTarget(typeof(OnResponsiveContextResize))]
-        private void OnResponsiveResize(ResponsiveContext responsive, float oldWidth, float newWidth)
+        private void OnResponsiveResize(ResponsiveContext responsive, float? oldWidth, float newWidth)
         {
             if (!TreeContains(responsive)) return;
-            
-            if (newWidth > oldWidth)
-            {
-                foreach (var styleSheet in SortedStyleSheets)
-                {
-                    if (styleSheet.MinWidth <= oldWidth)
-                    {
-                        continue;
-                    }
 
-                    if (styleSheet.MinWidth > newWidth)
-                    {
-                        break;
-                    }
-                    
-                    responsive.styleSheets.Add(styleSheet.StyleSheet);
-                }
-            }
-            else
+            if (newWidth < oldWidth)
             {
                 foreach (var styleSheet in SortedStyleSheets)
                 {
@@ -119,6 +102,23 @@ namespace Roots
                     }
                     
                     responsive.styleSheets.Remove(styleSheet.StyleSheet);
+                }
+            }
+            else
+            {
+                foreach (var styleSheet in SortedStyleSheets)
+                {
+                    if (styleSheet.MinWidth <= oldWidth)
+                    {
+                        continue;
+                    }
+
+                    if (styleSheet.MinWidth > newWidth)
+                    {
+                        break;
+                    }
+                    
+                    responsive.styleSheets.Add(styleSheet.StyleSheet);
                 }
             }
         }

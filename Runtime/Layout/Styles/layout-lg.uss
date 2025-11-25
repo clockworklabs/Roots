@@ -6,7 +6,7 @@
 }
 
 .col-lg {
-    flex: 1 0 0%;
+    flex: 1 0 0;
 }
 
 .row-cols-lg-1>* {

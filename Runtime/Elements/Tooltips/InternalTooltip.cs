@@ -6,6 +6,19 @@ namespace Roots
     internal partial class InternalTooltip : RishElement<InternalTooltipProps>, IMountingListener
     {
         private TooltipHolder Holder { get; set; }
+        
+        private Tooltip _tooltip;
+        private Tooltip Tooltip
+        {
+            set
+            {
+                if (_tooltip == value) return;
+                
+                _tooltip?.SetInternal(null);
+                _tooltip = value;
+                value?.SetInternal(this);
+            }
+        }
 
         public InternalTooltip()
         {
@@ -15,8 +28,14 @@ namespace Roots
         void IMountingListener.ComponentDidMount()
         {
             Holder = GetFirstAncestorOfType<TooltipHolder>();
+            var context = GetFirstAncestorOfType<TooltipsContext>();
+            Tooltip = context.Peek();
         }
-        void IMountingListener.ComponentWillUnmount() { }
+        void IMountingListener.ComponentWillUnmount()
+        {
+            Holder = null;
+            Tooltip = null;
+        }
 
         protected override Element Render() => Props.element;
 

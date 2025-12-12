@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using RishUI;
-using UnityEngine;
 
 namespace Roots
 {
@@ -11,7 +10,7 @@ namespace Roots
         private Stack<Tooltip> Stack { get; } = new();
         
         private ulong Count { get; set; }
-        
+
         void IManualState.Restart()
         {
             Tooltips.Clear();
@@ -81,10 +80,7 @@ namespace Roots
 
         internal void HideTooltip(Tooltip owner)
         {
-            if (!Tooltips.Remove(owner))
-            {
-                return;
-            }
+            if (!Tooltips.Remove(owner)) return;
 
             var forceRender = false;
             while(Stack.Count > 0 && !Tooltips.Contains(Stack.Peek()))
@@ -106,6 +102,8 @@ namespace Roots
                 Dirty();
             }
         }
+        
+        internal Tooltip Peek() => Stack.Count <= 0 ? null : Stack.Peek();
     }
 
     [RishValueType]

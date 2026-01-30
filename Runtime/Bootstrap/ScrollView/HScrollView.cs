@@ -1,6 +1,6 @@
 using RishUI;
 
-namespace Roots.Bootstrap
+namespace Roots.Experimental.Bootstrap
 {
     public partial class HScrollView : RishElement<HScrollViewProps>
     {

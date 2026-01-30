@@ -1,8 +1,0 @@
-.vertical-scrollbar {
-    width: 16px;
-    min-height: 19px;
-}
-.horizontal-scrollbar {
-    height: 16px;
-    min-width: 19px;
-}

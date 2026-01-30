@@ -6,7 +6,7 @@ using RishUI.Events;
 using RishUI.MemoryManagement;
 using UnityEngine;
 
-namespace Roots
+namespace Roots.Experimental
 {
     public partial class ScrollView : RishElement<ScrollViewProps, ScrollViewState>, IMountingListener, IPropsListener<ScrollViewProps>
     {
@@ -241,11 +241,12 @@ namespace Roots
 
         private void OnVisualChange(VisualChangeEvent evt) => SetupViewportSize();
 
-        private void SetupViewportSize() =>
-            SetViewportSize(Props.direction == Direction.Vertical ? ContentRect.height : ContentRect.width);
+        private void SetupViewportSize() => SetViewportSize(Props.direction == Direction.Vertical ? ContentRect.height : ContentRect.width);
         
         private void SetViewportSize(float v)
         {
+            if (Mathf.Approximately(v, State.viewportSize)) return;
+            
             RishSetViewportSize(v);
             OnViewportSize(v);
         }

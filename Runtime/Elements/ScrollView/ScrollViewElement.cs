@@ -1,9 +1,10 @@
+using System;
 using RishUI;
 using RishUI.Events;
 using UnityEngine.UIElements;
 using StyleLength = RishUI.StyleLength;
 
-namespace Roots
+namespace Roots.Experimental
 {
     public partial class ScrollView
     {
@@ -25,42 +26,41 @@ namespace Roots
 
             protected override Element Render()
             {
-                var isVertical = Props.direction == Direction.Vertical;
-
-                return Div.Create(
-                    className: new ClassName
-                    {
-                        "position-absolute",
-                        isVertical
-                            ? new ClassName
-                            {
-                                "w-100",
-                                "align-items-stretch",
-                                "flex-column"
-                            }
-                            : new ClassName
-                            {
-                                "h-100",
-                                "align-items-center",
-                                "flex-row"
-                            }
-                    },
-                    style: new Style
-                    {
-                        visibility = State.visible ? Visibility.Visible : Visibility.Hidden
-                    } + (isVertical
-                        ? new Style
+                Style directionalStyle;
+                switch (Props.direction)
+                {
+                    case Direction.Vertical:
+                        directionalStyle = new Style
                         {
+                            width = Length.Percent(100),
+                            alignItems = Align.Stretch,
+                            flexDirection = FlexDirection.Column,
                             top = Props.inverted ? default(StyleLength) : Props.position,
                             bottom = Props.inverted ? Props.position : default(StyleLength),
                             height = Props.fixedSize ?? default(StyleLength)
-                        }
-                        : new Style
+                        };
+                        break;
+                    case Direction.Horizontal:
+                        directionalStyle = new Style
                         {
+                            height = Length.Percent(100),
+                            alignItems = Align.Center,
+                            flexDirection = FlexDirection.Row,
                             left = Props.inverted ? default(StyleLength) : Props.position,
                             right = Props.inverted ? Props.position : default(StyleLength),
                             width = Props.fixedSize ?? default(StyleLength)
-                        }),
+                        };
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+
+                return Div.Create(
+                    style: new Style
+                    {
+                        position = Position.Absolute,
+                        visibility = State.visible ? Visibility.Visible : Visibility.Hidden
+                    } + directionalStyle,
                     children: Props.content);
             }
 

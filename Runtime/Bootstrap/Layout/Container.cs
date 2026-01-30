@@ -1,11 +1,11 @@
 using RishUI;
 
-namespace Roots
+namespace Roots.Bootstrap
 {
     public partial class Container : RishElement<ContainerProps>
     {
         protected override Element Render() => Div.Create(
-            className: Props.fluid switch
+            descriptor: Props.descriptor /*+ Props.fluid switch
             {
                 Fluid.None => "container",
                 Fluid.All => "container-fluid",
@@ -14,7 +14,8 @@ namespace Roots
                 Fluid.LG => "container-lg",
                 Fluid.XL => "container-xl",
                 Fluid.XXL => "container-xxl"
-            }, children: Props.children);
+            }*/,
+            children: Props.children);
     }
     
     public enum Fluid { None, All, SM, MD, LG, XL, XXL }
@@ -22,6 +23,8 @@ namespace Roots
     [RishValueType]
     public struct ContainerProps
     {
+        [DOMDescriptor]
+        public DOMDescriptor descriptor;
         public Fluid fluid;
         public Children children;
     }

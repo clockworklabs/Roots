@@ -1110,6 +1110,7 @@ namespace Roots
         public const string MS_lightbulb_circle = "\uebfe";
         public const string MS_lightbulb_outline = "\ue90f";
         public const string MS_line_axis = "\uea9a";
+        public const string MS_line_curve = "\uf757";
         public const string MS_line_style = "\ue919";
         public const string MS_line_weight = "\ue91a";
         public const string MS_linear_scale = "\ue260";
@@ -3348,6 +3349,7 @@ namespace Roots
             "lightbulb_circle" => MS_lightbulb_circle,
             "lightbulb_outline" => MS_lightbulb_outline,
             "line_axis" => MS_line_axis,
+            "line_curve" => MS_line_curve,
             "line_style" => MS_line_style,
             "line_weight" => MS_line_weight,
             "linear_scale" => MS_linear_scale,

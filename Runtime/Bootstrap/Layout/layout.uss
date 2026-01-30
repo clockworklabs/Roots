@@ -8,27 +8,7 @@
 .container-fluid {
     width: 100%;
 }
-.container {
-    align-self: center;
-    width: 100%;
-}
-.container-sm {
-    align-self: center;
-    width: 100%;
-}
-.container-md {
-    align-self: center;
-    width: 100%;
-}
-.container-lg {
-    align-self: center;
-    width: 100%;
-}
-.container-xl {
-    align-self: center;
-    width: 100%;
-}
-.container-xxl {
+.container,.container-sm,.container-md,.container-lg,.container-xl,.container-xxl {
     align-self: center;
     width: 100%;
 }

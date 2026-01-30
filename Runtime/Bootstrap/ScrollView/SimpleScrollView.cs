@@ -5,7 +5,7 @@ using Sappy;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Roots.Bootstrap
+namespace Roots.Experimental.Bootstrap
 {
     public partial class SimpleScrollView : RishElement<SimpleScrollViewProps, SimpleScrollViewState>, IMountingListener
     {
@@ -56,7 +56,7 @@ namespace Roots.Bootstrap
                         alwaysMountedIndices: Props.alwaysMountedIndices,
                         children: Props.children,
                         onContentSize: SappyState.SetContentSize,
-                        onViewportSize: SappyState.SetViewportSize),
+                        onViewportSize: SappySetViewportSize),
                     State.contentSize > State.viewportSize
                         ? ScrollBar.Create(
                             direction: Props.direction,
@@ -129,12 +129,22 @@ namespace Roots.Bootstrap
         private void OnDrag(float delta, bool dragging)
         {
             var target = Mathf.Clamp(State.position + delta, 0, State.contentSize - State.viewportSize);
+            ScrollAnimation.Stop();
             SetPosition(target);
             SetDragging(dragging);
         }
         
         [SapTarget(typeof(Func<float>))]
         private float GetPosition() => State.position;
+
+        [SapTarget]
+        private void SetViewportSize(float value)
+        {
+            RishSetViewportSize(value);
+            ScrollAnimation.Stop();
+            var target = Mathf.Clamp(State.position, 0, value > State.contentSize ? value - State.contentSize : State.contentSize - value);
+            SetPosition(target);
+        }
     }
 
     [RishValueType]

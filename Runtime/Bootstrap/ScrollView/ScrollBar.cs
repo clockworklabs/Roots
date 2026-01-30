@@ -3,7 +3,7 @@ using RishUI;
 using Sappy;
 using UnityEngine.UIElements;
 
-namespace Roots.Bootstrap
+namespace Roots.Experimental.Bootstrap
 {
     public partial class SimpleScrollView
     {

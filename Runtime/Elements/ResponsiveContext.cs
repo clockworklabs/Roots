@@ -1,85 +1,130 @@
-using System;
+﻿using System;
 using RishUI;
+using RishUI.Events;
 using Sappy;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace Roots
 {
-    public delegate void OnResponsiveContextResize(ResponsiveContext body, float? oldWidth, float newWidth);
-
-    public class ResponsiveContextResizeStem
+    public partial class ResponsiveContext : RishElement<ResponsiveContextProps, ResponsiveContextState>, IPropsListener<ResponsiveContextProps>
     {
-        public SapTargets<OnResponsiveContextResize> Targets { get; }
-
-        public ResponsiveContextResizeStem()
+        public enum Size { XSmall, Small, Medium, Large, XLarge, XXLarge, Count }
+        
+        public struct LayoutData
         {
-            Targets = new SapTargets<OnResponsiveContextResize>();
+            public Size size;
+            public bool uss;
+            public float width;
         }
-        public ResponsiveContextResizeStem(int initialSize)
-        {
-            Targets = new SapTargets<OnResponsiveContextResize>(initialSize);
-        }
-
-        public void Send(ResponsiveContext body, float? oldWidth, float newWidth)
-        {
-            for (var i = Targets.Count - 1; i >= 0; i--)
-            {
-                Targets[i]?.Invoke(body, oldWidth, newWidth);
-            }
-        }
-    }
-    
-    public partial class ResponsiveContext : VisualElement, IVisualElement
-    {
-        private Bridge Bridge { get; }
-        Bridge IVisualElement.Bridge => Bridge;
         
-        VisualElement IElement.GetDOMChild() => this;
-        
-        private PickingManager PickingManager { get; }
-        PickingManager ICustomPicking.Manager => PickingManager;
-        
-        private static ResponsiveContextResizeStem OnStaticResizeStem { get; } = new();
-        internal static SapTargets<OnResponsiveContextResize> OnStaticResize => OnStaticResizeStem.Targets;
-        
-        private SapStem<float> OnResizeStem { get; } = new();
-        public SapTargets<Action<float>> OnResize => OnResizeStem.Targets;
-
-        public float Width { get; private set; }
+        private SapStem<LayoutData> OnLayoutStem { get; } = new();
+        public SapTargets<Action<LayoutData>> OnLayout => OnLayoutStem.Targets;
         
         public ResponsiveContext()
         {
-            Bridge = new Bridge(this);
-            PickingManager = new RectPickingManager(Bridge);
-            
-            RegisterCallback<AttachToPanelEvent>(OnAttachToPanel);
-            RegisterCallback<GeometryChangedEvent>(OnGeometryChanged);
+            RegisterCallback<VisualChangeEvent>(OnVisualChange, EventPhase.AtTargetOnly);
         }
 
-        void IVisualElement.Setup() { }
-
-        public override bool ContainsPoint(Vector2 localPoint) => PickingManager.ContainsPoint(localPoint);
-
-        private void OnAttachToPanel(AttachToPanelEvent evt)
+        void IPropsListener<ResponsiveContextProps>.PropsDidChange(ResponsiveContextProps? prev)
         {
-            Width = contentRect.width;
-            
-            OnStaticResizeStem.Send(this, null, Width);
-            OnResizeStem.Send(Width);
+            if (prev.HasValue)
+            {
+                Update();
+            }
         }
+        void IPropsListener<ResponsiveContextProps>.PropsWillChange() { }
+        
+        protected override Element Render() => Props.uss
+            ? Visual.Create(descriptor: Props.descriptor, children: Props.children)
+            : Div.Create(descriptor: Props.descriptor, children: Props.children);
 
-        private void OnGeometryChanged(GeometryChangedEvent evt)
+
+        private void OnVisualChange(VisualChangeEvent evt) => SetWidth(ContentRect.width);
+
+        private void SetWidth(float value)
         {
-            var oldWidth = evt.oldRect.width;
-            var newWidth = evt.newRect.width;
-
-            if (Mathf.Approximately(oldWidth, newWidth)) return;
-            
-            Width = newWidth;
-            
-            OnStaticResizeStem.Send(this, oldWidth, newWidth);
-            OnResizeStem.Send(newWidth);
+            RishSetWidth(value);
+            Update();
         }
+
+        private void Update()
+        {
+            var width = State.width;
+            
+            var size = GetSizeFor(width);
+            SetSize(size);
+            
+            OnResize(width, size);
+            OnLayoutStem.Send(GetLayoutData());
+        }
+        
+        private const int XSmallMinWidth = 0;
+        private const int DefaultSmallMinWidth = 576;
+        private const float DefaultRatio = 4 / 3f;
+
+        private Size GetSizeFor(float width)
+        {
+            if (width <= XSmallMinWidth) return Size.XSmall;
+            
+            // TODO: Doing this is not the best performant thing in the world. We can revisit if it becomes a problem.
+            for (var i = (int)Size.Count - 1; i >= 0; i--)
+            {
+                var size = (Size)i;
+                if(GetMinWidth(size) <= width) return size;
+            }
+            
+            return Size.XSmall;
+        }
+
+        private int GetMinWidth(Size size)
+        {
+            if(size is Size.XSmall) return XSmallMinWidth;
+            var prevSize = size - 1;
+            var prevMinWidth = GetMinWidth(prevSize);
+            var propsMinWidth = GetPropsMinWidth(size);
+            if(propsMinWidth > prevMinWidth) return propsMinWidth;
+            return prevSize is Size.XSmall ? DefaultSmallMinWidth : Mathf.FloorToInt(prevMinWidth * DefaultRatio);
+        }
+
+        private int GetPropsMinWidth(Size size) => size switch
+        {
+            Size.Small => Props.smMinWidth,
+            Size.Medium => Props.mdMinWidth,
+            Size.Large => Props.lgMinWidth,
+            Size.XLarge => Props.xlMinWidth,
+            Size.XXLarge => Props.xxlMinWidth
+        };
+
+        public LayoutData GetLayoutData() => new()
+        {
+            uss = Props.uss,
+            width = State.width,
+            size = State.size,
+        };
+    }
+
+    [RishValueType]
+    public struct ResponsiveContextProps
+    {
+        public int smMinWidth;
+        public int mdMinWidth;
+        public int lgMinWidth;
+        public int xlMinWidth;
+        public int xxlMinWidth;
+
+        public bool uss;
+        
+        [DOMDescriptor]
+        public DOMDescriptor descriptor;
+        public Children children;
+
+        public Action<float, ResponsiveContext.Size> onResize;
+    }
+
+    [RishValueType]
+    public struct ResponsiveContextState
+    {
+        public float width;
+        public ResponsiveContext.Size size;
     }
 }

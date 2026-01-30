@@ -1,0 +1,395 @@
+using RishUI;
+using RishUI.Events;
+using RishUI.MemoryManagement;
+using Sappy;
+using UnityEngine;
+
+namespace Roots.Bootstrap
+{
+    public partial class ResponsiveGrid : RishElement<ResponsiveGridProps, ResponsiveGridState>, IMountingListener, IPropsListener<ResponsiveGridProps>
+    {
+        private ResponsiveContext _context;
+        private ResponsiveContext Context
+        {
+            set
+            {
+                if (_context == value) return;
+                
+                _context?.OnLayout.Remove(SappyOnContextLayout);
+                
+                _context = value;
+
+                if (value != null)
+                {
+                    value.OnLayout.Add(SappyOnContextLayout);
+                    OnContextLayout(value.GetLayoutData());
+                }
+            }
+        }
+
+        public ResponsiveGrid()
+        {
+            RegisterCallback<VisualChangeEvent>(OnVisualChange, EventPhase.AtTargetOnly);
+        }
+        
+        void IMountingListener.ComponentDidMount() { }
+        void IMountingListener.ComponentWillUnmount()
+        {
+            Context = null;
+        }
+
+        void IPropsListener<ResponsiveGridProps>.PropsDidChange(ResponsiveGridProps? prev)
+        {
+            if(prev.HasValue)
+            {
+                Update();
+            }
+            else
+            {
+                Context = GetFirstAncestorOfType<ResponsiveContext>();
+            }
+        }
+        void IPropsListener<ResponsiveGridProps>.PropsWillChange() { }
+        
+        protected override Element Render()
+        {
+            var colSizes = new RishList<int>();
+            var usedSize = 0;
+            if (State.size is null or > 0)
+            {
+                foreach (var col in Props.cols)
+                {
+                    var colSize = col.GetSize(State.contextSize);
+                    usedSize += colSize;
+                    colSizes.Add(colSize);
+                }
+            }
+
+            var size = State.size ?? usedSize;
+
+            if (size <= 0)
+            {
+                return Div.Create(descriptor: Props.descriptor);
+            }
+            
+            var rowWidth = State.width + State.gutter.x;
+
+            var invSize = 1f / size;
+
+            var colsCount = Props.cols.Count;
+            
+            var rows = new Children();
+            var i = 0;
+            do
+            {
+                var children = new Children();
+                var rowUsedSize = 0;
+                for (; i < colsCount; i++)
+                {
+                    var col = Props.cols[i];
+                    var colSize = colSizes.Count > 0 ? colSizes[i] : col.GetSize(State.contextSize);
+                    if (colSize <= 0 || colSize > size) continue;
+
+                    if (rowUsedSize + colSize > size) break;
+                    
+                    rowUsedSize += colSize;
+                    
+                    var width = rowWidth * colSize * invSize - State.gutter.x;
+                    
+                    children.Add(Col.Create(
+                        key: (ulong)(children.Count + 1),
+                        style: new Style
+                        {
+                            width = width,
+                            minWidth = width,
+                            maxWidth = width,
+                        },
+                        gap: State.gutter.y,
+                        children: col.children));
+                }
+                
+                if(children.Count > 0)
+                {
+                    rows.Add(Row.Create(key: (ulong)(rows.Count + 1), gap: State.gutter.x, children: children));
+                }
+            } while (i < colsCount);
+
+            return Col.Create(
+                name: Props.descriptor.name,
+                className: Props.descriptor.className,
+                style: Props.descriptor.style,
+                gap: State.gutter.y,
+                children: rows);
+        }
+        
+        private void OnVisualChange(VisualChangeEvent evt) => SetWidth(ContentRect.width);
+
+        [SapTarget]
+        private void OnContextLayout(ResponsiveContext.LayoutData data)
+        {
+            SetContextSize(data.size);
+            Update();
+        }
+
+        private void Update()
+        {
+            var size = State.contextSize;
+            
+            SetSize(GetSize(size));
+            SetGutter(GetGutter(size));
+        }
+        
+        private Gutter GetGutter(ResponsiveContext.Size size)
+        {
+            var propsGutter = GetPropsGutter(size);
+            if(propsGutter.HasValue) return propsGutter.Value;
+            
+            if(size is ResponsiveContext.Size.XSmall) return new Gutter();
+            
+            var prevSize = size - 1;
+            return GetGutter(prevSize);
+        }
+
+        private Gutter? GetPropsGutter(ResponsiveContext.Size size) => size switch
+        {
+            ResponsiveContext.Size.XSmall => Props.xsGutter,
+            ResponsiveContext.Size.Small => Props.smGutter,
+            ResponsiveContext.Size.Medium => Props.mdGutter,
+            ResponsiveContext.Size.Large => Props.lgGutter,
+            ResponsiveContext.Size.XLarge => Props.xlGutter,
+            ResponsiveContext.Size.XXLarge => Props.xxlGutter
+        };
+        
+        private int? GetSize(ResponsiveContext.Size size)
+        {
+            var propsCols = GetPropsSize(size);
+            if(propsCols.HasValue) return propsCols.Value;
+            
+            if(size is ResponsiveContext.Size.XSmall) return null;
+            
+            var prevSize = size - 1;
+            return GetSize(prevSize);
+        }
+
+        private int? GetPropsSize(ResponsiveContext.Size size) => size switch
+        {
+            ResponsiveContext.Size.XSmall => Props.xs,
+            ResponsiveContext.Size.Small => Props.sm,
+            ResponsiveContext.Size.Medium => Props.md,
+            ResponsiveContext.Size.Large => Props.lg,
+            ResponsiveContext.Size.XLarge => Props.xl,
+            ResponsiveContext.Size.XXLarge => Props.xxl
+        };
+
+        [RishValueType]
+        internal struct FinalColData
+        {
+            public int index;
+            public int size;
+        }
+    }
+
+    public struct Gutter
+    {
+        public float x;
+        public float y;
+    
+        public Gutter(float value)
+        {
+            x = value;
+            y = value;
+        }
+        public Gutter(float x, float y)
+        {
+            this.x = x;
+            this.y = y;
+        }
+        
+        public static implicit operator Gutter(float value) => new (value);
+        public static implicit operator Gutter((float x, float y) value) => new (value.x, value.y);
+        public static implicit operator Gutter(Vector2 value) => new (value.x, value.y);
+    
+        public static Gutter X(float x) => new()
+        {
+            x = x
+        };
+        public static Gutter Y(float y) => new()
+        {
+            y = y
+        };
+        
+        public static Gutter operator -(Gutter a) => new(-a.x, -a.y);
+        public static Gutter operator *(Gutter left, float right) => new(left.x * right, left.y * right);
+        public static Gutter operator /(Gutter left, float right) => new(left.x / right, left.y / right);
+
+        public override string ToString() => $"x: {x}, y: {y}";
+    }
+
+    [RishValueType]
+    public struct ColData
+    {
+        public int? xs;
+        public int? sm;
+        public int? md;
+        public int? lg;
+        public int? xl;
+        public int? xxl;
+
+        public Children children;
+
+        public ColData(Children children)
+        {
+            xs = null;
+            sm = null;
+            md = null;
+            lg = null;
+            xl = null;
+            xxl = null;
+            this.children = children;
+        }
+        public ColData(int size, Children children)
+        {
+            xs = size;
+            sm = null;
+            md = null;
+            lg = null;
+            xl = null;
+            xxl = null;
+            this.children = children;
+        }
+
+        public static ColData XS(Children children) => XS(1, children);
+        public static ColData XS(int size, Children children) => new()
+        {
+            xs = size,
+            children = children
+        };
+        [RequiresManagedContext]
+        public static ColData XS(Element child) => XS((Children)child);
+        [RequiresManagedContext]
+        public static ColData XS(int size, Element child) => XS(size, (Children)child);
+        public static ColData SM(Children children) => SM(1, children);
+        public static ColData SM(int size, Children children) => new()
+        {
+            sm = size,
+            children = children
+        };
+        [RequiresManagedContext]
+        public static ColData SM(Element child) => SM((Children)child);
+        [RequiresManagedContext]
+        public static ColData SM(int size, Element child) => SM(size, (Children)child);
+        public static ColData MD(Children children) => MD(1, children);
+        public static ColData MD(int size, Children children) => new()
+        {
+            sm = 0,
+            md = size,
+            children = children
+        };
+        [RequiresManagedContext]
+        public static ColData MD(Element child) => MD((Children)child);
+        [RequiresManagedContext]
+        public static ColData MD(int size, Element child) => MD(size, (Children)child);
+        public static ColData LG(Children children) => LG(1, children);
+        public static ColData LG(int size, Children children) => new()
+        {
+            sm = 0,
+            md = 0,
+            lg = size,
+            children = children
+        };
+        [RequiresManagedContext]
+        public static ColData LG(Element child) => LG((Children)child);
+        [RequiresManagedContext]
+        public static ColData LG(int size, Element child) => LG(size, (Children)child);
+        public static ColData XL(Children children) => XL(1, children);
+        public static ColData XL(int size, Children children) => new()
+        {
+            sm = 0,
+            md = 0,
+            lg = 0,
+            xl = size,
+            children = children
+        };
+        [RequiresManagedContext]
+        public static ColData XL(Element child) => XL((Children)child);
+        [RequiresManagedContext]
+        public static ColData XL(int size, Element child) => XL(size, (Children)child);
+        public static ColData XXL(Children children) => XXL(1, children);
+        public static ColData XXL(int size, Children children) => new()
+        {
+            sm = 0,
+            md = 0,
+            lg = 0,
+            xl = 0,
+            xxl = size,
+            children = children
+        };
+        [RequiresManagedContext]
+        public static ColData XXL(Element child) => XXL((Children)child);
+        [RequiresManagedContext]
+        public static ColData XXL(int size, Element child) => XXL(size, (Children)child);
+        
+        public static implicit operator ColData(Children value) => new()
+        {
+            children = value
+        };
+        [RequiresManagedContext]
+        public static implicit operator ColData(Element value) => new()
+        {
+            children = value
+        };
+        
+        public int GetSize(ResponsiveContext.Size size)
+        {
+            var propsSize = GetPropsSize(size);
+            if(propsSize.HasValue) return propsSize.Value;
+            
+            if(size is ResponsiveContext.Size.XSmall) return 1;
+            
+            var prevSize = size - 1;
+            return GetSize(prevSize);
+        }
+
+        private int? GetPropsSize(ResponsiveContext.Size size) => size switch
+        {
+            ResponsiveContext.Size.XSmall => xs,
+            ResponsiveContext.Size.Small => sm,
+            ResponsiveContext.Size.Medium => md,
+            ResponsiveContext.Size.Large => lg,
+            ResponsiveContext.Size.XLarge => xl,
+            ResponsiveContext.Size.XXLarge => xxl
+        };
+    }
+
+    [RishValueType]
+    public struct ResponsiveGridProps
+    {
+        public int? xs;
+        public int? sm;
+        public int? md;
+        public int? lg;
+        public int? xl;
+        public int? xxl;
+
+        public Gutter? xsGutter;
+        public Gutter? smGutter;
+        public Gutter? mdGutter;
+        public Gutter? lgGutter;
+        public Gutter? xlGutter;
+        public Gutter? xxlGutter;
+        
+        [DOMDescriptor]
+        public DOMDescriptor descriptor;
+
+        public RishList<ColData> cols;
+    }
+
+    [RishValueType]
+    public struct ResponsiveGridState
+    {
+        public ResponsiveContext.Size contextSize;
+        public int? size;
+        public Gutter gutter;
+        public float width;
+    }
+}

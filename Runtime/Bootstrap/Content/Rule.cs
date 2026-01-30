@@ -65,7 +65,7 @@ namespace Roots
                     break;
             }
 
-            return Div.Create(className: "align-self-stretch", children: Div.Create(className: className, style: new Style { backgroundColor = color }));
+            return Div.Create(style: StyleUtilities.AlignSelfStretch(), children: Div.Create(className: className, style: new Style { backgroundColor = color }));
         }
 
         private void OnGeometryChange(GeometryChangedEvent evt) => Dirty();

@@ -39,7 +39,7 @@ namespace Roots
                 RishRoot.OnStart.Add(SappySetupRishRoot);
             }
 
-            ResponsiveContext.OnStaticResize.Add(SappyOnResponsiveResize);
+            ResponsiveContext.Visual.OnStaticResize.Add(SappyOnResponsiveResize);
         }
         private void OnDestroy()
         {
@@ -47,7 +47,7 @@ namespace Roots
             {
                 RishRoot.OnStart.Remove(SappySetupRishRoot);
             }
-            ResponsiveContext.OnStaticResize.Remove(SappyOnResponsiveResize);
+            ResponsiveContext.Visual.OnStaticResize.Remove(SappyOnResponsiveResize);
         }
 
         [SapTarget]
@@ -82,10 +82,10 @@ namespace Roots
             }
         }
         
-        [SapTarget(typeof(OnResponsiveContextResize))]
-        private void OnResponsiveResize(ResponsiveContext responsive, float? oldWidth, float newWidth)
+        [SapTarget(typeof(ResponsiveContext.OnUSSResize))]
+        private void OnResponsiveResize(ResponsiveContext.Visual ussResponsive, float? oldWidth, float newWidth)
         {
-            if (!TreeContains(responsive)) return;
+            if (newWidth < 0 || float.IsNaN(newWidth) || float.IsInfinity(newWidth) || !TreeContains(ussResponsive)) return;
 
             if (newWidth < oldWidth)
             {
@@ -101,7 +101,7 @@ namespace Roots
                         break;
                     }
                     
-                    responsive.styleSheets.Remove(styleSheet.StyleSheet);
+                    ussResponsive.styleSheets.Remove(styleSheet.StyleSheet);
                 }
             }
             else
@@ -118,7 +118,7 @@ namespace Roots
                         break;
                     }
                     
-                    responsive.styleSheets.Add(styleSheet.StyleSheet);
+                    ussResponsive.styleSheets.Add(styleSheet.StyleSheet);
                 }
             }
         }

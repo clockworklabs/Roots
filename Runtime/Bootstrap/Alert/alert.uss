@@ -2,12 +2,10 @@
     --rs-alert-bg: transparent;
     --rs-alert-padding-x: 16px;
     --rs-alert-padding-y: 16px;
-    --rs-alert-margin-bottom: 16px;
     --rs-alert-color: inherit;
     --rs-alert-border-color: transparent;
     --rs-alert-border-radius: var(--rs-border-radius-2);
     padding: var(--rs-alert-padding-y) var(--rs-alert-padding-x);
-    margin-bottom: var(--rs-alert-margin-bottom);
     color: var(--rs-alert-color);
     background-color: var(--rs-alert-bg);
     border-width: var(--rs-border-width);

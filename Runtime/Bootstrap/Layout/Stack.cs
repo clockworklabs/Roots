@@ -7,19 +7,20 @@ using StyleLength = UnityEngine.UIElements.StyleLength;
 
 namespace Roots.Bootstrap
 {
+    // This element will override some margin properties of descendants.
     internal partial class Stack : RishElement<StackProps, StackState>, IManualState, IPropsListener<StackProps>, IVisualManipulator
     {
         public enum Direction { Vertical, Horizontal }
         
         private VisualElement _visualParent;
         private VisualElement VisualParent => _visualParent ??= GetFirstAncestorOfType<VisualElement>();
-        
-        private Dictionary<VisualElement, Vector2> OriginalMargins { get; }= new();
+
+        private Dictionary<VisualElement, Margins> PrevMargins { get; } = new();
 
         void IManualState.Restart()
         {
             _visualParent = null;
-            OriginalMargins.Clear();
+            PrevMargins.Clear();
         }
 
         void IPropsListener<StackProps>.PropsDidChange(StackProps? prev)
@@ -33,38 +34,52 @@ namespace Roots.Bootstrap
         bool IVisualManipulator.Manipulate(VisualManipulationPhase phase, VisualElement descendant)
         {
             var parent = descendant?.parent;
-            if(parent == null) return false;
-            
-            var style = descendant.style;
-            Vector2 originalMargins;
-            switch (phase)
+            if (parent == null) return false;
+            IStyle style;
+            if (phase == VisualManipulationPhase.BubbleUp)
             {
-                case VisualManipulationPhase.BubbleUp:
-                    if (parent.parent != VisualParent) return false;
-                    
-                    var m = parent.contentRect.width * 0.01f;
-                    originalMargins = GetMargins(Props.direction, style, m);
-                    OriginalMargins[descendant] = originalMargins;
-                    
-                    if(Mathf.Approximately(State.halfGap, 0)) return true;
-                    
-                    break;
-                case VisualManipulationPhase.DirectManipulation:
-                    if (!OriginalMargins.TryGetValue(descendant, out originalMargins)) return false;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(phase), phase, null);
+                if (parent.parent != VisualParent) return false;
+                
+                style = descendant.style;
+                if (TryGetMargins(Props.direction, style, out var margins))
+                {
+                    PrevMargins[descendant] = margins;
+                }
+                else
+                {
+                    PrevMargins.Remove(descendant);
+                }
+
+                return true;
             }
             
+            var resolvedStyle = descendant.resolvedStyle;
+            if (resolvedStyle.display == DisplayStyle.None || resolvedStyle.position == Position.Absolute) return true;
+
+            var targetMargins = new Vector2
+            {
+                x = State.halfGap,
+                y = State.halfGap
+            };
+            
+            if (PrevMargins.TryGetValue(descendant, out var prevMargins))
+            {
+                var m = parent.contentRect.width * 0.01f;
+
+                targetMargins.x += GetMargin(prevMargins.a, m);
+                targetMargins.y += GetMargin(prevMargins.b, m);
+            }
+            
+            style = descendant.style;
             switch (Props.direction)
             {
                 case Direction.Vertical:
-                    style.marginTop = originalMargins.x + State.halfGap;
-                    style.marginBottom = originalMargins.y + State.halfGap;
+                    style.marginTop = targetMargins.x;
+                    style.marginBottom = targetMargins.y;
                     break;
                 case Direction.Horizontal:
-                    style.marginLeft = originalMargins.x + State.halfGap;
-                    style.marginRight = originalMargins.y + State.halfGap;
+                    style.marginLeft = targetMargins.x;
+                    style.marginRight = targetMargins.y;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(Props.direction), Props.direction, null);
@@ -72,8 +87,8 @@ namespace Roots.Bootstrap
 
             return true;
         }
-
-        private static Vector2 GetMargins(Direction direction, IStyle style, float m)
+        
+        private static bool TryGetMargins(Direction direction, IStyle style, out Margins margins)
         {
             StyleLength a, b;
             switch (direction)
@@ -90,11 +105,12 @@ namespace Roots.Bootstrap
                     throw new ArgumentOutOfRangeException();
             }
 
-            return new Vector2(GetMargin(a, m), GetMargin(b, m));
+            margins = new Margins { a = a, b = b };
+            return a.keyword == StyleKeyword.Undefined || b.keyword == StyleKeyword.Undefined;
         }
         private static float GetMargin(StyleLength style, float m)
         {
-            if (style.keyword == StyleKeyword.Undefined) return 0;
+            if (style.keyword != StyleKeyword.Undefined) return 0;
             if (style.value.unit is LengthUnit.Percent)
             {
                 return m * style.value.value;
@@ -121,6 +137,14 @@ namespace Roots.Bootstrap
             };
             
             return Div.Create(descriptor: Props.descriptor + style, children: Props.children);
+        }
+
+        private struct Margins
+        {
+            public StyleLength a;
+            public StyleLength b;
+
+            public override string ToString() => $"({a}, {b})";
         }
     }
 

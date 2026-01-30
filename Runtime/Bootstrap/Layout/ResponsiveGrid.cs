@@ -54,18 +54,24 @@ namespace Roots.Bootstrap
         protected override Element Render()
         {
             var colSizes = new RishList<int>();
-            var usedSize = 0;
-            if (State.size is null or > 0)
+            int size;
+            if (State.size.HasValue)
             {
-                foreach (var col in Props.cols)
+                size = State.size.Value;
+            }
+            else
+            {
+                size = 0;
+                if (State.size is null or > 0)
                 {
-                    var colSize = col.GetSize(State.contextSize);
-                    usedSize += colSize;
-                    colSizes.Add(colSize);
+                    foreach (var col in Props.cols)
+                    {
+                        var colSize = col.GetSize(State.contextSize);
+                        size += colSize;
+                        colSizes.Add(colSize);
+                    }
                 }
             }
-
-            var size = State.size ?? usedSize;
 
             if (size <= 0)
             {
@@ -73,9 +79,7 @@ namespace Roots.Bootstrap
             }
             
             var rowWidth = State.width + State.gutter.x;
-
             var invSize = 1f / size;
-
             var colsCount = Props.cols.Count;
             
             var rows = new Children();
@@ -110,9 +114,26 @@ namespace Roots.Bootstrap
                 
                 if(children.Count > 0)
                 {
-                    rows.Add(Row.Create(key: (ulong)(rows.Count + 1), gap: State.gutter.x, children: children));
+                    if (i < colsCount || rows.Count > 0)
+                    {
+                        rows.Add(Row.Create(key: (ulong)(rows.Count + 1), gap: State.gutter.x, children: children));
+                    }
+                    else
+                    {
+                        return Row.Create(
+                            name: Props.descriptor.name,
+                            className: Props.descriptor.className,
+                            style: Props.descriptor.style,
+                            gap: State.gutter.x,
+                            children: children);
+                    }
                 }
             } while (i < colsCount);
+
+            if (rows.Count <= 0)
+            {
+                return Div.Create(descriptor: Props.descriptor);
+            }
 
             return Col.Create(
                 name: Props.descriptor.name,

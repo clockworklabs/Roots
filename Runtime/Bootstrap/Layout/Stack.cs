@@ -1,9 +1,13 @@
+// #define TRY_KEEP_DESCENDANTS_MARGINS
+
 using System;
-using System.Collections.Generic;
 using RishUI;
 using UnityEngine;
 using UnityEngine.UIElements;
+#if TRY_KEEP_DESCENDANTS_MARGINS
+using System.Collections.Generic;
 using StyleLength = UnityEngine.UIElements.StyleLength;
+#endif
 
 namespace Roots.Bootstrap
 {
@@ -15,12 +19,16 @@ namespace Roots.Bootstrap
         private VisualElement _visualParent;
         private VisualElement VisualParent => _visualParent ??= GetFirstAncestorOfType<VisualElement>();
 
+#if TRY_KEEP_DESCENDANTS_MARGINS
         private Dictionary<VisualElement, Margins> PrevMargins { get; } = new();
+#endif
 
         void IManualState.Restart()
         {
             _visualParent = null;
+#if TRY_KEEP_DESCENDANTS_MARGINS
             PrevMargins.Clear();
+#endif
         }
 
         void IPropsListener<StackProps>.PropsDidChange(StackProps? prev)
@@ -33,13 +41,17 @@ namespace Roots.Bootstrap
         
         bool IVisualManipulator.Manipulate(VisualManipulationPhase phase, VisualElement descendant)
         {
+#if !TRY_KEEP_DESCENDANTS_MARGINS
+            if (phase == VisualManipulationPhase.GeometryChanged) return true;
+#endif
             var parent = descendant?.parent;
             if (parent == null) return false;
             IStyle style;
             if (phase == VisualManipulationPhase.BubbleUp)
             {
                 if (parent.parent != VisualParent) return false;
-                
+
+#if TRY_KEEP_DESCENDANTS_MARGINS
                 style = descendant.style;
                 if (TryGetMargins(Props.direction, style, out var margins))
                 {
@@ -49,8 +61,9 @@ namespace Roots.Bootstrap
                 {
                     PrevMargins.Remove(descendant);
                 }
-
+                
                 return true;
+#endif
             }
             
             var resolvedStyle = descendant.resolvedStyle;
@@ -61,7 +74,8 @@ namespace Roots.Bootstrap
                 x = State.halfGap,
                 y = State.halfGap
             };
-            
+
+#if TRY_KEEP_DESCENDANTS_MARGINS
             if (PrevMargins.TryGetValue(descendant, out var prevMargins))
             {
                 var m = parent.contentRect.width * 0.01f;
@@ -69,6 +83,7 @@ namespace Roots.Bootstrap
                 targetMargins.x += GetMargin(prevMargins.a, m);
                 targetMargins.y += GetMargin(prevMargins.b, m);
             }
+#endif
             
             style = descendant.style;
             switch (Props.direction)
@@ -88,6 +103,7 @@ namespace Roots.Bootstrap
             return true;
         }
         
+#if TRY_KEEP_DESCENDANTS_MARGINS
         private static bool TryGetMargins(Direction direction, IStyle style, out Margins margins)
         {
             StyleLength a, b;
@@ -117,6 +133,7 @@ namespace Roots.Bootstrap
             }
             return style.value.value;
         }
+#endif
 
         protected override Element Render()
         {
@@ -139,6 +156,7 @@ namespace Roots.Bootstrap
             return Div.Create(descriptor: Props.descriptor + style, children: Props.children);
         }
 
+#if TRY_KEEP_DESCENDANTS_MARGINS
         private struct Margins
         {
             public StyleLength a;
@@ -146,6 +164,7 @@ namespace Roots.Bootstrap
 
             public override string ToString() => $"({a}, {b})";
         }
+#endif
     }
 
     [RishValueType]

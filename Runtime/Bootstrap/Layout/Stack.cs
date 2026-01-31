@@ -20,7 +20,7 @@ namespace Roots.Bootstrap
         private VisualElement VisualParent => _visualParent ??= GetFirstAncestorOfType<VisualElement>();
 
 #if TRY_KEEP_DESCENDANTS_MARGINS
-        private Dictionary<VisualElement, Margins> PrevMargins { get; } = new();
+        private Dictionary<IManipulable, Margins> PrevMargins { get; } = new();
 #endif
 
         void IManualState.Restart()
@@ -39,20 +39,19 @@ namespace Roots.Bootstrap
         }
         void IPropsListener<StackProps>.PropsWillChange() { }
         
-        bool IVisualManipulator.Manipulate(VisualManipulationPhase phase, VisualElement descendant)
+        bool IVisualManipulator.Manipulate(VisualManipulationPhase phase, IManipulable descendant)
         {
 #if !TRY_KEEP_DESCENDANTS_MARGINS
             if (phase == VisualManipulationPhase.GeometryChanged) return true;
 #endif
             var parent = descendant?.parent;
             if (parent == null) return false;
-            IStyle style;
             if (phase == VisualManipulationPhase.BubbleUp)
             {
                 if (parent.parent != VisualParent) return false;
 
 #if TRY_KEEP_DESCENDANTS_MARGINS
-                style = descendant.style;
+                var style = descendant.style;
                 if (TryGetMargins(Props.direction, style, out var margins))
                 {
                     PrevMargins[descendant] = margins;
@@ -66,8 +65,7 @@ namespace Roots.Bootstrap
 #endif
             }
             
-            var resolvedStyle = descendant.resolvedStyle;
-            if (resolvedStyle.display == DisplayStyle.None || resolvedStyle.position == Position.Absolute) return true;
+            if (descendant.display == DisplayStyle.None || descendant.position == Position.Absolute) return true;
 
             var targetMargins = new Vector2
             {
@@ -85,20 +83,35 @@ namespace Roots.Bootstrap
             }
 #endif
             
-            style = descendant.style;
+            var clonedStyle = descendant.CloneStyle();
             switch (Props.direction)
             {
                 case Direction.Vertical:
-                    style.marginTop = targetMargins.x;
-                    style.marginBottom = targetMargins.y;
+                    clonedStyle.marginTop = targetMargins.x;
+                    clonedStyle.marginBottom = targetMargins.y;
                     break;
                 case Direction.Horizontal:
-                    style.marginLeft = targetMargins.x;
-                    style.marginRight = targetMargins.y;
+                    clonedStyle.marginLeft = targetMargins.x;
+                    clonedStyle.marginRight = targetMargins.y;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(Props.direction), Props.direction, null);
             }
+            descendant.SetStyle(clonedStyle);
+            
+            // switch (Props.direction)
+            // {
+            //     case Direction.Vertical:
+            //         descendant.style.marginTop = targetMargins.x;
+            //         descendant.style.marginBottom = targetMargins.y;
+            //         break;
+            //     case Direction.Horizontal:
+            //         descendant.style.marginLeft = targetMargins.x;
+            //         descendant.style.marginRight = targetMargins.y;
+            //         break;
+            //     default:
+            //         throw new ArgumentOutOfRangeException(nameof(Props.direction), Props.direction, null);
+            // }
 
             return true;
         }

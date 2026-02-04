@@ -1,8 +1,7 @@
 using RishUI;
 
-namespace Roots.Bootstrap
+namespace Roots
 {
-    // This element will override some margin properties of descendants.
     public partial class Col : RishElement<ColProps>
     {
         protected override Element Render() => Stack.Create(

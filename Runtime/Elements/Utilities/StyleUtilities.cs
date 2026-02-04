@@ -1162,5 +1162,22 @@ namespace Roots
             style.unityFontStyleAndWeight = value;
             return style;
         }
+        
+        // Pointer Detection
+        public static Style PointerInherit() => PointerInherit(new Style());
+        public static Style PointerInherit(this Style style) => PointerDetection(style, PointerDetectionMode.Inherit);
+        public static Style PointerDetection() => PointerDetection(new Style());
+        public static Style PointerDetection(this Style style) => PointerDetection(style, PointerDetectionMode.Rect);
+        public static Style PointerIgnore() => PointerIgnore(new Style());
+        public static Style PointerIgnore(this Style style) => PointerDetection(style, PointerDetectionMode.Ignore);
+        public static Style PointerForceIgnore() => PointerForceIgnore(new Style());
+        public static Style PointerForceIgnore(this Style style) => PointerDetection(style, PointerDetectionMode.ForceIgnore);
+        public static Style PointerNone() => PointerNone(new Style());
+        public static Style PointerNone(this Style style) => PointerForceIgnore(style);
+        public static Style PointerDetection(this Style style, PointerDetectionMode value)
+        {
+            style.pointerDetection = value;
+            return style;
+        }
     }
 }

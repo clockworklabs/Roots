@@ -15,7 +15,7 @@ namespace Roots
         private Bridge<ImageProps> Bridge { get; }
         Bridge<ImageProps> IVisualElement<ImageProps>.Bridge => Bridge;
         
-        VisualElement IElement.GetDOMChild() => this;
+        VisualElement IElement.GetVisualChild() => this;
         
         private PickingManager PickingManager { get; }
         PickingManager ICustomPicking.Manager => PickingManager;

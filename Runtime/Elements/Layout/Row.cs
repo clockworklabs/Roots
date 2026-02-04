@@ -1,8 +1,7 @@
 ﻿using RishUI;
 
-namespace Roots.Bootstrap
+namespace Roots
 {
-    // This element will override some margin properties of descendants.
     public partial class Row : RishElement<RowProps>
     {
         protected override Element Render() => Stack.Create(
@@ -16,7 +15,6 @@ namespace Roots.Bootstrap
     public struct RowProps
     {
         public float gap;
-        // public bool wrap; // TODO
         [DOMDescriptor]
         public DOMDescriptor descriptor;
         public Children children;

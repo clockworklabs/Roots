@@ -4,22 +4,20 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using System.Collections.Generic;
 
-namespace Roots.Bootstrap
+namespace Roots
 {
-    // This element will override some margin properties of descendants.
     internal partial class Stack : RishElement<StackProps, StackState>, IManualState, IPropsListener<StackProps>, IVisualManipulator
     {
         public enum Direction { Vertical, Horizontal }
-        
-        private VisualElement _visualParent;
-        private VisualElement VisualParent => _visualParent ??= GetFirstAncestorOfType<VisualElement>();
 
         private Dictionary<int, Vector2> PrevMargins { get; } = new();
 
+        private VisualElement _visualChild;
+        private VisualElement VisualChild => _visualChild ??= GetVisualChild();
+
         void IManualState.Restart()
         {
-            _visualParent = null;
-
+            _visualChild = null;
             PrevMargins.Clear();
         }
 
@@ -31,14 +29,19 @@ namespace Roots.Bootstrap
         }
         void IPropsListener<StackProps>.PropsWillChange() { }
 
-        VisualManipulationEvaluation IVisualManipulator.Evaluate(VisualElement descendant)
+        bool IVisualManipulator.Evaluate(VisualElement descendant)
         {
-            if (descendant?.parent?.parent == VisualParent)
-            {
-                return VisualManipulationEvaluation.GeometryChangedBubbleUp | VisualManipulationEvaluation.TrickleDown;
-            }
-
-            return VisualManipulationEvaluation.NotInterested;
+            return descendant?.parent == VisualChild;
+            // if (descendant?.parent == VisualChild)
+            // {
+            //     if (VisualChild.name == "test")
+            //     {
+            //         Debug.Log($"Evaluate {descendant.GetID()}");
+            //     }
+            //     return VisualManipulationEvaluation.ScheduledBubbleUp | VisualManipulationEvaluation.TrickleDown;
+            // }
+            //
+            // return VisualManipulationEvaluation.NotInterested;
         }
         
         void IVisualManipulator.Manipulate(VisualManipulationPhase phase, IManipulable descendant)
@@ -48,7 +51,7 @@ namespace Roots.Bootstrap
             if (resolvedStyle.display == DisplayStyle.None || resolvedStyle.position == Position.Absolute) return;
             
             Vector2 prevMargins;
-            if (phase == VisualManipulationPhase.GeometryChangedBubbleUp)
+            if (phase == VisualManipulationPhase.BubbleUp)
             {
                 prevMargins = Props.direction switch
                 {

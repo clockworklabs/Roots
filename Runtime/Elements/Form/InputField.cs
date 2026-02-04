@@ -272,7 +272,7 @@ namespace Roots
             private Bridge<RishTextFieldProps> Bridge { get; }
             Bridge<RishTextFieldProps> IVisualElement<RishTextFieldProps>.Bridge => Bridge;
             
-            VisualElement IElement.GetDOMChild() => this;
+            VisualElement IElement.GetVisualChild() => this;
             
             private PickingManager PickingManager { get; }
             PickingManager ICustomPicking.Manager => PickingManager;

@@ -4,12 +4,7 @@ namespace Roots
 {
     public partial class Card : RishElement<CardProps>
     {
-        protected override Element Render() => Div.Create(
-            descriptor: Props.descriptor + new ClassName
-            {
-                "card"
-            },
-            children: Props.children);
+        protected override Element Render() => Div.Create(descriptor: Props.descriptor + "card", children: Props.children);
     }
 
     [RishValueType]

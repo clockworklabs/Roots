@@ -3,15 +3,7 @@
     --rs-heading-color: inherit;
     /*--luiss-serif: resource("Fonts/Luiss Serif Regular SDF");*/
     /*--luiss-sans: resource("Fonts/LuissSans-Regular SDF");*/
-}
 
-.body {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    
     color: var(--rs-body-color);
     font-size: 16px;
     -unity-font-definition: var(--luiss-sans);

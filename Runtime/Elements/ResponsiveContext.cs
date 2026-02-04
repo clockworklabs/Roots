@@ -76,7 +76,7 @@ namespace Roots
             return Size.XSmall;
         }
 
-        private int GetMinWidth(Size size)
+        public int GetMinWidth(Size size)
         {
             if(size is Size.XSmall) return XSmallMinWidth;
             var prevSize = size - 1;

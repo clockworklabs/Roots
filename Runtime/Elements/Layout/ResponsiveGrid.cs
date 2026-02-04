@@ -3,8 +3,9 @@ using RishUI.Events;
 using RishUI.MemoryManagement;
 using Sappy;
 using UnityEngine;
+using UnityEngine.UIElements;
 
-namespace Roots.Bootstrap
+namespace Roots
 {
     public partial class ResponsiveGrid : RishElement<ResponsiveGridProps, ResponsiveGridState>, IMountingListener, IPropsListener<ResponsiveGridProps>
     {
@@ -53,6 +54,8 @@ namespace Roots.Bootstrap
         
         protected override Element Render()
         {
+            SetSingleRow(false);
+            
             var colSizes = new RishList<int>();
             int size;
             if (State.size.HasValue)
@@ -79,8 +82,9 @@ namespace Roots.Bootstrap
             }
             
             var rowWidth = State.width + State.gutter.x;
-            var invSize = 1f / size;
             var colsCount = Props.cols.Count;
+            
+            var colWidth = rowWidth / size;
             
             var rows = new Children();
             var i = 0;
@@ -98,7 +102,7 @@ namespace Roots.Bootstrap
                     
                     rowUsedSize += colSize;
                     
-                    var width = rowWidth * colSize * invSize - State.gutter.x;
+                    var width = colWidth * colSize - State.gutter.x;
                     
                     children.Add(Col.Create(
                         key: (ulong)(children.Count + 1),
@@ -120,6 +124,7 @@ namespace Roots.Bootstrap
                     }
                     else
                     {
+                        SetSingleRow(true);
                         return Row.Create(
                             name: Props.descriptor.name,
                             className: Props.descriptor.className,
@@ -143,7 +148,20 @@ namespace Roots.Bootstrap
                 children: rows);
         }
         
-        private void OnVisualChange(VisualChangeEvent evt) => SetWidth(ContentRect.width);
+        private void OnVisualChange(VisualChangeEvent evt)
+        {
+            SetWidth(ParentWorldContentRect.width);
+            return;
+            // TODO: IMPROVE
+            if(evt.target is not VisualElement visualElement) return;
+            var width = visualElement.contentRect.width;
+            if (State.singleRow)
+            {
+                var resolvedStyle = visualElement.resolvedStyle;
+                width -= (resolvedStyle.marginLeft + resolvedStyle.marginRight);
+            }
+            SetWidth(width);
+        }
 
         [SapTarget]
         private void OnContextLayout(ResponsiveContext.LayoutData data)
@@ -412,5 +430,7 @@ namespace Roots.Bootstrap
         public int? size;
         public Gutter gutter;
         public float width;
+        [IgnoreComparison]
+        public bool singleRow;
     }
 }

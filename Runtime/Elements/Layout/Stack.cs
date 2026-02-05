@@ -29,20 +29,7 @@ namespace Roots
         }
         void IPropsListener<StackProps>.PropsWillChange() { }
 
-        bool IVisualManipulator.Evaluate(VisualElement descendant)
-        {
-            return descendant?.parent == VisualChild;
-            // if (descendant?.parent == VisualChild)
-            // {
-            //     if (VisualChild.name == "test")
-            //     {
-            //         Debug.Log($"Evaluate {descendant.GetID()}");
-            //     }
-            //     return VisualManipulationEvaluation.ScheduledBubbleUp | VisualManipulationEvaluation.TrickleDown;
-            // }
-            //
-            // return VisualManipulationEvaluation.NotInterested;
-        }
+        bool IVisualManipulator.Evaluate(VisualElement descendant) => descendant == VisualChild || descendant.parent == VisualChild;
         
         void IVisualManipulator.Manipulate(VisualManipulationPhase phase, IManipulable descendant)
         {
@@ -50,27 +37,34 @@ namespace Roots
             
             if (resolvedStyle.display == DisplayStyle.None || resolvedStyle.position == Position.Absolute) return;
             
-            Vector2 prevMargins;
+            Vector2 targetMargins;
             if (phase == VisualManipulationPhase.BubbleUp)
             {
-                prevMargins = Props.direction switch
+                targetMargins = Props.direction switch
                 {
                     Direction.Vertical => new Vector2(resolvedStyle.marginTop, resolvedStyle.marginBottom),
                     Direction.Horizontal => new Vector2(resolvedStyle.marginLeft, resolvedStyle.marginRight),
                 };
 
-                PrevMargins[descendant.ID] = prevMargins;
+                PrevMargins[descendant.ID] = targetMargins;
             }
-            else if(!PrevMargins.TryGetValue(descendant.ID, out prevMargins))
+            else if(!PrevMargins.TryGetValue(descendant.ID, out targetMargins))
             {
                 return;
             }
+
+            if (Mathf.Approximately(State.halfGap, 0)) return;
             
-            var targetMargins = prevMargins + new Vector2
+            if (descendant.element == VisualChild)
             {
-                x = State.halfGap,
-                y = State.halfGap
-            };
+                targetMargins.x -= State.halfGap;
+                targetMargins.y -= State.halfGap;
+            }
+            else
+            {
+                targetMargins.x += State.halfGap;
+                targetMargins.y += State.halfGap;
+            }
             
             var clonedStyle = descendant.CloneStyle();
             switch (Props.direction)
@@ -89,26 +83,16 @@ namespace Roots
             descendant.SetStyle(clonedStyle);
         }
 
-        protected override Element Render()
-        {
-            var style = Props.direction switch
+        protected override Element Render() => Div.Create(
+            descriptor: Props.descriptor + new Style
             {
-                Direction.Vertical => new Style
+                flexDirection = Props.direction switch
                 {
-                    flexDirection = FlexDirection.Column,
-                    marginTop = -State.halfGap,
-                    marginBottom = -State.halfGap,
+                    Direction.Vertical => FlexDirection.Column,
+                    Direction.Horizontal => FlexDirection.Row
                 },
-                Direction.Horizontal => new Style
-                {
-                    flexDirection = FlexDirection.Row,
-                    marginLeft = -State.halfGap,
-                    marginRight = -State.halfGap,
-                }
-            };
-            
-            return Div.Create(descriptor: Props.descriptor + style, children: Props.children);
-        }
+            },
+            children: Props.children);
     }
 
     [RishValueType]

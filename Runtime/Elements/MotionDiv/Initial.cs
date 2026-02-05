@@ -51,6 +51,7 @@ namespace Roots
         public InitialInt unitySliceBottom;
         public InitialInt unitySliceLeft;
         public InitialInt unitySliceRight;
+        public InitialFloat unitySliceScale;
         public InitialInt unitySliceTop;
         public InitialColor unityTextOutlineColor;
         public InitialFloat unityTextOutlineWidth;

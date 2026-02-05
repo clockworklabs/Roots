@@ -61,6 +61,7 @@ namespace Roots
         private MotionInt UnitySliceBottom { get; } // TODO: Test
         private MotionInt UnitySliceLeft { get; } // TODO: Test
         private MotionInt UnitySliceRight { get; } // TODO: Test
+        private MotionFloat UnitySliceScale { get; } // TODO: Test
         private MotionInt UnitySliceTop { get; } // TODO: Test
         private MotionColor UnityTextOutlineColor { get; }
         private MotionFloat UnityTextOutlineWidth { get; }
@@ -124,6 +125,7 @@ namespace Roots
             UnitySliceBottom = new MotionInt(s => s.unitySliceBottom, s => s.unitySliceBottom, (e, v) => e.unitySliceBottom = v);
             UnitySliceLeft = new MotionInt(s => s.unitySliceLeft, s => s.unitySliceLeft, (e, v) => e.unitySliceLeft = v);
             UnitySliceRight = new MotionInt(s => s.unitySliceRight, s => s.unitySliceRight, (e, v) => e.unitySliceRight = v);
+            UnitySliceScale = new MotionFloat(PropertyType.Physical, s => s.unitySliceScale, s => s.unitySliceScale, (e, v) => e.unitySliceScale = v);
             UnitySliceTop = new MotionInt(s => s.unitySliceTop, s => s.unitySliceTop, (e, v) => e.unitySliceTop = v);
             UnityTextOutlineColor = new MotionColor(s => s.unityTextOutlineColor, s => s.unityTextOutlineColor, (e, v) => e.unityTextOutlineColor = v);
             UnityTextOutlineWidth = new MotionFloat(PropertyType.Physical, s => s.unityTextOutlineWidth, s => s.unityTextOutlineWidth, (e, v) => e.unityTextOutlineWidth = v);
@@ -182,6 +184,7 @@ namespace Roots
             UnitySliceBottom.Reset();
             UnitySliceLeft.Reset();
             UnitySliceRight.Reset();
+            UnitySliceScale.Reset();
             UnitySliceTop.Reset();
             UnityTextOutlineColor.Reset();
             UnityTextOutlineWidth.Reset();
@@ -254,6 +257,7 @@ namespace Roots
             UnitySliceBottom.Init(element);
             UnitySliceLeft.Init(element);
             UnitySliceRight.Init(element);
+            UnitySliceScale.Init(element);
             UnitySliceTop.Init(element);
             UnityTextOutlineColor.Init(element);
             UnityTextOutlineWidth.Init(element);
@@ -417,6 +421,9 @@ namespace Roots
             }
             if(UnitySliceRight.Animate(target.unitySliceRight, transition.unitySliceRight, transition.defaultTransition, out var unitySliceRightAnimation)) {
                 GroupAnimations.Add(unitySliceRightAnimation);
+            }
+            if(UnitySliceScale.Animate(target.unitySliceScale, transition.unitySliceScale, transition.defaultTransition, out var unitySliceScaleAnimation)) {
+                GroupAnimations.Add(unitySliceScaleAnimation);
             }
             if(UnitySliceTop.Animate(target.unitySliceTop, transition.unitySliceTop, transition.defaultTransition, out var unitySliceTopAnimation)) {
                 GroupAnimations.Add(unitySliceTopAnimation);
@@ -618,6 +625,9 @@ namespace Roots
             }
             if(UnitySliceRight.Value.HasValue) {
                 style.unitySliceRight = UnitySliceRight.Value.Value;
+            }
+            if(UnitySliceScale.Value.HasValue) {
+                style.unitySliceScale = UnitySliceScale.Value.Value;
             }
             if(UnitySliceTop.Value.HasValue) {
                 style.unitySliceTop = UnitySliceTop.Value.Value;

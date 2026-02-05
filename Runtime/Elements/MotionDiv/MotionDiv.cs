@@ -588,6 +588,17 @@ namespace Roots
                     style.unitySliceRight = unitySliceRight.value.Value;
                 }
             }
+            if (initial.unitySliceScale is IInitialValue<float> unitySliceScale)
+            {
+                if (unitySliceScale.skip && animate.unitySliceScale.HasValue)
+                {
+                    style.unitySliceScale = animate.unitySliceScale.Value;
+                }
+                else if (unitySliceScale.value.HasValue)
+                {
+                    style.unitySliceScale = unitySliceScale.value.Value;
+                }
+            }
             if (initial.unitySliceTop is IInitialValue<int> unitySliceTop)
             {
                 if (unitySliceTop.skip && animate.unitySliceTop.HasValue)

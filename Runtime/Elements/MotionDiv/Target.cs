@@ -324,6 +324,7 @@ namespace Roots
         public TransitionDetails unitySliceBottom;
         public TransitionDetails unitySliceLeft;
         public TransitionDetails unitySliceRight;
+        public TransitionDetails unitySliceScale;
         public TransitionDetails unitySliceTop;
         public TransitionDetails unityTextOutlineColor;
         public TransitionDetails unityTextOutlineWidth;
@@ -397,6 +398,7 @@ namespace Roots
                 unitySliceBottom = value;
                 unitySliceLeft = value;
                 unitySliceRight = value;
+                unitySliceScale = value;
                 unitySliceTop = value;
                 unityTextOutlineColor = value;
                 unityTextOutlineWidth = value;
@@ -522,6 +524,7 @@ namespace Roots
             unitySliceBottom = default;
             unitySliceLeft = default;
             unitySliceRight = default;
+            unitySliceScale = default;
             unitySliceTop = default;
             unityTextOutlineColor = default;
             unityTextOutlineWidth = default;
@@ -582,6 +585,7 @@ namespace Roots
             unitySliceBottom = default;
             unitySliceLeft = default;
             unitySliceRight = default;
+            unitySliceScale = default;
             unitySliceTop = default;
             unityTextOutlineColor = default;
             unityTextOutlineWidth = default;
@@ -642,6 +646,7 @@ namespace Roots
             unitySliceBottom = default;
             unitySliceLeft = default;
             unitySliceRight = default;
+            unitySliceScale = default;
             unitySliceTop = default;
             unityTextOutlineColor = default;
             unityTextOutlineWidth = default;
@@ -700,6 +705,7 @@ namespace Roots
         public int? unitySliceBottom;
         public int? unitySliceLeft;
         public int? unitySliceRight;
+        public float? unitySliceScale;
         public int? unitySliceTop;
         public Color? unityTextOutlineColor;
         public float? unityTextOutlineWidth;
@@ -821,6 +827,7 @@ namespace Roots
                    unitySliceBottom.HasValue ||
                    unitySliceLeft.HasValue ||
                    unitySliceRight.HasValue ||
+                   unitySliceScale.HasValue ||
                    unitySliceTop.HasValue ||
                    unityTextOutlineColor.HasValue ||
                    unityTextOutlineWidth.HasValue ||

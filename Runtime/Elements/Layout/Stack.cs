@@ -23,8 +23,6 @@ namespace Roots
 
         void IPropsListener<StackProps>.PropsDidChange(StackProps? prev)
         {
-            if (prev.HasValue && Mathf.Approximately(prev.Value.gap, Props.gap)) return;
-
             SetHalfGap(Props.gap * 0.5f);
         }
         void IPropsListener<StackProps>.PropsWillChange() { }
@@ -33,17 +31,15 @@ namespace Roots
         
         void IVisualManipulator.Manipulate(VisualManipulationPhase phase, IManipulable descendant)
         {
-            var resolvedStyle = descendant.resolvedStyle;
-            
-            if (resolvedStyle.display == DisplayStyle.None || resolvedStyle.position == Position.Absolute) return;
+            var style = descendant.style;
             
             Vector2 targetMargins;
             if (phase == VisualManipulationPhase.BubbleUp)
             {
                 targetMargins = Props.direction switch
                 {
-                    Direction.Vertical => new Vector2(resolvedStyle.marginTop, resolvedStyle.marginBottom),
-                    Direction.Horizontal => new Vector2(resolvedStyle.marginLeft, resolvedStyle.marginRight),
+                    Direction.Vertical => new Vector2(style.resolvedMarginTop, style.resolvedMarginBottom),
+                    Direction.Horizontal => new Vector2(style.resolvedMarginLeft, style.resolvedMarginRight),
                 };
 
                 PrevMargins[descendant.ID] = targetMargins;
@@ -66,21 +62,19 @@ namespace Roots
                 targetMargins.y += State.halfGap;
             }
             
-            var clonedStyle = descendant.CloneStyle();
             switch (Props.direction)
             {
                 case Direction.Vertical:
-                    clonedStyle.marginTop = targetMargins.x;
-                    clonedStyle.marginBottom = targetMargins.y;
+                    style.resolvedMarginTop = targetMargins.x;
+                    style.resolvedMarginBottom = targetMargins.y;
                     break;
                 case Direction.Horizontal:
-                    clonedStyle.marginLeft = targetMargins.x;
-                    clonedStyle.marginRight = targetMargins.y;
+                    style.resolvedMarginLeft = targetMargins.x;
+                    style.resolvedMarginRight = targetMargins.y;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(Props.direction), Props.direction, null);
             }
-            descendant.SetStyle(clonedStyle);
         }
 
         protected override Element Render() => Div.Create(

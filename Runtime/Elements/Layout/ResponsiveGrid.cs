@@ -150,15 +150,11 @@ namespace Roots
         
         private void OnVisualChange(VisualChangeEvent evt)
         {
-            SetWidth(ParentWorldContentRect.width);
-            return;
-            // TODO: IMPROVE
             if(evt.target is not VisualElement visualElement) return;
-            var width = visualElement.contentRect.width;
+            var width = Mathf.FloorToInt(visualElement.contentRect.width);
             if (State.singleRow)
             {
-                var resolvedStyle = visualElement.resolvedStyle;
-                width -= (resolvedStyle.marginLeft + resolvedStyle.marginRight);
+                width -= Mathf.CeilToInt(State.gutter.x);
             }
             SetWidth(width);
         }
@@ -429,7 +425,7 @@ namespace Roots
         public ResponsiveContext.Size contextSize;
         public int? size;
         public Gutter gutter;
-        public float width;
+        public int width;
         [IgnoreComparison]
         public bool singleRow;
     }

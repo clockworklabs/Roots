@@ -1,7 +1,7 @@
 ﻿using RishUI;
 using RishUI.Elements;
 
-namespace Roots
+namespace Roots.Bootstrap
 {
     public partial class MaterialSymbol : RishElement<MaterialSymbolProps>
     {
@@ -10,11 +10,11 @@ namespace Roots
 
         protected override Element Render() => Label.Create(descriptor: Props.descriptor + "material-symbol", text: Factory(Props.unicode, Props.symbolStyle, Props.weight, Props.opticalSize, Props.filled));
 
-        public static string Outlined(RishString unicode, Weight? weight = null, int? opticalSize = null, bool filled = false) => Factory(unicode, Style.Outlined, weight, opticalSize, filled);
-        public static string Rounded(RishString unicode, Weight? weight = null, int? opticalSize = null, bool filled = false) => Factory(unicode, Style.Rounded, weight, opticalSize, filled);
-        public static string Sharp(RishString unicode, Weight? weight = null, int? opticalSize = null, bool filled = false) => Factory(unicode, Style.Sharp, weight, opticalSize, filled);
+        public static string Outlined(char unicode, Weight? weight = null, int? opticalSize = null, bool filled = false) => Factory(unicode, Style.Outlined, weight, opticalSize, filled);
+        public static string Rounded(char unicode, Weight? weight = null, int? opticalSize = null, bool filled = false) => Factory(unicode, Style.Rounded, weight, opticalSize, filled);
+        public static string Sharp(char unicode, Weight? weight = null, int? opticalSize = null, bool filled = false) => Factory(unicode, Style.Sharp, weight, opticalSize, filled);
 
-        private static string Factory(RishString unicode, Style style, Weight? weight = null, int? opticalSize = null, bool filled = false)
+        private static string Factory(char unicode, Style style, Weight? weight = null, int? opticalSize = null, bool filled = false)
         {
             var fontFamily = style switch
             {
@@ -56,7 +56,7 @@ namespace Roots
     {
         [DOMDescriptor]
         public DOMDescriptor descriptor;
-        public RishString unicode;
+        public char unicode;
         public MaterialSymbol.Style symbolStyle;
         public MaterialSymbol.Weight? weight;
         public int? opticalSize;

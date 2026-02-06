@@ -5,7 +5,7 @@ using Sappy;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Roots
+namespace Roots.Bootstrap
 {
     public partial class Spinner : RishElement<SpinnerProps, SpinnerState>, IMountingListener
     {

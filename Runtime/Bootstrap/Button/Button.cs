@@ -1,7 +1,7 @@
 using System;
 using RishUI;
 
-namespace Roots
+namespace Roots.Bootstrap
 {
     public partial class Button : RishElement<ButtonProps>
     {

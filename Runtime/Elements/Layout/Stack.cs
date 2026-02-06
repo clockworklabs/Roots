@@ -14,15 +14,19 @@ namespace Roots
 
         private VisualElement _visualChild;
         private VisualElement VisualChild => _visualChild ??= GetVisualChild();
+        
+        private HashSet<int> Indices { get; } = new();
 
         void IManualState.Restart()
         {
             _visualChild = null;
             PrevMargins.Clear();
+            Indices.Clear();
         }
 
         void IPropsListener<StackProps>.PropsDidChange(StackProps? prev)
         {
+            SetHasSeparator(Props.separator.Valid);
             SetHalfGap(Props.gap * 0.5f);
         }
         void IPropsListener<StackProps>.PropsWillChange() { }
@@ -36,6 +40,40 @@ namespace Roots
             Vector2 targetMargins;
             if (phase == VisualManipulationPhase.BubbleUp)
             {
+                var shouldSkip = style.display == DisplayStyle.None;
+
+                if (State.hasSeparator)
+                {
+                    var userData = descendant.element.userData;
+                    if (userData is Holder holder)
+                    {
+                        var index = holder.Props.index;
+                        if (shouldSkip || style.position == Position.Absolute)
+                        {
+                            if (Indices.Remove(index))
+                            {
+                                Dirty();
+                            }
+                        }
+                        else
+                        {
+                            if (Indices.Add(index))
+                            {
+                                Dirty();
+                            }
+                        }
+                    } else
+                    {
+                        shouldSkip = true;
+                    }
+                }
+
+                if (shouldSkip)
+                {
+                    PrevMargins.Remove(descendant.ID);
+                    return;
+                }
+                
                 targetMargins = Props.direction switch
                 {
                     Direction.Vertical => new Vector2(style.resolvedMarginTop, style.resolvedMarginBottom),
@@ -77,30 +115,59 @@ namespace Roots
             }
         }
 
-        protected override Element Render() => Div.Create(
-            descriptor: Props.descriptor + new Style
+        protected override Element Render()
+        {
+            Children children;
+            if (State.hasSeparator)
             {
-                flexDirection = Props.direction switch
+                children = new Children();
+                var lastIndex = -1;
+                for(int i = 0, n = Props.children.Count; i < n; i++)
                 {
-                    Direction.Vertical => FlexDirection.Column,
-                    Direction.Horizontal => FlexDirection.Row
+                    if (Indices.Contains(i))
+                    {
+                        if (lastIndex >= 0)
+                        {
+                            children.Add(Props.separator);
+                        }
+                        lastIndex = i;
+                    }
+                    children.Add(Holder.Create(key: (ulong)i, index: i, content: Props.children[i]));
+                }
+            }
+            else
+            {
+                children = Props.children;
+            }
+            
+            return Div.Create(
+                descriptor: Props.descriptor + new Style
+                {
+                    flexDirection = Props.direction switch
+                    {
+                        Direction.Vertical => Props.reverse ? FlexDirection.ColumnReverse : FlexDirection.Column,
+                        Direction.Horizontal => Props.reverse ? FlexDirection.RowReverse : FlexDirection.Row
+                    },
                 },
-            },
-            children: Props.children);
+                children: children);
+        }
     }
 
     [RishValueType]
     internal struct StackProps
     {
         public Stack.Direction direction;
+        public bool reverse;
         public float gap;
         public DOMDescriptor descriptor;
         public Children children;
+        public Element separator;
     }
 
     [RishValueType]
     internal struct StackState
     {
+        public bool hasSeparator;
         public float halfGap;
     }
 }

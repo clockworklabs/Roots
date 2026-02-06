@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Roots
 {
-    internal partial class Stack : RishElement<StackProps, StackState>, IManualState, IPropsListener<StackProps>, IVisualManipulator
+    public partial class Stack : RishElement<StackProps, StackState>, IManualState, IPropsListener<StackProps>, IVisualManipulator
     {
         public enum Direction { Vertical, Horizontal }
 
@@ -154,7 +154,7 @@ namespace Roots
     }
 
     [RishValueType]
-    internal struct StackProps
+    public struct StackProps
     {
         public Stack.Direction direction;
         public bool reverse;
@@ -165,7 +165,7 @@ namespace Roots
     }
 
     [RishValueType]
-    internal struct StackState
+    public struct StackState
     {
         public bool hasSeparator;
         public float halfGap;

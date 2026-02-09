@@ -55,7 +55,7 @@ namespace Roots
                 buttons.Add(a.button);
             }
             
-            return InternalElement.Create(
+            return Internal.Create(
                 isInteractable: Props.isInteractable,
                 // actionOnPointerDown: Props.actionOnPointerDown,
                 buttons: buttons,

@@ -9,8 +9,6 @@ namespace Roots
         private Bridge Bridge { get; }
         Bridge IVisualElement.Bridge => Bridge;
         
-        VisualElement IElement.GetVisualChild() => this;
-        
         private PickingManager PickingManager { get; }
         PickingManager ICustomPicking.Manager => PickingManager;
         

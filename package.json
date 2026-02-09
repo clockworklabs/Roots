@@ -1,17 +1,26 @@
 {
-  "name": "com.clockworklabs.roots",
+  "name": "io.clockworklabs.roots",
   "version": "1.0.0-pre.122",
   "displayName": "Roots",
   "description": "UI framework with ready-made components and solutions for Rish",
   "unity": "2022.3",
+  "documentationUrl": "https://rishui.com/docs/roots",
+  "changelogUrl": "https://rishui.com/docs/roots/changelog",
+  "licensesUrl": "https://rishui.com/licensing.html",
   "author": {
-    "name": "Lisandro Crespo",
-    "email": "hey@lisandroct.com",
-    "url": "https://lisandroct.com"
+    "name": "Clockwork Labs",
+    "email": "rish@clockworklabs.io",
+    "url": "https://clockworklabs.io"
   },
   "dependencies": {
-    "com.clockworklabs.rish": "3.0.0-pre.286",
-    "com.clockworklabs.motion": "1.7.6"
+    "io.clockworklabs.rish": "3.0.0-pre.286",
+    "io.clockworklabs.motion": "1.7.6"
   },
-  "type": "library"
+  "samples": [
+    {
+      "displayName": "Default Provider",
+      "description": "Basic UnityComponent prototypes provider.",
+      "path": "Samples~/Default"
+    }
+  ]
 }

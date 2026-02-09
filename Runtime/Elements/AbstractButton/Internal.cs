@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 namespace Roots
 {
     public partial class AbstractButton {
-        private partial class InternalElement : RishElement<InternalElementProps, InternalElementState>, IMountingListener
+        private partial class Internal : RishElement<InternalElementProps, InternalElementState>, IMountingListener
         {
             private int _pointerId = -1;
             private int PointerId
@@ -29,7 +29,7 @@ namespace Roots
                 }
             }
 
-            public InternalElement()
+            public Internal()
             {
                 RegisterCallback<HoverStartEvent>(OnHoverStart);
                 RegisterCallback<HoverEndEvent>(OnHoverEnd);

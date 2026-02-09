@@ -267,16 +267,13 @@ namespace Roots
             }
         }
 
-        private partial class RishTextField : TextField, IVisualElement<RishTextFieldProps>, IStyledProps<RishTextField, RishTextFieldProps>
+        private partial class RishTextField : TextField, IVisualElement<RishTextFieldProps>, IStyledProps<RishTextFieldProps>
         {
             private Bridge<RishTextFieldProps> Bridge { get; }
             Bridge<RishTextFieldProps> IVisualElement<RishTextFieldProps>.Bridge => Bridge;
             
             private PickingManager PickingManager { get; }
             PickingManager ICustomPicking.Manager => PickingManager;
-        
-            private StyledPropsManager<RishTextField, RishTextFieldProps> PropsManager { get; }
-            StyledPropsManager<RishTextField, RishTextFieldProps> IStyledProps<RishTextField, RishTextFieldProps>.Manager => PropsManager;
             
             private string[] TextInputClasses { get; }
             private string[] TextElementClasses { get; }
@@ -316,7 +313,6 @@ namespace Roots
                 this.RegisterValueChangedCallback(OnNewValue);
                 
                 PickingManager = new RectPickingManager(Bridge);
-                PropsManager = new StyledPropsManager<RishTextField, RishTextFieldProps>(this);
                 
                 textInputBase.name = null;
                 TextInputClasses = textInputBase.GetClasses().ToArray();
@@ -355,8 +351,7 @@ namespace Roots
                 value = null;
             }
 
-            void IVisualElement<RishTextFieldProps>.Setup(RishTextFieldProps props) => PropsManager.Setup(props);
-            void IStyledProps<RishTextField, RishTextFieldProps>.Setup(RishTextFieldProps props)
+            void IVisualElement<RishTextFieldProps>.Setup(RishTextFieldProps props)
             {
                 var firstSetup = !Props.HasValue;
                 
@@ -470,13 +465,13 @@ namespace Roots
                 Props = props;
             }
 
-            void IStyledProps<RishTextField, RishTextFieldProps>.OnCustomStyle(ref RishTextFieldProps props)
+            void IStyledProps<RishTextFieldProps>.OnCustomStyle(IStyler styler, ref RishTextFieldProps props)
             {
-                PropsManager.SetValue(MaxLengthProp, ref props.maxLength, -1);
-                PropsManager.SetValue(MultiClickInteractionProp, ref props.multiClickInteraction, true);
-                PropsManager.SetValue(SelectOnFocusProp, ref props.selectOnFocus, false);
-                PropsManager.SetValue(CursorColorProp, ref props.cursorColor, Color.black);
-                PropsManager.SetValue(SelectionColorProp, ref props.selectionColor, new Color(0.39f, 0.58f, 0.93f, 0.4f));
+                styler.SetValue(MaxLengthProp, ref props.maxLength, -1);
+                styler.SetValue(MultiClickInteractionProp, ref props.multiClickInteraction, true);
+                styler.SetValue(SelectOnFocusProp, ref props.selectOnFocus, false);
+                styler.SetValue(CursorColorProp, ref props.cursorColor, Color.black);
+                styler.SetValue(SelectionColorProp, ref props.selectionColor, new Color(0.39f, 0.58f, 0.93f, 0.4f));
             }
             
             public override bool ContainsPoint(Vector2 localPoint) => PickingManager.ContainsPoint(localPoint);

@@ -10,16 +10,13 @@ using VectorImage = UnityEngine.UIElements.VectorImage;
 namespace Roots
 {
     // If you set up backgroundImage or backgroundTint, behavior is undefined and will give unexpected results
-    public partial class Image : UnityEngine.UIElements.Image, IVisualElement<ImageProps>, IStyledProps<Image, ImageProps>
+    public partial class Image : UnityEngine.UIElements.Image, IVisualElement<ImageProps>, IStyledProps<ImageProps>
     {
         private Bridge<ImageProps> Bridge { get; }
         Bridge<ImageProps> IVisualElement<ImageProps>.Bridge => Bridge;
         
         private PickingManager PickingManager { get; }
         PickingManager ICustomPicking.Manager => PickingManager;
-        
-        private StyledPropsManager<Image, ImageProps> PropsManager { get; }
-        StyledPropsManager<Image, ImageProps> IStyledProps<Image, ImageProps>.Manager => PropsManager;
 
         private static readonly CustomStyleProperty<string> TextureAddressProp = new("--props-texture"); 
         private static readonly CustomStyleProperty<string> SpriteAddressProp = new("--props-sprite"); 
@@ -105,7 +102,6 @@ namespace Roots
         {
             Bridge = new Bridge<ImageProps>(this);
             PickingManager = new RectPickingManager(Bridge);
-            PropsManager = new StyledPropsManager<Image, ImageProps>(this);
             
             RegisterCallback<VisualChangeEvent>(SappyOnVisualChange.Callback);
 
@@ -114,8 +110,7 @@ namespace Roots
             Bridge.OnStyle.Add(SappyOnInlineStyle);
         }
         
-        void IVisualElement<ImageProps>.Setup(ImageProps props) => PropsManager.Setup(props);
-        void IStyledProps<Image, ImageProps>.Setup(ImageProps props)
+        void IVisualElement<ImageProps>.Setup(ImageProps props)
         {
             UseBackground = props.useBackground;
             
@@ -200,21 +195,21 @@ namespace Roots
                 }
             }
         }
-        void IStyledProps<Image, ImageProps>.OnCustomStyle(ref ImageProps props)
+        void IStyledProps<ImageProps>.OnCustomStyle(IStyler styler, ref ImageProps props)
         {
-            PropsManager.SetValue(TextureAddressProp, ref props.textureAddress);
-            PropsManager.SetValue(SpriteAddressProp, ref props.spriteAddress);
-            PropsManager.SetValue(VectorAddressProp, ref props.vectorAddress);
-            PropsManager.SetValue(RenderTextureAddressProp, ref props.renderTextureAddress);
-            PropsManager.SetValue(TintColorProp, ref props.tintColor, Color.white);
-            props.scaleMode ??= PropsManager.TryGetValue(ScaleModeProp, out var customScaleMode) ? customScaleMode switch
+            styler.SetValue(TextureAddressProp, ref props.textureAddress);
+            styler.SetValue(SpriteAddressProp, ref props.spriteAddress);
+            styler.SetValue(VectorAddressProp, ref props.vectorAddress);
+            styler.SetValue(RenderTextureAddressProp, ref props.renderTextureAddress);
+            styler.SetValue(TintColorProp, ref props.tintColor, Color.white);
+            props.scaleMode ??= styler.TryGetValue(ScaleModeProp, out var customScaleMode) ? customScaleMode switch
             {
                 "scale-and-crop" => ScaleMode.ScaleAndCrop,
                 "scale-to-fit" => ScaleMode.ScaleToFit,
                 _ => ScaleMode.StretchToFill
             } : default;
-            props.width ??= PropsManager.TryGetValue(ImageWidthProp, out var customImageWidth) ? ImageSize.Parse(customImageWidth) : default;
-            props.height ??= PropsManager.TryGetValue(ImageHeightProp, out var customImageHeight) ? ImageSize.Parse(customImageHeight) : default;
+            props.width ??= styler.TryGetValue(ImageWidthProp, out var customImageWidth) ? ImageSize.Parse(customImageWidth) : default;
+            props.height ??= styler.TryGetValue(ImageHeightProp, out var customImageHeight) ? ImageSize.Parse(customImageHeight) : default;
         }
 
         [SapTarget(typeof(AssetLoaded<Texture2D>))]

@@ -13,7 +13,7 @@
     "url": "https://clockworklabs.io"
   },
   "dependencies": {
-    "io.clockworklabs.rish": "3.0.0-pre.288",
+    "io.clockworklabs.rish": "3.0.0-pre.289",
     "io.clockworklabs.motion": "1.7.6"
   },
   "samples": [

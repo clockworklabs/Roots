@@ -267,7 +267,7 @@ namespace Roots
             }
         }
 
-        private partial class RishTextField : TextField, IVisualElement<RishTextFieldProps>, IStyledProps<RishTextFieldProps>
+        private partial class RishTextField : TextField, IVisualElement<RishTextFieldProps>, IStyledProps<RishTextFieldProps>, IManualState
         {
             private Bridge<RishTextFieldProps> Bridge { get; }
             Bridge<RishTextFieldProps> IVisualElement<RishTextFieldProps>.Bridge => Bridge;
@@ -302,11 +302,19 @@ namespace Roots
             
             private long FocusTimestamp { get;set; }
             private long BlurTimestamp { get;set; }
+
+            void IManualState.Restart()
+            {
+                Props = null;
+                SetSizeMethod(TextElement, Vector2.zero);
+                TextElement.MarkDirtyRepaint();
+                cursorIndex = 0;
+                value = null;
+            }
             
             public RishTextField()
             {
                 Bridge = new Bridge<RishTextFieldProps>(this, true);
-                Bridge.OnUnmounted.Add(SappyResetProps);
                 
                 RegisterCallback<FocusEvent>(OnFocus);
                 RegisterCallback<BlurEvent>(OnBlur);
@@ -339,16 +347,6 @@ namespace Roots
 
                 TextElement.name = null;
                 TextElementClasses = TextElement.GetClasses().ToArray();
-            }
-
-            [SapTarget]
-            private void ResetProps()
-            {
-                Props = null;
-                SetSizeMethod(TextElement, Vector2.zero);
-                TextElement.MarkDirtyRepaint();
-                cursorIndex = 0;
-                value = null;
             }
 
             void IVisualElement<RishTextFieldProps>.Setup(RishTextFieldProps props)

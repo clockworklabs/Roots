@@ -10,7 +10,7 @@ using VectorImage = UnityEngine.UIElements.VectorImage;
 namespace Roots
 {
     // If you set up backgroundImage or backgroundTint, behavior is undefined and will give unexpected results
-    public partial class Image : UnityEngine.UIElements.Image, IVisualElement<ImageProps>, IStyledProps<ImageProps>
+    public partial class Image : UnityEngine.UIElements.Image, IVisualElement<ImageProps>, IStyledProps<ImageProps>, IMountingListener, IManualState, IStyleListener
     {
         private Bridge<ImageProps> Bridge { get; }
         Bridge<ImageProps> IVisualElement<ImageProps>.Bridge => Bridge;
@@ -97,6 +97,47 @@ namespace Roots
         private StyleLength InlineHeight { get; set; }
         
         private bool UseBackground { get; set; }
+
+        void IMountingListener.ComponentDidMount()
+        {
+            Loader = AssetsLoader.GetLoader(this);
+            
+            Parent = parent;
+            Parent?.RegisterCallback<VisualChangeEvent>(SappyOnVisualChange.Callback);
+        }
+        void IMountingListener.ComponentWillUnmount()
+        {
+            Parent?.UnregisterCallback<VisualChangeEvent>(SappyOnVisualChange.Callback);
+            Parent = null;
+        }
+        
+        void IManualState.Restart()
+        {
+            image = null;
+            sprite = null;
+            vectorImage = null;
+            tintColor = Color.white;
+            scaleMode = ScaleMode.StretchToFill;
+
+            Loader = null;
+
+            UseBackground = false;
+            Width = default;
+            Height = default;
+            TextureAddress = default;
+            SpriteAddress = default;
+            VectorAddress = default;
+            RenderTextureAddress = default;
+            StyleBackgroundSet = false;
+            InlineWidth = default;
+            InlineHeight = default;
+        }
+        
+        void IStyleListener.OnSet(Style style)
+        {
+            InlineWidth = style.width;
+            InlineHeight = style.height;
+        }
         
         public Image()
         {
@@ -104,10 +145,6 @@ namespace Roots
             PickingManager = new RectPickingManager(Bridge);
             
             RegisterCallback<VisualChangeEvent>(SappyOnVisualChange.Callback);
-
-            Bridge.OnMounted.Add(SappyOnMounted);
-            Bridge.OnUnmounted.Add(SappyOnUnmounted);
-            Bridge.OnStyle.Add(SappyOnInlineStyle);
         }
         
         void IVisualElement<ImageProps>.Setup(ImageProps props)
@@ -349,48 +386,6 @@ namespace Roots
 
                 StyleBackgroundSet = true;
             }
-        }
-
-        [SapTarget]
-        private void OnMounted()
-        {
-            Loader = AssetsLoader.GetLoader(this);
-            
-            Parent = parent;
-            Parent?.RegisterCallback<VisualChangeEvent>(SappyOnVisualChange.Callback);
-        }
-        
-        [SapTarget]
-        private void OnUnmounted()
-        {
-            Parent?.UnregisterCallback<VisualChangeEvent>(SappyOnVisualChange.Callback);
-            Parent = null;
-
-            image = null;
-            sprite = null;
-            vectorImage = null;
-            tintColor = Color.white;
-            scaleMode = ScaleMode.StretchToFill;
-
-            Loader = null;
-
-            UseBackground = false;
-            Width = default;
-            Height = default;
-            TextureAddress = default;
-            SpriteAddress = default;
-            VectorAddress = default;
-            RenderTextureAddress = default;
-            StyleBackgroundSet = false;
-            InlineWidth = default;
-            InlineHeight = default;
-        }
-
-        [SapTarget]
-        private void OnInlineStyle(Style style)
-        {
-            InlineWidth = style.width;
-            InlineHeight = style.height;
         }
         
         [SapTarget(typeof(EventCallback<VisualChangeEvent>))]

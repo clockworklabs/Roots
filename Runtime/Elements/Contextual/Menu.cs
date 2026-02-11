@@ -37,19 +37,19 @@ namespace Roots
             };
             switch (Props.anchor)
             {
-                case Contextual.Anchor.TopLeft:
+                case ContextualAnchor.TopLeft:
                     style.left = local.x;
                     style.top = local.y;
                     break;
-                case Contextual.Anchor.BottomLeft:
+                case ContextualAnchor.BottomLeft:
                     style.left = local.x;
                     style.bottom = contextSize.y - local.y;
                     break;
-                case Contextual.Anchor.TopRight:
+                case ContextualAnchor.TopRight:
                     style.right = contextSize.x - local.x;
                     style.top = local.y;
                     break;
-                case Contextual.Anchor.BottomRight:
+                case ContextualAnchor.BottomRight:
                     style.right = contextSize.x - local.x;
                     style.bottom = contextSize.y - local.y;
                     break;
@@ -71,7 +71,7 @@ namespace Roots
             Length xOffset;
             switch (Props.anchor)
             {
-                case Contextual.Anchor.TopLeft or Contextual.Anchor.BottomLeft:
+                case ContextualAnchor.TopLeft or ContextualAnchor.BottomLeft:
                     if (Layout.xMax <= parentSize.x)
                     {
                         xOffset = Length.None();
@@ -89,7 +89,7 @@ namespace Roots
                     }
 
                     break;
-                case Contextual.Anchor.TopRight or Contextual.Anchor.BottomRight:
+                case ContextualAnchor.TopRight or ContextualAnchor.BottomRight:
                     if (Layout.xMin >= 0)
                     {
                         xOffset = Length.None();
@@ -113,7 +113,7 @@ namespace Roots
             Length yOffset;
             switch (Props.anchor)
             {
-                case Contextual.Anchor.TopLeft or Contextual.Anchor.TopRight:
+                case ContextualAnchor.TopLeft or ContextualAnchor.TopRight:
                     if (Layout.yMax <= parentSize.y)
                     {
                         yOffset = Length.None();
@@ -131,7 +131,7 @@ namespace Roots
                     }
 
                     break;
-                case Contextual.Anchor.BottomLeft or Contextual.Anchor.BottomRight:
+                case ContextualAnchor.BottomLeft or ContextualAnchor.BottomRight:
                     if (Layout.yMin >= 0)
                     {
                         yOffset = Length.None();
@@ -170,7 +170,7 @@ namespace Roots
     {
         public Vector2 position;
         public Element element;
-        public Contextual.Anchor anchor;
+        public ContextualAnchor anchor;
         public bool anchorCanChange;
     }
 

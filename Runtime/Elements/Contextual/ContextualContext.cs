@@ -6,11 +6,18 @@ using UnityEngine.UIElements;
 
 namespace Roots
 {
+    public interface IContextual
+    {
+        public Element Menu { get; }
+        public ContextualAnchor MenuAnchor { get; }
+        public bool MenuAnchorCanChange { get; }
+    }
+    
     public partial class ContextualContext : RishElement<ContextualContextProps>, IMountingListener
     {
         private static ulong Key { get; set; }
         
-        private Contextual Contextual { get; set; }
+        private IContextual Contextual { get; set; }
         private Menu Menu { get; set; }
         private Vector3 Position { get; set; }
 
@@ -71,9 +78,9 @@ namespace Roots
                     Menu.Create(
                         key: Key,
                         position: Position,
-                        element: Contextual.Props.menu,
-                        anchor: Contextual.Props.menuAnchor,
-                        anchorCanChange: Contextual.Props.menuAnchorCanChange)
+                        element: Contextual.Menu,
+                        anchor: Contextual.MenuAnchor,
+                        anchorCanChange: Contextual.MenuAnchorCanChange)
                 };
             }
             else
@@ -84,7 +91,7 @@ namespace Roots
             return Div.Create(descriptor: Props.descriptor, children: children);
         }
 
-        public void ShowContextMenu(Contextual owner, Vector3 position)
+        public void ShowContextMenu(IContextual owner, Vector3 position)
         {
             Key += 1;
             Contextual = owner;
@@ -104,7 +111,7 @@ namespace Roots
             OnShow(true);
         }
 
-        public void HideContextMenu(Contextual owner)
+        public void HideContextMenu(IContextual owner)
         {
             if (owner != Contextual)
             {

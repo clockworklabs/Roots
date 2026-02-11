@@ -5,14 +5,14 @@ using UnityEngine.UIElements;
 
 namespace Roots
 {
-    public partial class Contextual : RishElement<ContextualProps, ContextualState>, IContextual, IMountingListener
+    public partial class Contextual : RishElement<ContextualProps, ContextualState>, IMountingListener
     {
+        public enum Anchor { TopLeft, BottomLeft, TopRight, BottomRight }
+
         private ContextualContext Context { get; set; }
 
         // private bool Listening { get; set; }
         // private int PointerId { get; set; }
-
-        Element IContextual.Menu => Props.menu;
         
         public Contextual()
         {
@@ -152,6 +152,9 @@ namespace Roots
         public Element pressed;
 
         public Element menu;
+
+        public Contextual.Anchor menuAnchor;
+        public bool menuAnchorCanChange;
     }
 
     [RishValueType]

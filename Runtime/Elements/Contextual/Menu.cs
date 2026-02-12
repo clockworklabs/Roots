@@ -120,7 +120,7 @@ namespace Roots
                     }
                     else
                     {
-                        if (Props.anchorCanChange && Layout.yMin > Layout.width)
+                        if (Props.anchorCanChange && Layout.yMin > Layout.height)
                         {
                             yOffset = Length.Percent(-100);
                         }
@@ -138,7 +138,7 @@ namespace Roots
                     }
                     else
                     {
-                        if (Props.anchorCanChange && parentSize.y - Layout.yMax > Layout.width)
+                        if (Props.anchorCanChange && parentSize.y - Layout.yMax > Layout.height)
                         {
                             yOffset = Length.Percent(100);
                         }

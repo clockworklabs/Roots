@@ -21,10 +21,59 @@ namespace Roots
         private IReadOnlyList<MediaQueryStyleSheet> _sortedStyleSheets;
         private IReadOnlyList<MediaQueryStyleSheet> SortedStyleSheets => _sortedStyleSheets;
 
+        private RishRoot RishRoot { get; set; }
+
         private List<StyleSheet> BaseStyleSheets { get; } = new();
 
-        private RishRoot RishRoot { get; set; }
-        
+        private VisualElement _rootVisualElement;
+        private VisualElement RootVisualElement
+        {
+            get => _rootVisualElement;
+            set
+            {
+                if (_rootVisualElement == value) return;
+
+                if (_rootVisualElement != null)
+                {
+                    _rootVisualElement.UnregisterCallback<GeometryChangedEvent>(SappyOnGeometryChanged);
+                    
+                    _rootVisualElement.styleSheets.Clear();
+                    for(int i = 0, n = BaseStyleSheets.Count; i < n; i++)
+                    {
+                        _rootVisualElement.styleSheets.Add(BaseStyleSheets[i]);
+                    }
+                }
+                
+                BaseStyleSheets.Clear();
+                
+                _rootVisualElement = value;
+
+                if (value != null)
+                {
+                    value.RegisterCallback<GeometryChangedEvent>(SappyOnGeometryChanged);
+                    
+                    var baseStyleSheetsCount = value.styleSheets.count;
+                    for(var i = 0; i < baseStyleSheetsCount; i++)
+                    {
+                        var styleSheet = value.styleSheets[i];
+                        BaseStyleSheets.Add(styleSheet);
+                    }
+            
+                    foreach (var responsiveStyleSheet in SortedStyleSheets)
+                    {
+                        if (responsiveStyleSheet.MinWidth > 0)
+                        {
+                            break;
+                        }
+                
+                        value.styleSheets.Add(responsiveStyleSheet.StyleSheet);
+                    }
+                    
+                    OnNewSize(null, _rootVisualElement.layout.width);
+                }
+            }
+        }
+
         private void Awake()
         {
             UIDocument = GetComponent<UIDocument>();
@@ -38,8 +87,6 @@ namespace Roots
             {
                 RishRoot.OnStart.Add(SappySetupRishRoot);
             }
-
-            ResponsiveContext.Visual.OnStaticResize.Add(SappyOnResponsiveResize);
         }
         private void OnDestroy()
         {
@@ -47,45 +94,30 @@ namespace Roots
             {
                 RishRoot.OnStart.Remove(SappySetupRishRoot);
             }
-            ResponsiveContext.Visual.OnStaticResize.Remove(SappyOnResponsiveResize);
+            
+            RootVisualElement = null;
         }
 
         [SapTarget]
         private void SetupRishRoot()
         {
-            var root = UIDocument.rootVisualElement;
+            RootVisualElement = UIDocument.rootVisualElement;
+        }
+
+        [SapTarget(typeof(EventCallback<GeometryChangedEvent>))]
+        private void OnGeometryChanged(GeometryChangedEvent evt)
+        {
+            var oldWidth = evt.oldRect.width;
+            var newWidth = evt.newRect.width;
+
+            if (Mathf.Approximately(oldWidth, newWidth)) return;
             
-            BaseStyleSheets.Clear();
-            var baseStyleSheetsCount = root.styleSheets.count;
-            for(var i = 0; i < baseStyleSheetsCount; i++)
-            {
-                var styleSheet = root.styleSheets[i];
-                BaseStyleSheets.Add(styleSheet);
-            }
-            
-            root.styleSheets.Clear();
-            
-            foreach (var responsiveStyleSheet in SortedStyleSheets)
-            {
-                if (responsiveStyleSheet.MinWidth > 0)
-                {
-                    break;
-                }
-                
-                root.styleSheets.Add(responsiveStyleSheet.StyleSheet);
-            }
-            
-            for(var i = 0; i < baseStyleSheetsCount; i++)
-            {
-                var styleSheet = BaseStyleSheets[i];
-                root.styleSheets.Add(styleSheet);
-            }
+            OnNewSize(oldWidth, newWidth);
         }
         
-        [SapTarget(typeof(ResponsiveContext.OnUSSResize))]
-        private void OnResponsiveResize(ResponsiveContext.Visual ussResponsive, float? oldWidth, float newWidth)
+        private void OnNewSize(float? oldWidth, float newWidth)
         {
-            if (newWidth < 0 || float.IsNaN(newWidth) || float.IsInfinity(newWidth) || !TreeContains(ussResponsive)) return;
+            if (newWidth < 0 || float.IsNaN(newWidth) || float.IsInfinity(newWidth)) return;
 
             if (newWidth < oldWidth)
             {
@@ -101,7 +133,7 @@ namespace Roots
                         break;
                     }
                     
-                    ussResponsive.styleSheets.Remove(styleSheet.StyleSheet);
+                    RootVisualElement.styleSheets.Remove(styleSheet.StyleSheet);
                 }
             }
             else
@@ -118,11 +150,9 @@ namespace Roots
                         break;
                     }
                     
-                    ussResponsive.styleSheets.Add(styleSheet.StyleSheet);
+                    RootVisualElement.styleSheets.Add(styleSheet.StyleSheet);
                 }
             }
         }
-
-        private bool TreeContains(VisualElement body) => UIDocument.rootVisualElement.Contains(body);
     }
 }

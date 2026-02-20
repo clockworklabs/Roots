@@ -8,13 +8,10 @@ namespace Roots
 {
     public partial class ResponsiveContext : RishElement<ResponsiveContextProps, ResponsiveContextState>, IPropsListener<ResponsiveContextProps>
     {
-        public enum Size { XSmall, Small, Medium, Large, XLarge, XXLarge, Count }
-        
         public struct LayoutData
         {
-            public Size size;
-            public bool uss;
             public float width;
+            public ResponsiveBreakpoint breakpoint;
         }
         
         private SapStem<LayoutData> OnLayoutStem { get; } = new();
@@ -34,9 +31,7 @@ namespace Roots
         }
         void IPropsListener<ResponsiveContextProps>.PropsWillChange() { }
         
-        protected override Element Render() => Props.uss
-            ? Visual.Create(descriptor: Props.descriptor, children: Props.children)
-            : Div.Create(descriptor: Props.descriptor, children: Props.children);
+        protected override Element Render() => Div.Create(descriptor: Props.descriptor, children: Props.children);
 
 
         private void OnVisualChange(VisualChangeEvent evt) => SetWidth(ContentRect.width);
@@ -51,80 +46,77 @@ namespace Roots
         {
             var width = State.width;
             
-            var size = GetSizeFor(width);
-            SetSize(size);
+            var breakpoint = GetBreakpointFor(width);
+            SetBreakpoint(breakpoint);
             
-            OnResize(width, size);
+            OnResize(width, breakpoint);
             OnLayoutStem.Send(GetLayoutData());
         }
         
-        private const int XSmallMinWidth = 0;
+        private const int ExtraSmallMinWidth = 0;
         private const int DefaultSmallMinWidth = 576;
         private const float DefaultRatio = 4 / 3f;
 
-        private Size GetSizeFor(float width)
+        private ResponsiveBreakpoint GetBreakpointFor(float width)
         {
-            if (width <= XSmallMinWidth) return Size.XSmall;
+            if (width <= ExtraSmallMinWidth) return ResponsiveBreakpoint.ExtraSmall;
             
             // TODO: Doing this is not the best performant thing in the world. We can revisit if it becomes a problem.
-            for (var i = (int)Size.Count - 1; i >= 0; i--)
+            for (var i = (int)ResponsiveBreakpoint.Count - 1; i >= 0; i--)
             {
-                var size = (Size)i;
+                var size = (ResponsiveBreakpoint)i;
                 if(GetMinWidth(size) <= width) return size;
             }
             
-            return Size.XSmall;
+            return ResponsiveBreakpoint.ExtraSmall;
         }
 
-        public int GetMinWidth(Size size)
+        public int GetMinWidth(ResponsiveBreakpoint breakpoint)
         {
-            if(size is Size.XSmall) return XSmallMinWidth;
-            var prevSize = size - 1;
+            if(breakpoint is ResponsiveBreakpoint.ExtraSmall) return ExtraSmallMinWidth;
+            var prevSize = breakpoint - 1;
             var prevMinWidth = GetMinWidth(prevSize);
-            var propsMinWidth = GetPropsMinWidth(size);
+            var propsMinWidth = GetPropsMinWidth(breakpoint);
             if(propsMinWidth > prevMinWidth) return propsMinWidth;
-            return prevSize is Size.XSmall ? DefaultSmallMinWidth : Mathf.FloorToInt(prevMinWidth * DefaultRatio);
+            return prevSize is ResponsiveBreakpoint.ExtraSmall ? DefaultSmallMinWidth : Mathf.FloorToInt(prevMinWidth * DefaultRatio);
         }
 
-        private int GetPropsMinWidth(Size size) => size switch
+        private int GetPropsMinWidth(ResponsiveBreakpoint breakpoint) => breakpoint switch
         {
-            Size.Small => Props.smMinWidth,
-            Size.Medium => Props.mdMinWidth,
-            Size.Large => Props.lgMinWidth,
-            Size.XLarge => Props.xlMinWidth,
-            Size.XXLarge => Props.xxlMinWidth
+            ResponsiveBreakpoint.Small => Props.sm,
+            ResponsiveBreakpoint.Medium => Props.md,
+            ResponsiveBreakpoint.Large => Props.lg,
+            ResponsiveBreakpoint.ExtraLarge => Props.xl,
+            ResponsiveBreakpoint.ExtraExtraLarge => Props.xxl
         };
 
         public LayoutData GetLayoutData() => new()
         {
-            uss = Props.uss,
             width = State.width,
-            size = State.size,
+            breakpoint = State.breakpoint,
         };
     }
 
     [RishValueType]
     public struct ResponsiveContextProps
     {
-        public int smMinWidth;
-        public int mdMinWidth;
-        public int lgMinWidth;
-        public int xlMinWidth;
-        public int xxlMinWidth;
-
-        public bool uss;
+        public int sm;
+        public int md;
+        public int lg;
+        public int xl;
+        public int xxl;
         
         [DOMDescriptor]
         public DOMDescriptor descriptor;
         public Children children;
 
-        public Action<float, ResponsiveContext.Size> onResize;
+        public Action<float, ResponsiveBreakpoint> onResize;
     }
 
     [RishValueType]
     public struct ResponsiveContextState
     {
         public float width;
-        public ResponsiveContext.Size size;
+        public ResponsiveBreakpoint breakpoint;
     }
 }

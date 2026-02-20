@@ -38,23 +38,30 @@ namespace Roots
             Context = GetFirstAncestorOfType<ResponsiveContext>();
         }
         void IPropsListener<ContainerProps>.PropsWillChange() { }
-        
-        protected override Element Render() => Div.Create(
-            descriptor: Props.descriptor + new Style
+
+        protected override Element Render()
+        {
+            var style = new Style
             {
-                maxWidth = State.width ?? Length.Percent(100),
+                width = Length.Percent(100),
                 marginLeft = Length.Auto(),
                 marginRight = Length.Auto(),
-                alignSelf = Align.Center,
-            },
-            children: Props.children);
+                alignSelf = Align.Center
+            };
+            if (State.width.HasValue)
+            {
+                style.maxWidth = State.width.Value;
+            }
+            
+            return Div.Create(descriptor: Props.descriptor + style, children: Props.content);
+        }
 
         [SapTarget]
         private void OnContextLayout(ResponsiveContext.LayoutData data)
         {
-            if (data.size >= Props.breakpoint)
+            if (data.breakpoint >= Props.breakpoint)
             {
-                SetWidth(Context.GetMinWidth(data.size));
+                SetWidth(Context.GetMinWidth(data.breakpoint));
             }
             else
             {
@@ -68,8 +75,8 @@ namespace Roots
     {
         [DOMDescriptor]
         public DOMDescriptor descriptor;
-        public ResponsiveContext.Size breakpoint;
-        public Children children;
+        public ResponsiveBreakpoint breakpoint;
+        public Element content;
     }
 
     [RishValueType]

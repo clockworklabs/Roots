@@ -359,6 +359,24 @@ namespace Roots
             style.paddingLeft = value;
             return style;
         }
+        public static Style Padding(Length xValue, Length yValue) => Padding(new Style(), xValue, yValue);
+        public static Style Padding(this Style style, Length xValue, Length yValue)
+        {
+            style.paddingTop = yValue;
+            style.paddingRight = xValue;
+            style.paddingBottom = yValue;
+            style.paddingLeft = xValue;
+            return style;
+        }
+        public static Style Padding(Length top, Length right, Length bottom, Length left) => Padding(new Style(), top, right, bottom, left);
+        public static Style Padding(this Style style, Length top, Length right, Length bottom, Length left)
+        {
+            style.paddingTop = top;
+            style.paddingRight = right;
+            style.paddingBottom = bottom;
+            style.paddingLeft = left;
+            return style;
+        }
         
         // Text Alignment
         public static Style TextLeft() => TextUpperLeft();

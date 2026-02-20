@@ -69,7 +69,7 @@ namespace Roots
                 {
                     foreach (var col in Props.cols)
                     {
-                        var colSize = col.GetSize(State.contextSize);
+                        var colSize = col.GetSize(State.breakpoint);
                         size += colSize;
                         colSizes.Add(colSize);
                     }
@@ -95,7 +95,7 @@ namespace Roots
                 for (; i < colsCount; i++)
                 {
                     var col = Props.cols[i];
-                    var colSize = colSizes.Count > 0 ? colSizes[i] : col.GetSize(State.contextSize);
+                    var colSize = colSizes.Count > 0 ? colSizes[i] : col.GetSize(State.breakpoint);
                     if (colSize <= 0 || colSize > size) continue;
 
                     if (rowUsedSize + colSize > size) break;
@@ -162,58 +162,58 @@ namespace Roots
         [SapTarget]
         private void OnContextLayout(ResponsiveContext.LayoutData data)
         {
-            SetContextSize(data.size);
+            SetBreakpoint(data.breakpoint);
             Update();
         }
 
         private void Update()
         {
-            var size = State.contextSize;
+            var size = State.breakpoint;
             
             SetSize(GetSize(size));
             SetGutter(GetGutter(size));
         }
         
-        private Gutter GetGutter(ResponsiveContext.Size size)
+        private Gutter GetGutter(ResponsiveBreakpoint breakpoint)
         {
-            var propsGutter = GetPropsGutter(size);
+            var propsGutter = GetPropsGutter(breakpoint);
             if(propsGutter.HasValue) return propsGutter.Value;
             
-            if(size is ResponsiveContext.Size.XSmall) return new Gutter();
+            if(breakpoint is ResponsiveBreakpoint.ExtraSmall) return new Gutter();
             
-            var prevSize = size - 1;
+            var prevSize = breakpoint - 1;
             return GetGutter(prevSize);
         }
 
-        private Gutter? GetPropsGutter(ResponsiveContext.Size size) => size switch
+        private Gutter? GetPropsGutter(ResponsiveBreakpoint breakpoint) => breakpoint switch
         {
-            ResponsiveContext.Size.XSmall => Props.xsGutter,
-            ResponsiveContext.Size.Small => Props.smGutter,
-            ResponsiveContext.Size.Medium => Props.mdGutter,
-            ResponsiveContext.Size.Large => Props.lgGutter,
-            ResponsiveContext.Size.XLarge => Props.xlGutter,
-            ResponsiveContext.Size.XXLarge => Props.xxlGutter
+            ResponsiveBreakpoint.ExtraSmall => Props.xsGutter,
+            ResponsiveBreakpoint.Small => Props.smGutter,
+            ResponsiveBreakpoint.Medium => Props.mdGutter,
+            ResponsiveBreakpoint.Large => Props.lgGutter,
+            ResponsiveBreakpoint.ExtraLarge => Props.xlGutter,
+            ResponsiveBreakpoint.ExtraExtraLarge => Props.xxlGutter
         };
         
-        private int? GetSize(ResponsiveContext.Size size)
+        private int? GetSize(ResponsiveBreakpoint breakpoint)
         {
-            var propsCols = GetPropsSize(size);
+            var propsCols = GetPropsSize(breakpoint);
             if(propsCols.HasValue) return propsCols.Value;
             
-            if(size is ResponsiveContext.Size.XSmall) return null;
+            if(breakpoint is ResponsiveBreakpoint.ExtraSmall) return null;
             
-            var prevSize = size - 1;
+            var prevSize = breakpoint - 1;
             return GetSize(prevSize);
         }
 
-        private int? GetPropsSize(ResponsiveContext.Size size) => size switch
+        private int? GetPropsSize(ResponsiveBreakpoint breakpoint) => breakpoint switch
         {
-            ResponsiveContext.Size.XSmall => Props.xs,
-            ResponsiveContext.Size.Small => Props.sm,
-            ResponsiveContext.Size.Medium => Props.md,
-            ResponsiveContext.Size.Large => Props.lg,
-            ResponsiveContext.Size.XLarge => Props.xl,
-            ResponsiveContext.Size.XXLarge => Props.xxl
+            ResponsiveBreakpoint.ExtraSmall => Props.xs,
+            ResponsiveBreakpoint.Small => Props.sm,
+            ResponsiveBreakpoint.Medium => Props.md,
+            ResponsiveBreakpoint.Large => Props.lg,
+            ResponsiveBreakpoint.ExtraLarge => Props.xl,
+            ResponsiveBreakpoint.ExtraExtraLarge => Props.xxl
         };
 
         [RishValueType]
@@ -374,25 +374,25 @@ namespace Roots
             children = value
         };
         
-        public int GetSize(ResponsiveContext.Size size)
+        public int GetSize(ResponsiveBreakpoint breakpoint)
         {
-            var propsSize = GetPropsSize(size);
+            var propsSize = GetPropsSize(breakpoint);
             if(propsSize.HasValue) return propsSize.Value;
             
-            if(size is ResponsiveContext.Size.XSmall) return 1;
+            if(breakpoint is ResponsiveBreakpoint.ExtraSmall) return 1;
             
-            var prevSize = size - 1;
+            var prevSize = breakpoint - 1;
             return GetSize(prevSize);
         }
 
-        private int? GetPropsSize(ResponsiveContext.Size size) => size switch
+        private int? GetPropsSize(ResponsiveBreakpoint breakpoint) => breakpoint switch
         {
-            ResponsiveContext.Size.XSmall => xs,
-            ResponsiveContext.Size.Small => sm,
-            ResponsiveContext.Size.Medium => md,
-            ResponsiveContext.Size.Large => lg,
-            ResponsiveContext.Size.XLarge => xl,
-            ResponsiveContext.Size.XXLarge => xxl
+            ResponsiveBreakpoint.ExtraSmall => xs,
+            ResponsiveBreakpoint.Small => sm,
+            ResponsiveBreakpoint.Medium => md,
+            ResponsiveBreakpoint.Large => lg,
+            ResponsiveBreakpoint.ExtraLarge => xl,
+            ResponsiveBreakpoint.ExtraExtraLarge => xxl
         };
     }
 
@@ -422,7 +422,7 @@ namespace Roots
     [RishValueType]
     public struct ResponsiveGridState
     {
-        public ResponsiveContext.Size contextSize;
+        public ResponsiveBreakpoint breakpoint;
         public int? size;
         public Gutter gutter;
         public int width;

@@ -8,11 +8,11 @@ namespace Roots
         protected override Element Render() => Div.Create(
             descriptor: Props.descriptor + new Style
             {
-                maxWidth = Length.Percent(100),
+                width = Length.Percent(100),
                 marginLeft = Length.Auto(),
                 marginRight = Length.Auto(),
             },
-            children: Props.children);
+            children: Props.content);
     }
 
     [RishValueType]
@@ -20,6 +20,6 @@ namespace Roots
     {
         [DOMDescriptor]
         public DOMDescriptor descriptor;
-        public Children children;
+        public Element content;
     }
 }

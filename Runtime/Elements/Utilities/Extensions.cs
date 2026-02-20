@@ -1,4 +1,3 @@
-using System.Text;
 using UnityEngine.UIElements;
 
 namespace Roots
@@ -8,7 +7,7 @@ namespace Roots
         // public static void AddClassNames(this VisualElement visualElement, Utilities utilities, StringBuilder stringBuilder) =>
         //     utilities.AddClassNamesTo(visualElement, stringBuilder);
         
-        public static LanguageDirection GetComputedLanguageDirection(this VisualElement visualElement) {
+        public static LanguageDirection GetResolvedLanguageDirection(this VisualElement visualElement) {
             var direction = LanguageDirection.Inherit;
             while(direction == LanguageDirection.Inherit && visualElement != null)
             {

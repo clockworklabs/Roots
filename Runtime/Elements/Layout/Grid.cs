@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 
 namespace Roots
 {
-    public partial class ResponsiveGrid : RishElement<ResponsiveGridProps, ResponsiveGridState>, IMountingListener, IPropsListener<ResponsiveGridProps>
+    public partial class Grid : RishElement<GridProps, GridState>, IMountingListener, IPropsListener<GridProps>
     {
         private ResponsiveContext _context;
         private ResponsiveContext Context
@@ -28,7 +28,7 @@ namespace Roots
             }
         }
 
-        public ResponsiveGrid()
+        public Grid()
         {
             RegisterCallback<VisualChangeEvent>(OnVisualChange, EventPhase.AtTargetOnly);
         }
@@ -39,7 +39,7 @@ namespace Roots
             Context = null;
         }
 
-        void IPropsListener<ResponsiveGridProps>.PropsDidChange(ResponsiveGridProps? prev)
+        void IPropsListener<GridProps>.PropsDidChange(GridProps? prev)
         {
             if(prev.HasValue)
             {
@@ -50,7 +50,7 @@ namespace Roots
                 Context = GetFirstAncestorOfType<ResponsiveContext>();
             }
         }
-        void IPropsListener<ResponsiveGridProps>.PropsWillChange() { }
+        void IPropsListener<GridProps>.PropsWillChange() { }
         
         protected override Element Render()
         {
@@ -106,7 +106,9 @@ namespace Roots
                     
                     children.Add(Col.Create(
                         key: (ulong)(children.Count + 1),
-                        style: new Style
+                        name: col.name,
+                        className: col.className,
+                        style: col.style + new Style
                         {
                             width = width,
                             minWidth = width,
@@ -269,8 +271,24 @@ namespace Roots
         public int? lg;
         public int? xl;
         public int? xxl;
-
+        public DOMDescriptor descriptor;
         public Children children;
+
+        public Name name
+        {
+            get => descriptor.name;
+            set => descriptor.name = value;
+        }
+        public ClassName className
+        {
+            get => descriptor.className;
+            set => descriptor.className = value;
+        }
+        public Style style
+        {
+            get => descriptor.style;
+            set => descriptor.style = value;
+        }
 
         public ColData(Children children)
         {
@@ -280,6 +298,7 @@ namespace Roots
             lg = null;
             xl = null;
             xxl = null;
+            descriptor = default;
             this.children = children;
         }
         public ColData(int size, Children children)
@@ -290,6 +309,7 @@ namespace Roots
             lg = null;
             xl = null;
             xxl = null;
+            descriptor = default;
             this.children = children;
         }
 
@@ -397,7 +417,7 @@ namespace Roots
     }
 
     [RishValueType]
-    public struct ResponsiveGridProps
+    public struct GridProps
     {
         public int? xs;
         public int? sm;
@@ -420,7 +440,7 @@ namespace Roots
     }
 
     [RishValueType]
-    public struct ResponsiveGridState
+    public struct GridState
     {
         public ResponsiveBreakpoint breakpoint;
         public int? size;

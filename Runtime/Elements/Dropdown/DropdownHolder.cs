@@ -8,11 +8,11 @@ namespace Roots
     {
         private DropdownContext Context { get; set; }
         
-        void IMountingListener.ComponentDidMount()
+        void IMountingListener.ElementDidMount()
          {
              Context = GetFirstAncestorOfType<DropdownContext>();
          }
-         void IMountingListener.ComponentWillUnmount() { }
+         void IMountingListener.ElementWillUnmount() { }
         
         protected override Element Render()
         {

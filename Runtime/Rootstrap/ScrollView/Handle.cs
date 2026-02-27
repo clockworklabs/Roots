@@ -18,6 +18,7 @@ namespace Roots.Experimental.Bootstrap
                 RegisterCallback<DragStartEvent>(SappyOnDragStart);
                 RegisterCallback<DragEndEvent>(SappyOnDragEnd);
                 RegisterCallback<DragEvent>(SappyOnDrag);
+                RegisterCallback<PointerDownEvent>(OnPointerDown);
             }
 
             protected override Element Render() => Stateful.Create(
@@ -52,8 +53,8 @@ namespace Roots.Experimental.Bootstrap
                 return Div.Create(
                     className: new ClassName
                     {
-                        "m-n1",
-                        "p-1",
+                        // "m-n1",
+                        // "p-1",
                         "position-absolute",
                         "overflow-hidden"
                     },
@@ -122,6 +123,11 @@ namespace Roots.Experimental.Bootstrap
                     Direction.Vertical => evt.deltaPosition.y / contentRect.height * Props.contentSize,
                     Direction.Horizontal => evt.deltaPosition.x / contentRect.width * Props.contentSize,
                 }, true);
+            }
+            
+            private void OnPointerDown(PointerDownEvent evt)
+            {
+                evt.StopPropagation();
             }
         }
 

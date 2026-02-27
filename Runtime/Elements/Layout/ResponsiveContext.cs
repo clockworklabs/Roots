@@ -106,8 +106,8 @@ namespace Roots
         public int xl;
         public int xxl;
         
-        [DOMDescriptor]
-        public DOMDescriptor descriptor;
+        [Expand]
+        public VisualAttributes descriptor;
         public Children children;
 
         public Action<float, ResponsiveBreakpoint> onResize;

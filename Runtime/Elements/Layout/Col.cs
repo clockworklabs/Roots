@@ -18,8 +18,8 @@ namespace Roots
     {
         public float gap;
         public bool reverse;
-        [DOMDescriptor]
-        public DOMDescriptor descriptor;
+        [Expand]
+        public VisualAttributes descriptor;
         public Children children;
         public Element separator;
     }

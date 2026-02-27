@@ -25,13 +25,13 @@ namespace Roots
             RegisterCallback<VisualChangeEvent>(OnVisualChange);
         }
 
-        void IMountingListener.ComponentDidMount()
+        void IMountingListener.ElementDidMount()
         {
             Holder = GetFirstAncestorOfType<TooltipHolder>();
             var context = GetFirstAncestorOfType<TooltipsContext>();
             Tooltip = context.Peek();
         }
-        void IMountingListener.ComponentWillUnmount()
+        void IMountingListener.ElementWillUnmount()
         {
             Holder = null;
             Tooltip = null;

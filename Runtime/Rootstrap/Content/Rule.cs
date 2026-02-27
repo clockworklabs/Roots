@@ -8,7 +8,7 @@ namespace Roots
     {
         public enum Direction { Auto, Horizontal, Vertical }
         
-        void IMountingListener.ComponentDidMount()
+        void IMountingListener.ElementDidMount()
         {
             var parent = GetFirstAncestorOfType<VisualElement>();
             while (parent != null)
@@ -17,7 +17,7 @@ namespace Roots
                 parent = parent.parent;
             }
         }
-        void IMountingListener.ComponentWillUnmount()
+        void IMountingListener.ElementWillUnmount()
         {
             var parent = GetFirstAncestorOfType<VisualElement>();
             while (parent != null)

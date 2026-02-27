@@ -159,7 +159,7 @@ namespace Roots
         public Stack.Direction direction;
         public bool reverse;
         public float gap;
-        public DOMDescriptor descriptor;
+        public VisualAttributes descriptor;
         public Children children;
         public Element separator;
     }

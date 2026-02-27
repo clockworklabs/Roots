@@ -1197,5 +1197,45 @@ namespace Roots
             style.pointerDetection = value;
             return style;
         }
+        
+        // Scale
+        public static Style Scale(float value) => Scale(new Style(), value);
+        public static Style Scale(this Style style, float value) => Scale(style, value, value);
+        public static Style Scale(float xValue, float yValue) => Scale(new Style(), xValue, yValue);
+        public static Style Scale(this Style style, float xValue, float yValue) => Scale(style, new Vector3(xValue, yValue, 1));
+        public static Style Scale(Vector2 value) => Scale(value.x, value.y);
+        public static Style Scale(this Style style, Vector2 value) => Scale(style, value.x, value.y);
+        public static Style Scale(Vector3 value) => Scale(new Style(), value);
+        public static Style Scale(this Style style, Vector3 value)
+        {
+            style.scale = value;
+            return style;
+        }
+        
+        // Transform Origin
+        public static Style TransformOriginTopLeft() => TransformOriginTopLeft(new Style());
+        public static Style TransformOriginTopLeft(this Style style) => TransformOrigin(style, new TransformOrigin(0, 0, 0));
+        public static Style TransformOriginTopCenter() => TransformOriginTopCenter(new Style());
+        public static Style TransformOriginTopCenter(this Style style) => TransformOrigin(style, new TransformOrigin(Length.Percent(50), 0, 0));
+        public static Style TransformOriginTopRight() => TransformOriginTopRight(new Style());
+        public static Style TransformOriginTopRight(this Style style) => TransformOrigin(style, new TransformOrigin(Length.Percent(100), 0, 0));
+        public static Style TransformOriginMiddleLeft() => TransformOriginMiddleLeft(new Style());
+        public static Style TransformOriginMiddleLeft(this Style style) => TransformOrigin(style, new TransformOrigin(0, Length.Percent(50), 0));
+        public static Style TransformOriginMiddleCenter() => TransformOriginMiddleCenter(new Style());
+        public static Style TransformOriginMiddleCenter(this Style style) => TransformOrigin(style, new TransformOrigin(Length.Percent(50), Length.Percent(50), 0));
+        public static Style TransformOriginMiddleRight() => TransformOriginMiddleRight(new Style());
+        public static Style TransformOriginMiddleRight(this Style style) => TransformOrigin(style, new TransformOrigin(Length.Percent(100), Length.Percent(50), 0));
+        public static Style TransformOriginBottomLeft() => TransformOriginBottomLeft(new Style());
+        public static Style TransformOriginBottomLeft(this Style style) => TransformOrigin(style, new TransformOrigin(0, Length.Percent(100), 0));
+        public static Style TransformOriginBottomCenter() => TransformOriginBottomCenter(new Style());
+        public static Style TransformOriginBottomCenter(this Style style) => TransformOrigin(style, new TransformOrigin(Length.Percent(50), Length.Percent(100), 0));
+        public static Style TransformOriginBottomRight() => TransformOriginBottomRight(new Style());
+        public static Style TransformOriginBottomRight(this Style style) => TransformOrigin(style, new TransformOrigin(Length.Percent(100), Length.Percent(100), 0));
+        public static Style TransformOrigin(TransformOrigin value) => TransformOrigin(new Style(), value);
+        public static Style TransformOrigin(this Style style, TransformOrigin value)
+        {
+            style.transformOrigin = value;
+            return style;
+        }
     }
 }

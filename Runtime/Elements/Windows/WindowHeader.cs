@@ -23,7 +23,7 @@ namespace Roots
             RegisterCallback<DragEndEvent>(OnDragEnd);
         }
         
-        void IMountingListener.ComponentDidMount()
+        void IMountingListener.ElementDidMount()
         {
             RegisterCallback<VisualChangeEvent>(SappyOnVisualChange.Callback);
             Context = GetFirstAncestorOfType<WindowsContext>();
@@ -31,7 +31,7 @@ namespace Roots
 
             DraggingPointer = -1;
         }
-        void IMountingListener.ComponentWillUnmount() {
+        void IMountingListener.ElementWillUnmount() {
             UnregisterCallback<VisualChangeEvent>(SappyOnVisualChange.Callback);
         }
         

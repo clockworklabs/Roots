@@ -13,7 +13,7 @@ namespace Roots
         private ulong NodeHashCode { get; set; }
         private ulong GUID => Props.guid ?? NodeHashCode;
         
-        void IMountingListener.ComponentDidMount()
+        void IMountingListener.ElementDidMount()
         {
             NodeHashCode = GetNodeHashCode();
             
@@ -22,7 +22,7 @@ namespace Roots
             VisualElementParent = GetFirstAncestorOfType<VisualElement>();
             VisualElementParent.RegisterCallback<GeometryChangedEvent>(SappyParentGeometryChanged.Callback);
         }
-        void IMountingListener.ComponentWillUnmount()
+        void IMountingListener.ElementWillUnmount()
         {
             Context?.UnregisterWindow(GUID);
             VisualElementParent.UnregisterCallback<GeometryChangedEvent>(SappyParentGeometryChanged.Callback);

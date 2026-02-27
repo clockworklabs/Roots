@@ -4,10 +4,10 @@ using RishUI.Elements;
 
 namespace Roots
 {
-    public partial class P : RishElement<PProps>
+    public partial class Body : RishElement<PProps>
     {
         protected override Element Render() => Label.Create(
-            descriptor: Props.descriptor + "p",
+            descriptor: Props.descriptor + "body",
             text: Props.text,
             widthRange: Props.widthRange,
             heightRange: Props.heightRange,
@@ -19,8 +19,8 @@ namespace Roots
     [RishValueType]
     public struct PProps
     {
-        [DOMDescriptor]
-        public DOMDescriptor descriptor;
+        [Expand]
+        public VisualAttributes descriptor;
         public RishString text;
         
         public LengthRange? widthRange;

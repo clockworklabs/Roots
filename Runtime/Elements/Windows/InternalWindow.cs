@@ -13,11 +13,11 @@ namespace Roots
         {
             RegisterCallback<PointerDownEvent>(OnPointerDown);
         }
-        void IMountingListener.ComponentDidMount()
+        void IMountingListener.ElementDidMount()
         {
             Context = GetFirstAncestorOfType<WindowsContext>();
         }
-        void IMountingListener.ComponentWillUnmount() { }
+        void IMountingListener.ElementWillUnmount() { }
         
         protected override Element Render()
         {

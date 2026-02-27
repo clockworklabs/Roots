@@ -44,8 +44,8 @@ namespace Roots
                 // TODO: Add longPress
             }
 
-            void IMountingListener.ComponentDidMount() { }
-            void IMountingListener.ComponentWillUnmount()
+            void IMountingListener.ElementDidMount() { }
+            void IMountingListener.ElementWillUnmount()
             {
                 PointerId = -1;
             }

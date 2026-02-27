@@ -10,8 +10,8 @@ namespace Roots.Bootstrap
     [RishValueType]
     public struct CardProps
     {
-        [DOMDescriptor]
-        public DOMDescriptor descriptor;
+        [Expand]
+        public VisualAttributes descriptor;
         public Children children;
     }
 }

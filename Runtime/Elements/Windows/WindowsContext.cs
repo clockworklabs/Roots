@@ -332,8 +332,8 @@ namespace Roots
     [RishValueType]
     public struct WindowsContextProps
     {
-        [DOMDescriptor]
-        public DOMDescriptor descriptor;
+        [Expand]
+        public VisualAttributes descriptor;
         public bool forceFit;
         public int safeZoneSize;
         public bool hideAllWindows;

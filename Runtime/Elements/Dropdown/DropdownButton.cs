@@ -1,7 +1,6 @@
 using System;
 using RishUI;
-using RishUI.Events;
-using UnityEngine.UIElements;
+using Sappy;
 
 namespace Roots
 {
@@ -9,23 +8,13 @@ namespace Roots
     {
         private DropdownContext Context { get; set; }
 
-        private bool Listening { get; set; }
-        private int PointerId { get; set; }
-        public DropdownButton()
-        {
-            RegisterCallback<HoverStartEvent>(OnHoverStart);
-            RegisterCallback<HoverEndEvent>(OnHoverEnd);
-
-            RegisterCallback<PointerDownEvent>(OnPointerDown);
-            RegisterCallback<PointerUpEvent>(OnPointerUp);
-            RegisterCallback<PointerCancelEvent>(OnPointerCancel);
-        }
-        void IMountingListener.ComponentDidMount()
+        void IMountingListener.ElementDidMount()
         {
             Context = GetFirstAncestorOfType<DropdownContext>();
-
-            Listening = false;
-            PointerId = 0;
+        }
+        void IMountingListener.ElementWillUnmount()
+        {
+            Context?.HideDropdownMenu(this);
         }
 
         void IPropsListener.PropsDidChange()
@@ -37,104 +26,13 @@ namespace Roots
         }
         void IPropsListener.PropsWillChange() { }
 
-        void IMountingListener.ComponentWillUnmount()
-        {
-            Context?.HideDropdownMenu(this);
-        }
-
-        protected override Element Render()
-        {
-            Element element;
-            if (!Props.interactable)
-            {
-                return Props.disabled.Valid ? Props.disabled : Props.normal;
-            }
-            
-            if (State.open && Props.open.Valid)
-            {
-                element = Props.open;
-            } else if (State.pressed && Props.pressed.Valid)
-            {
-                element = Props.pressed;
-            }
-            else if (State.hovered && Props.hovered.Valid)
-            {
-                element = Props.hovered;
-            }
-            else
-            {
-                element = Props.normal;
-            }
-
-            return element;
-        }
-
-        private void OnHoverStart(HoverStartEvent evt) => SetHovered(true);
-
-        private void OnHoverEnd(HoverEndEvent evt) => SetHovered(false);
-
-        private void OnPointerDown(PointerDownEvent evt)
-        {
-            if (!Props.interactable || Listening || evt.button != 0)
-            {
-                return;
-            }
-
-            if (State.open)
-            {
-                OnAction();
-                return;
-            }
-
-            Listening = true;
-            PointerId = evt.pointerId;
-
-            CapturePointer(PointerId);
-
-            SetPressed(true);
-
-            evt.StopPropagation();
-
-        }
-
-        private void OnPointerUp(PointerUpEvent evt)
-        {
-            if (!Listening || PointerId != evt.pointerId)
-            {
-                return;
-            }
-
-            ReleasePointer(PointerId);
-
-            Listening = false;
-            PointerId = 0;
-
-            if (evt.button == 0)
-            {
-                OnAction();
-            }
-
-            SetPressed(false);
-
-            evt.StopPropagation();
-        }
-
-        private void OnPointerCancel(PointerCancelEvent evt)
-        {
-            if (!Listening || PointerId != evt.pointerId)
-            {
-                return;
-            }
-
-            ReleasePointer(PointerId);
-
-            Listening = false;
-            PointerId = 0;
-
-            SetPressed(false);
-
-            evt.StopPropagation();
-        }
+        protected override Element Render() => AbstractButton.Create(
+            action: SappyDoAction,
+            normal: State.open && Props.open.Valid ? Props.open : Props.normal,
+            hovered: State.open && Props.open.Valid ? Props.open : Props.hovered,
+            pressed: State.open && Props.open.Valid ? Props.open : Props.pressed,
+            disabled: State.open && Props.open.Valid ? Props.open : Props.disabled,
+            interactable: Props.interactable);
 
         internal void OnOpen()
         {
@@ -148,7 +46,8 @@ namespace Roots
             OnOpen(false);
         }
 
-        private void OnAction()
+        [SapTarget]
+        private void DoAction()
         {
             if (!State.open)
             {
@@ -186,8 +85,6 @@ namespace Roots
     [RishValueType]
     public struct DropdownButtonState
     {
-        public bool hovered;
-        public bool pressed;
         public bool open;
     }
 }

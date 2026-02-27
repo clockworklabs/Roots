@@ -1,6 +1,7 @@
 using System;
 using Motion;
 using RishUI;
+using Sappy;
 
 namespace Roots
 {
@@ -52,20 +53,22 @@ namespace Roots
                     : Element.Null);
         }
 
+        [SapTarget]
         private void OnAnimateComplete()
         {
             SetVisible(Props.visible);
-            Props.onAnimateComplete?.Invoke();
+            RishOnAnimateComplete();
         }
 
-        private void OnExitComplete() => Props.onAnimateComplete?.Invoke();
+        [SapTarget]
+        private void OnExitComplete() => RishOnAnimateComplete();
     }
 
     [RishValueType]
     public struct FadeProps
     {
-        [DOMDescriptor]
-        public DOMDescriptor descriptor;
+        [Expand]
+        public VisualAttributes descriptor;
 
         public bool visible;
         public bool fadeOnUnmount;

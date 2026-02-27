@@ -12,46 +12,40 @@ namespace Roots.Experimental
     {
         public enum Direction { Vertical, Horizontal }
 
+        public const float DefaultBufferSize = 0.45f;
+
         private Dictionary<int, float> Sizes { get; } = new();
-        private float ComputedContentSize { get; set; }
-        private float AverageElementSize => Props.elementsSize ?? (Sizes.Count == 0 ? 0 : ComputedContentSize / Sizes.Count);
+        private float _computedContentSize;
+        private float ComputedContentSize
+        {
+            get => _computedContentSize;
+            set
+            {
+                if (Mathf.Approximately(_computedContentSize, value)) return;
+                _computedContentSize = value;
+                UpdateAverageElementSize();
+            }
+        }
+        private float _averageElementSize;
+        private float AverageElementSize
+        {
+            get => _averageElementSize;
+            set
+            {
+                if (Mathf.Approximately(_averageElementSize, value)) return;
+                _averageElementSize = value;
+                OnElementSize(value);
+            }
+        }
         private float _projectedContentSize;
         private float ProjectedContentSize
         {
-            get
+            get => _projectedContentSize;
+            set
             {
-                var totalCount = Props.children.Count;
-                float elementsSize;
-                if (Props.elementsSize.HasValue)
-                {
-                    elementsSize = totalCount * Props.elementsSize.Value;
-                }
-                else
-                {
-                    var projectedCount = Mathf.Max(0, totalCount - Sizes.Count);
-                    elementsSize = ComputedContentSize + projectedCount * AverageElementSize;
-                }
-
-                var value = elementsSize + (totalCount - 1) * Props.gap;
-
-                if (!Mathf.Approximately(_projectedContentSize, value))
-                {
-                    Props.onContentSize?.Invoke(value);
-                }
-
-                return value;
-            }
-        }
-        private float ActualContentSize
-        {
-            get
-            {
-                if (Props.elementsSize.HasValue)
-                {
-                    return ProjectedContentSize;
-                }
-
-                return ComputedContentSize + (Sizes.Count - 1) * Props.gap;
+                if (Mathf.Approximately(_projectedContentSize, value)) return;
+                _projectedContentSize = value;
+                OnContentSize(value);
             }
         }
 
@@ -60,12 +54,13 @@ namespace Roots.Experimental
             RegisterCallback<VisualChangeEvent>(OnVisualChange, EventPhase.AtTargetOnly);
         }
 
-        void IMountingListener.ComponentDidMount() { }
-        void IMountingListener.ComponentWillUnmount()
+        void IMountingListener.ElementDidMount() { }
+        void IMountingListener.ElementWillUnmount()
         {
             Sizes.Clear();
-            ComputedContentSize = 0;
+            _computedContentSize = 0;
             _projectedContentSize = 0;
+            _averageElementSize = 0;
         }
 
         void IPropsListener<ScrollViewProps>.PropsDidChange(ScrollViewProps? prev)
@@ -76,26 +71,29 @@ namespace Roots.Experimental
             {
                 ComputedContentSize = 0;
                 Sizes.Clear();
-                return;
+
+                UpdateAverageElementSize();
             }
-
-            if (!prev.HasValue) return;
-
-            var prevCount = prev.Value.children.Count;
-            var count = Props.children.Count;
-            if (prevCount == count) return;
-            if (Sizes.Count > count)
+            else if(prev.HasValue)
             {
-                for (int i = count, n = Sizes.Count - 1; i < n; i++)
+                var prevCount = prev.Value.children.Count;
+                var count = Props.children.Count;
+                if (prevCount == count) return;
+                if (Sizes.Count > count)
                 {
-                    Sizes.Remove(i);
-                }
-                ComputedContentSize = 0;
-                for (var i = 0; i < count; i++)
-                {
-                    ComputedContentSize += Sizes[i];
+                    for (int i = count, n = Sizes.Count - 1; i < n; i++)
+                    {
+                        Sizes.Remove(i);
+                    }
+                    ComputedContentSize = 0;
+                    for (var i = 0; i < count; i++)
+                    {
+                        ComputedContentSize += Sizes[i];
+                    }
                 }
             }
+            
+            UpdateProjectedContentSize();
         }
         void IPropsListener<ScrollViewProps>.PropsWillChange() { }
 
@@ -111,45 +109,22 @@ namespace Roots.Experimental
                 throw new ArgumentOutOfRangeException();
             }
 
-            float delta;
             if (Sizes.TryGetValue(index, out var prevSize))
             {
                 if (Mathf.Approximately(prevSize, size))
                 {
                     return;
                 }
-
-                delta = size - prevSize;
-
+                
                 ComputedContentSize -= prevSize;
-            }
-            else
-            {
-                delta = size - AverageElementSize;
             }
 
             Sizes[index] = size;
 
-            // Compensate element growing when inverted and scrolling
-            if (Props.inverted && !Mathf.Approximately(Props.position, 0))
-            {
-                int lastEntryIndex;
-                using (ManagedContext.New())
-                {
-                    var entries = GetEntries();
-                    lastEntryIndex = entries.Count > 0 ? entries[^1].index : index;
-                }
-                if (index < lastEntryIndex)
-                {
-                    // SetPosition(Props.position + delta); // TODO
-                }
-            }
-
             ComputedContentSize += size;
-            if (ProjectedContentSize <= State.viewportSize)
-            {
-                // SetPosition(0); // TODO
-            }
+            
+            UpdateProjectedContentSize();
+
             Dirty(true);
         }
 
@@ -186,6 +161,12 @@ namespace Roots.Experimental
         [RequiresManagedContext]
         private RishList<Entry> GetEntries()
         {
+            if (State.viewportSize <= 0) return RishList<Entry>.Null;
+
+            var bufferSize = Props.bufferSize > 0 ? Props.bufferSize : DefaultBufferSize;
+            var bottomBuffer = 1 + bufferSize;
+            var topBuffer = -bufferSize;
+            
             var alwaysMounted = Props.alwaysMountedIndices;
 
             var position = -Props.position;
@@ -201,7 +182,7 @@ namespace Roots.Experimental
                 var outsideOfViewport = false;
 
                 var elementPosition = position;
-                if (elementPosition / State.viewportSize >= 1.2f)
+                if (elementPosition / State.viewportSize >= bottomBuffer)
                 {
                     outsideOfViewport = true;
                     if (alwaysMounted.Count <= 0)
@@ -210,13 +191,13 @@ namespace Roots.Experimental
                     }
                 }
 
-                var size = Props.elementsSize ?? Sizes.GetValueOrDefault(i, -1);
+                var size = Props.elementsSize ?? Sizes.GetValueOrDefault(i, AverageElementSize > 0 ? AverageElementSize : -1);
                 if (size >= 0)
                 {
                     position += size;
                 }
 
-                if (position / State.viewportSize <= -0.2f)
+                if (position / State.viewportSize <= topBuffer)
                 {
                     outsideOfViewport = true;
                 }
@@ -250,6 +231,25 @@ namespace Roots.Experimental
             RishSetViewportSize(v);
             OnViewportSize(v);
         }
+
+        private void UpdateAverageElementSize() => AverageElementSize = Props.elementsSize ?? (Sizes.Count == 0 ? 0 : ComputedContentSize / Sizes.Count);
+
+        private void UpdateProjectedContentSize()
+        {
+            var totalCount = Props.children.Count;
+            float elementsSize;
+            if (Props.elementsSize.HasValue)
+            {
+                elementsSize = totalCount * Props.elementsSize.Value;
+            }
+            else
+            {
+                var projectedCount = Mathf.Max(0, totalCount - Sizes.Count);
+                elementsSize = ComputedContentSize + projectedCount * AverageElementSize;
+            }
+
+            ProjectedContentSize = elementsSize + (totalCount - 1) * Props.gap;
+        }
     }
 
     [RishValueType]
@@ -257,12 +257,13 @@ namespace Roots.Experimental
     {
         public float position;
 
-        [DOMDescriptor]
-        public DOMDescriptor descriptor;
+        [Expand]
+        public VisualAttributes descriptor;
 
         public ScrollView.Direction direction;
         
         public int gap;
+        public float bufferSize;
 
         public Children children;
         public bool inverted;
@@ -271,7 +272,7 @@ namespace Roots.Experimental
 
         public float? elementsSize;
 
-        public Action<float> onPosition;
+        public Action<float> onElementSize;
         public Action<float> onViewportSize;
         public Action<float> onContentSize;
     }

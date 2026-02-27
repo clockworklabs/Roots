@@ -28,8 +28,8 @@ namespace Roots.Bootstrap
     [RishValueType]
     public struct SimpleWindowProps
     {
-        [DOMDescriptor]
-        public DOMDescriptor descriptor;
+        [Expand]
+        public VisualAttributes descriptor;
         public bool open;
         public bool fixedPosition;
         public bool alwaysOnTop;

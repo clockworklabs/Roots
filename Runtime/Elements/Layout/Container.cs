@@ -26,8 +26,8 @@ namespace Roots
             }
         }
         
-        void IMountingListener.ComponentDidMount() { }
-        void IMountingListener.ComponentWillUnmount()
+        void IMountingListener.ElementDidMount() { }
+        void IMountingListener.ElementWillUnmount()
         {
             Context = null;
         }
@@ -73,8 +73,8 @@ namespace Roots
     [RishValueType]
     public struct ContainerProps
     {
-        [DOMDescriptor]
-        public DOMDescriptor descriptor;
+        [Expand]
+        public VisualAttributes descriptor;
         public ResponsiveBreakpoint breakpoint;
         public Element content;
     }

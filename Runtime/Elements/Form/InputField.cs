@@ -28,14 +28,14 @@ namespace Roots
             RegisterCallback<KeyDownEvent>(OnKeyDown);
         }
         
-        void IMountingListener.ComponentDidMount()
+        void IMountingListener.ElementDidMount()
         {
             Form = GetFirstAncestorOfType<Form>();
             FormIndex = Form?.RegisterElement(this) ?? 0;
             
             JustMounted = true;
         }
-        void IMountingListener.ComponentWillUnmount()
+        void IMountingListener.ElementWillUnmount()
         {
             Form?.UnregisterElement(this);
             NotFocusable();
@@ -537,8 +537,8 @@ namespace Roots
             /// </summary>
             public bool? selectOnFocus;
             
-            public DOMDescriptor textInputDescriptor;
-            public DOMDescriptor textElementDescriptor;
+            public VisualAttributes textInputDescriptor;
+            public VisualAttributes textElementDescriptor;
 
             /// <summary>
             /// Styled Prop as --props-cursor-color
@@ -560,12 +560,12 @@ namespace Roots
     {
         public InputField.Type type;
         
-        [DOMDescriptor]
-        public DOMDescriptor descriptor;
-        [DOMDescriptor]
-        public DOMDescriptor textInputDescriptor;
-        [DOMDescriptor]
-        public DOMDescriptor textElementDescriptor;
+        [Expand]
+        public VisualAttributes descriptor;
+        [Expand]
+        public VisualAttributes textInputDescriptor;
+        [Expand]
+        public VisualAttributes textElementDescriptor;
         public RishString value;
         public bool updateOnEveryKeystroke;
         public bool multiline;

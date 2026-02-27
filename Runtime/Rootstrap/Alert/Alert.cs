@@ -28,8 +28,8 @@ namespace Roots.Bootstrap
     [RishValueType]
     public struct AlertProps
     {
-        [DOMDescriptor]
-        public DOMDescriptor descriptor;
+        [Expand]
+        public VisualAttributes descriptor;
         public Alert.Context context;
         public Children children;
     }

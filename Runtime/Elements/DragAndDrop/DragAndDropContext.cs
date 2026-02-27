@@ -371,8 +371,8 @@ namespace Roots
     [RishValueType]
     public struct DragAndDropContextProps
     {
-        [DOMDescriptor]
-        public DOMDescriptor descriptor;
+        [Expand]
+        public VisualAttributes descriptor;
         public Children children;
         
         public Action<bool> onDrag;

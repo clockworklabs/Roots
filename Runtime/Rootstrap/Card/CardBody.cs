@@ -6,7 +6,7 @@ namespace Roots.Bootstrap
     {
         protected override Element Render()
         {
-            var descriptor = new DOMDescriptor(Props.descriptor)
+            var descriptor = new VisualAttributes(Props.descriptor)
             {
                 className = new ClassName(Props.descriptor.className)
                 {
@@ -22,8 +22,8 @@ namespace Roots.Bootstrap
     [RishValueType]
     public struct CardBodyProps
     {
-        [DOMDescriptor]
-        public DOMDescriptor descriptor;
+        [Expand]
+        public VisualAttributes descriptor;
         // public Utilities utilities;
         public Children children;
     }

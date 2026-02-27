@@ -18,8 +18,8 @@ namespace Roots
     [RishValueType]
     public struct FluidContainerProps
     {
-        [DOMDescriptor]
-        public DOMDescriptor descriptor;
+        [Expand]
+        public VisualAttributes descriptor;
         public Element content;
     }
 }

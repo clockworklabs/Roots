@@ -13,14 +13,14 @@ namespace Roots
             RegisterCallback<VisualChangeEvent>(OnVisualChange);
         }
 
-        void IMountingListener.ComponentDidMount()
+        void IMountingListener.ElementDidMount()
         {
             Holder = GetFirstAncestorOfType<DropdownHolder>();
             Context = GetFirstAncestorOfType<DropdownContext>();
             Context.RegisterDropdown(this);
         }
 
-        void IMountingListener.ComponentWillUnmount()
+        void IMountingListener.ElementWillUnmount()
         {
             Context.UnregisterDropdown(this);
         }

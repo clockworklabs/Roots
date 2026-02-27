@@ -93,12 +93,12 @@ namespace Roots
             RegisterCallback<HoverEndEvent>(OnHoverEnd);
         }
         
-        void IMountingListener.ComponentDidMount()
+        void IMountingListener.ElementDidMount()
         {
             Context = GetFirstAncestorOfType<TooltipsContext>();
 
         }
-        void IMountingListener.ComponentWillUnmount()
+        void IMountingListener.ElementWillUnmount()
         {
             HideTooltip();
             

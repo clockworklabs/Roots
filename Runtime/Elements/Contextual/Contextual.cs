@@ -26,7 +26,7 @@ namespace Roots
             // RegisterCallback<PointerCancelEvent>(OnPointerCancel);
         }
 
-        void IMountingListener.ComponentDidMount()
+        void IMountingListener.ElementDidMount()
         {
             Context = GetFirstAncestorOfType<ContextualContext>();
             
@@ -34,7 +34,7 @@ namespace Roots
             // PointerId = 0;
         }
         
-        void IMountingListener.ComponentWillUnmount()
+        void IMountingListener.ElementWillUnmount()
         {
             Context?.HideContextMenu(this);
         }
@@ -76,7 +76,7 @@ namespace Roots
             // PointerId = evt.pointerId;
             
             // CapturePointer(PointerId);
-            OnAction(evt.position);
+            DoAction(evt.position);
             
             SetPressed(true);
             
@@ -140,7 +140,7 @@ namespace Roots
         //     evt.StopPropagation();
         // }
 
-        private void OnAction(Vector3 position)
+        private void DoAction(Vector3 position)
         {
             Context?.ShowContextMenu(this, position);
         }

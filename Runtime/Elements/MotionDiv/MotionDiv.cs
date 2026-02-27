@@ -17,7 +17,7 @@ namespace Roots
             Animation = new StyleAnimation(this);
         }
 
-        void IMountingListener.ComponentDidMount()
+        void IMountingListener.ElementDidMount()
         {
             RegisterCallback<VisualChangeEvent>(SappyOnVisualChange.Callback);
             Parent = GetFirstAncestorOfType<IAnimatedElement>();
@@ -25,7 +25,7 @@ namespace Roots
             Animation.Mounted();
         }
 
-        void IMountingListener.ComponentWillUnmount() {
+        void IMountingListener.ElementWillUnmount() {
             UnregisterCallback<VisualChangeEvent>(SappyOnVisualChange.Callback);
         }
 
@@ -676,8 +676,8 @@ namespace Roots
         // public Target whileHover;
         // public Target whilePress;
 
-        [DOMDescriptor]
-        public DOMDescriptor descriptor;
+        [Expand]
+        public VisualAttributes descriptor;
         public Children children;
     }
 

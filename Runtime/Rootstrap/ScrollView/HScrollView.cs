@@ -11,7 +11,7 @@ namespace Roots.Experimental.Bootstrap
             direction: SimpleScrollView.Direction.Vertical,
             inverted: Props.inverted,
             gap: Props.gap,
-            mouseWheelSensitivity: Props.mouseWheelSensitivity,
+            mouseWheelMultiplier: Props.mouseWheelMultiplier,
             elementsSize: Props.elementsSize,
             alwaysMountedIndices: Props.alwaysMountedIndices,
             children: Props.children);
@@ -20,13 +20,13 @@ namespace Roots.Experimental.Bootstrap
     [RishValueType]
     public struct HScrollViewProps
     {
-        [DOMDescriptor]
-        public DOMDescriptor descriptor;
+        [Expand]
+        public VisualAttributes descriptor;
         
         public bool inverted;
         public int gap;
         
-        public float mouseWheelSensitivity;
+        public float? mouseWheelMultiplier;
         public float? elementsSize;
         
         public RishList<int> alwaysMountedIndices;

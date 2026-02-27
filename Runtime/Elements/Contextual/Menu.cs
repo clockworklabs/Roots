@@ -16,12 +16,12 @@ namespace Roots
             RegisterCallback<VisualChangeEvent>(OnVisualChange);
         }
         
-        void IMountingListener.ComponentDidMount()
+        void IMountingListener.ElementDidMount()
         {
             Context = GetFirstAncestorOfType<ContextualContext>();
             Context?.RegisterMenu(this);
         }
-        void IMountingListener.ComponentWillUnmount() { 
+        void IMountingListener.ElementWillUnmount() { 
             Context?.UnregisterMenu(this);
         }
 

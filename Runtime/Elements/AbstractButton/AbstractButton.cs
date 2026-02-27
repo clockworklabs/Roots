@@ -21,14 +21,14 @@ namespace Roots
             RegisterCallback<KeyDownEvent>(OnKeyDown);
         }
         
-        void IMountingListener.ComponentDidMount()
+        void IMountingListener.ElementDidMount()
         {
             Form = GetFirstAncestorOfType<Form>();
             FocusIndex = Form?.RegisterElement(this) ?? 0;
 
             JustMounted = true;
         }
-        void IMountingListener.ComponentWillUnmount()
+        void IMountingListener.ElementWillUnmount()
         {
             Form?.UnregisterElement(this);
             NotFocusable();

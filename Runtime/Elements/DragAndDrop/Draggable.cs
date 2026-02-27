@@ -25,7 +25,7 @@ namespace Roots
             RegisterCallback<DragEndEvent>(OnDragEnd);
         }
 
-        void IMountingListener.ComponentDidMount()
+        void IMountingListener.ElementDidMount()
         {
             Context = GetFirstAncestorOfType<DragAndDropContext>();
 
@@ -40,7 +40,7 @@ namespace Roots
             Threshold = shortSideSize * 0.005f;
         }
 
-        void IMountingListener.ComponentWillUnmount()
+        void IMountingListener.ElementWillUnmount()
         {
             Context?.UnmountDraggable(this);
 

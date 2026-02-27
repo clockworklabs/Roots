@@ -54,8 +54,8 @@ namespace Roots.Bootstrap
     [RishValueType]
     public struct MaterialSymbolProps
     {
-        [DOMDescriptor]
-        public DOMDescriptor descriptor;
+        [Expand]
+        public VisualAttributes descriptor;
         public char unicode;
         public MaterialSymbol.Style symbolStyle;
         public MaterialSymbol.Weight? weight;

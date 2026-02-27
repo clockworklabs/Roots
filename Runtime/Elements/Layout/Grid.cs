@@ -33,8 +33,8 @@ namespace Roots
             RegisterCallback<VisualChangeEvent>(OnVisualChange, EventPhase.AtTargetOnly);
         }
         
-        void IMountingListener.ComponentDidMount() { }
-        void IMountingListener.ComponentWillUnmount()
+        void IMountingListener.ElementDidMount() { }
+        void IMountingListener.ElementWillUnmount()
         {
             Context = null;
         }
@@ -271,7 +271,7 @@ namespace Roots
         public int? lg;
         public int? xl;
         public int? xxl;
-        public DOMDescriptor descriptor;
+        public VisualAttributes descriptor;
         public Children children;
 
         public Name name
@@ -433,8 +433,8 @@ namespace Roots
         public Gutter? xlGutter;
         public Gutter? xxlGutter;
         
-        [DOMDescriptor]
-        public DOMDescriptor descriptor;
+        [Expand]
+        public VisualAttributes descriptor;
 
         public RishList<ColData> cols;
     }

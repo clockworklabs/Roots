@@ -11,22 +11,22 @@ namespace Roots
 
         private T? Info { get; set; }
 
-        void IMountingListener.ComponentDidMount()
+        public DropArea()
         {
             RegisterCallback<HoverStartEvent>(OnHoverStart);
             RegisterCallback<HoverEndEvent>(OnHoverEnd);
+        }
 
+        void IMountingListener.ElementDidMount()
+        {
             Set = false;
 
             Context = GetFirstAncestorOfType<DragAndDropContext>();
             Context.RegisterDropArea(this);
         }
 
-        void IMountingListener.ComponentWillUnmount()
+        void IMountingListener.ElementWillUnmount()
         {
-            UnregisterCallback<HoverStartEvent>(OnHoverStart);
-            UnregisterCallback<HoverEndEvent>(OnHoverEnd);
-
             Context.UnregisterDropArea(this);
         }
 
@@ -38,28 +38,21 @@ namespace Roots
 
         void IPropsListener.PropsWillChange() { }
 
-        protected override Element Render()
-        {
-            var element = State.dragging
-                ? State.hovering
-                    ? State.acceptable
-                        ? Props.hoveredAcceptedContent.Valid
-                            ? Props.hoveredAcceptedContent
-                            : State.acceptable && Props.highlightedContent.Valid
-                                ? Props.highlightedContent
-                                : Props.content
-                        : Props.hoveredRejectedContent.Valid
-                            ? Props.hoveredRejectedContent
-                            : State.acceptable && Props.highlightedContent.Valid
-                                ? Props.highlightedContent
-                                : Props.content
-                    : State.acceptable && Props.highlightedContent.Valid
-                        ? Props.highlightedContent
+        protected override Element Render() => State.dragging
+            ? State.hovering
+                ? State.acceptable
+                    ? Props.hoveredAcceptedContent.Valid
+                        ? Props.hoveredAcceptedContent
+                        : Props.highlightedContent.Valid
+                            ? Props.highlightedContent
+                            : Props.content
+                    : Props.hoveredRejectedContent.Valid
+                        ? Props.hoveredRejectedContent
                         : Props.content
-                : Props.content;
-
-            return element;
-        }
+                : State.acceptable && Props.highlightedContent.Valid
+                    ? Props.highlightedContent
+                    : Props.content
+            : Props.content;
 
         private void OnHoverStart(HoverStartEvent evt)
         {

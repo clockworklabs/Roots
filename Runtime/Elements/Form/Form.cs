@@ -26,14 +26,14 @@ namespace Roots
             RegisterCallback<KeyDownEvent>(OnKeyDown);
         }
 
-        void IMountingListener.ComponentDidMount()
+        void IMountingListener.ElementDidMount()
         {
             ParentForm = GetFirstAncestorOfType<Form>();
 
             Index = ParentForm?.RegisterForm() ?? 0;
         }
 
-        void IMountingListener.ComponentWillUnmount()
+        void IMountingListener.ElementWillUnmount()
         {
             ParentForm?.UnregisterForm();
             

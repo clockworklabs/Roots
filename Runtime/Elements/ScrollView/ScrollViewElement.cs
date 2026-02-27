@@ -17,12 +17,12 @@ namespace Roots.Experimental
                 RegisterCallback<VisualChangeEvent>(OnVisualChange, EventPhase.AtTargetOnly);
             }
 
-            void IMountingListener.ComponentDidMount()
+            void IMountingListener.ElementDidMount()
             {
                 ScrollView = GetFirstAncestorOfType<ScrollView>();
             }
 
-            void IMountingListener.ComponentWillUnmount() { }
+            void IMountingListener.ElementWillUnmount() { }
 
             protected override Element Render()
             {

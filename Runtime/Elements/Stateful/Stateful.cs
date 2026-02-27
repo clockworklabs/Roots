@@ -35,8 +35,8 @@ namespace Roots
             RegisterCallback<PointerUpEvent>(SappyOnPointerUp);
         }
 
-        void IMountingListener.ComponentDidMount() { }
-        void IMountingListener.ComponentWillUnmount()
+        void IMountingListener.ElementDidMount() { }
+        void IMountingListener.ElementWillUnmount()
         {
             PointerId = -1;
         }

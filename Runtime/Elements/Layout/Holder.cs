@@ -30,8 +30,8 @@ namespace Roots
             RegisterCallback(SappyOnVisualChange.Callback, EventPhase.AtTargetOnly);
         }
         
-        void IMountingListener.ComponentDidMount() { }
-        void IMountingListener.ComponentWillUnmount()
+        void IMountingListener.ElementDidMount() { }
+        void IMountingListener.ElementWillUnmount()
         {
             VisualChild = null;
         }

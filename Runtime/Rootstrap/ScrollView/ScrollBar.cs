@@ -1,5 +1,6 @@
 ﻿using System;
 using RishUI;
+using RishUI.Events;
 using Sappy;
 using UnityEngine.UIElements;
 
@@ -9,13 +10,16 @@ namespace Roots.Experimental.Bootstrap
     {
         public partial class ScrollBar : RishElement<ScrollBarProps, ScrollBarState>
         {
-            private const float DefaultMinimalSize = 2;
-            private const float DefaultHoveredSize = 6;
+            private const float DefaultMinimalSize = 3;
+            private const float DefaultHoveredSize = 9;
 
             public ScrollBar()
             {
                 RegisterCallback<PointerEnterEvent>(SappyOnHoverStart); // TODO: We shouldn't add the manipulator to every element
                 RegisterCallback<PointerLeaveEvent>(SappyOnHoverEnd); // TODO: We shouldn't add the manipulator to every element
+
+                RegisterCallback<PointerDownEvent>(OnPointerDown);
+                RegisterCallback<HideDropdownEvent>(OnHideDropdownEvent, EventPhase.AtTargetOnly);
             }
             
             protected override Element Render()
@@ -118,6 +122,23 @@ namespace Roots.Experimental.Bootstrap
                 SetDragging(dragging);
                 RishOnDrag(delta, dragging);
             }
+
+            private void OnPointerDown(PointerDownEvent evt)
+            {
+                if (evt.button != 0)
+                {
+                    return;
+                }
+
+                var p = Props.direction == Direction.Vertical ? evt.localPosition.y / ContentRect.height : evt.localPosition.x / ContentRect.width;
+                var target = (Props.contentSize - Props.viewportSize) * p;
+
+                evt.StopPropagation();
+
+                OnInstant(target - Props.position);
+            }
+
+            private void OnHideDropdownEvent(HideDropdownEvent evt) => evt.StopPropagation();
         }
 
         [RishValueType]
@@ -131,6 +152,7 @@ namespace Roots.Experimental.Bootstrap
             public float viewportSize;
             public float contentSize;
 
+            public Action<float> onInstant;
             public Action<float, bool> onDrag;
         }
 

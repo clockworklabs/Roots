@@ -16,8 +16,8 @@ namespace Roots.Bootstrap
     [RishValueType]
     public struct ProgressProps
     {
-        [DOMDescriptor]
-        public DOMDescriptor descriptor;
+        [Expand]
+        public VisualAttributes descriptor;
 
         public bool animated;
 

@@ -45,8 +45,8 @@ namespace Roots
             RegisterCallback<HideDropdownEvent>(OnDropdownClose);
         }
 
-        void IMountingListener.ComponentDidMount() { }
-        void IMountingListener.ComponentWillUnmount()
+        void IMountingListener.ElementDidMount() { }
+        void IMountingListener.ElementWillUnmount()
         {
             DropdownButton = null;
             Dropdown = null;
@@ -226,8 +226,8 @@ namespace Roots
     [RishValueType]
     public struct DropdownContextProps
     {
-        [DOMDescriptor]
-        public DOMDescriptor descriptor;
+        [Expand]
+        public VisualAttributes descriptor;
         public bool forceFit;
         public Children children;
 

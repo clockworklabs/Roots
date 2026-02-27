@@ -109,8 +109,8 @@ namespace Roots
     [RishValueType]
     public struct TooltipsContextProps
     {
-        [DOMDescriptor]
-        public DOMDescriptor descriptor;
+        [Expand]
+        public VisualAttributes descriptor;
         public bool forceFit;
         public bool hideTooltips;
         public Children children;

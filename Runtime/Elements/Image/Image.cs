@@ -98,14 +98,14 @@ namespace Roots
         
         private bool UseBackground { get; set; }
 
-        void IMountingListener.ComponentDidMount()
+        void IMountingListener.ElementDidMount()
         {
             Loader = AssetsLoader.GetLoader(this);
             
             Parent = parent;
             Parent?.RegisterCallback<VisualChangeEvent>(SappyOnVisualChange.Callback);
         }
-        void IMountingListener.ComponentWillUnmount()
+        void IMountingListener.ElementWillUnmount()
         {
             Parent?.UnregisterCallback<VisualChangeEvent>(SappyOnVisualChange.Callback);
             Parent = null;
@@ -133,7 +133,7 @@ namespace Roots
             InlineHeight = default;
         }
         
-        void IStyleListener.OnSet(Style style)
+        void IStyleListener.StyleSet(Style style)
         {
             InlineWidth = style.width;
             InlineHeight = style.height;

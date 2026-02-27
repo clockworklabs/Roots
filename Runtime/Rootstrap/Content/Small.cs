@@ -19,8 +19,8 @@ namespace Roots
     [RishValueType]
     public struct SmallProps
     {
-        [DOMDescriptor]
-        public DOMDescriptor descriptor;
+        [Expand]
+        public VisualAttributes descriptor;
         public RishString text;
         
         public LengthRange? widthRange;

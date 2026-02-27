@@ -54,8 +54,8 @@ namespace Roots
             RegisterCallback<PointerCaptureOutEvent>(OnPointerRelease);
         }
 
-        void IMountingListener.ComponentDidMount() { }
-        void IMountingListener.ComponentWillUnmount()
+        void IMountingListener.ElementDidMount() { }
+        void IMountingListener.ElementWillUnmount()
         {
             Contextual = null;
             Menu = null;
@@ -194,8 +194,8 @@ namespace Roots
     [RishValueType]
     public struct ContextualContextProps
     {
-        [DOMDescriptor]
-        public DOMDescriptor descriptor;
+        [Expand]
+        public VisualAttributes descriptor;
         public Children children;
         
         public Action<bool> onShow;

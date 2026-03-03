@@ -15,9 +15,9 @@ namespace Roots.Experimental.Bootstrap
             public Handle()
             {
                 AddManipulator(new DragManipulator());
-                RegisterCallback<DragStartEvent>(SappyOnDragStart);
-                RegisterCallback<DragEndEvent>(SappyOnDragEnd);
-                RegisterCallback<DragEvent>(SappyOnDrag);
+                RegisterCallback<DragStartEvent>(Sappy.OnDragStart);
+                RegisterCallback<DragEndEvent>(Sappy.OnDragEnd);
+                RegisterCallback<DragEvent>(Sappy.OnDrag);
                 RegisterCallback<PointerDownEvent>(OnPointerDown);
             }
 

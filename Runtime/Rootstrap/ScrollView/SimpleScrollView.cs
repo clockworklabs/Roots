@@ -18,8 +18,8 @@ namespace Roots.Experimental.Bootstrap
         public SimpleScrollView()
         {
             RegisterCallback<WheelEvent>(OnWheel);
-            RegisterCallback<PointerEnterEvent>(SappyOnHoverStart); // TODO: We shouldn't add the manipulator to every element
-            RegisterCallback<PointerLeaveEvent>(SappyOnHoverEnd); // TODO: We shouldn't add the manipulator to every element
+            RegisterCallback<PointerEnterEvent>(Sappy.OnHoverStart); // TODO: We shouldn't add the manipulator to every element
+            RegisterCallback<PointerLeaveEvent>(Sappy.OnHoverEnd); // TODO: We shouldn't add the manipulator to every element
         }
         
         void IMountingListener.ElementDidMount() { }
@@ -48,8 +48,8 @@ namespace Roots.Experimental.Bootstrap
                     position: GetPosition(),
                     alwaysMountedIndices: Props.alwaysMountedIndices,
                     children: Props.children,
-                    onContentSize: SappySetContentSize,
-                    onViewportSize: SappySetViewportSize,
+                    onContentSize: Sappy.SetContentSize,
+                    onViewportSize: Sappy.SetViewportSize,
                     onElementSize: SappyState.SetElementSize),
                 State.contentSize > State.viewportSize
                     ? ScrollBar.Create(
@@ -58,8 +58,8 @@ namespace Roots.Experimental.Bootstrap
                         position: State.position,
                         viewportSize: State.viewportSize,
                         contentSize:  State.contentSize,
-                        onInstant: SappyOnInstant,
-                        onDrag: SappyOnDrag)
+                        onInstant: Sappy.OnInstant,
+                        onDrag: Sappy.OnDrag)
                     : Element.Null
             });
 
@@ -136,7 +136,7 @@ namespace Roots.Experimental.Bootstrap
             Animation.Stop();
             if (animate)
             {
-                Animation = DoMotion.Spring(SappyGetPosition, SappySetPosition, target).SetInitialVelocity(initialVelocity);
+                Animation = DoMotion.Spring(Sappy.GetPosition, Sappy.SetPosition, target).SetInitialVelocity(initialVelocity);
             }
             else
             {
@@ -154,7 +154,7 @@ namespace Roots.Experimental.Bootstrap
             SetBufferSize(bufferSize);
         }
         
-        [SapTarget(typeof(Func<float>))]
+        [SapTarget]
         private float GetPosition() => State.contentSize > State.viewportSize ? Mathf.Clamp(State.position, 0, State.viewportSize > State.contentSize ? State.viewportSize - State.contentSize : State.contentSize - State.viewportSize) : 0;
         
         private float GetTargetPosition() => State.contentSize > State.viewportSize ? Mathf.Clamp(State.targetPosition, 0, State.viewportSize > State.contentSize ? State.viewportSize - State.contentSize : State.contentSize - State.viewportSize) : 0;

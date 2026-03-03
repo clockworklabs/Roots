@@ -16,13 +16,13 @@ namespace Roots
             {
                 if (_context == value) return;
                 
-                _context?.OnLayout.Remove(SappyOnContextLayout);
+                _context?.OnLayout.Remove(Sappy.OnContextLayout);
                 
                 _context = value;
 
                 if (value != null)
                 {
-                    value.OnLayout.Add(SappyOnContextLayout);
+                    value.OnLayout.Add(Sappy.OnContextLayout);
                     OnContextLayout(value.GetLayoutData());
                 }
             }

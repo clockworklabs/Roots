@@ -282,16 +282,16 @@ namespace Roots
             if (!Mathf.Approximately(delta.x, 0))
             {
                 HorizontalAnimation.Stop();
-                HorizontalAnimation = DoMotion.Spring(SappyGetOffsetX, SappySetOffsetX, target.x, FastSpring)
+                HorizontalAnimation = DoMotion.Spring(Sappy.GetOffsetX, Sappy.SetOffsetX, target.x, FastSpring)
                     .SetInitialVelocity(horizontalVelocity)
-                    .OnComplete(SappyAnimateReleaseHorizontalSimple);
+                    .OnComplete(Sappy.AnimateReleaseHorizontalSimple);
             }
             if (!Mathf.Approximately(delta.y, 0))
             {
                 VerticalAnimation.Stop();
-                VerticalAnimation = DoMotion.Spring(SappyGetOffsetY, SappySetOffsetY, target.y, FastSpring)
+                VerticalAnimation = DoMotion.Spring(Sappy.GetOffsetY, Sappy.SetOffsetY, target.y, FastSpring)
                     .SetInitialVelocity(verticalVelocity)
-                    .OnComplete(SappyAnimateReleaseVerticalSimple);
+                    .OnComplete(Sappy.AnimateReleaseVerticalSimple);
             }
         }
 
@@ -321,11 +321,11 @@ namespace Roots
             {
                 var offset = State.offset.x;
                 var target = offset < min ? min : offset > max ? max : offset;
-                HorizontalAnimation = DoMotion.Spring(SappyGetOffsetX, SappySetOffsetX, target, FastSpring);
+                HorizontalAnimation = DoMotion.Spring(Sappy.GetOffsetX, Sappy.SetOffsetX, target, FastSpring);
             }
             else
             {
-                HorizontalAnimation = DoMotion.Inertia(SappyGetOffsetX, SappySetOffsetX, dragVelocity, Inertia, min, max);
+                HorizontalAnimation = DoMotion.Inertia(Sappy.GetOffsetX, Sappy.SetOffsetX, dragVelocity, Inertia, min, max);
             }
         }
         private void AnimateReleaseVertical(float limit, float dragVelocity)
@@ -347,11 +347,11 @@ namespace Roots
             {
                 var offset = State.offset.y;
                 var target = offset < min ? min : offset > max ? max : offset;
-                VerticalAnimation = DoMotion.Spring(SappyGetOffsetY, SappySetOffsetY, target, FastSpring);
+                VerticalAnimation = DoMotion.Spring(Sappy.GetOffsetY, Sappy.SetOffsetY, target, FastSpring);
             }
             else
             {
-                VerticalAnimation = DoMotion.Inertia(SappyGetOffsetY, SappySetOffsetY, dragVelocity, Inertia, min, max);
+                VerticalAnimation = DoMotion.Inertia(Sappy.GetOffsetY, Sappy.SetOffsetY, dragVelocity, Inertia, min, max);
             }
         }
         [SapTarget]
@@ -463,9 +463,9 @@ namespace Roots
             ComputeLimits();
         }
 
-        [SapTarget(typeof(Func<float>))]
+        [SapTarget]
         private float GetOffsetX() => State.offset.x;
-        [SapTarget(typeof(Func<float>))]
+        [SapTarget]
         private float GetOffsetY() => State.offset.y;
 
         [SapTarget]

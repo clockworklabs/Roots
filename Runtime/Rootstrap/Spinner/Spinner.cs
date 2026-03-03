@@ -22,14 +22,14 @@ namespace Roots.Bootstrap
 
                 if (_parent != null)
                 {
-                    _parent.generateVisualContent -= SappyOnParentDirty;
-                    _parent.UnregisterCallback<GeometryChangedEvent>(SappyOnGeometryChanged);
+                    _parent.generateVisualContent -= Sappy.OnParentDirty;
+                    _parent.UnregisterCallback<GeometryChangedEvent>(Sappy.OnGeometryChanged);
                 }
                 _parent = value;
                 if (value != null)
                 {
-                    value.generateVisualContent += SappyOnParentDirty;
-                    value.RegisterCallback<GeometryChangedEvent>(SappyOnGeometryChanged);
+                    value.generateVisualContent += Sappy.OnParentDirty;
+                    value.RegisterCallback<GeometryChangedEvent>(Sappy.OnGeometryChanged);
                 }
             }
         }

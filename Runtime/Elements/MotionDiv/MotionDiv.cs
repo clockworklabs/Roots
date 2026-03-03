@@ -19,14 +19,14 @@ namespace Roots
 
         void IMountingListener.ElementDidMount()
         {
-            RegisterCallback<VisualChangeEvent>(SappyOnVisualChange.Callback);
+            RegisterCallback<VisualChangeEvent>(Sappy.OnVisualChange);
             Parent = GetFirstAncestorOfType<IAnimatedElement>();
             
             Animation.Mounted();
         }
 
         void IMountingListener.ElementWillUnmount() {
-            UnregisterCallback<VisualChangeEvent>(SappyOnVisualChange.Callback);
+            UnregisterCallback<VisualChangeEvent>(Sappy.OnVisualChange);
         }
 
         void ICustomUnmountListener.UnmountRequested() => Animation.UnmountRequested();

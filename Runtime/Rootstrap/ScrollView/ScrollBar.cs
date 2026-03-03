@@ -15,8 +15,8 @@ namespace Roots.Experimental.Bootstrap
 
             public ScrollBar()
             {
-                RegisterCallback<PointerEnterEvent>(SappyOnHoverStart); // TODO: We shouldn't add the manipulator to every element
-                RegisterCallback<PointerLeaveEvent>(SappyOnHoverEnd); // TODO: We shouldn't add the manipulator to every element
+                RegisterCallback<PointerEnterEvent>(Sappy.OnHoverStart); // TODO: We shouldn't add the manipulator to every element
+                RegisterCallback<PointerLeaveEvent>(Sappy.OnHoverEnd); // TODO: We shouldn't add the manipulator to every element
 
                 RegisterCallback<PointerDownEvent>(OnPointerDown);
                 RegisterCallback<HideDropdownEvent>(OnHideDropdownEvent, EventPhase.AtTargetOnly);
@@ -107,7 +107,7 @@ namespace Roots.Experimental.Bootstrap
                                 position: Props.position,
                                 viewportSize: Props.viewportSize,
                                 contentSize: Props.contentSize,
-                                onDrag: SappyOnDrag)
+                                onDrag: Sappy.OnDrag)
                         }));
             }
 

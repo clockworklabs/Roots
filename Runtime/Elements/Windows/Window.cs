@@ -20,12 +20,12 @@ namespace Roots
             Context = GetFirstAncestorOfType<WindowsContext>();
 
             VisualElementParent = GetFirstAncestorOfType<VisualElement>();
-            VisualElementParent.RegisterCallback<GeometryChangedEvent>(SappyParentGeometryChanged.Callback);
+            VisualElementParent.RegisterCallback<GeometryChangedEvent>(Sappy.ParentGeometryChanged);
         }
         void IMountingListener.ElementWillUnmount()
         {
             Context?.UnregisterWindow(GUID);
-            VisualElementParent.UnregisterCallback<GeometryChangedEvent>(SappyParentGeometryChanged.Callback);
+            VisualElementParent.UnregisterCallback<GeometryChangedEvent>(Sappy.ParentGeometryChanged);
         }
 
         void IPropsListener<WindowProps>.PropsDidChange(WindowProps? prev)

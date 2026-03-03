@@ -44,7 +44,7 @@ namespace Roots
 
                 if (value.IsEmpty) return;
                 
-                Loader?.Load<Texture2D>(value, SappyOnTextureLoaded.Callback);
+                Loader?.Load<Texture2D>(value, Sappy.OnTextureLoaded);
             }
         }
         private RishString _spriteAddress;
@@ -59,7 +59,7 @@ namespace Roots
 
                 if (value.IsEmpty) return;
                 
-                Loader?.Load<Sprite>(value, SappyOnSpriteLoaded.Callback);
+                Loader?.Load<Sprite>(value, Sappy.OnSpriteLoaded);
             }
         }
         private bool StyleBackgroundSet { get; set; }
@@ -75,7 +75,7 @@ namespace Roots
 
                 if (value.IsEmpty) return;
                 
-                Loader?.Load<VectorImage>(value, SappyOnVectorLoaded.Callback);
+                Loader?.Load<VectorImage>(value, Sappy.OnVectorLoaded);
             }
         }
         private RishString _renderTextureAddress;
@@ -90,7 +90,7 @@ namespace Roots
 
                 if (value.IsEmpty) return;
                 
-                Loader?.Load<RenderTexture>(value, SappyOnRenderTextureLoaded.Callback);
+                Loader?.Load<RenderTexture>(value, Sappy.OnRenderTextureLoaded);
             }
         }
         private StyleLength InlineWidth { get; set; }
@@ -103,11 +103,11 @@ namespace Roots
             Loader = AssetsLoader.GetLoader(this);
             
             Parent = parent;
-            Parent?.RegisterCallback<VisualChangeEvent>(SappyOnVisualChange.Callback);
+            Parent?.RegisterCallback<VisualChangeEvent>(Sappy.OnVisualChange);
         }
         void IMountingListener.ElementWillUnmount()
         {
-            Parent?.UnregisterCallback<VisualChangeEvent>(SappyOnVisualChange.Callback);
+            Parent?.UnregisterCallback<VisualChangeEvent>(Sappy.OnVisualChange);
             Parent = null;
         }
         
@@ -144,7 +144,7 @@ namespace Roots
             Bridge = new Bridge<ImageProps>(this);
             PickingManager = new RectPickingManager(Bridge);
             
-            RegisterCallback<VisualChangeEvent>(SappyOnVisualChange.Callback);
+            RegisterCallback<VisualChangeEvent>(Sappy.OnVisualChange);
         }
         
         void IVisualElement<ImageProps>.Setup(ImageProps props)

@@ -29,10 +29,10 @@ namespace Roots
 
         public Stateful()
         {
-            RegisterCallback<PointerEnterEvent>(SappyOnHoverStart);
-            RegisterCallback<PointerLeaveEvent>(SappyOnHoverEnd);
-            RegisterCallback<PointerDownEvent>(SappyOnPointerDown);
-            RegisterCallback<PointerUpEvent>(SappyOnPointerUp);
+            RegisterCallback<PointerEnterEvent>(Sappy.OnHoverStart);
+            RegisterCallback<PointerLeaveEvent>(Sappy.OnHoverEnd);
+            RegisterCallback<PointerDownEvent>(Sappy.OnPointerDown);
+            RegisterCallback<PointerUpEvent>(Sappy.OnPointerUp);
         }
 
         void IMountingListener.ElementDidMount() { }

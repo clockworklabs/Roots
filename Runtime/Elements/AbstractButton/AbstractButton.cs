@@ -63,7 +63,7 @@ namespace Roots
                 hovered: Props.hovered,
                 pressed: Props.pressed,
                 disabled: Props.disabled,
-                action: SappyDoAction);
+                action: Sappy.DoAction);
         }
 
         [SapTarget]

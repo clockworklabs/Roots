@@ -56,7 +56,7 @@ namespace Roots
                         draggable: props.draggable,
                         offset: props.offset,
                         rect: WorldToLocal(window.ParentWorldContentRect),
-                        onDrag: SappyDrag));
+                        onDrag: Sappy.Drag));
                 }
             }
 

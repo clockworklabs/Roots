@@ -23,16 +23,16 @@ namespace Roots
                 if (_internal != null)
                 {
                     HoveringInternal = false;
-                    _internal.UnregisterCallback<HoverStartEvent>(SappyOnInternalHoverStart);
-                    _internal.UnregisterCallback<HoverEndEvent>(SappyOnInternalHoverEnd);
+                    _internal.UnregisterCallback<HoverStartEvent>(Sappy.OnInternalHoverStart);
+                    _internal.UnregisterCallback<HoverEndEvent>(Sappy.OnInternalHoverEnd);
                 }
                 
                 _internal = value;
 
                 if (value != null)
                 {
-                    value.RegisterCallback<HoverStartEvent>(SappyOnInternalHoverStart);
-                    value.RegisterCallback<HoverEndEvent>(SappyOnInternalHoverEnd);
+                    value.RegisterCallback<HoverStartEvent>(Sappy.OnInternalHoverStart);
+                    value.RegisterCallback<HoverEndEvent>(Sappy.OnInternalHoverEnd);
                 }
             }
         }
@@ -140,7 +140,7 @@ namespace Roots
             
             if(Props.enterDelay > 0)
             {
-                Countdown = DoMotion.Countdown(Props.enterDelay, SappyShowTooltip);
+                Countdown = DoMotion.Countdown(Props.enterDelay, Sappy.ShowTooltip);
             }
             else
             {
@@ -155,7 +155,7 @@ namespace Roots
             
             if(Props.exitDelay > 0)
             {
-                Countdown = DoMotion.Countdown(Props.exitDelay, SappyHideTooltip);
+                Countdown = DoMotion.Countdown(Props.exitDelay, Sappy.HideTooltip);
             }
             else
             {

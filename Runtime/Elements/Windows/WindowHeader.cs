@@ -25,14 +25,14 @@ namespace Roots
         
         void IMountingListener.ElementDidMount()
         {
-            RegisterCallback<VisualChangeEvent>(SappyOnVisualChange.Callback);
+            RegisterCallback<VisualChangeEvent>(Sappy.OnVisualChange);
             Context = GetFirstAncestorOfType<WindowsContext>();
             Window = GetFirstAncestorOfType<InternalWindow>();
 
             DraggingPointer = -1;
         }
         void IMountingListener.ElementWillUnmount() {
-            UnregisterCallback<VisualChangeEvent>(SappyOnVisualChange.Callback);
+            UnregisterCallback<VisualChangeEvent>(Sappy.OnVisualChange);
         }
         
         protected override Element Render() => Props.content;
@@ -78,7 +78,7 @@ namespace Roots
         [SapTarget(typeof(EventCallback<VisualChangeEvent>))]
         private void OnVisualChange(VisualChangeEvent evt)
         {
-            UnregisterCallback<VisualChangeEvent>(SappyOnVisualChange.Callback);
+            UnregisterCallback<VisualChangeEvent>(Sappy.OnVisualChange);
             Drag(Vector2.zero, true);
         }
 

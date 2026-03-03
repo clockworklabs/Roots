@@ -27,7 +27,7 @@ namespace Roots
         void IPropsListener.PropsWillChange() { }
 
         protected override Element Render() => AbstractButton.Create(
-            action: SappyDoAction,
+            action: Sappy.DoAction,
             normal: State.open && Props.open.Valid ? Props.open : Props.normal,
             hovered: State.open && Props.open.Valid ? Props.open : Props.hovered,
             pressed: State.open && Props.open.Valid ? Props.open : Props.pressed,

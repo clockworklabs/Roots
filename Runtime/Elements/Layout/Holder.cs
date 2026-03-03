@@ -27,7 +27,7 @@ namespace Roots
 
         public Holder()
         {
-            RegisterCallback(SappyOnVisualChange.Callback, EventPhase.AtTargetOnly);
+            RegisterCallback<VisualChangeEvent>(Sappy.OnVisualChange, EventPhase.AtTargetOnly);
         }
         
         void IMountingListener.ElementDidMount() { }

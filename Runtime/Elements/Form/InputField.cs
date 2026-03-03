@@ -84,11 +84,11 @@ namespace Roots
                 textElementDescriptor: Props.textElementDescriptor,
                 cursorColor: Props.cursorColor,
                 selectionColor: Props.selectionColor,
-                onValidation: SappyOnValidation,
-                onChange: SappyOnChange);
+                onValidation: Sappy.OnValidation,
+                onChange: Sappy.OnChange);
         }
 
-        [SapTarget(typeof(Func<string, string>))]
+        [SapTarget]
         private string OnValidation(string value)
         {
             string result;

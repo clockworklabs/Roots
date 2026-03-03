@@ -445,7 +445,7 @@ namespace Roots
 
             // TODO: If parent animates before children, delay animation start
             // TODO: If parent animates after children, start animation
-            Animation = DoMotion.Group(GroupAnimations).OnStep(SappyOnStep).OnComplete(SappyOnComplete);
+            Animation = DoMotion.Group(GroupAnimations).OnStep(Sappy.OnStep).OnComplete(Sappy.OnComplete);
 
             // if (Parent != null)
             // {
@@ -478,7 +478,7 @@ namespace Roots
 
             if (Parent != null)
             {
-                Animation.OnAboutToStart(SappySetDelay);
+                Animation.OnAboutToStart(Sappy.SetDelay);
             }
             
             OnStep();

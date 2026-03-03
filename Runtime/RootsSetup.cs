@@ -35,7 +35,7 @@ namespace Roots
 
                 if (_rootVisualElement != null)
                 {
-                    _rootVisualElement.UnregisterCallback<GeometryChangedEvent>(SappyOnGeometryChanged);
+                    _rootVisualElement.UnregisterCallback<GeometryChangedEvent>(Sappy.OnGeometryChanged);
                     
                     _rootVisualElement.styleSheets.Clear();
                     for(int i = 0, n = BaseStyleSheets.Count; i < n; i++)
@@ -50,7 +50,7 @@ namespace Roots
 
                 if (value != null)
                 {
-                    value.RegisterCallback<GeometryChangedEvent>(SappyOnGeometryChanged);
+                    value.RegisterCallback<GeometryChangedEvent>(Sappy.OnGeometryChanged);
                     
                     var baseStyleSheetsCount = value.styleSheets.count;
                     for(var i = 0; i < baseStyleSheetsCount; i++)
@@ -85,14 +85,14 @@ namespace Roots
             RishRoot = gameObject.GetComponent<RishRoot>();
             if (RishRoot != null)
             {
-                RishRoot.OnStart.Add(SappySetupRishRoot);
+                RishRoot.OnStart.Add(Sappy.SetupRishRoot);
             }
         }
         private void OnDestroy()
         {
             if (RishRoot != null)
             {
-                RishRoot.OnStart.Remove(SappySetupRishRoot);
+                RishRoot.OnStart.Remove(Sappy.SetupRishRoot);
             }
             
             RootVisualElement = null;

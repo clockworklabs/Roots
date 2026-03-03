@@ -42,8 +42,8 @@ namespace Roots
             Element = element;
             Motion = new Motion();
             Machine = new StateMachine(this);
-            Motion.OnStyle.Add(SappyOnStyle);
-            Motion.Completed.Add(SappyOnMotionComplete);
+            Motion.OnStyle.Add(Sappy.OnStyle);
+            Motion.Completed.Add(Sappy.OnMotionComplete);
         }
 
         [SapTarget]
@@ -178,11 +178,11 @@ namespace Roots
             public override void Enter()
             {
                 Element.Reset();
-                Element.OnMounted.Add(SappyStartSetUp);
+                Element.OnMounted.Add(Sappy.StartSetUp);
             }
 
             public override void Exit() {
-                Element.OnMounted.Remove(SappyStartSetUp);
+                Element.OnMounted.Remove(Sappy.StartSetUp);
             }
 
             [SapTarget]
@@ -230,27 +230,27 @@ namespace Roots
                 ParentReady = false;
                 ParentMachine = null;
                 
-                Element.OnChange.Add(SappyOnChange);
-                Element.OnUnmountRequested.Add(SappyUnmount);
-                Element.OnUnmounted.Add(SappyOnUnmounted);
+                Element.OnChange.Add(Sappy.OnChange);
+                Element.OnUnmountRequested.Add(Sappy.Unmount);
+                Element.OnUnmounted.Add(Sappy.OnUnmounted);
             }
 
             public override void Exit()
             {
-                Element.OnChange.Remove(SappyOnChange);
-                Element.OnUnmountRequested.Remove(SappyUnmount);
-                Element.OnUnmounted.Remove(SappyOnUnmounted);
+                Element.OnChange.Remove(Sappy.OnChange);
+                Element.OnUnmountRequested.Remove(Sappy.Unmount);
+                Element.OnUnmounted.Remove(Sappy.OnUnmounted);
 
                 if (ParentMachine != null)
                 {
-                    ParentMachine.OnChange.Remove(SappyOnParentStateChange);
+                    ParentMachine.OnChange.Remove(Sappy.OnParentStateChange);
                 }
             }
 
             [SapTarget]
             private void OnChange(VisualElement element)
             {
-                Element.OnChange.Remove(SappyOnChange);
+                Element.OnChange.Remove(Sappy.OnChange);
                 
                 var parent = Element.GetParent();
 
@@ -261,7 +261,7 @@ namespace Roots
                 else
                 {
                     ParentMachine = parent.Machine;
-                    ParentMachine.OnChange.Add(SappyOnParentStateChange);
+                    ParentMachine.OnChange.Add(Sappy.OnParentStateChange);
                 }
 
                 Motion.SetInitial(element, parent?.Motion);
@@ -274,7 +274,7 @@ namespace Roots
             {
                 if (state is ActiveState)
                 {
-                    ParentMachine.OnChange.Remove(SappyOnParentStateChange);
+                    ParentMachine.OnChange.Remove(Sappy.OnParentStateChange);
                     ParentReady = true;
                 }
             }
@@ -297,16 +297,16 @@ namespace Roots
 
             public override void Enter()
             {
-                Element.OnTarget.Add(SappyOnTarget);
-                Element.OnUnmountRequested.Add(SappyStartUnmounting);
-                Element.OnUnmounted.Add(SappyOnUnmounted);
+                Element.OnTarget.Add(Sappy.OnTarget);
+                Element.OnUnmountRequested.Add(Sappy.StartUnmounting);
+                Element.OnUnmounted.Add(Sappy.OnUnmounted);
             }
 
             public override void Exit()
             {
-                Element.OnTarget.Remove(SappyOnTarget);
-                Element.OnUnmountRequested.Remove(SappyStartUnmounting);
-                Element.OnUnmounted.Remove(SappyOnUnmounted);
+                Element.OnTarget.Remove(Sappy.OnTarget);
+                Element.OnUnmountRequested.Remove(Sappy.StartUnmounting);
+                Element.OnUnmounted.Remove(Sappy.OnUnmounted);
             }
 
             [SapTarget]
@@ -323,8 +323,8 @@ namespace Roots
 
             public override void Enter()
             {
-                Motion.Completed.Add(SappyUnmount);
-                Element.OnUnmounted.Add(SappyOnUnmounted);
+                Motion.Completed.Add(Sappy.Unmount);
+                Element.OnUnmounted.Add(Sappy.OnUnmounted);
 
                 if (Element.Exit.IsValid())
                 {
@@ -339,8 +339,8 @@ namespace Roots
 
             public override void Exit()
             {
-                Motion.Completed.Remove(SappyUnmount);
-                Element.OnUnmounted.Remove(SappyOnUnmounted);
+                Motion.Completed.Remove(Sappy.Unmount);
+                Element.OnUnmounted.Remove(Sappy.OnUnmounted);
             }
 
             [SapTarget]

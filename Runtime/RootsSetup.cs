@@ -78,7 +78,7 @@ namespace Roots
         {
             UIDocument = GetComponent<UIDocument>();
             
-            var styleSheets = StyleSheets.SelectMany(ss => ss.GetResponsive().StyleSheets).ToList();
+            var styleSheets = StyleSheets.Where(ss => ss != null && ss.GetResponsive() != null).SelectMany(ss => ss.GetResponsive().StyleSheets).ToList();
             styleSheets.Sort((a, b) => a.MinWidth.CompareTo(b.MinWidth));
             _sortedStyleSheets = styleSheets.AsReadOnly();
             

@@ -1,11 +1,10 @@
-using System;
 using Motion;
 using RishUI;
 using Sappy;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Roots.Experimental.Bootstrap
+namespace Roots.Experimental.Rootstrap
 {
     public partial class SimpleScrollView : RishElement<SimpleScrollViewProps, SimpleScrollViewState>, IMountingListener
     {

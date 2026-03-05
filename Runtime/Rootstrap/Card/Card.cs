@@ -1,6 +1,6 @@
 using RishUI;
 
-namespace Roots.Bootstrap
+namespace Roots.Rootstrap
 {
     public partial class Card : RishElement<CardProps>
     {

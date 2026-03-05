@@ -2,7 +2,7 @@ using System;
 using RishUI;
 using UnityEngine.UIElements;
 
-namespace Roots
+namespace Roots.Rootstrap
 {
     public partial class Rule : RishElement<RuleProps>, IMountingListener
     {

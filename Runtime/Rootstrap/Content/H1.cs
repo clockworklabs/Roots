@@ -2,7 +2,7 @@ using System;
 using RishUI;
 using RishUI.Elements;
 
-namespace Roots
+namespace Roots.Rootstrap
 {
     public partial class H1 : RishElement<H1Props>
     {

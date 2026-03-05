@@ -1,7 +1,7 @@
 ﻿using RishUI;
 using RishUI.MemoryManagement;
 
-namespace Roots.Bootstrap
+namespace Roots.Rootstrap
 {
     public static class Utilities
     {

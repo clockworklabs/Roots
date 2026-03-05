@@ -1,4 +1,4 @@
-namespace Roots.Bootstrap
+namespace Roots.Rootstrap
 {
     // List created using https://github.com/google/material-design-icons/blob/master/font/MaterialIcons-Regular.codepoints
     public static class MaterialSymbols

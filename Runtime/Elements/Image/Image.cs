@@ -118,6 +118,8 @@ namespace Roots
             vectorImage = null;
             tintColor = Color.white;
             scaleMode = ScaleMode.StretchToFill;
+            style.backgroundImage = StyleKeyword.Null;
+            style.unityBackgroundImageTintColor = StyleKeyword.Null;
 
             Loader = null;
 
@@ -229,6 +231,7 @@ namespace Roots
                     image = null;
                     sprite = null;
                     vectorImage = null;
+                    style.backgroundImage = StyleKeyword.Null;
                 }
             }
         }
@@ -271,6 +274,7 @@ namespace Roots
             if (value == null) return;
             sprite = null;
             vectorImage = null;
+            style.backgroundImage = StyleKeyword.Null;
             
             if (UseBackground)
             {
@@ -304,6 +308,7 @@ namespace Roots
             if (value == null) return;
             image = null;
             vectorImage = null;
+            style.backgroundImage = StyleKeyword.Null;
 
             var border = value.border;
             if (UseBackground || border != Vector4.zero)
@@ -345,6 +350,7 @@ namespace Roots
             if (value == null) return;
             image = null;
             sprite = null;
+            style.backgroundImage = StyleKeyword.Null;
             
             if (UseBackground)
             {
@@ -377,6 +383,7 @@ namespace Roots
             if (value == null) return;
             sprite = null;
             vectorImage = null;
+            style.backgroundImage = StyleKeyword.Null;
             
             if (UseBackground)
             {
@@ -446,7 +453,17 @@ namespace Roots
                     ? sprite.bounds.size
                     : vectorImage != null
                         ? new Vector2(vectorImage.width, vectorImage.height)
-                        : Vector2.negativeInfinity;
+                        : style.backgroundImage.keyword is StyleKeyword.Undefined
+                            ? style.backgroundImage.value.texture != null
+                                ? new Vector2(style.backgroundImage.value.texture.width, style.backgroundImage.value.texture.height)
+                                : style.backgroundImage.value.renderTexture != null
+                                    ? new Vector2(style.backgroundImage.value.renderTexture.width, style.backgroundImage.value.renderTexture.height)
+                                    : style.backgroundImage.value.sprite != null
+                                        ? style.backgroundImage.value.sprite.bounds.size
+                                        : style.backgroundImage.value.vectorImage != null
+                                            ? new Vector2(style.backgroundImage.value.vectorImage.width, style.backgroundImage.value.vectorImage.height)
+                                            : Vector2.negativeInfinity
+                            : Vector2.negativeInfinity;
             
             if (size.x < 0 || size.y < 0)
             {

@@ -4,7 +4,7 @@ using RishUI.Events;
 using Sappy;
 using UnityEngine.UIElements;
 
-namespace Roots.Experimental.Bootstrap
+namespace Roots.Experimental.Rootstrap
 {
     public partial class SimpleScrollView
     {

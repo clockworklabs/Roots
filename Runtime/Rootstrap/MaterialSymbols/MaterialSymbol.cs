@@ -1,7 +1,7 @@
 ﻿using RishUI;
 using RishUI.Elements;
 
-namespace Roots.Bootstrap
+namespace Roots.Rootstrap
 {
     public partial class MaterialSymbol : RishElement<MaterialSymbolProps>
     {

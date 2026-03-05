@@ -2,7 +2,7 @@ using System;
 using RishUI;
 using UnityEngine;
 
-namespace Roots.Bootstrap
+namespace Roots.Rootstrap
 {
     public partial class CardTitle : RishElement<CardTitleProps>
     {

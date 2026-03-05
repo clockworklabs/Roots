@@ -10,7 +10,7 @@ namespace Roots
     public partial class WindowsContext : RishElement<WindowsContextProps>, IManualState
     {
         private SapStem<ulong> OnFocusStem { get; } = new();
-        public SapTargets<Action<ulong>> OnFocus => OnFocusStem.Targets;
+        public SapTargets<ulong> OnFocus => OnFocusStem.Targets;
         
         private const int _SafeZone = 10;
         internal int SafeZone => Props.safeZoneSize > 0 ? Props.safeZoneSize : _SafeZone;

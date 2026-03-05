@@ -20,15 +20,15 @@ namespace Roots
     public partial class StyleAnimation
     {
         private SapStem<VisualElement> OnChangeStem { get; } = new();
-        private SapTargets<Action<VisualElement>> OnChange => OnChangeStem.Targets;
+        private SapTargets<VisualElement> OnChange => OnChangeStem.Targets;
         private SapStem<Target> OnTargetStem { get; } = new();
-        private SapTargets<Action<Target>> OnTarget => OnTargetStem.Targets;
+        private SapTargets<Target> OnTarget => OnTargetStem.Targets;
         private SapStem OnMountedStem { get; } = new();
-        private SapTargets<Action> OnMounted => OnMountedStem.Targets;
+        private SapTargets OnMounted => OnMountedStem.Targets;
         private SapStem OnUnmountRequestedStem { get; } = new();
-        private SapTargets<Action> OnUnmountRequested => OnUnmountRequestedStem.Targets;
+        private SapTargets OnUnmountRequested => OnUnmountRequestedStem.Targets;
         private SapStem OnUnmountedStem { get; } = new();
-        private SapTargets<Action> OnUnmounted => OnUnmountedStem.Targets;
+        private SapTargets OnUnmounted => OnUnmountedStem.Targets;
 
         private IAnimatedElement Element { get; }
         private Motion Motion { get; }
@@ -93,7 +93,7 @@ namespace Roots
         private class StateMachine
         {
             private SapStem<State> OnChangeStem { get; } = new();
-            public SapTargets<Action<State>> OnChange => OnChangeStem.Targets;
+            public SapTargets<State> OnChange => OnChangeStem.Targets;
             
             private UnmountedState UnmountedState { get; }
             private SettingUpState SettingUpState { get; }

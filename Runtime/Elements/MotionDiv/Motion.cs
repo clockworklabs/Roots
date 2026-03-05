@@ -11,9 +11,9 @@ namespace Roots
     public partial class Motion
     {
         private SapStem<Style> OnStyleStem { get; } = new();
-        public SapTargets<Action<Style>> OnStyle => OnStyleStem.Targets;
+        public SapTargets<Style> OnStyle => OnStyleStem.Targets;
         private SapStem CompletedStem { get; } = new();
-        public SapTargets<Action> Completed => CompletedStem.Targets;
+        public SapTargets Completed => CompletedStem.Targets;
         
         private MotionColor BackgroundColor { get; }
         private MotionColor BorderBottomColor { get; }

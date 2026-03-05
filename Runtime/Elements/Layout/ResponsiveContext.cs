@@ -15,7 +15,7 @@ namespace Roots
         }
         
         private SapStem<LayoutData> OnLayoutStem { get; } = new();
-        public SapTargets<Action<LayoutData>> OnLayout => OnLayoutStem.Targets;
+        public SapTargets<LayoutData> OnLayout => OnLayoutStem.Targets;
         
         public ResponsiveContext()
         {

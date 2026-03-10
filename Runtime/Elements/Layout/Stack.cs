@@ -141,7 +141,7 @@ namespace Roots
             }
             
             return Div.Create(
-                descriptor: Props.descriptor + new Style
+                attributes: Props.attributes + new Style
                 {
                     flexDirection = Props.direction switch
                     {
@@ -159,7 +159,7 @@ namespace Roots
         public Stack.Direction direction;
         public bool reverse;
         public float gap;
-        public VisualAttributes descriptor;
+        public VisualAttributes attributes;
         public Children children;
         public Element separator;
     }

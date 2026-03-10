@@ -6,17 +6,17 @@ namespace Roots.Rootstrap
     {
         protected override Element Render()
         {
-            var descriptor = Props.descriptor;
-            descriptor.style.pointerDetection = PointerDetectionMode.Rect;
+            var attributes = Props.attributes;
+            attributes.style.pointerDetection = PointerDetectionMode.Rect;
             
             return Window.Create(
                 open: Props.open,
                 draggable: !Props.fixedPosition,
                 alwaysOnTop: Props.alwaysOnTop,
                 content: Card.Create(
-                    name: descriptor.name,
-                    className: descriptor.className,
-                    style: descriptor.style,
+                    name: attributes.name,
+                    className: attributes.className,
+                    style: attributes.style,
                     children: new Children
                     {
                         WindowHeader.Create(content: CardHeader.Create(children: Props.title)),
@@ -29,7 +29,7 @@ namespace Roots.Rootstrap
     public struct SimpleWindowProps
     {
         [Expand]
-        public VisualAttributes descriptor;
+        public VisualAttributes attributes;
         public bool open;
         public bool fixedPosition;
         public bool alwaysOnTop;

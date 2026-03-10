@@ -28,7 +28,7 @@ namespace Roots.Experimental.Rootstrap
         }
 
         protected override Element Render() => Div.Create(
-            descriptor: Props.descriptor,
+            attributes: Props.attributes,
             children: new Children
             {
                 ScrollView.Create(
@@ -196,7 +196,7 @@ namespace Roots.Experimental.Rootstrap
     public struct SimpleScrollViewProps
     {
         [Expand]
-        public VisualAttributes descriptor;
+        public VisualAttributes attributes;
 
 		public SimpleScrollView.Direction direction;
         

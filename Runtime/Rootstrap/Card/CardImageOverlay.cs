@@ -6,15 +6,15 @@ namespace Roots.Rootstrap
     {
         protected override Element Render()
         {
-            var descriptor = new VisualAttributes(Props.descriptor)
+            var attributes = new VisualAttributes(Props.attributes)
             {
-                className = new ClassName(Props.descriptor.className)
+                className = new ClassName(Props.attributes.className)
                 {
                     "card-img-overlay"
                 }
             };
             
-            return Div.Create(descriptor, /*utilities: Props.utilities,*/ children: Props.children);
+            return Div.Create(attributes: attributes, children: Props.children);
 
         }
     }
@@ -23,8 +23,7 @@ namespace Roots.Rootstrap
     public struct CardImageOverlayProps
     {
         [Expand]
-        public VisualAttributes descriptor;
-        // public Utilities utilities;
+        public VisualAttributes attributes;
         public Children children;
     }
 }

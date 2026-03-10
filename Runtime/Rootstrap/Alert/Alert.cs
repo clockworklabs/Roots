@@ -7,7 +7,7 @@ namespace Roots.Rootstrap
         public enum Context { Primary, Secondary, Success, Danger, Warning, Info, Light, Dark }
         
         protected override Element Render() => Div.Create(
-            descriptor: Props.descriptor + new ClassName
+            attributes: Props.attributes + new ClassName
             {
                 "alert",
                 Props.context switch
@@ -29,7 +29,7 @@ namespace Roots.Rootstrap
     public struct AlertProps
     {
         [Expand]
-        public VisualAttributes descriptor;
+        public VisualAttributes attributes;
         public Alert.Context context;
         public Children children;
     }

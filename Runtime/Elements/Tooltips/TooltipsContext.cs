@@ -40,7 +40,7 @@ namespace Roots
             }
 
             return Div.Create(
-                descriptor: Props.descriptor,
+                attributes: Props.attributes,
                 children: new Children
                 {
                     Props.children,
@@ -110,7 +110,7 @@ namespace Roots
     public struct TooltipsContextProps
     {
         [Expand]
-        public VisualAttributes descriptor;
+        public VisualAttributes attributes;
         public bool forceFit;
         public bool hideTooltips;
         public Children children;

@@ -40,9 +40,7 @@ namespace Roots
             var maxOpacity = Props.maxOpacity ?? 1;
 
             return MotionDiv.Create(
-                name: Props.descriptor.name,
-                className: Props.descriptor.className,
-                style: Props.descriptor.style,
+                attributes: Props.attributes,
                 initial: new Initial { opacity = minOpacity },
                 animate: new Target { opacity = Props.visible ? maxOpacity : minOpacity, transition = transition },
                 exit: new Target { opacity = Props.fadeOnUnmount ? minOpacity : null, transition = transition },
@@ -68,7 +66,7 @@ namespace Roots
     public struct FadeProps
     {
         [Expand]
-        public VisualAttributes descriptor;
+        public VisualAttributes attributes;
 
         public bool visible;
         public bool fadeOnUnmount;

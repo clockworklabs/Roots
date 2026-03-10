@@ -31,7 +31,7 @@ namespace Roots
         }
         void IPropsListener<ResponsiveContextProps>.PropsWillChange() { }
         
-        protected override Element Render() => Div.Create(descriptor: Props.descriptor, children: Props.children);
+        protected override Element Render() => Div.Create(attributes: Props.attributes, children: Props.children);
 
 
         private void OnVisualChange(VisualChangeEvent evt) => SetWidth(ContentRect.width);
@@ -107,7 +107,7 @@ namespace Roots
         public int xxl;
         
         [Expand]
-        public VisualAttributes descriptor;
+        public VisualAttributes attributes;
         public Children children;
 
         public Action<float, ResponsiveBreakpoint> onResize;

@@ -5,7 +5,7 @@ namespace Roots.Rootstrap
     public partial class Progress : RishElement<ProgressProps>
     {
         protected override Element Render() => Div.Create(
-            descriptor: Props.descriptor + new ClassName
+            attributes: Props.attributes + new ClassName
             {
                 "progress",
                 Props.animated ? "animated" : string.Empty
@@ -17,7 +17,7 @@ namespace Roots.Rootstrap
     public struct ProgressProps
     {
         [Expand]
-        public VisualAttributes descriptor;
+        public VisualAttributes attributes;
 
         public bool animated;
 

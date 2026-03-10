@@ -53,7 +53,7 @@ namespace Roots
                 style.maxWidth = State.width.Value;
             }
             
-            return Div.Create(descriptor: Props.descriptor + style, children: Props.content);
+            return Div.Create(attributes: Props.attributes + style, children: Props.content);
         }
 
         [SapTarget]
@@ -74,7 +74,7 @@ namespace Roots
     public struct ContainerProps
     {
         [Expand]
-        public VisualAttributes descriptor;
+        public VisualAttributes attributes;
         public ResponsiveBreakpoint breakpoint;
         public Element content;
     }

@@ -29,7 +29,7 @@ namespace Roots
                 pointerDetection = PointerDetectionMode.Ignore
             };
             
-            return Div.Create(style, children: Props.element);
+            return Div.Create(style: style, children: Props.element);
         }
 
         public void OnLayout(Rect tooltipWorldLayout)

@@ -45,7 +45,7 @@ namespace Roots
             }
             else
             {
-                SetStyle(GetInitial(Props.descriptor.style, Props.initial, Props.animate));
+                SetStyle(GetInitial(Props.attributes.style, Props.initial, Props.animate));
 
                 animateDirty = true;
                 exitDirty = true;
@@ -62,7 +62,7 @@ namespace Roots
         }
         void IPropsListener<MotionDivProps>.PropsWillChange() { }
 
-        protected override Element Render() => Div.Create(name: Props.descriptor.name, className: Props.descriptor.className, style: State.style.Value, children: Props.children);
+        protected override Element Render() => Div.Create(name: Props.attributes.name, className: Props.attributes.className, style: State.style.Value, children: Props.children);
 
         [SapTarget(typeof(EventCallback<VisualChangeEvent>))]
         private void OnVisualChange(VisualChangeEvent evt) => Animation.OnVisualChange(evt.target as VisualElement);
@@ -677,7 +677,7 @@ namespace Roots
         // public Target whilePress;
 
         [Expand]
-        public VisualAttributes descriptor;
+        public VisualAttributes attributes;
         public Children children;
     }
 

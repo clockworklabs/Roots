@@ -6,7 +6,7 @@ namespace Roots
     public partial class FluidContainer : RishElement<FluidContainerProps>
     {
         protected override Element Render() => Div.Create(
-            descriptor: Props.descriptor + new Style
+            attributes: Props.attributes + new Style
             {
                 width = Length.Percent(100),
                 marginLeft = Length.Auto(),
@@ -19,7 +19,7 @@ namespace Roots
     public struct FluidContainerProps
     {
         [Expand]
-        public VisualAttributes descriptor;
+        public VisualAttributes attributes;
         public Element content;
     }
 }

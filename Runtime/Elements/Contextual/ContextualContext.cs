@@ -88,7 +88,7 @@ namespace Roots
                 children = Props.children;
             }
             
-            return Div.Create(descriptor: Props.descriptor, children: children);
+            return Div.Create(attributes: Props.attributes, children: children);
         }
 
         public void ShowContextMenu(IContextual owner, Vector3 position)
@@ -195,7 +195,7 @@ namespace Roots
     public struct ContextualContextProps
     {
         [Expand]
-        public VisualAttributes descriptor;
+        public VisualAttributes attributes;
         public Children children;
         
         public Action<bool> onShow;

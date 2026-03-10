@@ -7,7 +7,7 @@ namespace Roots.Rootstrap
     public partial class H6 : RishElement<H6Props>
     {
         protected override Element Render() => Label.Create(
-            descriptor: Props.descriptor + "h6",
+            attributes: Props.attributes + "h6",
             text: Props.text,
             widthRange: Props.widthRange,
             heightRange: Props.heightRange,
@@ -20,22 +20,17 @@ namespace Roots.Rootstrap
     public struct H6Props
     {
         [Expand]
-        public VisualAttributes descriptor;
+        public VisualAttributes attributes;
         public RishString text;
         
         public LengthRange? widthRange;
         public LengthRange? heightRange;
 
+        [DefaultValue(true)]
         public bool enableRichText;
+        [DefaultValue(true)]
         public bool parseEscapeSequences;
 
         public Action<bool> onElided;
-
-        [Default]
-        private static PProps Default => new()
-        {
-            enableRichText = true,
-            parseEscapeSequences = true
-        };
     }
 }

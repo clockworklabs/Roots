@@ -63,6 +63,7 @@ namespace Roots
     [RishValueType]
     public struct DropdownButtonProps
     {
+        [DefaultValue(true)]
         public bool interactable;
         
         public Element normal;
@@ -74,12 +75,6 @@ namespace Roots
         public Element menu;
         
         public Action<bool> onOpen;
-
-        [Default]
-        private static DropdownButtonProps Default => new()
-        {
-            interactable = true
-        };
     }
 
     [RishValueType]

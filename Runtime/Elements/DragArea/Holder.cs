@@ -26,9 +26,9 @@ namespace Roots
             }
 
             protected override Element Render() => Div.Create(
-                name: Props.descriptor.name,
-                className: Props.descriptor.className,
-                style: Props.descriptor.style
+                name: Props.attributes.name,
+                className: Props.attributes.className,
+                style: Props.attributes.style
                     .PositionAbsolute()
                     .Left(Props.offset.x)
                     .Top(Props.offset.y)
@@ -42,7 +42,7 @@ namespace Roots
         [RishValueType]
         public struct HolderProps
         {
-            public VisualAttributes descriptor;
+            public VisualAttributes attributes;
             public Element content;
             public Vector2 offset;
             public Vector2 scale;

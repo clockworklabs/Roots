@@ -187,9 +187,9 @@ namespace Roots
             }
 
             return Div.Create(
-                descriptor: Props.descriptor + StyleUtilities.PointerDetection(), 
+                attributes: Props.attributes + StyleUtilities.PointerDetection(), 
                 children: Holder.Create(
-                    descriptor: Props.holderDescriptor,
+                    attributes: Props.holderAttributes,
                     offset: offset,
                     scale: scale,
                     content: Props.content));
@@ -637,10 +637,11 @@ namespace Roots
     public struct DragAreaProps
     {
         [Expand]
-        public VisualAttributes descriptor;
+        public VisualAttributes attributes;
         [Expand]
-        public VisualAttributes holderDescriptor;
+        public VisualAttributes holderAttributes;
         public DragArea.VisualBehavior behavior;
+        [DefaultValue(DragArea.AxisOfFreedom.VerticalAndHorizontal)]
         public DragArea.AxisOfFreedom axisOfFreedom;
         public Translate initialOffset;
         public Element content;
@@ -650,9 +651,6 @@ namespace Roots
         public Vector2? offset;
 
         public Action<Vector2> onOffset;
-
-        [Default]
-        private static DragAreaProps Default => new() { axisOfFreedom = DragArea.AxisOfFreedom.VerticalAndHorizontal };
     }
 
     [RishValueType]

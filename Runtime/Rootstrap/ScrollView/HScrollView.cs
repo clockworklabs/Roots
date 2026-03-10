@@ -5,9 +5,7 @@ namespace Roots.Experimental.Rootstrap
     public partial class HScrollView : RishElement<HScrollViewProps>
     {
         protected override Element Render() => SimpleScrollView.Create(
-            name: Props.descriptor.name,
-            className: Props.descriptor.className,
-            style: Props.descriptor.style,
+            attributes: Props.attributes,
             direction: SimpleScrollView.Direction.Vertical,
             inverted: Props.inverted,
             gap: Props.gap,
@@ -21,7 +19,7 @@ namespace Roots.Experimental.Rootstrap
     public struct HScrollViewProps
     {
         [Expand]
-        public VisualAttributes descriptor;
+        public VisualAttributes attributes;
         
         public bool inverted;
         public int gap;

@@ -6,15 +6,15 @@ namespace Roots.Rootstrap
     {
         protected override Element Render()
         {
-            var descriptor = new VisualAttributes(Props.descriptor)
+            var attributes = new VisualAttributes(Props.attributes)
             {
-                className = new ClassName(Props.descriptor.className)
+                className = new ClassName(Props.attributes.className)
                 {
                     "card-header"
                 }
             };
 
-            return Div.Create(descriptor: descriptor, /*utilities: Props.utilities,*/ children: Props.children);
+            return Div.Create(attributes: attributes, /*utilities: Props.utilities,*/ children: Props.children);
         }
     }
 
@@ -22,7 +22,7 @@ namespace Roots.Rootstrap
     public struct CardHeaderProps
     {
         [Expand]
-        public VisualAttributes descriptor;
+        public VisualAttributes attributes;
         // public Utilities utilities;
         public Children children;
     }

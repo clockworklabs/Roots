@@ -78,7 +78,7 @@ namespace Roots
 
             if (size <= 0)
             {
-                return Div.Create(descriptor: Props.descriptor);
+                return Div.Create(attributes: Props.attributes);
             }
             
             var rowWidth = State.width + State.gutter.x;
@@ -127,27 +127,17 @@ namespace Roots
                     else
                     {
                         SetSingleRow(true);
-                        return Row.Create(
-                            name: Props.descriptor.name,
-                            className: Props.descriptor.className,
-                            style: Props.descriptor.style,
-                            gap: State.gutter.x,
-                            children: children);
+                        return Row.Create(attributes: Props.attributes, gap: State.gutter.x, children: children);
                     }
                 }
             } while (i < colsCount);
 
             if (rows.Count <= 0)
             {
-                return Div.Create(descriptor: Props.descriptor);
+                return Div.Create(attributes: Props.attributes);
             }
 
-            return Col.Create(
-                name: Props.descriptor.name,
-                className: Props.descriptor.className,
-                style: Props.descriptor.style,
-                gap: State.gutter.y,
-                children: rows);
+            return Col.Create(attributes: Props.attributes, gap: State.gutter.y, children: rows);
         }
         
         private void OnVisualChange(VisualChangeEvent evt)
@@ -271,23 +261,23 @@ namespace Roots
         public int? lg;
         public int? xl;
         public int? xxl;
-        public VisualAttributes descriptor;
+        public VisualAttributes attributes;
         public Children children;
 
-        public Name name
+        public RishString name
         {
-            get => descriptor.name;
-            set => descriptor.name = value;
+            get => attributes.name;
+            set => attributes.name = value;
         }
         public ClassName className
         {
-            get => descriptor.className;
-            set => descriptor.className = value;
+            get => attributes.className;
+            set => attributes.className = value;
         }
         public Style style
         {
-            get => descriptor.style;
-            set => descriptor.style = value;
+            get => attributes.style;
+            set => attributes.style = value;
         }
 
         public ColData(Children children)
@@ -298,7 +288,7 @@ namespace Roots
             lg = null;
             xl = null;
             xxl = null;
-            descriptor = default;
+            attributes = default;
             this.children = children;
         }
         public ColData(int size, Children children)
@@ -309,7 +299,7 @@ namespace Roots
             lg = null;
             xl = null;
             xxl = null;
-            descriptor = default;
+            attributes = default;
             this.children = children;
         }
 
@@ -434,7 +424,7 @@ namespace Roots
         public Gutter? xxlGutter;
         
         [Expand]
-        public VisualAttributes descriptor;
+        public VisualAttributes attributes;
 
         public RishList<ColData> cols;
     }

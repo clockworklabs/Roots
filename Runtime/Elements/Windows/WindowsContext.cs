@@ -60,7 +60,7 @@ namespace Roots
                 }
             }
 
-            return Div.Create(descriptor: Props.descriptor, children: children);
+            return Div.Create(attributes: Props.attributes, children: children);
         }
 
         internal void RegisterWindow(Window window, ulong guid)
@@ -333,7 +333,7 @@ namespace Roots
     public struct WindowsContextProps
     {
         [Expand]
-        public VisualAttributes descriptor;
+        public VisualAttributes attributes;
         public bool forceFit;
         public int safeZoneSize;
         public bool hideAllWindows;

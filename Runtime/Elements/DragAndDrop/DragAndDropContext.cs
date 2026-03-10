@@ -46,7 +46,7 @@ namespace Roots
             }
 
             return Div.Create(
-                descriptor: Props.descriptor,
+                attributes: Props.attributes,
                 children: new Children
                 {
                     Props.children,
@@ -343,8 +343,8 @@ namespace Roots
 
                 if (element.Valid)
                 {
-                    // var descriptor = element.GetDescriptor();
-                    // var elementStyle = descriptor.style;
+                    // var attributes = element.GetAttributes();
+                    // var elementStyle = attributes.style;
                     // elementStyle.position = Position.Absolute;
                     // TODO: Support transformed elements
 
@@ -372,7 +372,7 @@ namespace Roots
     public struct DragAndDropContextProps
     {
         [Expand]
-        public VisualAttributes descriptor;
+        public VisualAttributes attributes;
         public Children children;
         
         public Action<bool> onDrag;

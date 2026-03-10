@@ -77,7 +77,7 @@ namespace Roots
                 children = Props.children;
             }
             
-            return Div.Create(descriptor: Props.descriptor, children: children);
+            return Div.Create(attributes: Props.attributes, children: children);
         }
 
         internal void ShowDropdownMenu(DropdownButton owner)
@@ -227,7 +227,7 @@ namespace Roots
     public struct DropdownContextProps
     {
         [Expand]
-        public VisualAttributes descriptor;
+        public VisualAttributes attributes;
         public bool forceFit;
         public Children children;
 

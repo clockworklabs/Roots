@@ -58,18 +58,18 @@ namespace Roots
 
         protected override Element Render()
         {
-            var descriptor = Props.multiline
-                ? Props.descriptor
-                : Props.descriptor + new Style
+            var attributes = Props.multiline
+                ? Props.attributes
+                : Props.attributes + new Style
                 {
                     whiteSpace = WhiteSpace.NoWrap
                 };
 
             return RishTextField.Create(
                 key: 0,
-                name: descriptor.name,
-                className: descriptor.className,
-                style: descriptor.style,
+                name: attributes.name,
+                className: attributes.className,
+                style: attributes.style,
                 value: Props.value,
                 updateOnEveryKeystroke: Props.updateOnEveryKeystroke,
                 multiline: Props.multiline,
@@ -80,8 +80,8 @@ namespace Roots
                 maxLength: Props.maxLength,
                 multiClickInteraction: Props.multiClickInteraction,
                 selectOnFocus: Props.selectOnFocus,
-                textInputDescriptor: Props.textInputDescriptor,
-                textElementDescriptor: Props.textElementDescriptor,
+                textInputAttributes: Props.textInputAttributes,
+                textElementAttributes: Props.textElementAttributes,
                 cursorColor: Props.cursorColor,
                 selectionColor: Props.selectionColor,
                 onValidation: Sappy.OnValidation,
@@ -414,40 +414,40 @@ namespace Roots
                     textInputBase.selectionColor = targetSelectionColor;
                 }
 
-                var textInputDescriptor = props.textInputDescriptor;
-                if (firstSetup || textInputBase.name != textInputDescriptor.name)
+                var textInputAttributes = props.textInputAttributes;
+                if (firstSetup || textInputBase.name != textInputAttributes.name)
                 {
-                    textInputBase.name = textInputDescriptor.name;
+                    textInputBase.name = textInputAttributes.name;
                 }
-                if (firstSetup || !RishUtils.Compare(Props.Value.textInputDescriptor.className, textInputDescriptor.className))
+                if (firstSetup || !RishUtils.Compare(Props.Value.textInputAttributes.className, textInputAttributes.className))
                 {
-                    textInputBase.SetClassName(textInputDescriptor.className);
+                    textInputBase.SetClassName(textInputAttributes.className);
                     foreach (var className in TextInputClasses)
                     {
                         textInputBase.AddToClassList(className);
                     }
                 }
-                if (firstSetup || !RishUtils.MemCmp(Props.Value.textInputDescriptor.style, textInputDescriptor.style))
+                if (firstSetup || !RishUtils.MemCmp(Props.Value.textInputAttributes.style, textInputAttributes.style))
                 {
-                    textInputBase.ForceStyle(textInputDescriptor.style);
+                    textInputBase.ForceStyle(textInputAttributes.style);
                 }
 
-                var textElementDescriptor = props.textElementDescriptor;
-                if (firstSetup || TextElement.name != textElementDescriptor.name)
+                var textElementAttributes = props.textElementAttributes;
+                if (firstSetup || TextElement.name != textElementAttributes.name)
                 {
-                    TextElement.name = textElementDescriptor.name;
+                    TextElement.name = textElementAttributes.name;
                 }
-                if (firstSetup || !RishUtils.Compare(Props.Value.textElementDescriptor.className, textElementDescriptor.className))
+                if (firstSetup || !RishUtils.Compare(Props.Value.textElementAttributes.className, textElementAttributes.className))
                 {
-                    TextElement.SetClassName(textElementDescriptor.className);
+                    TextElement.SetClassName(textElementAttributes.className);
                     foreach (var className in TextElementClasses)
                     {
                         TextElement.AddToClassList(className);
                     }
                 }
-                if (firstSetup || !RishUtils.MemCmp(Props.Value.textElementDescriptor.style, textElementDescriptor.style))
+                if (firstSetup || !RishUtils.MemCmp(Props.Value.textElementAttributes.style, textElementAttributes.style))
                 {
-                    TextElement.ForceStyle(textElementDescriptor.style);
+                    TextElement.ForceStyle(textElementAttributes.style);
                 }
 
                 if (firstSetup || TextElement.enableRichText != props.richTextEnabled)
@@ -537,8 +537,8 @@ namespace Roots
             /// </summary>
             public bool? selectOnFocus;
             
-            public VisualAttributes textInputDescriptor;
-            public VisualAttributes textElementDescriptor;
+            public VisualAttributes textInputAttributes;
+            public VisualAttributes textElementAttributes;
 
             /// <summary>
             /// Styled Prop as --props-cursor-color
@@ -561,11 +561,11 @@ namespace Roots
         public InputField.Type type;
         
         [Expand]
-        public VisualAttributes descriptor;
+        public VisualAttributes attributes;
         [Expand]
-        public VisualAttributes textInputDescriptor;
+        public VisualAttributes textInputAttributes;
         [Expand]
-        public VisualAttributes textElementDescriptor;
+        public VisualAttributes textElementAttributes;
         public RishString value;
         public bool updateOnEveryKeystroke;
         public bool multiline;

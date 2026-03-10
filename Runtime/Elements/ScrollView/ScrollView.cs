@@ -148,7 +148,7 @@ namespace Roots.Experimental
                     fixedSize: Props.elementsSize));
             }
 
-            return Div.Create(descriptor: Props.descriptor, children: children);
+            return Div.Create(attributes: Props.attributes, children: children);
         }
 
         private struct Entry
@@ -258,7 +258,7 @@ namespace Roots.Experimental
         public float position;
 
         [Expand]
-        public VisualAttributes descriptor;
+        public VisualAttributes attributes;
 
         public ScrollView.Direction direction;
         

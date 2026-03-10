@@ -5,7 +5,7 @@ namespace Roots
     public partial class Col : RishElement<ColProps>
     {
         protected override Element Render() => Stack.Create(
-            descriptor: Props.descriptor,
+            attributes: Props.attributes,
             direction: Stack.Direction.Vertical,
             reverse: Props.reverse,
             gap: Props.gap,
@@ -19,7 +19,7 @@ namespace Roots
         public float gap;
         public bool reverse;
         [Expand]
-        public VisualAttributes descriptor;
+        public VisualAttributes attributes;
         public Children children;
         public Element separator;
     }

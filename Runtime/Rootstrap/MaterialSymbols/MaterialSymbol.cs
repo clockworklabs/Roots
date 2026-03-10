@@ -8,7 +8,7 @@ namespace Roots.Rootstrap
         public enum Style { Outlined, Rounded, Sharp }
         public enum Weight { Thin, ExtraLight, Light, Regular, Medium, SemiBold, Bold }
 
-        protected override Element Render() => Label.Create(descriptor: Props.descriptor + "material-symbol", text: Factory(Props.unicode, Props.symbolStyle, Props.weight, Props.opticalSize, Props.filled));
+        protected override Element Render() => Label.Create(attributes: Props.attributes + "material-symbol", text: Factory(Props.unicode, Props.symbolStyle, Props.weight, Props.opticalSize, Props.filled));
 
         public static string Outlined(char unicode, Weight? weight = null, int? opticalSize = null, bool filled = false) => Factory(unicode, Style.Outlined, weight, opticalSize, filled);
         public static string Rounded(char unicode, Weight? weight = null, int? opticalSize = null, bool filled = false) => Factory(unicode, Style.Rounded, weight, opticalSize, filled);
@@ -55,7 +55,7 @@ namespace Roots.Rootstrap
     public struct MaterialSymbolProps
     {
         [Expand]
-        public VisualAttributes descriptor;
+        public VisualAttributes attributes;
         public char unicode;
         public MaterialSymbol.Style symbolStyle;
         public MaterialSymbol.Weight? weight;

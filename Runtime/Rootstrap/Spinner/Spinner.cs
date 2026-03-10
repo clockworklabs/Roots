@@ -45,9 +45,9 @@ namespace Roots.Rootstrap
         
         protected override Element Render()
         {
-            var descriptor = new VisualAttributes(Props.descriptor)
+            var attributes = new VisualAttributes(Props.attributes)
             {
-                className = new ClassName(Props.descriptor.className)
+                className = new ClassName(Props.attributes.className)
                 {
                     Props.type switch
                     {
@@ -63,9 +63,9 @@ namespace Roots.Rootstrap
             var grow = !border;
             
             return MotionDiv.Create(
-                name: descriptor.name,
-                className: descriptor.className,
-                style: descriptor.style,
+                name: attributes.name,
+                className: attributes.className,
+                style: attributes.style,
                 initial: new Initial
                 {
                     rotate = border ? 0 : default(InitialRotate),
@@ -121,7 +121,7 @@ namespace Roots.Rootstrap
         public bool autoColor;
         
         [Expand]
-        public VisualAttributes descriptor;
+        public VisualAttributes attributes;
         // public Utilities utilities;
         public Children children;
     }

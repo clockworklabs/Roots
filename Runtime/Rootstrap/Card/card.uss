@@ -51,8 +51,6 @@
     background-color: var(--rs-card-cap-bg);
     border-bottom-width: var(--rs-card-border-width);
     border-bottom-color: var(--rs-card-border-color);
-}
-.card .card-header/*:first-child*/ {
     border-top-left-radius: var(--rs-card-inner-border-radius);
     border-top-right-radius: var(--rs-card-inner-border-radius);
 }
@@ -63,8 +61,6 @@
     background-color: var(--rs-card-cap-bg);
     border-top-width: var(--rs-card-border-width);
     border-top-color: var(--rs-card-border-color);
-}
-.card .card-footer/*:last-child*/ {
     border-bottom-left-radius: var(--rs-card-inner-border-radius);
     border-bottom-right-radius: var(--rs-card-inner-border-radius);
 }

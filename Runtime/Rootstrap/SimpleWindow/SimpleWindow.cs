@@ -17,11 +17,8 @@ namespace Roots.Rootstrap
                     name: attributes.name,
                     className: attributes.className,
                     style: attributes.style,
-                    children: new Children
-                    {
-                        WindowHeader.Create(content: CardHeader.Create(children: Props.title)),
-                        CardBody.Create(children: Props.content)
-                    }));
+                    header: WindowHeader.Create(content: Props.title),
+                    body: Props.content));
         }
     }
 

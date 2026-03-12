@@ -1,5 +1,6 @@
 using System;
 using RishUI;
+using RishUI.MemoryManagement;
 
 namespace Roots.Rootstrap
 {
@@ -45,9 +46,9 @@ namespace Roots.Rootstrap
             var normalClassName = Props.active ? pressedClassName : className;
             var disabledClassName = normalClassName + "disabled";
             
-            var normal = Content.Create(className: normalClassName, children: Props.children);
-            var pressed = Content.Create(className: pressedClassName, children: Props.children);
-            var disabled = Content.Create(className: disabledClassName, children: Props.children);
+            var normal = CreateContent(className: normalClassName, children: Props.children);
+            var pressed = CreateContent(className: pressedClassName, children: Props.children);
+            var disabled = CreateContent(className: disabledClassName, children: Props.children);
 
             return AbstractButton.Create(
                 interactable: !Props.disabled,
@@ -56,18 +57,9 @@ namespace Roots.Rootstrap
                 disabled: disabled,
                 action: SappyProps.Action);
         }
-
-        private partial class Content : RishElement<ContentProps>
-        {
-            protected override Element Render() => Div.Create(className: Props.className, children: Props.children);
-        }
         
-        [RishValueType]
-        public struct ContentProps
-        {
-            public ClassName className;
-            public Children children;
-        }
+        [RequiresManagedContext]
+        private static Element CreateContent(ClassName className, Children children) => Div.Create(className: className, children: children);
     }
 
     [RishValueType]

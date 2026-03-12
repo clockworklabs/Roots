@@ -28,10 +28,10 @@ namespace Roots
 
         protected override Element Render() => AbstractButton.Create(
             action: Sappy.DoAction,
-            normal: State.open && Props.open.Valid ? Props.open : Props.normal,
-            hovered: State.open && Props.open.Valid ? Props.open : Props.hovered,
-            pressed: State.open && Props.open.Valid ? Props.open : Props.pressed,
-            disabled: State.open && Props.open.Valid ? Props.open : Props.disabled,
+            normal: State.open && Props.open.IsValid ? Props.open : Props.normal,
+            hovered: State.open && Props.open.IsValid ? Props.open : Props.hovered,
+            pressed: State.open && Props.open.IsValid ? Props.open : Props.pressed,
+            disabled: State.open && Props.open.IsValid ? Props.open : Props.disabled,
             interactable: Props.interactable);
 
         internal void OnOpen()

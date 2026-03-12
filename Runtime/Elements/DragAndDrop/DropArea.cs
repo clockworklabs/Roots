@@ -41,15 +41,15 @@ namespace Roots
         protected override Element Render() => State.dragging
             ? State.hovering
                 ? State.acceptable
-                    ? Props.hoveredAcceptedContent.Valid
+                    ? Props.hoveredAcceptedContent.IsValid
                         ? Props.hoveredAcceptedContent
-                        : Props.highlightedContent.Valid
+                        : Props.highlightedContent.IsValid
                             ? Props.highlightedContent
                             : Props.content
-                    : Props.hoveredRejectedContent.Valid
+                    : Props.hoveredRejectedContent.IsValid
                         ? Props.hoveredRejectedContent
                         : Props.content
-                : State.acceptable && Props.highlightedContent.Valid
+                : State.acceptable && Props.highlightedContent.IsValid
                     ? Props.highlightedContent
                     : Props.content
             : Props.content;

@@ -26,7 +26,7 @@ namespace Roots
 
         void IPropsListener<StackProps>.PropsDidChange(StackProps? prev)
         {
-            SetHasSeparator(Props.separator.Valid);
+            SetHasSeparator(Props.separator.IsValid);
             SetHalfGap(Props.gap * 0.5f);
         }
         void IPropsListener<StackProps>.PropsWillChange() { }

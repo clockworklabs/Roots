@@ -46,13 +46,13 @@ namespace Roots
             Element element;
             if (Props.isDisabled)
             {
-                element = Props.disabled.Valid 
+                element = Props.disabled.IsValid 
                     ? Props.disabled 
                     : Props.normal;
-            } else if(State.pressed && State.hovered && Props.pressed.Valid)
+            } else if(State.pressed && State.hovered && Props.pressed.IsValid)
             {
                 element = Props.pressed;
-            } else if(State.hovered && Props.hovered.Valid)
+            } else if(State.hovered && Props.hovered.IsValid)
             {
                 element = Props.hovered;
             }

@@ -24,7 +24,7 @@ namespace Roots
         protected override Element Render()
         {
             Element draggedElement;
-            if (State.draggedElement.Valid)
+            if (State.draggedElement.IsValid)
             {
                 var rect = State.rect;
                 var delta = State.dragDelta;
@@ -318,30 +318,30 @@ namespace Roots
                 var element = hovering
                     ? acceptable
                         ? Primary
-                            ? props.draggedAcceptedElement.Valid 
+                            ? props.draggedAcceptedElement.IsValid 
                                 ? props.draggedAcceptedElement 
                                 : props.draggedElement
-                            : props.secondaryDraggedAcceptedElement.Valid 
+                            : props.secondaryDraggedAcceptedElement.IsValid 
                                 ? props.secondaryDraggedAcceptedElement 
-                                : props.secondaryDraggedElement.Valid 
+                                : props.secondaryDraggedElement.IsValid 
                                     ? props.secondaryDraggedElement 
                                     : props.draggedElement
                         : Primary
-                            ? props.draggedRejectedElement.Valid 
+                            ? props.draggedRejectedElement.IsValid 
                                 ? props.draggedRejectedElement
                                 : props.draggedElement
-                            : props.secondaryDraggedRejectedElement.Valid 
+                            : props.secondaryDraggedRejectedElement.IsValid 
                                 ? props.secondaryDraggedRejectedElement
-                                : props.secondaryDraggedElement.Valid 
+                                : props.secondaryDraggedElement.IsValid 
                                     ? props.secondaryDraggedElement 
                                     : props.draggedElement
                     : Primary
                         ? props.draggedElement
-                        : props.secondaryDraggedElement.Valid 
+                        : props.secondaryDraggedElement.IsValid 
                             ? props.secondaryDraggedElement 
                             : props.draggedElement;
 
-                if (element.Valid)
+                if (element.IsValid)
                 {
                     // var attributes = element.GetAttributes();
                     // var elementStyle = attributes.style;

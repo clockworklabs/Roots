@@ -26,7 +26,7 @@ namespace Roots
             {
                 var owner = Stack.Peek();
                 var tooltipContent = owner.Props.tooltip;
-                if (tooltipContent.Valid)
+                if (tooltipContent.IsValid)
                 {
                     // TODO: Support transformed elements
                     var localRect = WorldToLocal(owner.WorldBoundingBox);

@@ -56,12 +56,12 @@ namespace Roots
 
         protected override Element Render() => State.dragging
             ? State.primary
-                ? Props.contentWhileDragging.Valid
+                ? Props.contentWhileDragging.IsValid
                     ? Props.contentWhileDragging
                     : Props.content
-                : Props.secondaryContentWhileDragging.Valid
+                : Props.secondaryContentWhileDragging.IsValid
                     ? Props.secondaryContentWhileDragging
-                    : Props.contentWhileDragging.Valid
+                    : Props.contentWhileDragging.IsValid
                         ? Props.contentWhileDragging
                         : Props.content
             : Props.content;

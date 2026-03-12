@@ -42,10 +42,10 @@ namespace Roots
         protected override Element Render()
         {
             Element element;
-            if(State.pressed && Props.pressed.Valid)
+            if(State.pressed && Props.pressed.IsValid)
             {
                 element = Props.pressed;
-            } else if(State.hovered && Props.hovered.Valid)
+            } else if(State.hovered && Props.hovered.IsValid)
             {
                 element = Props.hovered;
             }

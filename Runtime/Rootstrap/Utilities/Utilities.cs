@@ -1672,6 +1672,622 @@ namespace Roots.Rootstrap
             : $"mr-{GetResponsiveSizeUSSCode(responsiveBreakpoint)}-nh5";
         
         [RequiresManagedContext]
+        public static ClassName MarginX0(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => MarginX0String(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginX0(this string className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => ((ClassName)className).MarginX0(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginX0(this ClassName className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall)
+        {
+            className.Add(MarginX0String(responsiveBreakpoint));
+            return className;
+        }
+        private static string MarginX0String(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => responsiveBreakpoint is ResponsiveBreakpoint.ExtraSmall
+            ? "mx-0"
+            : $"mx-{GetResponsiveSizeUSSCode(responsiveBreakpoint)}-0";
+        
+        [RequiresManagedContext]
+        public static ClassName MarginX1(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => MarginX1String(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginX1(this string className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => ((ClassName)className).MarginX1(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginX1(this ClassName className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall)
+        {
+            className.Add(MarginX1String(responsiveBreakpoint));
+            return className;
+        }
+        private static string MarginX1String(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => responsiveBreakpoint is ResponsiveBreakpoint.ExtraSmall
+            ? "mx-1"
+            : $"mx-{GetResponsiveSizeUSSCode(responsiveBreakpoint)}-1";
+        
+        [RequiresManagedContext]
+        public static ClassName MarginX2(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => MarginX2String(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginX2(this string className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => ((ClassName)className).MarginX2(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginX2(this ClassName className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall)
+        {
+            className.Add(MarginX2String(responsiveBreakpoint));
+            return className;
+        }
+        private static string MarginX2String(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => responsiveBreakpoint is ResponsiveBreakpoint.ExtraSmall
+            ? "mx-2"
+            : $"mx-{GetResponsiveSizeUSSCode(responsiveBreakpoint)}-2";
+        
+        [RequiresManagedContext]
+        public static ClassName MarginX3(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => MarginX3String(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginX3(this string className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => ((ClassName)className).MarginX3(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginX3(this ClassName className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall)
+        {
+            className.Add(MarginX3String(responsiveBreakpoint));
+            return className;
+        }
+        private static string MarginX3String(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => responsiveBreakpoint is ResponsiveBreakpoint.ExtraSmall
+            ? "mx-3"
+            : $"mx-{GetResponsiveSizeUSSCode(responsiveBreakpoint)}-3";
+        
+        [RequiresManagedContext]
+        public static ClassName MarginX4(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => MarginX4String(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginX4(this string className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => ((ClassName)className).MarginX4(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginX4(this ClassName className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall)
+        {
+            className.Add(MarginX4String(responsiveBreakpoint));
+            return className;
+        }
+        private static string MarginX4String(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => responsiveBreakpoint is ResponsiveBreakpoint.ExtraSmall
+            ? "mx-4"
+            : $"mx-{GetResponsiveSizeUSSCode(responsiveBreakpoint)}-4";
+        
+        [RequiresManagedContext]
+        public static ClassName MarginX5(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => MarginX5String(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginX5(this string className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => ((ClassName)className).MarginX5(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginX5(this ClassName className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall)
+        {
+            className.Add(MarginX5String(responsiveBreakpoint));
+            return className;
+        }
+        private static string MarginX5String(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => responsiveBreakpoint is ResponsiveBreakpoint.ExtraSmall
+            ? "mx-5"
+            : $"mx-{GetResponsiveSizeUSSCode(responsiveBreakpoint)}-5";
+        
+        [RequiresManagedContext]
+        public static ClassName MarginXAuto(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => MarginXAutoString(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginXAuto(this string className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => ((ClassName)className).MarginXAuto(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginXAuto(this ClassName className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall)
+        {
+            className.Add(MarginXAutoString(responsiveBreakpoint));
+            return className;
+        }
+        private static string MarginXAutoString(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => responsiveBreakpoint is ResponsiveBreakpoint.ExtraSmall
+            ? "mx-auto"
+            : $"mx-{GetResponsiveSizeUSSCode(responsiveBreakpoint)}-auto";
+        
+        [RequiresManagedContext]
+        public static ClassName MarginXHalf1(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => MarginXHalf1String(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginXHalf1(this string className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => ((ClassName)className).MarginXHalf1(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginXHalf1(this ClassName className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall)
+        {
+            className.Add(MarginXHalf1String(responsiveBreakpoint));
+            return className;
+        }
+        private static string MarginXHalf1String(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => responsiveBreakpoint is ResponsiveBreakpoint.ExtraSmall
+            ? "mx-h1"
+            : $"mx-{GetResponsiveSizeUSSCode(responsiveBreakpoint)}-h1";
+        
+        [RequiresManagedContext]
+        public static ClassName MarginXHalf2(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => MarginXHalf2String(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginXHalf2(this string className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => ((ClassName)className).MarginXHalf2(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginXHalf2(this ClassName className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall)
+        {
+            className.Add(MarginXHalf2String(responsiveBreakpoint));
+            return className;
+        }
+        private static string MarginXHalf2String(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => responsiveBreakpoint is ResponsiveBreakpoint.ExtraSmall
+            ? "mx-h2"
+            : $"mx-{GetResponsiveSizeUSSCode(responsiveBreakpoint)}-h2";
+        
+        [RequiresManagedContext]
+        public static ClassName MarginXHalf3(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => MarginXHalf3String(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginXHalf3(this string className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => ((ClassName)className).MarginXHalf3(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginXHalf3(this ClassName className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall)
+        {
+            className.Add(MarginXHalf3String(responsiveBreakpoint));
+            return className;
+        }
+        private static string MarginXHalf3String(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => responsiveBreakpoint is ResponsiveBreakpoint.ExtraSmall
+            ? "mx-h3"
+            : $"mx-{GetResponsiveSizeUSSCode(responsiveBreakpoint)}-h3";
+        
+        [RequiresManagedContext]
+        public static ClassName MarginXHalf4(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => MarginXHalf4String(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginXHalf4(this string className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => ((ClassName)className).MarginXHalf4(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginXHalf4(this ClassName className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall)
+        {
+            className.Add(MarginXHalf4String(responsiveBreakpoint));
+            return className;
+        }
+        private static string MarginXHalf4String(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => responsiveBreakpoint is ResponsiveBreakpoint.ExtraSmall
+            ? "mx-h4"
+            : $"mx-{GetResponsiveSizeUSSCode(responsiveBreakpoint)}-h4";
+        
+        [RequiresManagedContext]
+        public static ClassName MarginXHalf5(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => MarginXHalf5String(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginXHalf5(this string className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => ((ClassName)className).MarginXHalf5(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginXHalf5(this ClassName className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall)
+        {
+            className.Add(MarginXHalf5String(responsiveBreakpoint));
+            return className;
+        }
+        private static string MarginXHalf5String(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => responsiveBreakpoint is ResponsiveBreakpoint.ExtraSmall
+            ? "mx-h5"
+            : $"mx-{GetResponsiveSizeUSSCode(responsiveBreakpoint)}-h5";
+        
+        [RequiresManagedContext]
+        public static ClassName MarginXNegative1(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => MarginXNegative1String(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginXNegative1(this string className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => ((ClassName)className).MarginXNegative1(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginXNegative1(this ClassName className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall)
+        {
+            className.Add(MarginXNegative1String(responsiveBreakpoint));
+            return className;
+        }
+        private static string MarginXNegative1String(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => responsiveBreakpoint is ResponsiveBreakpoint.ExtraSmall
+            ? "mx-n1"
+            : $"mx-{GetResponsiveSizeUSSCode(responsiveBreakpoint)}-n1";
+        
+        [RequiresManagedContext]
+        public static ClassName MarginXNegative2(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => MarginXNegative2String(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginXNegative2(this string className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => ((ClassName)className).MarginXNegative2(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginXNegative2(this ClassName className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall)
+        {
+            className.Add(MarginXNegative2String(responsiveBreakpoint));
+            return className;
+        }
+        private static string MarginXNegative2String(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => responsiveBreakpoint is ResponsiveBreakpoint.ExtraSmall
+            ? "mx-n2"
+            : $"mx-{GetResponsiveSizeUSSCode(responsiveBreakpoint)}-n2";
+        
+        [RequiresManagedContext]
+        public static ClassName MarginXNegative3(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => MarginXNegative3String(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginXNegative3(this string className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => ((ClassName)className).MarginXNegative3(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginXNegative3(this ClassName className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall)
+        {
+            className.Add(MarginXNegative3String(responsiveBreakpoint));
+            return className;
+        }
+        private static string MarginXNegative3String(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => responsiveBreakpoint is ResponsiveBreakpoint.ExtraSmall
+            ? "mx-n3"
+            : $"mx-{GetResponsiveSizeUSSCode(responsiveBreakpoint)}-n3";
+        
+        [RequiresManagedContext]
+        public static ClassName MarginXNegative4(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => MarginXNegative4String(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginXNegative4(this string className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => ((ClassName)className).MarginXNegative4(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginXNegative4(this ClassName className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall)
+        {
+            className.Add(MarginXNegative4String(responsiveBreakpoint));
+            return className;
+        }
+        private static string MarginXNegative4String(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => responsiveBreakpoint is ResponsiveBreakpoint.ExtraSmall
+            ? "mx-n4"
+            : $"mx-{GetResponsiveSizeUSSCode(responsiveBreakpoint)}-n4";
+        
+        [RequiresManagedContext]
+        public static ClassName MarginXNegative5(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => MarginXNegative5String(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginXNegative5(this string className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => ((ClassName)className).MarginXNegative5(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginXNegative5(this ClassName className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall)
+        {
+            className.Add(MarginXNegative5String(responsiveBreakpoint));
+            return className;
+        }
+        private static string MarginXNegative5String(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => responsiveBreakpoint is ResponsiveBreakpoint.ExtraSmall
+            ? "mx-n5"
+            : $"mx-{GetResponsiveSizeUSSCode(responsiveBreakpoint)}-n5";
+        
+        [RequiresManagedContext]
+        public static ClassName MarginXNegativeHalf1(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => MarginXNegativeHalf1String(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginXNegativeHalf1(this string className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => ((ClassName)className).MarginXNegativeHalf1(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginXNegativeHalf1(this ClassName className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall)
+        {
+            className.Add(MarginXNegativeHalf1String(responsiveBreakpoint));
+            return className;
+        }
+        private static string MarginXNegativeHalf1String(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => responsiveBreakpoint is ResponsiveBreakpoint.ExtraSmall
+            ? "mx-nh1"
+            : $"mx-{GetResponsiveSizeUSSCode(responsiveBreakpoint)}-nh1";
+        
+        [RequiresManagedContext]
+        public static ClassName MarginXNegativeHalf2(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => MarginXNegativeHalf2String(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginXNegativeHalf2(this string className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => ((ClassName)className).MarginXNegativeHalf2(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginXNegativeHalf2(this ClassName className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall)
+        {
+            className.Add(MarginXNegativeHalf2String(responsiveBreakpoint));
+            return className;
+        }
+        private static string MarginXNegativeHalf2String(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => responsiveBreakpoint is ResponsiveBreakpoint.ExtraSmall
+            ? "mx-nh2"
+            : $"mx-{GetResponsiveSizeUSSCode(responsiveBreakpoint)}-nh2";
+        
+        [RequiresManagedContext]
+        public static ClassName MarginXNegativeHalf3(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => MarginXNegativeHalf3String(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginXNegativeHalf3(this string className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => ((ClassName)className).MarginXNegativeHalf3(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginXNegativeHalf3(this ClassName className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall)
+        {
+            className.Add(MarginXNegativeHalf3String(responsiveBreakpoint));
+            return className;
+        }
+        private static string MarginXNegativeHalf3String(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => responsiveBreakpoint is ResponsiveBreakpoint.ExtraSmall
+            ? "mx-nh3"
+            : $"mx-{GetResponsiveSizeUSSCode(responsiveBreakpoint)}-nh3";
+        
+        [RequiresManagedContext]
+        public static ClassName MarginXNegativeHalf4(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => MarginXNegativeHalf4String(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginXNegativeHalf4(this string className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => ((ClassName)className).MarginXNegativeHalf4(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginXNegativeHalf4(this ClassName className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall)
+        {
+            className.Add(MarginXNegativeHalf4String(responsiveBreakpoint));
+            return className;
+        }
+        private static string MarginXNegativeHalf4String(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => responsiveBreakpoint is ResponsiveBreakpoint.ExtraSmall
+            ? "mx-nh4"
+            : $"mx-{GetResponsiveSizeUSSCode(responsiveBreakpoint)}-nh4";
+        
+        [RequiresManagedContext]
+        public static ClassName MarginXNegativeHalf5(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => MarginXNegativeHalf5String(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginXNegativeHalf5(this string className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => ((ClassName)className).MarginXNegativeHalf5(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginXNegativeHalf5(this ClassName className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall)
+        {
+            className.Add(MarginXNegativeHalf5String(responsiveBreakpoint));
+            return className;
+        }
+        private static string MarginXNegativeHalf5String(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => responsiveBreakpoint is ResponsiveBreakpoint.ExtraSmall
+            ? "mx-nh5"
+            : $"mx-{GetResponsiveSizeUSSCode(responsiveBreakpoint)}-nh5";
+        
+        [RequiresManagedContext]
+        public static ClassName MarginY0(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => MarginY0String(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginY0(this string className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => ((ClassName)className).MarginY0(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginY0(this ClassName className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall)
+        {
+            className.Add(MarginY0String(responsiveBreakpoint));
+            return className;
+        }
+        private static string MarginY0String(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => responsiveBreakpoint is ResponsiveBreakpoint.ExtraSmall
+            ? "my-0"
+            : $"my-{GetResponsiveSizeUSSCode(responsiveBreakpoint)}-0";
+        
+        [RequiresManagedContext]
+        public static ClassName MarginY1(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => MarginY1String(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginY1(this string className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => ((ClassName)className).MarginY1(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginY1(this ClassName className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall)
+        {
+            className.Add(MarginY1String(responsiveBreakpoint));
+            return className;
+        }
+        private static string MarginY1String(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => responsiveBreakpoint is ResponsiveBreakpoint.ExtraSmall
+            ? "my-1"
+            : $"my-{GetResponsiveSizeUSSCode(responsiveBreakpoint)}-1";
+        
+        [RequiresManagedContext]
+        public static ClassName MarginY2(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => MarginY2String(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginY2(this string className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => ((ClassName)className).MarginY2(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginY2(this ClassName className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall)
+        {
+            className.Add(MarginY2String(responsiveBreakpoint));
+            return className;
+        }
+        private static string MarginY2String(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => responsiveBreakpoint is ResponsiveBreakpoint.ExtraSmall
+            ? "my-2"
+            : $"my-{GetResponsiveSizeUSSCode(responsiveBreakpoint)}-2";
+        
+        [RequiresManagedContext]
+        public static ClassName MarginY3(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => MarginY3String(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginY3(this string className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => ((ClassName)className).MarginY3(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginY3(this ClassName className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall)
+        {
+            className.Add(MarginY3String(responsiveBreakpoint));
+            return className;
+        }
+        private static string MarginY3String(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => responsiveBreakpoint is ResponsiveBreakpoint.ExtraSmall
+            ? "my-3"
+            : $"my-{GetResponsiveSizeUSSCode(responsiveBreakpoint)}-3";
+        
+        [RequiresManagedContext]
+        public static ClassName MarginY4(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => MarginY4String(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginY4(this string className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => ((ClassName)className).MarginY4(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginY4(this ClassName className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall)
+        {
+            className.Add(MarginY4String(responsiveBreakpoint));
+            return className;
+        }
+        private static string MarginY4String(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => responsiveBreakpoint is ResponsiveBreakpoint.ExtraSmall
+            ? "my-4"
+            : $"my-{GetResponsiveSizeUSSCode(responsiveBreakpoint)}-4";
+        
+        [RequiresManagedContext]
+        public static ClassName MarginY5(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => MarginY5String(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginY5(this string className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => ((ClassName)className).MarginY5(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginY5(this ClassName className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall)
+        {
+            className.Add(MarginY5String(responsiveBreakpoint));
+            return className;
+        }
+        private static string MarginY5String(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => responsiveBreakpoint is ResponsiveBreakpoint.ExtraSmall
+            ? "my-5"
+            : $"my-{GetResponsiveSizeUSSCode(responsiveBreakpoint)}-5";
+        
+        [RequiresManagedContext]
+        public static ClassName MarginYAuto(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => MarginYAutoString(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginYAuto(this string className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => ((ClassName)className).MarginYAuto(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginYAuto(this ClassName className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall)
+        {
+            className.Add(MarginYAutoString(responsiveBreakpoint));
+            return className;
+        }
+        private static string MarginYAutoString(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => responsiveBreakpoint is ResponsiveBreakpoint.ExtraSmall
+            ? "my-auto"
+            : $"my-{GetResponsiveSizeUSSCode(responsiveBreakpoint)}-auto";
+        
+        [RequiresManagedContext]
+        public static ClassName MarginYHalf1(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => MarginYHalf1String(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginYHalf1(this string className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => ((ClassName)className).MarginYHalf1(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginYHalf1(this ClassName className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall)
+        {
+            className.Add(MarginYHalf1String(responsiveBreakpoint));
+            return className;
+        }
+        private static string MarginYHalf1String(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => responsiveBreakpoint is ResponsiveBreakpoint.ExtraSmall
+            ? "my-h1"
+            : $"my-{GetResponsiveSizeUSSCode(responsiveBreakpoint)}-h1";
+        
+        [RequiresManagedContext]
+        public static ClassName MarginYHalf2(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => MarginYHalf2String(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginYHalf2(this string className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => ((ClassName)className).MarginYHalf2(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginYHalf2(this ClassName className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall)
+        {
+            className.Add(MarginYHalf2String(responsiveBreakpoint));
+            return className;
+        }
+        private static string MarginYHalf2String(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => responsiveBreakpoint is ResponsiveBreakpoint.ExtraSmall
+            ? "my-h2"
+            : $"my-{GetResponsiveSizeUSSCode(responsiveBreakpoint)}-h2";
+        
+        [RequiresManagedContext]
+        public static ClassName MarginYHalf3(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => MarginYHalf3String(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginYHalf3(this string className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => ((ClassName)className).MarginYHalf3(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginYHalf3(this ClassName className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall)
+        {
+            className.Add(MarginYHalf3String(responsiveBreakpoint));
+            return className;
+        }
+        private static string MarginYHalf3String(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => responsiveBreakpoint is ResponsiveBreakpoint.ExtraSmall
+            ? "my-h3"
+            : $"my-{GetResponsiveSizeUSSCode(responsiveBreakpoint)}-h3";
+        
+        [RequiresManagedContext]
+        public static ClassName MarginYHalf4(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => MarginYHalf4String(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginYHalf4(this string className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => ((ClassName)className).MarginYHalf4(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginYHalf4(this ClassName className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall)
+        {
+            className.Add(MarginYHalf4String(responsiveBreakpoint));
+            return className;
+        }
+        private static string MarginYHalf4String(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => responsiveBreakpoint is ResponsiveBreakpoint.ExtraSmall
+            ? "my-h4"
+            : $"my-{GetResponsiveSizeUSSCode(responsiveBreakpoint)}-h4";
+        
+        [RequiresManagedContext]
+        public static ClassName MarginYHalf5(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => MarginYHalf5String(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginYHalf5(this string className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => ((ClassName)className).MarginYHalf5(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginYHalf5(this ClassName className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall)
+        {
+            className.Add(MarginYHalf5String(responsiveBreakpoint));
+            return className;
+        }
+        private static string MarginYHalf5String(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => responsiveBreakpoint is ResponsiveBreakpoint.ExtraSmall
+            ? "my-h5"
+            : $"my-{GetResponsiveSizeUSSCode(responsiveBreakpoint)}-h5";
+        
+        [RequiresManagedContext]
+        public static ClassName MarginYNegative1(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => MarginYNegative1String(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginYNegative1(this string className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => ((ClassName)className).MarginYNegative1(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginYNegative1(this ClassName className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall)
+        {
+            className.Add(MarginYNegative1String(responsiveBreakpoint));
+            return className;
+        }
+        private static string MarginYNegative1String(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => responsiveBreakpoint is ResponsiveBreakpoint.ExtraSmall
+            ? "my-n1"
+            : $"my-{GetResponsiveSizeUSSCode(responsiveBreakpoint)}-n1";
+        
+        [RequiresManagedContext]
+        public static ClassName MarginYNegative2(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => MarginYNegative2String(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginYNegative2(this string className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => ((ClassName)className).MarginYNegative2(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginYNegative2(this ClassName className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall)
+        {
+            className.Add(MarginYNegative2String(responsiveBreakpoint));
+            return className;
+        }
+        private static string MarginYNegative2String(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => responsiveBreakpoint is ResponsiveBreakpoint.ExtraSmall
+            ? "my-n2"
+            : $"my-{GetResponsiveSizeUSSCode(responsiveBreakpoint)}-n2";
+        
+        [RequiresManagedContext]
+        public static ClassName MarginYNegative3(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => MarginYNegative3String(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginYNegative3(this string className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => ((ClassName)className).MarginYNegative3(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginYNegative3(this ClassName className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall)
+        {
+            className.Add(MarginYNegative3String(responsiveBreakpoint));
+            return className;
+        }
+        private static string MarginYNegative3String(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => responsiveBreakpoint is ResponsiveBreakpoint.ExtraSmall
+            ? "my-n3"
+            : $"my-{GetResponsiveSizeUSSCode(responsiveBreakpoint)}-n3";
+        
+        [RequiresManagedContext]
+        public static ClassName MarginYNegative4(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => MarginYNegative4String(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginYNegative4(this string className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => ((ClassName)className).MarginYNegative4(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginYNegative4(this ClassName className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall)
+        {
+            className.Add(MarginYNegative4String(responsiveBreakpoint));
+            return className;
+        }
+        private static string MarginYNegative4String(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => responsiveBreakpoint is ResponsiveBreakpoint.ExtraSmall
+            ? "my-n4"
+            : $"my-{GetResponsiveSizeUSSCode(responsiveBreakpoint)}-n4";
+        
+        [RequiresManagedContext]
+        public static ClassName MarginYNegative5(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => MarginYNegative5String(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginYNegative5(this string className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => ((ClassName)className).MarginYNegative5(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginYNegative5(this ClassName className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall)
+        {
+            className.Add(MarginYNegative5String(responsiveBreakpoint));
+            return className;
+        }
+        private static string MarginYNegative5String(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => responsiveBreakpoint is ResponsiveBreakpoint.ExtraSmall
+            ? "my-n5"
+            : $"my-{GetResponsiveSizeUSSCode(responsiveBreakpoint)}-n5";
+        
+        [RequiresManagedContext]
+        public static ClassName MarginYNegativeHalf1(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => MarginYNegativeHalf1String(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginYNegativeHalf1(this string className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => ((ClassName)className).MarginYNegativeHalf1(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginYNegativeHalf1(this ClassName className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall)
+        {
+            className.Add(MarginYNegativeHalf1String(responsiveBreakpoint));
+            return className;
+        }
+        private static string MarginYNegativeHalf1String(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => responsiveBreakpoint is ResponsiveBreakpoint.ExtraSmall
+            ? "my-nh1"
+            : $"my-{GetResponsiveSizeUSSCode(responsiveBreakpoint)}-nh1";
+        
+        [RequiresManagedContext]
+        public static ClassName MarginYNegativeHalf2(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => MarginYNegativeHalf2String(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginYNegativeHalf2(this string className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => ((ClassName)className).MarginYNegativeHalf2(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginYNegativeHalf2(this ClassName className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall)
+        {
+            className.Add(MarginYNegativeHalf2String(responsiveBreakpoint));
+            return className;
+        }
+        private static string MarginYNegativeHalf2String(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => responsiveBreakpoint is ResponsiveBreakpoint.ExtraSmall
+            ? "my-nh2"
+            : $"my-{GetResponsiveSizeUSSCode(responsiveBreakpoint)}-nh2";
+        
+        [RequiresManagedContext]
+        public static ClassName MarginYNegativeHalf3(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => MarginYNegativeHalf3String(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginYNegativeHalf3(this string className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => ((ClassName)className).MarginYNegativeHalf3(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginYNegativeHalf3(this ClassName className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall)
+        {
+            className.Add(MarginYNegativeHalf3String(responsiveBreakpoint));
+            return className;
+        }
+        private static string MarginYNegativeHalf3String(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => responsiveBreakpoint is ResponsiveBreakpoint.ExtraSmall
+            ? "my-nh3"
+            : $"my-{GetResponsiveSizeUSSCode(responsiveBreakpoint)}-nh3";
+        
+        [RequiresManagedContext]
+        public static ClassName MarginYNegativeHalf4(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => MarginYNegativeHalf4String(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginYNegativeHalf4(this string className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => ((ClassName)className).MarginYNegativeHalf4(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginYNegativeHalf4(this ClassName className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall)
+        {
+            className.Add(MarginYNegativeHalf4String(responsiveBreakpoint));
+            return className;
+        }
+        private static string MarginYNegativeHalf4String(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => responsiveBreakpoint is ResponsiveBreakpoint.ExtraSmall
+            ? "my-nh4"
+            : $"my-{GetResponsiveSizeUSSCode(responsiveBreakpoint)}-nh4";
+        
+        [RequiresManagedContext]
+        public static ClassName MarginYNegativeHalf5(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => MarginYNegativeHalf5String(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginYNegativeHalf5(this string className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => ((ClassName)className).MarginYNegativeHalf5(responsiveBreakpoint);
+        [RequiresManagedContext]
+        public static ClassName MarginYNegativeHalf5(this ClassName className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall)
+        {
+            className.Add(MarginYNegativeHalf5String(responsiveBreakpoint));
+            return className;
+        }
+        private static string MarginYNegativeHalf5String(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => responsiveBreakpoint is ResponsiveBreakpoint.ExtraSmall
+            ? "my-nh5"
+            : $"my-{GetResponsiveSizeUSSCode(responsiveBreakpoint)}-nh5";
+        
+        [RequiresManagedContext]
         public static ClassName PaddingTop0(ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => PaddingTop0String(responsiveBreakpoint);
         [RequiresManagedContext]
         public static ClassName PaddingTop0(this string className, ResponsiveBreakpoint responsiveBreakpoint = ResponsiveBreakpoint.ExtraSmall) => ((ClassName)className).PaddingTop0(responsiveBreakpoint);

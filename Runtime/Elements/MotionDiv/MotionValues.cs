@@ -8,7 +8,7 @@ using UnityEngine.UIElements;
 
 namespace Roots
 {
-    public partial class Motion
+    public partial class MotionValues
     {
         private SapStem<Style> OnStyleStem { get; } = new();
         public SapTargets<Style> OnStyle => OnStyleStem.Targets;
@@ -72,12 +72,12 @@ namespace Roots
         private GroupAnimationId Animation { get; set; }
 
         private Target LastTarget { get; set; }
-        private Motion Parent { get; set; }
+        private MotionValues Parent { get; set; }
         private int StaggerIndex { get; set; }
         
         private List<AnimationId> GroupAnimations { get; } = new(51);
 
-        public Motion()
+        public MotionValues()
         {
             BackgroundColor = new MotionColor(s => s.backgroundColor, s => s.backgroundColor, (s, v) => s.backgroundColor = v);
             BorderBottomColor = new MotionColor(s => s.borderBottomColor, s => s.borderBottomColor, (s, v) => s.borderBottomColor = v);
@@ -206,7 +206,7 @@ namespace Roots
             #endif
         }
 
-        public void SetInitial(VisualElement element, Motion parent)
+        public void SetInitial(VisualElement element, MotionValues parent)
         {
             Element = element;
             Parent = parent;
@@ -656,9 +656,9 @@ namespace Roots
             CompletedStem.Send();
         }
 
-        private HashSet<Motion> AnimatingChildren { get; } = new();
+        private HashSet<MotionValues> AnimatingChildren { get; } = new();
         private int AnimatingChildrenCount { get; set; } = -1;
-        private int RegisterChildAnimation(Motion child)
+        private int RegisterChildAnimation(MotionValues child)
         {
             if (child == null)
             {
@@ -679,7 +679,7 @@ namespace Roots
             AnimatingChildrenCount = count;
             return count;
         }
-        private float GetChildDelay(Motion child)
+        private float GetChildDelay(MotionValues child)
         {
             if (child == null)
             {

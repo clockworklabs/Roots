@@ -31,7 +31,7 @@ namespace Roots
         private SapTargets OnUnmounted => OnUnmountedStem.Targets;
 
         private IAnimatedElement Element { get; }
-        private Motion Motion { get; }
+        private MotionValues Motion { get; }
         private StateMachine Machine { get; }
         
         private Target Animate { get; set; }
@@ -40,7 +40,7 @@ namespace Roots
         public StyleAnimation(IAnimatedElement element)
         {
             Element = element;
-            Motion = new Motion();
+            Motion = new MotionValues();
             Machine = new StateMachine(this);
             Motion.OnStyle.Add(Sappy.OnStyle);
             Motion.Completed.Add(Sappy.OnMotionComplete);
@@ -156,7 +156,7 @@ namespace Roots
         {
             private StateMachine Machine { get; }
             protected StyleAnimation Element { get; }
-            protected Motion Motion { get; }
+            protected MotionValues Motion { get; }
 
             protected State(StateMachine machine, StyleAnimation element)
             {

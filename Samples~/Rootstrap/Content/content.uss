@@ -1,0 +1,83 @@
+:root {
+    --rs-body-color: #adb5bd;
+    --rs-heading-color: inherit;
+    /*--luiss-serif: resource("Fonts/Luiss Serif Regular SDF");*/
+    /*--luiss-sans: resource("Fonts/LuissSans-Regular SDF");*/
+
+    color: var(--rs-body-color);
+    font-size: 16px;
+    -unity-font-definition: var(--luiss-sans);
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6 {
+    -unity-font-style: bold;
+    /*line-height: 1.2;*/
+    color: var(--rs-heading-color);
+    -unity-font-definition: var(--luiss-serif);
+}
+.h1 {
+    font-size: 40px;
+}
+.h2 {
+    font-size: 32px;
+}
+.h3 {
+    font-size: 28px;
+}
+.h4 {
+    font-size: 24px;
+}
+.h5 {
+    font-size: 20px;
+}
+.h6 {
+    font-size: 16px;
+}
+.small {
+    font-size: 14px;
+}
+.lead {
+    font-size: 20px;
+    font-weight: 300;
+}
+
+Image {
+    overflow: hidden;
+}
+
+.img-fluid {
+    max-width: 100%;
+    --props-image-height: auto;
+    --props-scale-mode: scale-to-fit;
+}
+
+.img-thumbnail {
+    padding: 4px;
+    background-color: var(--rs-body-bg);
+    border-width: var(--rs-border-width);
+    border-color: var(--rs-border-color);
+    border-radius: var(--rs-border-radius-1);
+    max-width: 100%;
+    --props-image-height: auto;
+    --props-scale-mode: scale-to-fit;
+}
+
+.hr,.vr {
+    opacity: 0.25;
+    align-self: stretch;
+    
+    --min-size: 16px;
+    --thickness: 1px;
+}
+.hr {
+    height: var(--thickness);
+    max-height: var(--thickness);
+    margin: var(--min-size) 0;
+    min-width: var(--min-size);
+}
+.vr {
+    width: var(--thickness);
+    max-width: var(--thickness);
+    margin: 0 var(--min-size);
+    min-height: var(--min-size);
+}

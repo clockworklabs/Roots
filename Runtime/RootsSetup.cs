@@ -79,8 +79,7 @@ namespace Roots
             UIDocument = GetComponent<UIDocument>();
             
             var styleSheets = StyleSheets.Where(ss => ss != null && ss.GetResponsive() != null).SelectMany(ss => ss.GetResponsive().StyleSheets).ToList();
-            styleSheets.Sort((a, b) => a.MinWidth.CompareTo(b.MinWidth));
-            _sortedStyleSheets = styleSheets.AsReadOnly();
+            _sortedStyleSheets = styleSheets.OrderBy(styleSheet => styleSheet.MinWidth).ToList().AsReadOnly();
             
             RishRoot = gameObject.GetComponent<RishRoot>();
             if (RishRoot != null)

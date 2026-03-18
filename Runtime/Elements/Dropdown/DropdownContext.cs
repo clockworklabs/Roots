@@ -164,10 +164,10 @@ namespace Roots
             var worldPosition = evt.position;
             
             // Ignore pointer events on dropdown button. These are handled by the button
-            if (DropdownButton.ContainsPoint(DropdownButton.WorldToLocal(worldPosition)) || DropdownButton.WorldContentRect.Contains(worldPosition))
-            {
-                return;
-            }
+            // if (DropdownButton.ContainsPoint(DropdownButton.WorldToLocal(worldPosition)) || DropdownButton.WorldContentRect.Contains(worldPosition))
+            // {
+            //     return;
+            // }
 
             if (Dropdown.ContainsPoint(Dropdown.WorldToLocal(worldPosition)) || Dropdown.WorldContentRect.Contains(worldPosition))
             {

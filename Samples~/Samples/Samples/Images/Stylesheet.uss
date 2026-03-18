@@ -1,0 +1,8 @@
+Image {
+    margin-bottom: var(--rs-spacer-3);
+}
+
+.test-image {
+    --props-sprite: "placeholder-200x200";
+    max-width: 200px;
+}

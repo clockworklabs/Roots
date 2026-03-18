@@ -1,0 +1,86 @@
+using System;
+using RishUI;
+using RishUI.MemoryManagement;
+
+namespace Roots.Rootstrap
+{
+    public partial class Button : RishElement<ButtonProps>
+    {
+        public enum Variant { None, Primary, PrimaryOutline, Secondary, SecondaryOutline, Success, SuccessOutline, Danger, DangerOutline, Warning, WarningOutline, Info, InfoOutline, Light, LightOutline, Dark, DarkOutline, Link }
+        public enum Size { Regular, Small, Large }
+        
+        protected override Element Render()
+        {
+            var className = new ClassName {
+                "btn", 
+                Props.variant switch
+                {
+                    Variant.Primary => "btn-primary",
+                    Variant.PrimaryOutline => "btn-outline-primary",
+                    Variant.Secondary => "btn-secondary",
+                    Variant.SecondaryOutline => "btn-outline-secondary",
+                    Variant.Success => "btn-success",
+                    Variant.SuccessOutline => "btn-outline-success",
+                    Variant.Danger => "btn-danger",
+                    Variant.DangerOutline => "btn-outline-danger",
+                    Variant.Warning => "btn-warning",
+                    Variant.WarningOutline => "btn-outline-warning",
+                    Variant.Info => "btn-info",
+                    Variant.InfoOutline => "btn-outline-info",
+                    Variant.Light => "btn-light",
+                    Variant.LightOutline => "btn-outline-light",
+                    Variant.Dark => "btn-dark",
+                    Variant.DarkOutline => "btn-outline-dark",
+                    Variant.Link => "btn-link",
+                    _ => string.Empty
+                },
+                Props.size switch
+                {
+                    Size.Small => "btn-sm",
+                    Size.Large => "btn-lg",
+                    _ => string.Empty
+                }
+            };
+
+            var pressedClassName = className + "active";
+            var normalClassName = Props.active ? pressedClassName : className;
+            var disabledClassName = normalClassName + "disabled";
+            
+            var normal = CreateContent(className: normalClassName, children: Props.children);
+            var pressed = CreateContent(className: pressedClassName, children: Props.children);
+            var disabled = CreateContent(className: disabledClassName, children: Props.children);
+
+            return AbstractButton.Create(
+                interactable: !Props.disabled,
+                normal: normal,
+                pressed: pressed,
+                disabled: disabled,
+                action: SappyProps.Action);
+        }
+        
+        [RequiresManagedContext]
+        private Element CreateContent(ClassName className, Children children) => Div.Create(
+            name: Props.attributes.name,
+            className: Props.attributes.className + className,
+            style: Props.attributes.style,
+            children: children);
+    }
+
+    [RishValueType]
+    public struct ButtonProps
+    {
+        [Expand]
+        public VisualAttributes attributes;
+
+        [DefaultValue(Button.Variant.Primary)]
+        public Button.Variant variant;
+        public Button.Size size;
+
+        public bool disabled;
+        public bool active;
+
+        public Children children;
+
+        public Action action;
+    }
+}

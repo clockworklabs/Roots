@@ -22,7 +22,7 @@ namespace Roots
         };
     }
     
-    [CreateAssetMenu(fileName = "New ResponsiveStyleSheet", menuName = "Roots/ResponsiveStyleSheet")]
+    [CreateAssetMenu(fileName = "New ResponsiveStyleSheet", menuName = "Roots/ResponsiveStyleSheet", order = 100)]
     public class ResponsiveStyleSheet : ScriptableObject
     {
         [SerializeField]

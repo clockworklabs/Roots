@@ -18,9 +18,14 @@
   },
   "samples": [
     {
-      "displayName": "Default Provider",
-      "description": "Basic UnityComponent prototypes provider.",
-      "path": "Samples~/Default"
+      "displayName": "Rootstrap",
+      "description": "Kickoff/Reference Element Collection.",
+      "path": "Samples~/Rootstrap"
+    },
+    {
+      "displayName": "Samples",
+      "description": "Samples Scene. Requires Rootstrap.",
+      "path": "Samples~/Samples"
     }
   ]
 }

@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 91c896f250645514384d65eb0d2ed955
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Luiss Sans
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 3041f0731a3066846ac094ff46b212e2, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

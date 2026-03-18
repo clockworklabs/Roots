@@ -147,8 +147,6 @@ namespace RootsSamples
                         sm: 2,
                         md: 3,
                         lg: 4,
-                        xl: 5,
-                        xxl: 6,
                         xsGutter: 4,
                         lgGutter: 8,
                         cols: new()
@@ -157,31 +155,21 @@ namespace RootsSamples
                                 title: "Additive",
                                 children: new Children
                                 {
-                                    Example.Create(className: Utilities.Border(), text: ".border"),
-                                    Example.Create(className: Utilities.BorderTop(), text: ".border-top"),
-                                    Example.Create(className: Utilities.BorderRight(), text: ".border-right"),
-                                    Example.Create(className: Utilities.BorderBottom(), text: ".border-bottom"),
-                                    Example.Create(className: Utilities.BorderLeft(), text: ".border-left"),
-                                }),
-                            Group.Create(
-                                title: "Subtractive",
-                                children: new Children
-                                {
-                                    Example.Create(className: Utilities.Border().Border0(), text: ".border .border-0"),
-                                    Example.Create(className: Utilities.Border().BorderTop0(), text: ".border .border-top-0"),
-                                    Example.Create(className: Utilities.Border().BorderRight0(), text: ".border .border-right-0"),
-                                    Example.Create(className: Utilities.Border().BorderBottom0(), text: ".border .border-bottom-0"),
-                                    Example.Create(className: Utilities.Border().BorderLeft0(), text: ".border .border-left-0"),
+                                    Example.Create(className: Utilities.Border().Border3(), text: ".border.border-3"),
+                                    Example.Create(className: Utilities.BorderTop().Border3(), text: ".border-top.border-3"),
+                                    Example.Create(className: Utilities.BorderRight().Border3(), text: ".border-right.border-3"),
+                                    Example.Create(className: Utilities.BorderBottom().Border3(), text: ".border-bottom.border-3"),
+                                    Example.Create(className: Utilities.BorderLeft().Border3(), text: ".border-left.border-3"),
                                 }),
                             Group.Create(
                                 title: "Width",
                                 children: new Children
                                 {
-                                    Example.Create(className: Utilities.Border().Border1(), text: ".border .border-1"),
-                                    Example.Create(className: Utilities.Border().Border2(), text: ".border .border-2"),
-                                    Example.Create(className: Utilities.Border().Border3(), text: ".border .border-3"),
-                                    Example.Create(className: Utilities.Border().Border4(), text: ".border .border-4"),
-                                    Example.Create(className: Utilities.Border().Border5(), text: ".border .border-5"),
+                                    Example.Create(className: Utilities.Border().Border1(), text: ".border.border-1"),
+                                    Example.Create(className: Utilities.Border().Border2(), text: ".border.border-2"),
+                                    Example.Create(className: Utilities.Border().Border3(), text: ".border.border-3"),
+                                    Example.Create(className: Utilities.Border().Border4(), text: ".border.border-4"),
+                                    Example.Create(className: Utilities.Border().Border5(), text: ".border.border-5"),
                                 }),
                             Group.Create(
                                 title: "Radius",
@@ -194,7 +182,7 @@ namespace RootsSamples
                                     Example.Create(className: Utilities.RoundedLeft(), text: ".rounded-left"),
                                 }),
                             Group.Create(
-                                title: "Sizes",
+                                title: "Radius Size",
                                 children: new Children
                                 {
                                     Example.Create(className: Utilities.Rounded1(), text: ".rounded-1"),
@@ -217,24 +205,24 @@ namespace RootsSamples
                                 lgGutter: 8,
                                 cols: new()
                                 {
-                                    Example.Create(className: Utilities.Border().BorderPrimary(), text: ".border .border-primary"),
-                                    Example.Create(className: Utilities.Border().BorderPrimarySubtle(), text: ".border .border-primary-subtle"),
-                                    Example.Create(className: Utilities.Border().BorderSecondary(), text: ".border .border-secondary"),
-                                    Example.Create(className: Utilities.Border().BorderSecondarySubtle(), text: ".border .border-secondary-subtle"),
-                                    Example.Create(className: Utilities.Border().BorderSuccess(), text: ".border .border-success"),
-                                    Example.Create(className: Utilities.Border().BorderSuccessSubtle(), text: ".border .border-success-subtle"),
-                                    Example.Create(className: Utilities.Border().BorderDanger(), text: ".border .border-danger"),
-                                    Example.Create(className: Utilities.Border().BorderDangerSubtle(), text: ".border .border-danger-subtle"),
-                                    Example.Create(className: Utilities.Border().BorderWarning(), text: ".border .border-warning"),
-                                    Example.Create(className: Utilities.Border().BorderWarningSubtle(), text: ".border .border-warning-subtle"),
-                                    Example.Create(className: Utilities.Border().BorderInfo(), text: ".border .border-info"),
-                                    Example.Create(className: Utilities.Border().BorderInfoSubtle(), text: ".border .border-info-subtle"),
-                                    Example.Create(className: Utilities.Border().BorderLight(), text: ".border .border-light"),
-                                    Example.Create(className: Utilities.Border().BorderLightSubtle(), text: ".border .border-light-subtle"),
-                                    Example.Create(className: Utilities.Border().BorderDark(), text: ".border .border-dark"),
-                                    Example.Create(className: Utilities.Border().BorderDarkSubtle(), text: ".border .border-dark-subtle"),
-                                    Example.Create(className: Utilities.Border().BorderBlack(), text: ".border .border-black"),
-                                    Example.Create(className: Utilities.Border().BorderWhite(), text: ".border .border-white")
+                                    Example.Create(className: Utilities.Border().BorderPrimary(), text: ".border.border-primary"),
+                                    Example.Create(className: Utilities.Border().BorderPrimarySubtle(), text: ".border.border-primary-subtle"),
+                                    Example.Create(className: Utilities.Border().BorderSecondary(), text: ".border.border-secondary"),
+                                    Example.Create(className: Utilities.Border().BorderSecondarySubtle(), text: ".border.border-secondary-subtle"),
+                                    Example.Create(className: Utilities.Border().BorderSuccess(), text: ".border.border-success"),
+                                    Example.Create(className: Utilities.Border().BorderSuccessSubtle(), text: ".border.border-success-subtle"),
+                                    Example.Create(className: Utilities.Border().BorderDanger(), text: ".border.border-danger"),
+                                    Example.Create(className: Utilities.Border().BorderDangerSubtle(), text: ".border.border-danger-subtle"),
+                                    Example.Create(className: Utilities.Border().BorderWarning(), text: ".border.border-warning"),
+                                    Example.Create(className: Utilities.Border().BorderWarningSubtle(), text: ".border.border-warning-subtle"),
+                                    Example.Create(className: Utilities.Border().BorderInfo(), text: ".border.border-info"),
+                                    Example.Create(className: Utilities.Border().BorderInfoSubtle(), text: ".border.border-info-subtle"),
+                                    Example.Create(className: Utilities.Border().BorderLight(), text: ".border.border-light"),
+                                    Example.Create(className: Utilities.Border().BorderLightSubtle(), text: ".border.border-light-subtle"),
+                                    Example.Create(className: Utilities.Border().BorderDark(), text: ".border.border-dark"),
+                                    Example.Create(className: Utilities.Border().BorderDarkSubtle(), text: ".border.border-dark-subtle"),
+                                    Example.Create(className: Utilities.Border().BorderBlack(), text: ".border.border-black"),
+                                    Example.Create(className: Utilities.Border().BorderWhite(), text: ".border.border-white")
                                 }))
                     }),
                 Group.Create(

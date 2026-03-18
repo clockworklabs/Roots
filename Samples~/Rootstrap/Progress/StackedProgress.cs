@@ -82,6 +82,7 @@ namespace Roots.Rootstrap
                 attributes: Props.attributes + new ClassName
                 {
                     "progress",
+                    Props.size is ProgressSize.Thin ? "progress-thin" : null,
                     Props.animated && !Props.spring.HasValue && !Props.tween.HasValue ? "animated" : null
                 },
                 children: children);

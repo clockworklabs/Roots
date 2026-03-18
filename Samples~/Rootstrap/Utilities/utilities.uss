@@ -890,6 +890,9 @@
 .border-white {
     border-color: var(--rs-white)!important;
 }
+.border-0 {
+    border-width: 0!important;
+}
 .border-1 {
     border-width: 1px!important;
 }

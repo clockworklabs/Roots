@@ -15,6 +15,10 @@
     border-radius: var(--rs-progress-border-radius);
 }
 
+.progress.progress-thin {
+    --rs-progress-height: 2px;
+}
+
 .progress-bar {
     flex-direction: column;
     justify-content: center;

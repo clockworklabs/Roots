@@ -27,28 +27,22 @@ namespace RootsSamples
 
         protected override Element Render()
         {
-            var className = new ClassName
-            {
-                "m-3",
-                "absolute-fill"
-            };
+            var className = Utilities.FlexFill();
             var content = Container.Create(
-                className: new ClassName
-                {
-                    "flex-grow-1",
-                    "w-100"
-                },
+                className: Utilities.FlexFill().Width100(),
                 breakpoint: ResponsiveBreakpoint.ExtraExtraLarge,
                 content: Props.content);
             
             return DropdownContext.Create(
                 name: "samples-container",
-                className: "flex-grow-1",
+                className: Utilities.FlexFill().Padding3(),
                 children: new Children
                 {
-                    Props.scrollView
-                        ? VScrollView.Create(className: className, children: content)
-                        : Div.Create(className: className, children: content),
+                    Div.Create(
+                        className: Utilities.FlexFill().PointerDetection().Padding1().OverflowHidden(),
+                        children: Props.scrollView
+                            ? VScrollView.Create(className: className, hideOverflow: true, children: content)
+                            : Div.Create(className: className, children: content)),
                     Body.Create(
                         className: new ClassName
                         {

@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "io.clockworklabs.rish": "3.0.0",
-    "io.clockworklabs.motion": "1.7.9"
+    "io.clockworklabs.motion": "1.8.0"
   },
   "samples": [
     {

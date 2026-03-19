@@ -11,8 +11,6 @@ namespace Roots.Experimental.Rootstrap
     {
         public enum Direction { Vertical, Horizontal }
 
-        public const float DefaultMouseWheelDeltaMultiplier = 30;
-
         private SpringAnimationId<float> Animation { get; set; }
 
         public SimpleScrollView()
@@ -86,7 +84,7 @@ namespace Roots.Experimental.Rootstrap
                     : evt.delta.x;
             }
 
-            var delta = wheelDelta * (Props.mouseWheelMultiplier ?? DefaultMouseWheelDeltaMultiplier);
+            var delta = wheelDelta * Props.mouseWheelMultiplier;
             
             if (Props.inverted)
             {
@@ -209,7 +207,8 @@ namespace Roots.Experimental.Rootstrap
         [DefaultValue(true)]
         public bool interactableScrollBar;
         
-        public float? mouseWheelMultiplier;
+        [DefaultValue(30)]
+        public float mouseWheelMultiplier;
         public float? elementsSize;
         
         public RishList<int> alwaysMountedIndices;

@@ -11,9 +11,9 @@ namespace Roots
     public partial class AbstractButton : RishElement<AbstractButtonProps>, IMountingListener, IPropsListener, IFormSubmit
     {
         private Form Form { get; set; }
-        private bool JustMounted { get; set; }
-        
         private uint FocusIndex { get; set; }
+
+        private bool JustMounted { get; set; }
 
         public AbstractButton()
         {
@@ -80,10 +80,7 @@ namespace Roots
 
         private void OnVisualChange(VisualChangeEvent evt)
         {
-            if (!JustMounted)
-            {
-                return;
-            }
+            if (!JustMounted) return;
             
             JustMounted = false;
 
@@ -95,16 +92,7 @@ namespace Roots
 
         private void OnKeyDown(KeyDownEvent evt)
         {
-            if (!HasFocus)
-            {
-                return;
-            }
-
-            var keyCode = evt.keyCode;
-            if (keyCode != KeyCode.Space)
-            {
-                return;
-            }
+            if (!HasFocus || evt.keyCode != KeyCode.Space) return;
             
             DoAction(0);
 
@@ -113,10 +101,7 @@ namespace Roots
 
         bool IFormSubmit.OnFormSubmit()
         {
-            if (Form == null || !Props.submitsForm)
-            {
-                return false;
-            }
+            if (Form == null || !Props.submitsForm) return false;
             
             DoAction(0);
 

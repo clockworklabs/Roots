@@ -32,7 +32,8 @@ namespace Roots.Experimental.Rootstrap
         [DefaultValue(true)]
         public bool interactableScrollBar;
         
-        public float? mouseWheelMultiplier;
+        [DefaultValue(30)]
+        public float mouseWheelMultiplier;
         public float? elementsSize;
         
         public RishList<int> alwaysMountedIndices;

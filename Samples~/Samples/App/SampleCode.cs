@@ -1,11 +1,15 @@
 ﻿#if UNITY_EDITOR
 using System;
+using System.IO;
 using System.Linq;
 using RishUI;
 using Roots;
 using Roots.Experimental.Rootstrap;
 using Roots.Rootstrap;
 using UnityEditor;
+using UnityEditor.SceneManagement;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 namespace RootsSamples
@@ -20,8 +24,9 @@ namespace RootsSamples
             
             var sampleName = sample.Name;
             var folderName = sampleName.Replace(" ", "");
+            var folderPath = $"{Path.GetDirectoryName(SceneManager.GetActiveScene().path)}/Samples/{folderName}";
 
-            var script = AssetDatabase.LoadAssetAtPath<MonoScript>($"Assets/_Project/Roots/Samples/{folderName}/{folderName}Sample.cs");
+            var script = AssetDatabase.LoadAssetAtPath<MonoScript>($"{folderPath}/{folderName}Sample.cs");
 
             string code;
             if (script == null)
@@ -36,7 +41,7 @@ namespace RootsSamples
                 string indentation;
                 if (sourceCode.Contains("Element ISample.Factory() => Content.Create("))
                 {
-                    script = AssetDatabase.LoadAssetAtPath<MonoScript>($"Assets/_Project/Roots/Samples/{folderName}/Content.cs");
+                    script = AssetDatabase.LoadAssetAtPath<MonoScript>($"{folderPath}/Content.cs");
                     sourceCode = script.text;
                     searchText = "protected override Element Render() =>";
                     indentation = "            ";
@@ -68,13 +73,12 @@ namespace RootsSamples
                     "thin-border"
                 },
                 style: StyleUtilities.Height(Length.Percent(30)),
-                children: VScrollView.Create(
-                        className: new ClassName
-                        {
-                            "absolute-fill",
-                            "m-2"
-                        },
-                        children: Body.Create(text: State.code)))
+                children: DragArea.Create(
+                    key: (ulong)Props.index,
+                    className: Utilities.FlexFill(),
+                    extraMargin: 10,
+                    behavior: DragArea.VisualBehavior.Stretchy,
+                    content: Body.Create(className: Utilities.Margin3(), text: State.code)))
             : Element.Null;
     }
 

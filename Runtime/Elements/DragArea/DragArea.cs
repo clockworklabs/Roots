@@ -11,8 +11,6 @@ namespace Roots
 {
     public partial class DragArea : RishElement<DragAreaProps, DragAreaState>, IMountingListener, IPropsListener<DragAreaProps>
     {
-        private const float DefaultMouseWheelDeltaMultiplier = 100;
-        
         public enum VisualBehavior { Default, Stretchy, Clamped }
 
         [Flags]
@@ -258,38 +256,52 @@ namespace Roots
 
             if (Mathf.Approximately(wheelDelta.x, 0) && Mathf.Approximately(wheelDelta.y, 0)) return;
 
-            var multiplier = Props.mouseWheelMultiplier ?? DefaultMouseWheelDeltaMultiplier;
-            
-            var delta = ClampDeltaPosition(-wheelDelta * multiplier);
-
-            if (!SpringAnimationId<float>.From(HorizontalAnimation, out var horizontalSpringAnimation) || !horizontalSpringAnimation.GetVelocity(out var horizontalVelocity))
+            float horizontalVelocity;
+            float horizontalStartingPoint;
+            if (SpringAnimationId<float>.From(HorizontalAnimation, out var horizontalSpring) && horizontalSpring.IsActive(out var isHorizontalSpringActive) && isHorizontalSpringActive)
             {
-                if (!InertiaAnimationId.From(HorizontalAnimation, out var horizontalInertiaAnimation) || !horizontalInertiaAnimation.GetVelocity(out horizontalVelocity))
-                {
-                    horizontalVelocity = 0;
-                }
-            }
-            if (!SpringAnimationId<float>.From(VerticalAnimation, out var verticalSpringAnimation) || !verticalSpringAnimation.GetVelocity(out var verticalVelocity))
+                horizontalSpring.GetVelocity(out horizontalVelocity);
+                horizontalSpring.GetTarget(out horizontalStartingPoint);
+            } else if (InertiaAnimationId.From(HorizontalAnimation, out var horizontalInertia) && horizontalInertia.IsActive(out var isHorizontalInertiaActive) && isHorizontalInertiaActive)
             {
-                if (!InertiaAnimationId.From(VerticalAnimation, out var verticalInertiaAnimation) || !verticalInertiaAnimation.GetVelocity(out verticalVelocity))
-                {
-                    verticalVelocity = 0;
-                }
+                horizontalInertia.GetVelocity(out horizontalVelocity);
+                horizontalInertia.GetTarget(out horizontalStartingPoint);
+            }
+            else
+            {
+                horizontalVelocity = 0;
+                horizontalStartingPoint = State.offset.x;
+            }
+            float verticalVelocity;
+            float verticalStartingPoint;
+            if (SpringAnimationId<float>.From(VerticalAnimation, out var verticalSpring) && verticalSpring.IsActive(out var isVerticalSpringActive) && isVerticalSpringActive)
+            {
+                verticalSpring.GetVelocity(out verticalVelocity);
+                verticalSpring.GetTarget(out verticalStartingPoint);
+            } else if (InertiaAnimationId.From(VerticalAnimation, out var verticalInertia) && verticalInertia.IsActive(out var isVerticalInertiaActive) && isVerticalInertiaActive)
+            {
+                verticalInertia.GetVelocity(out verticalVelocity);
+                verticalInertia.GetTarget(out verticalStartingPoint);
+            }
+            else
+            {
+                verticalVelocity = 0;
+                verticalStartingPoint = State.offset.y;
             }
 
-            var target = State.offset + delta;
+            var delta = ClampDeltaPosition(new Vector2(horizontalStartingPoint, verticalStartingPoint), -wheelDelta * Props.mouseWheelMultiplier);
 
             if (!Mathf.Approximately(delta.x, 0))
             {
                 HorizontalAnimation.Stop();
-                HorizontalAnimation = DoMotion.Spring(Sappy.GetOffsetX, Sappy.SetOffsetX, target.x, FastSpring)
+                HorizontalAnimation = DoMotion.Spring(Sappy.GetOffsetX, Sappy.SetOffsetX, horizontalStartingPoint + delta.x, FastSpring)
                     .SetInitialVelocity(horizontalVelocity)
                     .OnComplete(Sappy.AnimateReleaseHorizontalSimple);
             }
             if (!Mathf.Approximately(delta.y, 0))
             {
                 VerticalAnimation.Stop();
-                VerticalAnimation = DoMotion.Spring(Sappy.GetOffsetY, Sappy.SetOffsetY, target.y, FastSpring)
+                VerticalAnimation = DoMotion.Spring(Sappy.GetOffsetY, Sappy.SetOffsetY, verticalStartingPoint + delta.y, FastSpring)
                     .SetInitialVelocity(verticalVelocity)
                     .OnComplete(Sappy.AnimateReleaseVerticalSimple);
             }
@@ -367,7 +379,8 @@ namespace Roots
             AnimateReleaseVertical(limits.y, 0);
         }
 
-        private Vector2 ClampDeltaPosition(Vector2 unclamped)
+        private Vector2 ClampDeltaPosition(Vector2 unclamped) => ClampDeltaPosition(State.offset, unclamped);
+        private Vector2 ClampDeltaPosition(Vector2 startingPoint, Vector2 unclamped)
         {
             if (!ContentSize.HasValue) return unclamped;
 
@@ -388,33 +401,47 @@ namespace Roots
             var invExtraMargin = 1 / extraMargin;
             float tX, tY;
 
-            if (!Props.axisOfFreedom.HasFlag(AxisOfFreedom.Horizontal))
+            var axisOfFreedom = Props.axisOfFreedom;
+            if (!Props.allowDraggingFullyContainedContent)
+            {
+                if (limits.x > 0)
+                {
+                    axisOfFreedom &= ~AxisOfFreedom.Horizontal;
+                }
+
+                if (limits.y > 0)
+                {
+                    axisOfFreedom &= ~AxisOfFreedom.Vertical;
+                }
+            }
+
+            if (!axisOfFreedom.HasFlag(AxisOfFreedom.Horizontal))
             {
                 tX = 1;
             }
             else if (unclamped.x > 0)
             {
                 var limit = limits.x > 0 ? limits.x : 0;
-                tX = State.offset.x > limit ? Mathf.Clamp01(Mathf.Abs(State.offset.x - limit) * invExtraMargin) : 0;
+                tX = startingPoint.x > limit ? Mathf.Clamp01(Mathf.Abs(startingPoint.x - limit) * invExtraMargin) : 0;
             }
             else
             {
                 var limit = limits.x > 0 ? 0 : limits.x;
-                tX = State.offset.x < limit ? Mathf.Clamp01(Mathf.Abs(State.offset.x - limit) * invExtraMargin) : 0;
+                tX = startingPoint.x < limit ? Mathf.Clamp01(Mathf.Abs(startingPoint.x - limit) * invExtraMargin) : 0;
             }
-            if (!Props.axisOfFreedom.HasFlag(AxisOfFreedom.Vertical))
+            if (!axisOfFreedom.HasFlag(AxisOfFreedom.Vertical))
             {
                 tY = 1;
             }
             else if (unclamped.y > 0)
             {
                 var limit = limits.y > 0 ? limits.y : 0;
-                tY = State.offset.y > limit ? Mathf.Clamp01(Mathf.Abs(State.offset.y - limit) * invExtraMargin) : 0;
+                tY = startingPoint.y > limit ? Mathf.Clamp01(Mathf.Abs(startingPoint.y - limit) * invExtraMargin) : 0;
             }
             else
             {
                 var limit = limits.y > 0 ? 0 : limits.y;
-                tY = State.offset.y < limit ? Mathf.Clamp01(Mathf.Abs(State.offset.y - limit) * invExtraMargin) : 0;
+                tY = startingPoint.y < limit ? Mathf.Clamp01(Mathf.Abs(startingPoint.y - limit) * invExtraMargin) : 0;
             }
 
             const float halfPi = Mathf.PI * 0.5f;
@@ -425,8 +452,8 @@ namespace Roots
 
             var min = new Vector2(Mathf.Min(limits.x, 0) - extraMargin, Mathf.Min(limits.y, 0) - extraMargin);
             var max = new Vector2(Mathf.Max(limits.x, 0) + extraMargin, Mathf.Max(limits.y, 0) + extraMargin);
-            var toMin = min - State.offset;
-            var toMax = max - State.offset;
+            var toMin = min - startingPoint;
+            var toMax = max - startingPoint;
             result.x = Mathf.Clamp(result.x, toMin.x, toMax.x);
             result.y = Mathf.Clamp(result.y, toMin.y, toMax.y);
 
@@ -646,7 +673,10 @@ namespace Roots
         public Translate initialOffset;
         public Element content;
         public Length? extraMargin;
-        public float? mouseWheelMultiplier;
+        [DefaultValue(30)]
+        public float mouseWheelMultiplier;
+
+        public bool allowDraggingFullyContainedContent;
 
         public Vector2? offset;
 

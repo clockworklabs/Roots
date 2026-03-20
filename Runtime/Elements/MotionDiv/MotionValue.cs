@@ -229,6 +229,13 @@ namespace Roots
             };
         }
     }
+    
+#if UNITY_6000_3_OR_NEWER
+    public class MotionRatio : MotionValue<Ratio, RishUI.StyleRatio, RatioSpring, RatioTween>
+    {
+        public MotionRatio(InlineGetter inline, ResolvedGetter resolved, InlineSetter setter) : base(PropertyType.Physical, inline, resolved, setter) { }
+    }
+#endif
 
     public class MotionRotate : MotionValue<Angle, RishUI.StyleRotate, AngleSpring, AngleTween>
     {
@@ -318,206 +325,237 @@ namespace Roots
         }
     }
      
-     public class IntSpring : SpringAnimation<int>
-     {
-         protected override int Add(int a, int b) => a + b;
+    public class IntSpring : SpringAnimation<int>
+    {
+        protected override int Add(int a, int b) => a + b;
 
-         protected override int Subtract(int a, int b) => a - b;
+        protected override int Subtract(int a, int b) => a - b;
 
-         protected override int Multiply(int a, float b) => Mathf.RoundToInt(a * b);
+        protected override int Multiply(int a, float b) => Mathf.RoundToInt(a * b);
 
-         protected override float SqrMagnitude(int a) => a * a;
-     }
+        protected override float SqrMagnitude(int a) => a * a;
+    }
      
-     public class LengthSpring : SpringAnimation<Length>
-     {
-         protected override Length Add(Length a, Length b) => a.unit != b.unit ? throw new ArgumentException("Both Lengths must have the same unit") : new Length(a.value + b.value, a.unit);
+    public class LengthSpring : SpringAnimation<Length>
+    {
+        protected override Length Add(Length a, Length b) => a.unit != b.unit ? throw new ArgumentException("Both Lengths must have the same unit") : new Length(a.value + b.value, a.unit);
 
-         protected override Length Subtract(Length a, Length b) => a.unit != b.unit ? throw new ArgumentException("Both Lengths must have the same unit") : new Length(a.value - b.value, a.unit);
+        protected override Length Subtract(Length a, Length b) => a.unit != b.unit ? throw new ArgumentException("Both Lengths must have the same unit") : new Length(a.value - b.value, a.unit);
 
-         protected override Length Multiply(Length a, float b) => new (a.value * b, a.unit);
+        protected override Length Multiply(Length a, float b) => new (a.value * b, a.unit);
 
-         protected override float SqrMagnitude(Length a) => a.value * a.value;
-     }
-         
-     public class LengthTween : TweenAnimation<Length>
-     {
-         protected override Length LinearInterpolation(Length a, Length b, float t) => a.unit != b.unit ? throw new ArgumentException("Both Lengths must have the same unit") : new Length(Mathf.Lerp(a.value, b.value, t), a.unit);
+        protected override float SqrMagnitude(Length a) => a.value * a.value;
+    }
 
-         protected override Length GetVelocity(Length a, Length b, float dt) => a.unit != b.unit ? throw new ArgumentException("Both Lengths must have the same unit") : new Length((b.value - a.value) / dt, a.unit);
-     }
-     
-     public class AngleSpring : SpringAnimation<Angle>
-     {
-         protected override Angle Add(Angle a, Angle b) => a.ToDegrees() + b.ToDegrees();
+    public class LengthTween : TweenAnimation<Length>
+    {
+        protected override Length LinearInterpolation(Length a, Length b, float t) => a.unit != b.unit
+            ? throw new ArgumentException("Both Lengths must have the same unit")
+            : new Length(Mathf.Lerp(a.value, b.value, t), a.unit);
 
-         protected override Angle Subtract(Angle a, Angle b) => a.ToDegrees() - b.ToDegrees();
+        protected override Length GetVelocity(Length a, Length b, float dt) => a.unit != b.unit
+            ? throw new ArgumentException("Both Lengths must have the same unit")
+            : new Length((b.value - a.value) / dt, a.unit);
+    }
 
-         protected override Angle Multiply(Angle a, float b) => a.ToDegrees() * b;
+    public class AngleSpring : SpringAnimation<Angle>
+    {
+        protected override Angle Add(Angle a, Angle b) => a.ToDegrees() + b.ToDegrees();
 
-         protected override float SqrMagnitude(Angle a) => a.ToDegrees() * a.ToDegrees();
-     }
-         
-     public class AngleTween : TweenAnimation<Angle>
-     {
-         protected override Angle LinearInterpolation(Angle a, Angle b, float t) => Mathf.Lerp(a.ToDegrees(), b.ToDegrees(), t);
+        protected override Angle Subtract(Angle a, Angle b) => a.ToDegrees() - b.ToDegrees();
 
-         protected override Angle GetVelocity(Angle a, Angle b, float dt) => (b.ToDegrees() - a.ToDegrees()) / dt;
-     }
-     
-     public class TransformOriginSpring : SpringAnimation<TransformOrigin>
-     {
-         protected override TransformOrigin Add(TransformOrigin a, TransformOrigin b)
-         {
-             var x = a.x.unit != b.x.unit
-                 ? throw new ArgumentException($"Both Lengths must have the same unit. Instead: a.x = {a.x} and b.x = {b.x}")
-                 : new Length(a.x.value + b.x.value, a.x.unit);
-             var y = a.y.unit != b.y.unit
-                 ? throw new ArgumentException($"Both Lengths must have the same unit. Instead: a.y = {a.y} and b.y = {b.y}")
-                 : new Length(a.y.value + b.y.value, a.y.unit);
-             var z = a.z + b.z;
+        protected override Angle Multiply(Angle a, float b) => a.ToDegrees() * b;
 
-             return new TransformOrigin(x, y, z);
-         }
+        protected override float SqrMagnitude(Angle a) => a.ToDegrees() * a.ToDegrees();
+    }
 
-         protected override TransformOrigin Subtract(TransformOrigin a, TransformOrigin b)
-         {
-             var x = a.x.unit != b.x.unit
-                 ? throw new ArgumentException($"Both Lengths must have the same unit. Instead: a.x = {a.x} and b.x = {b.x}")
-                 : new Length(a.x.value - b.x.value, a.x.unit);
-             var y = a.y.unit != b.y.unit
-                 ? throw new ArgumentException($"Both Lengths must have the same unit. Instead: a.y = {a.y} and b.y = {b.y}")
-                 : new Length(a.y.value - b.y.value, a.y.unit);
-             var z = a.z - b.z;
+    public class AngleTween : TweenAnimation<Angle>
+    {
+        protected override Angle LinearInterpolation(Angle a, Angle b, float t) => Mathf.Lerp(a.ToDegrees(), b.ToDegrees(), t);
 
-             return new TransformOrigin(x, y, z);
-         }
+        protected override Angle GetVelocity(Angle a, Angle b, float dt) => (b.ToDegrees() - a.ToDegrees()) / dt;
+    }
+#if UNITY_6000_3_OR_NEWER
+    public class RatioSpring : SpringAnimation<Ratio>
+    {
+        protected override Ratio Add(Ratio a, Ratio b) => a.value + b.value;
 
-         protected override TransformOrigin Multiply(TransformOrigin a, float b)
-         {
-             var x = new Length(a.x.value * b, a.x.unit);
-             var y = new Length(a.y.value * b, a.y.unit);
-             var z = a.z * b;
+        protected override Ratio Subtract(Ratio a, Ratio b) => a.value - b.value;
 
-             return new TransformOrigin(x, y, z);
-         }
+        protected override Ratio Multiply(Ratio a, float b) => a.value * b;
 
-         protected override float SqrMagnitude(TransformOrigin a)
-         {
-             var xSqr = a.x.value * a.x.value;
-             var ySqr = a.y.value * a.y.value;
-             var zSqr = a.z * a.z;
+        protected override float SqrMagnitude(Ratio a) => a.value * a.value;
+    }
 
-             return xSqr + ySqr + zSqr;
-         }
-     }
-         
-     public class TransformOriginTween : TweenAnimation<TransformOrigin>
-     {
-         protected override TransformOrigin LinearInterpolation(TransformOrigin a, TransformOrigin b, float t)
-         {
-             var x = a.x.unit != b.x.unit
-                 ? throw new ArgumentException($"Both Lengths must have the same unit. Instead: a.x = {a.x} and b.x = {b.x}")
-                 : new Length(Mathf.Lerp(a.x.value, b.x.value, t), a.x.unit);
-             var y = a.y.unit != b.y.unit
-                 ? throw new ArgumentException($"Both Lengths must have the same unit. Instead: a.y = {a.y} and b.y = {b.y}")
-                 : new Length(Mathf.Lerp(a.y.value, b.y.value, t), a.y.unit);
-             var z = Mathf.Lerp(a.z, b.z, t);
+    public class RatioTween : TweenAnimation<Ratio>
+    {
+        protected override Ratio LinearInterpolation(Ratio a, Ratio b, float t) => Mathf.Lerp(a.value, b.value, t);
 
-             return new TransformOrigin(x, y, z);
-         }
+        protected override Ratio GetVelocity(Ratio a, Ratio b, float dt) => (b.value - a.value) / dt;
+    }
+#endif
 
-         protected override TransformOrigin GetVelocity(TransformOrigin a, TransformOrigin b, float dt)
-         {
-             var inv = 1 / dt;
-             
-             var x = a.x.unit != b.x.unit
-                 ? throw new ArgumentException($"Both Lengths must have the same unit. Instead: a.x = {a.x} and b.x = {b.x}")
-                 : new Length((b.x.value - a.x.value) * inv, a.x.unit);
-             var y = a.y.unit != b.y.unit
-                 ? throw new ArgumentException($"Both Lengths must have the same unit. Instead: a.y = {a.y} and b.y = {b.y}")
-                 : new Length((b.y.value - a.y.value) * inv, a.y.unit);
-             var z = (b.z - a.z) * inv;
+    public class TransformOriginSpring : SpringAnimation<TransformOrigin>
+    {
+        protected override TransformOrigin Add(TransformOrigin a, TransformOrigin b)
+        {
+            var x = a.x.unit != b.x.unit
+                ? throw new ArgumentException(
+                    $"Both Lengths must have the same unit. Instead: a.x = {a.x} and b.x = {b.x}")
+                : new Length(a.x.value + b.x.value, a.x.unit);
+            var y = a.y.unit != b.y.unit
+                ? throw new ArgumentException(
+                    $"Both Lengths must have the same unit. Instead: a.y = {a.y} and b.y = {b.y}")
+                : new Length(a.y.value + b.y.value, a.y.unit);
+            var z = a.z + b.z;
 
-             return new TransformOrigin(x, y, z);
-         }
-     }
-     
-     public class TranslateSpring : SpringAnimation<Translate>
-     {
-         protected override Translate Add(Translate a, Translate b)
-         {
-             var x = a.x.unit != b.x.unit
-                 ? throw new ArgumentException("Both Lengths must have the same unit")
-                 : new Length(a.x.value + b.x.value, a.x.unit);
-             var y = a.y.unit != b.y.unit
-                 ? throw new ArgumentException("Both Lengths must have the same unit")
-                 : new Length(a.y.value + b.y.value, a.y.unit);
-             var z = a.z + b.z;
+            return new TransformOrigin(x, y, z);
+        }
 
-             return new Translate(x, y, z);
-         }
+        protected override TransformOrigin Subtract(TransformOrigin a, TransformOrigin b)
+        {
+            var x = a.x.unit != b.x.unit
+                ? throw new ArgumentException(
+                    $"Both Lengths must have the same unit. Instead: a.x = {a.x} and b.x = {b.x}")
+                : new Length(a.x.value - b.x.value, a.x.unit);
+            var y = a.y.unit != b.y.unit
+                ? throw new ArgumentException(
+                    $"Both Lengths must have the same unit. Instead: a.y = {a.y} and b.y = {b.y}")
+                : new Length(a.y.value - b.y.value, a.y.unit);
+            var z = a.z - b.z;
 
-         protected override Translate Subtract(Translate a, Translate b)
-         {
-             var x = a.x.unit != b.x.unit
-                 ? throw new ArgumentException("Both Lengths must have the same unit")
-                 : new Length(a.x.value - b.x.value, a.x.unit);
-             var y = a.y.unit != b.y.unit
-                 ? throw new ArgumentException("Both Lengths must have the same unit")
-                 : new Length(a.y.value - b.y.value, a.y.unit);
-             var z = a.z - b.z;
+            return new TransformOrigin(x, y, z);
+        }
 
-             return new Translate(x, y, z);
-         }
+        protected override TransformOrigin Multiply(TransformOrigin a, float b)
+        {
+            var x = new Length(a.x.value * b, a.x.unit);
+            var y = new Length(a.y.value * b, a.y.unit);
+            var z = a.z * b;
 
-         protected override Translate Multiply(Translate a, float b)
-         {
-             var x = new Length(a.x.value * b, a.x.unit);
-             var y = new Length(a.y.value * b, a.y.unit);
-             var z = a.z * b;
+            return new TransformOrigin(x, y, z);
+        }
 
-             return new Translate(x, y, z);
-         }
+        protected override float SqrMagnitude(TransformOrigin a)
+        {
+            var xSqr = a.x.value * a.x.value;
+            var ySqr = a.y.value * a.y.value;
+            var zSqr = a.z * a.z;
 
-         protected override float SqrMagnitude(Translate a)
-         {
-             var xSqr = a.x.value * a.x.value;
-             var ySqr = a.y.value * a.y.value;
-             var zSqr = a.z * a.z;
+            return xSqr + ySqr + zSqr;
+        }
+    }
 
-             return xSqr + ySqr + zSqr;
-         }
-     }
-         
-     public class TranslateTween : TweenAnimation<Translate>
-     {
-         protected override Translate LinearInterpolation(Translate a, Translate b, float t)
-         {
-             var x = a.x.unit != b.x.unit
-                 ? throw new ArgumentException("Both Lengths must have the same unit")
-                 : new Length(Mathf.Lerp(a.x.value, b.x.value, t), a.x.unit);
-             var y = a.y.unit != b.y.unit
-                 ? throw new ArgumentException("Both Lengths must have the same unit")
-                 : new Length(Mathf.Lerp(a.y.value, b.y.value, t), a.y.unit);
-             var z = Mathf.Lerp(a.z, b.z, t);
+    public class TransformOriginTween : TweenAnimation<TransformOrigin>
+    {
+        protected override TransformOrigin LinearInterpolation(TransformOrigin a, TransformOrigin b, float t)
+        {
+            var x = a.x.unit != b.x.unit
+                ? throw new ArgumentException(
+                    $"Both Lengths must have the same unit. Instead: a.x = {a.x} and b.x = {b.x}")
+                : new Length(Mathf.Lerp(a.x.value, b.x.value, t), a.x.unit);
+            var y = a.y.unit != b.y.unit
+                ? throw new ArgumentException(
+                    $"Both Lengths must have the same unit. Instead: a.y = {a.y} and b.y = {b.y}")
+                : new Length(Mathf.Lerp(a.y.value, b.y.value, t), a.y.unit);
+            var z = Mathf.Lerp(a.z, b.z, t);
 
-             return new Translate(x, y, z);
-         }
+            return new TransformOrigin(x, y, z);
+        }
 
-         protected override Translate GetVelocity(Translate a, Translate b, float dt)
-         {
-             var inv = 1 / dt;
-             
-             var x = a.x.unit != b.x.unit
-                 ? throw new ArgumentException("Both Lengths must have the same unit")
-                 : new Length((b.x.value - a.x.value) * inv, a.x.unit);
-             var y = a.y.unit != b.y.unit
-                 ? throw new ArgumentException("Both Lengths must have the same unit")
-                 : new Length((b.y.value - a.y.value) * inv, a.y.unit);
-             var z = (b.z - a.z) * inv;
+        protected override TransformOrigin GetVelocity(TransformOrigin a, TransformOrigin b, float dt)
+        {
+            var inv = 1 / dt;
 
-             return new Translate(x, y, z);
-         }
-     }
+            var x = a.x.unit != b.x.unit
+                ? throw new ArgumentException(
+                    $"Both Lengths must have the same unit. Instead: a.x = {a.x} and b.x = {b.x}")
+                : new Length((b.x.value - a.x.value) * inv, a.x.unit);
+            var y = a.y.unit != b.y.unit
+                ? throw new ArgumentException(
+                    $"Both Lengths must have the same unit. Instead: a.y = {a.y} and b.y = {b.y}")
+                : new Length((b.y.value - a.y.value) * inv, a.y.unit);
+            var z = (b.z - a.z) * inv;
+
+            return new TransformOrigin(x, y, z);
+        }
+    }
+
+    public class TranslateSpring : SpringAnimation<Translate>
+    {
+        protected override Translate Add(Translate a, Translate b)
+        {
+            var x = a.x.unit != b.x.unit
+                ? throw new ArgumentException("Both Lengths must have the same unit")
+                : new Length(a.x.value + b.x.value, a.x.unit);
+            var y = a.y.unit != b.y.unit
+                ? throw new ArgumentException("Both Lengths must have the same unit")
+                : new Length(a.y.value + b.y.value, a.y.unit);
+            var z = a.z + b.z;
+
+            return new Translate(x, y, z);
+        }
+
+        protected override Translate Subtract(Translate a, Translate b)
+        {
+            var x = a.x.unit != b.x.unit
+                ? throw new ArgumentException("Both Lengths must have the same unit")
+                : new Length(a.x.value - b.x.value, a.x.unit);
+            var y = a.y.unit != b.y.unit
+                ? throw new ArgumentException("Both Lengths must have the same unit")
+                : new Length(a.y.value - b.y.value, a.y.unit);
+            var z = a.z - b.z;
+
+            return new Translate(x, y, z);
+        }
+
+        protected override Translate Multiply(Translate a, float b)
+        {
+            var x = new Length(a.x.value * b, a.x.unit);
+            var y = new Length(a.y.value * b, a.y.unit);
+            var z = a.z * b;
+
+            return new Translate(x, y, z);
+        }
+
+        protected override float SqrMagnitude(Translate a)
+        {
+            var xSqr = a.x.value * a.x.value;
+            var ySqr = a.y.value * a.y.value;
+            var zSqr = a.z * a.z;
+
+            return xSqr + ySqr + zSqr;
+        }
+    }
+
+    public class TranslateTween : TweenAnimation<Translate>
+    {
+        protected override Translate LinearInterpolation(Translate a, Translate b, float t)
+        {
+            var x = a.x.unit != b.x.unit
+                ? throw new ArgumentException("Both Lengths must have the same unit")
+                : new Length(Mathf.Lerp(a.x.value, b.x.value, t), a.x.unit);
+            var y = a.y.unit != b.y.unit
+                ? throw new ArgumentException("Both Lengths must have the same unit")
+                : new Length(Mathf.Lerp(a.y.value, b.y.value, t), a.y.unit);
+            var z = Mathf.Lerp(a.z, b.z, t);
+
+            return new Translate(x, y, z);
+        }
+
+        protected override Translate GetVelocity(Translate a, Translate b, float dt)
+        {
+            var inv = 1 / dt;
+
+            var x = a.x.unit != b.x.unit
+                ? throw new ArgumentException("Both Lengths must have the same unit")
+                : new Length((b.x.value - a.x.value) * inv, a.x.unit);
+            var y = a.y.unit != b.y.unit
+                ? throw new ArgumentException("Both Lengths must have the same unit")
+                : new Length((b.y.value - a.y.value) * inv, a.y.unit);
+            var z = (b.z - a.z) * inv;
+
+            return new Translate(x, y, z);
+        }
+    }
 }

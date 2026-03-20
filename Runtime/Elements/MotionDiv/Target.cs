@@ -658,6 +658,9 @@ namespace Roots
     
     public struct Target
     {
+#if UNITY_6000_3_OR_NEWER
+        public Ratio? aspectRatio;
+#endif
         public Color? backgroundColor;
         public Color? borderBottomColor;
         public Length? borderBottomLeftRadius;

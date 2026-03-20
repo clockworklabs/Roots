@@ -5,6 +5,9 @@ namespace Roots
 {
     public struct Initial
     {
+#if UNITY_6000_3_OR_NEWER
+        public InitialAspectRatio aspectRatio;
+#endif
         public InitialColor backgroundColor;
         public InitialColor borderBottomColor;
         public InitialLength borderBottomLeftRadius;
@@ -221,6 +224,33 @@ namespace Roots
         public static implicit operator InitialInt(int value) => new(value);
         public static implicit operator InitialInt(bool animate) => new(animate);
     }
+
+#if UNITY_6000_3_OR_NEWER
+    public readonly struct InitialAspectRatio : IInitialValue<Ratio>
+    {
+        private readonly Ratio? _value;
+        Ratio? IInitialValue<Ratio>.value => _value;
+
+        private readonly bool _skip;
+        bool IInitialValue<Ratio>.skip => _skip;
+
+        public InitialAspectRatio(Ratio value)
+        {
+            _value = value;
+            _skip = false;
+        }
+
+        public InitialAspectRatio(bool animate)
+        {
+            _value = null;
+            _skip = !animate;
+        }
+
+        public static implicit operator InitialAspectRatio(Ratio value) => new(value);
+        public static implicit operator InitialAspectRatio(float value) => new(value);
+        public static implicit operator InitialAspectRatio(bool animate) => new(animate);
+    }
+#endif
 
     public readonly struct InitialRotate : IInitialValue<Angle>
     {

@@ -15,6 +15,9 @@ namespace Roots
         private SapStem CompletedStem { get; } = new();
         public SapTargets Completed => CompletedStem.Targets;
         
+#if UNITY_6000_3_OR_NEWER
+        private MotionRatio AspectRatio { get; }
+#endif
         private MotionColor BackgroundColor { get; }
         private MotionColor BorderBottomColor { get; }
         private MotionLength BorderBottomLeftRadius { get; }
@@ -79,6 +82,7 @@ namespace Roots
 
         public MotionValues()
         {
+            AspectRatio = new MotionRatio(s => s.aspectRatio, s => s.aspectRatio, (s, v) => s.aspectRatio = v);
             BackgroundColor = new MotionColor(s => s.backgroundColor, s => s.backgroundColor, (s, v) => s.backgroundColor = v);
             BorderBottomColor = new MotionColor(s => s.borderBottomColor, s => s.borderBottomColor, (s, v) => s.borderBottomColor = v);
             BorderBottomLeftRadius = new MotionLength(s => s.borderBottomLeftRadius, s => s.borderBottomLeftRadius, (s, v) => s.borderBottomLeftRadius = v, e => Mathf.Max(e.layout.width, e.layout.height));
@@ -488,6 +492,11 @@ namespace Roots
         private void OnStep()
         {
             var style = new Style();
+#if UNITY_6000_3_OR_NEWER
+            if(AspectRatio.Value.HasValue) {
+                style.aspectRatio = AspectRatio.Value.Value;
+            }
+#endif
             if(BackgroundColor.Value.HasValue) {
                 style.backgroundColor = BackgroundColor.Value.Value;
             }

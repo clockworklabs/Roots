@@ -82,6 +82,19 @@ namespace Roots
         
         private static Style GetInitial(Style style, Initial initial, Target animate)
         {
+#if UNITY_6000_3_OR_NEWER
+            if (initial.aspectRatio is IInitialValue<Ratio> aspectRatio)
+            {
+                if (aspectRatio.skip && animate.aspectRatio.HasValue)
+                {
+                    style.aspectRatio = animate.aspectRatio.Value;
+                }
+                else if (aspectRatio.value.HasValue)
+                {
+                    style.aspectRatio = aspectRatio.value.Value;
+                }
+            }
+#endif
             if (initial.backgroundColor is IInitialValue<Color> backgroundColor)
             {
                 if (backgroundColor.skip && animate.backgroundColor.HasValue)

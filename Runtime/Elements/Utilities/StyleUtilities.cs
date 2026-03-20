@@ -1177,7 +1177,7 @@ namespace Roots
         public static Style FontStyle(FontStyle value) => FontStyle(new Style(), value);
         public static Style FontStyle(this Style style, FontStyle value)
         {
-            style.unityFontStyleAndWeight = value;
+            style.unityFontStyle = value;
             return style;
         }
         

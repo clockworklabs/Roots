@@ -21,8 +21,8 @@
     --rs-gray-900: #212529;
     --rs-black:    #000;
     --rs-transparent: rgba(0, 0, 0, 0);
-    --rs-white-50: rgba(255, 255, 255, 50%);
-    --rs-black-50: rgba(0, 0, 0, 50%);
+    --rs-white-50: rgba(255, 255, 255, 0.5);
+    --rs-black-50: rgba(0, 0, 0, 0.5);
 
     --rs-primary:   var(--rs-blue);
     --rs-secondary: var(--rs-gray-600);

@@ -82,7 +82,9 @@ namespace Roots
 
         public MotionValues()
         {
+#if UNITY_6000_3_OR_NEWER
             AspectRatio = new MotionRatio(s => s.aspectRatio, s => s.aspectRatio, (s, v) => s.aspectRatio = v);
+#endif
             BackgroundColor = new MotionColor(s => s.backgroundColor, s => s.backgroundColor, (s, v) => s.backgroundColor = v);
             BorderBottomColor = new MotionColor(s => s.borderBottomColor, s => s.borderBottomColor, (s, v) => s.borderBottomColor = v);
             BorderBottomLeftRadius = new MotionLength(s => s.borderBottomLeftRadius, s => s.borderBottomLeftRadius, (s, v) => s.borderBottomLeftRadius = v, e => Mathf.Max(e.layout.width, e.layout.height));

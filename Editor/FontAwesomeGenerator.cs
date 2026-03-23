@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if USING_NEWTONSOFT_JSON
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -228,3 +229,4 @@ namespace Roots.Rootstrap
         }
     }
 }
+#endif

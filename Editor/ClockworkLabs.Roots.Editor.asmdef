@@ -16,7 +16,7 @@
     "versionDefines": [
         {
             "name": "com.unity.nuget.newtonsoft-json",
-            "expression": "",
+            "expression": "3.2.2",
             "define": "USING_NEWTONSOFT_JSON"
         }
     ],

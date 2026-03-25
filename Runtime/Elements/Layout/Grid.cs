@@ -20,11 +20,9 @@ namespace Roots
                 
                 _context = value;
 
-                if (value != null)
-                {
-                    value.OnLayout.Add(Sappy.OnContextLayout);
-                    OnContextLayout(value.GetLayoutData());
-                }
+                value?.OnLayout.Add(Sappy.OnContextLayout);
+
+                OnContextLayout(value?.GetLayoutData());
             }
         }
 
@@ -152,9 +150,12 @@ namespace Roots
         }
 
         [SapTarget]
-        private void OnContextLayout(ResponsiveContext.LayoutData data)
+        private void OnContextLayout(ResponsiveContext.LayoutData data) => SetBreakpoint(data.breakpoint);
+        private void OnContextLayout(ResponsiveContext.LayoutData? data) => SetBreakpoint(data?.breakpoint ?? ResponsiveBreakpoint.ExtraSmall);
+
+        private void SetBreakpoint(ResponsiveBreakpoint value)
         {
-            SetBreakpoint(data.breakpoint);
+            RishSetBreakpoint(value);
             Update();
         }
 

@@ -18,11 +18,9 @@ namespace Roots
                 
                 _context = value;
 
-                if (value != null)
-                {
-                    value.OnLayout.Add(Sappy.OnContextLayout);
-                    OnContextLayout(value.GetLayoutData());
-                }
+                value?.OnLayout.Add(Sappy.OnContextLayout);
+
+                OnContextLayout(value?.GetLayoutData());
             }
         }
         
@@ -57,11 +55,15 @@ namespace Roots
         }
 
         [SapTarget]
-        private void OnContextLayout(ResponsiveContext.LayoutData data)
+        private void OnContextLayout(ResponsiveContext.LayoutData data) => SetBreakpoint(data.breakpoint);
+        private void OnContextLayout(ResponsiveContext.LayoutData? data) => SetBreakpoint(data?.breakpoint);
+
+        [SapTarget]
+        private void SetBreakpoint(ResponsiveBreakpoint? value)
         {
-            if (data.breakpoint >= Props.breakpoint)
+            if (value.HasValue && value.Value >= Props.breakpoint)
             {
-                SetWidth(Context.GetMinWidth(data.breakpoint));
+                SetWidth(Context.GetMinWidth(value.Value));
             }
             else
             {

@@ -1,0 +1,19 @@
+{
+    "name": "ClockworkLabs.Roots",
+    "rootNamespace": "Roots",
+    "references": [
+        "GUID:e0cd26848372d4e5c891c569017e11f1",
+        "GUID:f78b56649bf2463a942c93c39bfdd81f",
+        "GUID:b48378ee121dd0142a6ae4bfb857454b",
+        "GUID:8b1612d3d2c9fc44e970ff9d0c84c30f"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

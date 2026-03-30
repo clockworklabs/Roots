@@ -1,0 +1,29 @@
+{
+  "name": "io.clockworklabs.roots",
+  "version": "1.0.0",
+  "displayName": "Roots",
+  "description": "UI framework with ready-made components and solutions for Rish",
+  "unity": "2022.3",
+  "documentationUrl": "https://rish-ui.com/docs/roots",
+  "author": {
+    "name": "Lisandro Crespo",
+    "email": "lisandro@clockworklabs.io",
+    "url": "https://clockworklabs.io"
+  },
+  "dependencies": {
+    "io.clockworklabs.rish": "3.0.0",
+    "io.clockworklabs.motion": "1.8.0"
+  },
+  "samples": [
+    {
+      "displayName": "Rootstrap",
+      "description": "Kickoff/Reference Element Collection.",
+      "path": "Samples~/Rootstrap"
+    },
+    {
+      "displayName": "Samples",
+      "description": "Samples Scene. Requires Rootstrap.",
+      "path": "Samples~/Samples"
+    }
+  ]
+}

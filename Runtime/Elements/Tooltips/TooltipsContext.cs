@@ -1,0 +1,120 @@
+using System;
+using System.Collections.Generic;
+using RishUI;
+
+namespace Roots
+{
+    public partial class TooltipsContext : RishElement<TooltipsContextProps>, IManualState
+    {
+        private HashSet<Tooltip> Tooltips { get; } = new();
+        private Stack<Tooltip> Stack { get; } = new();
+        
+        private ulong Count { get; set; }
+
+        void IManualState.Restart()
+        {
+            Tooltips.Clear();
+            Stack.Clear();
+
+            Count = 0;
+        }
+        
+        protected override Element Render()
+        {
+            var tooltip = Element.Null;
+            if (!Props.hideTooltips && Stack.Count > 0)
+            {
+                var owner = Stack.Peek();
+                var tooltipContent = owner.Props.tooltip;
+                if (tooltipContent.IsValid)
+                {
+                    // TODO: Support transformed elements
+                    var localRect = WorldToLocal(owner.WorldBoundingBox);
+
+                    tooltip = TooltipHolder.Create(
+                        key: Count,
+                        rect: localRect,
+                        ignoreFit: owner.Props.ignoreFit,
+                        element: InternalTooltip.Create(element: tooltipContent));
+                }
+            }
+
+            return Div.Create(
+                attributes: Props.attributes,
+                children: new Children
+                {
+                    Props.children,
+                    tooltip
+                });
+        }
+        
+        internal void ShowTooltip(Tooltip owner)
+        {
+            var forceRender = false;
+            if (Tooltips.Contains(owner))
+            {
+                if (Stack.Peek() == owner)
+                {
+                    forceRender = true;
+                }
+            }
+            else
+            {
+                Count++;
+                
+                Tooltips.Add(owner);
+                Stack.Push(owner);
+                forceRender = true;
+            }
+
+            if (Stack.Count == 1)
+            {
+                OnShow(true);
+            }
+
+            if (forceRender)
+            {
+                Dirty();
+            }
+        }
+
+        internal void HideTooltip(Tooltip owner)
+        {
+            if (!Tooltips.Remove(owner)) return;
+
+            var forceRender = false;
+            while(Stack.Count > 0 && !Tooltips.Contains(Stack.Peek()))
+            {
+                Stack.Pop();
+                if(Stack.Count > 0) {
+                    Count++;
+                }
+                forceRender = true;
+            }
+
+            if (Stack.Count == 0)
+            {
+                OnShow(false);
+            }
+
+            if (forceRender)
+            {
+                Dirty();
+            }
+        }
+        
+        internal Tooltip Peek() => Stack.Count <= 0 ? null : Stack.Peek();
+    }
+
+    [RishValueType]
+    public struct TooltipsContextProps
+    {
+        [Expand]
+        public VisualAttributes attributes;
+        public bool forceFit;
+        public bool hideTooltips;
+        public Children children;
+
+        public Action<bool> onShow;
+    }
+}

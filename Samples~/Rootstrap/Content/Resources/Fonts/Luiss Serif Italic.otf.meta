@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: 5c8acb2ceb1f73c4b8716d432dea4cac
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Luiss Serif
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: f3e9254c326edab489f6b0db4053f394, type: 3}
+  - {fileID: 12800000, guid: 7075bed6734f2d543beb55e302ff33a6, type: 3}
+  - {fileID: 12800000, guid: f6e4e044b726577488f73c49eb34fc43, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

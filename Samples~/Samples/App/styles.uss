@@ -1,0 +1,34 @@
+:root {
+    background-color: #26282b;
+}
+#root {
+    padding: 10px;
+}
+.content-rect {
+    border-radius: 15px;
+    background-color: #191a1c;
+    overflow: hidden;
+    --pointer-detection: rect;
+}
+.thin-border {
+    border-width: 1px;
+    border-color: #404040;
+}
+.thin-border-top {
+    border-top-width: 1px;
+    border-color: #404040;
+}
+.navigation-rail .font-awesome-icon {
+    font-size: 25px;
+}
+.resize-handle-right,.resize-handle-bottom,.resize-handle-corner {
+    font-size: 15px;
+}
+.resize-handle-corner {
+    rotate: 90deg;
+}
+
+/* Images Sample */
+.image-from-props {
+    --props-sprite: "placeholder-200x200";
+}

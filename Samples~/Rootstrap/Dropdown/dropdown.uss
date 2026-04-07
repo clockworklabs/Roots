@@ -1,0 +1,17 @@
+.dropdown-menu {
+    position: absolute;
+    min-width: 100%;
+    top: 100%;
+    padding: var(--rs-spacer-1);
+    margin: var(--rs-spacer-1) 0;
+    background-color: var(--rs-light)!important;
+    border-radius: var(--rs-border-radius-3)!important;
+}
+
+.dropdown-menu.with-scroll > Div {
+    height: var(--height);
+    min-height: var(--height);
+    max-height: var(--height);
+
+    --height: 200px;
+}

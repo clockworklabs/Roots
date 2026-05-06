@@ -46,6 +46,10 @@ namespace Roots
             else
             {
                 Context = GetFirstAncestorOfType<ResponsiveContext>();
+                if (_context == null)
+                {
+                    Update();
+                }
             }
         }
         void IPropsListener<GridProps>.PropsWillChange() { }

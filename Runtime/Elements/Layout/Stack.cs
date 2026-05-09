@@ -103,12 +103,24 @@ namespace Roots
             switch (Props.direction)
             {
                 case Direction.Vertical:
-                    style.resolvedMarginTop = targetMargins.x;
-                    style.resolvedMarginBottom = targetMargins.y;
+                    if(!Mathf.Approximately(style.resolvedMarginTop, targetMargins.x))
+                    {
+                        style.resolvedMarginTop = targetMargins.x;
+                    }
+                    if (!Mathf.Approximately(style.resolvedMarginBottom, targetMargins.y))
+                    {
+                        style.resolvedMarginBottom = targetMargins.y;
+                    }
                     break;
                 case Direction.Horizontal:
-                    style.resolvedMarginLeft = targetMargins.x;
-                    style.resolvedMarginRight = targetMargins.y;
+                    if(!Mathf.Approximately(style.resolvedMarginLeft, targetMargins.x))
+                    {
+                        style.resolvedMarginLeft = targetMargins.x;
+                    }
+                    if (!Mathf.Approximately(style.resolvedMarginRight, targetMargins.y))
+                    {
+                        style.resolvedMarginRight = targetMargins.y;
+                    }
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(Props.direction), Props.direction, null);
@@ -157,6 +169,7 @@ namespace Roots
     public struct StackProps
     {
         public Stack.Direction direction;
+        public int[] test;
         public bool reverse;
         public float gap;
         public VisualAttributes attributes;

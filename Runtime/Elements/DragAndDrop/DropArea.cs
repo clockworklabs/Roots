@@ -129,7 +129,7 @@ namespace Roots
         public Action<T> hoverStarted;
         public Action hoverEnded;
     }
-
+    
     [RishValueType]
     public struct DropAreaState
     {

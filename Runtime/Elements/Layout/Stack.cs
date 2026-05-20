@@ -151,7 +151,7 @@ namespace Roots
             {
                 children = Props.children;
             }
-            
+
             return Div.Create(
                 attributes: Props.attributes + new Style
                 {
@@ -169,7 +169,6 @@ namespace Roots
     public struct StackProps
     {
         public Stack.Direction direction;
-        public int[] test;
         public bool reverse;
         public float gap;
         public VisualAttributes attributes;

@@ -57,7 +57,6 @@ namespace Roots
             
             return Internal.Create(
                 isInteractable: Props.isInteractable,
-                // actionOnPointerDown: Props.actionOnPointerDown,
                 buttons: buttons,
                 normal: Props.normal,
                 hovered: Props.hovered,

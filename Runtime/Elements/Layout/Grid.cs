@@ -56,8 +56,6 @@ namespace Roots
         
         protected override Element Render()
         {
-            SetSingleRow(false);
-            
             var colSizes = new RishList<int>();
             int size;
             if (State.size.HasValue)
@@ -84,15 +82,18 @@ namespace Roots
             }
             
             var rowWidth = State.width + State.gutter.x;
-            var colsCount = Props.cols.Count;
+            var singleRowWidth = State.width;
             
             var colWidth = rowWidth / size;
+            var singleRowColWidth = singleRowWidth / size;
+            
+            var colsCount = Props.cols.Count;
             
             var rows = new Children();
             var i = 0;
             do
             {
-                var children = new Children();
+                var descriptions = new RishList<ColDescription>();
                 var rowUsedSize = 0;
                 for (; i < colsCount; i++)
                 {
@@ -104,31 +105,34 @@ namespace Roots
                     
                     rowUsedSize += colSize;
                     
-                    var width = colWidth * colSize - State.gutter.x;
-                    
-                    children.Add(Col.Create(
-                        key: (ulong)(children.Count + 1),
-                        name: col.name,
-                        className: col.className,
-                        style: col.style + new Style
-                        {
-                            width = width,
-                            minWidth = width,
-                            maxWidth = width,
-                        },
-                        gap: State.gutter.y,
-                        children: col.children));
+                    descriptions.Add(new ColDescription
+                    {
+                        key = (ulong)(descriptions.Count + 1),
+                        attributes = col.attributes,
+                        width = colWidth * colSize - State.gutter.x,
+                        singleRowWidth = rows.Count <= 0 ? singleRowColWidth * colSize - State.gutter.x : 0,
+                        gap = State.gutter.y,
+                        children = col.children
+                    });
                 }
                 
-                if(children.Count > 0)
+                if(descriptions.Count > 0)
                 {
+                    var children = new Children();
                     if (i < colsCount || rows.Count > 0)
                     {
+                        foreach (var desc in descriptions)
+                        {
+                            children.Add(desc.CreateCol());
+                        }
                         rows.Add(Row.Create(key: (ulong)(rows.Count + 1), gap: State.gutter.x, children: children));
                     }
                     else
                     {
-                        SetSingleRow(true);
+                        foreach (var desc in descriptions)
+                        {
+                            children.Add(desc.CreateCol(true));
+                        }
                         return Row.Create(attributes: Props.attributes, gap: State.gutter.x, children: children);
                     }
                 }
@@ -145,12 +149,7 @@ namespace Roots
         private void OnVisualChange(VisualChangeEvent evt)
         {
             if(evt.target is not VisualElement visualElement) return;
-            var width = Mathf.FloorToInt(visualElement.contentRect.width);
-            if (State.singleRow)
-            {
-                width -= Mathf.CeilToInt(State.gutter.x);
-            }
-            SetWidth(width);
+            SetWidth(Mathf.FloorToInt(visualElement.contentRect.width));
         }
 
         [SapTarget]
@@ -218,6 +217,31 @@ namespace Roots
         {
             public int index;
             public int size;
+        }
+
+        private struct ColDescription
+        {
+            public ulong key;
+            public VisualAttributes attributes;
+            public float width;
+            public float singleRowWidth;
+            public float gap;
+            public Children children;
+
+            [RequiresManagedContext]
+            public Element CreateCol(bool singleRow = false) => CreateCol(singleRow ? singleRowWidth : width);
+            
+            [RequiresManagedContext]
+            private Element CreateCol(float w) => Col.Create(
+                key: key,
+                attributes: attributes + new Style
+                {
+                    width = w,
+                    minWidth = w,
+                    maxWidth = w,
+                },
+                gap: gap,
+                children: children);
         }
     }
 
@@ -441,7 +465,5 @@ namespace Roots
         public int? size;
         public Gutter gutter;
         public int width;
-        [IgnoreComparison]
-        public bool singleRow;
     }
 }

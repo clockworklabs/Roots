@@ -224,8 +224,6 @@ namespace Roots
         [SapTarget]
         private void OnChange(string value)
         {
-            if (value == Props.value) return;
-            
             var result = OnValidation(value);
             
             RishOnChange(result);
@@ -362,7 +360,8 @@ namespace Roots
                 
                 if (firstSetup || value != props.value)
                 {
-                    value = props.value;
+                    // Applying controlled state must not report another user edit.
+                    SetValueWithoutNotify(props.value);
                 }
                 
                 if (firstSetup || multiline != props.multiline)

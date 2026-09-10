@@ -224,8 +224,6 @@ namespace Roots
         [SapTarget]
         private void OnChange(string value)
         {
-            // IME confirmation can emit several changes before props are rendered again.
-            // The final value may equal Props.value even though an earlier change was forwarded.
             var result = OnValidation(value);
             
             RishOnChange(result);

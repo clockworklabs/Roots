@@ -224,8 +224,8 @@ namespace Roots
         [SapTarget]
         private void OnChange(string value)
         {
-            if (value == Props.value) return;
-            
+            // IME confirmation can emit several changes before props are rendered again.
+            // The final value may equal Props.value even though an earlier change was forwarded.
             var result = OnValidation(value);
             
             RishOnChange(result);
@@ -362,7 +362,8 @@ namespace Roots
                 
                 if (firstSetup || value != props.value)
                 {
-                    value = props.value;
+                    // Applying controlled state must not report another user edit.
+                    SetValueWithoutNotify(props.value);
                 }
                 
                 if (firstSetup || multiline != props.multiline)
